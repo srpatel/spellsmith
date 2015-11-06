@@ -16,7 +16,7 @@ USING_NS_CC;
 
 class Spell {
 public:
-	Spell();
+	Spell(std::string name);
 	~Spell();
 	static void init(int width, int height);
 	static std::vector<Spell *> spells;
@@ -24,6 +24,7 @@ public:
 	Node *mininode;
 	bool operator==(Chain *chain);
 private:
+	std::string name;
 	GemType *shape;
 	int width;
 	int height;

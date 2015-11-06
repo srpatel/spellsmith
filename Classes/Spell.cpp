@@ -9,6 +9,8 @@
 #include "Spell.hpp"
 #include "Gem.hpp"
 
+#include "json/document.h"
+
 GemType *Spell::compare_temp;
 std::vector<Spell *> Spell::spells;
 int Spell::max_width;
@@ -26,74 +28,45 @@ void Spell::init(int width, int height) {
 	
 	compare_temp = NewArray;
 	
-	// Put in some sample spells!
-	// should come from JSON!
-	{
-		auto s = new Spell;
-		s->shape at(0, 0) = FIRE;
-		s->shape at(0, 1) = FIRE;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 1) = WATER;
-		s->setup();
-		spells.push_back(s);
-	}
+	std::string data = FileUtils::getInstance()->getStringFromFile("data/spells.json");
+	rapidjson::Document doc;
+	doc.Parse<0>(data.c_str());
 	
-	{
-		auto s = new Spell;
-		s->shape at(0, 0) = EARTH;
-		s->shape at(1, 1) = AIR;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 2) = WATER;
-		s->setup();
-		spells.push_back(s);
-	}
-	
-	{
-		auto s = new Spell;
-		s->shape at(0, 1) = FIRE;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 1) = AIR;
-		s->shape at(1, 2) = FIRE;
-		s->shape at(2, 1) = FIRE;
-		s->setup();
-		spells.push_back(s);
-	}
-	
-	{
-		auto s = new Spell;
-		s->shape at(0, 1) = FIRE;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 1) = AIR;
-		s->shape at(1, 2) = FIRE;
-		s->shape at(2, 1) = FIRE;
-		s->setup();
-		spells.push_back(s);
-	}
-	
-	{
-		auto s = new Spell;
-		s->shape at(0, 1) = FIRE;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 1) = AIR;
-		s->shape at(1, 2) = FIRE;
-		s->shape at(2, 1) = FIRE;
-		s->setup();
-		spells.push_back(s);
-	}
-	
-	{
-		auto s = new Spell;
-		s->shape at(0, 1) = FIRE;
-		s->shape at(1, 0) = FIRE;
-		s->shape at(1, 1) = AIR;
-		s->shape at(1, 2) = FIRE;
-		s->shape at(2, 1) = FIRE;
+	For (doc.Size()) {
+		const rapidjson::Value& spell = doc[i];
+		const rapidjson::Value& shape = spell["shape"];
+		auto s = new Spell(spell["name"].GetString());
+		if (shape.Size() != Spell::max_height) {
+			printf("height != Spell::max_height\n");
+		}
+		for (int j = shape.Size() - 1; j >= 0; j--) {
+			const char *row = shape[j].GetString();
+			// TODO : should it be strlen?
+			int width = strlen(row);
+			if (width != Spell::max_width) {
+				printf("width != Spell::max_width\n");
+			}
+			for (int k = 0; k < Spell::max_width; k++) {
+				GemType g = NONE;
+				switch (row[k]) {
+					case ' ': g = NONE; break;
+					case 'F': g = FIRE; break;
+					case 'W': g = WATER; break;
+					case 'E': g = EARTH; break;
+					case 'A': g = AIR; break;
+				}
+				if (g != NONE) {
+					s->shape at(k, Spell::max_height - j - 1) = g;
+				}
+			}
+		}
 		s->setup();
 		spells.push_back(s);
 	}
 }
 
-Spell::Spell() {
+Spell::Spell(std::string name) {
+	this->name = name;
 	shape = NewArray;
 	// Zero it!
 	Zero(shape);

@@ -13,6 +13,8 @@
 		1039227C1BD6F11500233891 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922711BD6EC3F00233891 /* libcocos2d Mac.a */; };
 		10DD2C181BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
 		10DD2C191BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
+		10DD2C1C1BED6BF7004FBA37 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10DD2C1B1BED6BF7004FBA37 /* data */; };
+		10DD2C1D1BED6BF7004FBA37 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10DD2C1B1BED6BF7004FBA37 /* data */; };
 		10F3CBD41BD81CAF000C139F /* sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBD31BD81CAF000C139F /* sprite.png */; };
 		10F3CBD51BD81CAF000C139F /* sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBD31BD81CAF000C139F /* sprite.png */; };
 		10F3CBD81BD831AF000C139F /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBD61BD831AF000C139F /* GameScene.cpp */; };
@@ -121,6 +123,7 @@
 		10DD2C161BED13F2004FBA37 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spell.cpp; sourceTree = "<group>"; };
 		10DD2C171BED13F2004FBA37 /* Spell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spell.hpp; sourceTree = "<group>"; };
 		10DD2C1A1BED4F9C004FBA37 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
+		10DD2C1B1BED6BF7004FBA37 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		10F3CBD31BD81CAF000C139F /* sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprite.png; sourceTree = "<group>"; };
 		10F3CBD61BD831AF000C139F /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		10F3CBD71BD831AF000C139F /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
@@ -309,6 +312,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				10DD2C1B1BED6BF7004FBA37 /* data */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				10F3CBE21BD83FE8000C139F /* gems */,
@@ -495,6 +499,7 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				10DD2C1C1BED6BF7004FBA37 /* data in Resources */,
 				10292CAF1BEC8C8900D1EDE6 /* spells in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
@@ -519,6 +524,7 @@
 				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
+				10DD2C1D1BED6BF7004FBA37 /* data in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
 				10F3CBD51BD81CAF000C139F /* sprite.png in Resources */,
 				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
