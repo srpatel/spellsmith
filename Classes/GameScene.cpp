@@ -27,7 +27,17 @@ bool Game::init()
 	Spell::init(GRID_WIDTH, GRID_HEIGHT);
 	PlayerState::get()->inventory = Spell::spells;
 	
-	// Backgrounds
+	
+/*
+ _                _                                   _     
+| |              | |                                 | |    
+| |__   __ _  ___| | ____ _ _ __ ___  _   _ _ __   __| |___ 
+| '_ \ / _` |/ __| |/ / _` | '__/ _ \| | | | '_ \ / _` / __|
+| |_) | (_| | (__|   < (_| | | | (_) | |_| | | | | (_| \__ \
+|_.__/ \__,_|\___|_|\_\__, |_|  \___/ \__,_|_| |_|\__,_|___/
+                       __/ |                                
+                      |___/
+*/
 	auto soil = Color4F(142/255.f,101/255.f,49/255.f, 255/255.f);
 	auto grass = Color4F(48/255.f,114/255.f,39/255.f, 255/255.f);
 	auto sky = Color4F(177/255.f,240/255.f,243/255.f, 255/255.f);
@@ -35,7 +45,17 @@ bool Game::init()
 	background->drawSolidRect(Vec2::ZERO, Vec2(visibleSize), soil);
 	background->setPosition(origin.x, origin.y);
 	this->addChild(background);
-	
+
+/*
+            _     _ 
+           (_)   | |
+  __ _ _ __ _  __| |
+ / _` | '__| |/ _` |
+| (_| | |  | | (_| |
+ \__, |_|  |_|\__,_|
+  __/ |             
+ |___/              
+*/
     // Create the grid
     this->grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
     cocos2d::Vec2 gridSize = this->grid->getSize();
@@ -48,8 +68,17 @@ bool Game::init()
 	// More background (must be done after grid because of sizing)
 	background->drawSolidRect(Vec2(0, y + gridSize.y/2 + 20), Vec2(visibleSize.width, y + gridSize.y/2 + 60), grass);
 	background->drawSolidRect(Vec2(0, y + gridSize.y/2 + 60), Vec2(visibleSize.width, visibleSize.height), sky);
-	
-	// Inventory
+
+/*
+ _                      _
+(_)                    | |                  
+ _ _ ____   _____ _ __ | |_ ___  _ __ _   _ 
+| | '_ \ \ / / _ \ '_ \| __/ _ \| '__| | | |
+| | | | \ V /  __/ | | | || (_) | |  | |_| |
+|_|_| |_|\_/ \___|_| |_|\__\___/|_|   \__, |
+                                       __/ |
+                                      |___/
+*/
 	float padding = 10;
 	float margin = visibleSize.width - gridSize.x - padding;
 	float spellHeight = gridSize.y/3 - padding*3;
@@ -92,6 +121,16 @@ bool Game::init()
 			this->addChild(sprite);
 		}
 	}
+	
+/*
+      _                          _                
+     | |                        | |               
+  ___| |__   __ _ _ __ __ _  ___| |_ ___ _ __ ___ 
+ / __| '_ \ / _` | '__/ _` |/ __| __/ _ \ '__/ __|
+| (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
+ \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
+*/
+	
 	
     //this->scheduleUpdate();
     
