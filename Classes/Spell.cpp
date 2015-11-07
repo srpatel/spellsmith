@@ -36,16 +36,20 @@ void Spell::init(int width, int height) {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
 		auto s = new Spell(spell["name"].GetString());
+#if DEBUG
 		if (shape.Size() != Spell::max_height) {
-			printf("height != Spell::max_height\n");
+			LOG("height != Spell::max_height\n");
 		}
+#endif
 		for (int j = shape.Size() - 1; j >= 0; j--) {
 			const char *row = shape[j].GetString();
 			// TODO : should it be strlen?
 			int width = strlen(row);
+#if DEBUG
 			if (width != Spell::max_width) {
-				printf("width != Spell::max_width\n");
+				LOG("width != Spell::max_width\n");
 			}
+#endif
 			for (int k = 0; k < Spell::max_width; k++) {
 				GemType g = NONE;
 				switch (row[k]) {
