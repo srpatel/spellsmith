@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "GameScene.hpp"
+#include "Strings.hpp"
 
 static Size designResolutionSize = Size(320, 568);
 static Size smallResolutionSize  = Size(640, 1136);
@@ -81,6 +82,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// load the Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("spritesheet.plist");
+	// Load strings
+	Strings::get()->init();
 	
     // create a scene. it's an autorelease object
     // 'scene' is an autorelease object

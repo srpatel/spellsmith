@@ -8,6 +8,7 @@
 
 #include "Spell.hpp"
 #include "Gem.hpp"
+#include "Strings.hpp"
 
 #include "json/document.h"
 
@@ -35,7 +36,7 @@ void Spell::init(int width, int height) {
 	For (doc.Size()) {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
-		auto s = new Spell(spell["name"].GetString());
+		auto s = new Spell(_(std::string("spell.") + spell["name"].GetString() + ".name"));
 #if DEBUG
 		if (shape.Size() != Spell::max_height) {
 			LOG("height != Spell::max_height\n");

@@ -13,6 +13,8 @@
 		1018282C1BEDDBA100A66FBC /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 101828281BEDDBA100A66FBC /* spritesheet.png */; };
 		1018282E1BEDDBB800A66FBC /* images-prepack in Resources */ = {isa = PBXBuildFile; fileRef = 1018282D1BEDDBB800A66FBC /* images-prepack */; };
 		1018282F1BEDDBB800A66FBC /* images-prepack in Resources */ = {isa = PBXBuildFile; fileRef = 1018282D1BEDDBB800A66FBC /* images-prepack */; };
+		101828371BEDE66500A66FBC /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101828351BEDE66500A66FBC /* Strings.cpp */; };
+		101828381BEDE66500A66FBC /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101828351BEDE66500A66FBC /* Strings.cpp */; };
 		1039227B1BD6F11100233891 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922731BD6EC3F00233891 /* libcocos2d iOS.a */; };
 		1039227C1BD6F11500233891 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922711BD6EC3F00233891 /* libcocos2d Mac.a */; };
 		10DD2C181BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
@@ -114,6 +116,8 @@
 		101828271BEDDBA100A66FBC /* spritesheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spritesheet.plist; sourceTree = "<group>"; };
 		101828281BEDDBA100A66FBC /* spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet.png; sourceTree = "<group>"; };
 		1018282D1BEDDBB800A66FBC /* images-prepack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "images-prepack"; sourceTree = "<group>"; };
+		101828351BEDE66500A66FBC /* Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Strings.cpp; sourceTree = "<group>"; };
+		101828361BEDE66500A66FBC /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
 		1039226B1BD6EC3F00233891 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = "../../../dev/cocos2d-x-3.8.1/build/cocos2d_libs.xcodeproj"; sourceTree = "<group>"; };
 		103922741BD6ECBC00233891 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		10DD2C161BED13F2004FBA37 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spell.cpp; sourceTree = "<group>"; };
@@ -327,6 +331,8 @@
 				10F3CBDF1BD83642000C139F /* Grid.hpp */,
 				10DD2C161BED13F2004FBA37 /* Spell.cpp */,
 				10DD2C171BED13F2004FBA37 /* Spell.hpp */,
+				101828351BEDE66500A66FBC /* Strings.cpp */,
+				101828361BEDE66500A66FBC /* Strings.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -404,7 +410,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "GemGame-desktop" */;
 			buildPhases = (
-				101828341BEDDECE00A66FBC /* ShellScript */,
+				101828391BEDEC6700A66FBC /* Fix JSON */,
+				101828341BEDDECE00A66FBC /* Create Spritesheet */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
 				5087E75C17EB910900C73F5D /* Frameworks */,
@@ -519,18 +526,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		101828341BEDDECE00A66FBC /* ShellScript */ = {
+		101828341BEDDECE00A66FBC /* Create Spritesheet */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Create Spritesheet";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n# Later:\n#TexturePacker --variant 2:-hd --variant 1: --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n#TexturePacker --variant 1:-hd:@2x --variant 1: --data main{v}.plist --sheet main{v}.png --format cocos2d assets";
+		};
+		101828391BEDEC6700A66FBC /* Fix JSON */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Fix JSON";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# validate or fix json? write perl script";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -541,6 +563,7 @@
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				101828371BEDE66500A66FBC /* Strings.cpp in Sources */,
 				10DD2C181BED13F2004FBA37 /* Spell.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				10F3CBD81BD831AF000C139F /* GameScene.cpp in Sources */,
@@ -556,6 +579,7 @@
 			files = (
 				10F3CBDD1BD83356000C139F /* Gem.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				101828381BEDE66500A66FBC /* Strings.cpp in Sources */,
 				10DD2C191BED13F2004FBA37 /* Spell.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				10F3CBE11BD83642000C139F /* Grid.cpp in Sources */,

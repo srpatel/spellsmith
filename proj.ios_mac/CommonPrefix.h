@@ -20,9 +20,11 @@ for (int j = 0; j < _j; j++)
 
 #define DEBUG 1
 #if DEBUG
-#define LOG(_x_) do { printf(__FILE__ ":%d %s\n", __LINE__, _x_); } while (0)
+	#define LOG(_x_) do { printf(__FILE__ ":%d %s\n", __LINE__, _x_); } while (0)
+	#define RAPIDJSON_ASSERT(_x_) do{assert(_x_);}while(0)
 #else
-#define LOG(_x_)
+	#define LOG(_x_)
+	#define RAPIDJSON_ASSERT(_x_)
 #endif
 
 #endif /* CommonPrefix_h */
