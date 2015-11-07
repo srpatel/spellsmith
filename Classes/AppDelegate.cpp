@@ -84,6 +84,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	spritecache->addSpriteFramesWithFile("spritesheet.plist");
 	// Load strings
 	Strings::get()->init();
+	// Random
+	srand (time(NULL));
 	
     // create a scene. it's an autorelease object
     // 'scene' is an autorelease object
