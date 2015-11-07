@@ -21,7 +21,7 @@ void Gem::init(GemType type) {
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;
-	sprite = cocos2d::Sprite::create(element);
+	sprite = Sprite::createWithSpriteFrameName(element);
 	sprite->setScale(Gem::scale);
 }
 
@@ -30,9 +30,9 @@ void Gem::init() {
 }
 
 float Gem::getWidth() {
-	return 80 * Gem::scale / cocos2d::Director::getInstance()->getContentScaleFactor();
+	return 80 * Gem::scale / Director::getInstance()->getContentScaleFactor();
 }
 
 float Gem::getHeight() {
-	return 100 * Gem::scale / cocos2d::Director::getInstance()->getContentScaleFactor();
+	return 100 * Gem::scale / Director::getInstance()->getContentScaleFactor();
 }

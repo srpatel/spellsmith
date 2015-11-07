@@ -23,6 +23,7 @@ public:
 	void setup();
 	Node *mininode;
 	bool operator==(Chain *chain);
+	std::string getName();
 private:
 	std::string name;
 	GemType *shape;

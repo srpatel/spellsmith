@@ -7,35 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10292CAF1BEC8C8900D1EDE6 /* spells in Resources */ = {isa = PBXBuildFile; fileRef = 10292CAE1BEC8C8900D1EDE6 /* spells */; };
-		10292CB01BEC8C8900D1EDE6 /* spells in Resources */ = {isa = PBXBuildFile; fileRef = 10292CAE1BEC8C8900D1EDE6 /* spells */; };
+		101828291BEDDBA100A66FBC /* spritesheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101828271BEDDBA100A66FBC /* spritesheet.plist */; };
+		1018282A1BEDDBA100A66FBC /* spritesheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101828271BEDDBA100A66FBC /* spritesheet.plist */; };
+		1018282B1BEDDBA100A66FBC /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 101828281BEDDBA100A66FBC /* spritesheet.png */; };
+		1018282C1BEDDBA100A66FBC /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 101828281BEDDBA100A66FBC /* spritesheet.png */; };
+		1018282E1BEDDBB800A66FBC /* images-prepack in Resources */ = {isa = PBXBuildFile; fileRef = 1018282D1BEDDBB800A66FBC /* images-prepack */; };
+		1018282F1BEDDBB800A66FBC /* images-prepack in Resources */ = {isa = PBXBuildFile; fileRef = 1018282D1BEDDBB800A66FBC /* images-prepack */; };
 		1039227B1BD6F11100233891 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922731BD6EC3F00233891 /* libcocos2d iOS.a */; };
 		1039227C1BD6F11500233891 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922711BD6EC3F00233891 /* libcocos2d Mac.a */; };
 		10DD2C181BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
 		10DD2C191BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
 		10DD2C1C1BED6BF7004FBA37 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10DD2C1B1BED6BF7004FBA37 /* data */; };
 		10DD2C1D1BED6BF7004FBA37 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10DD2C1B1BED6BF7004FBA37 /* data */; };
-		10F3CBD41BD81CAF000C139F /* sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBD31BD81CAF000C139F /* sprite.png */; };
-		10F3CBD51BD81CAF000C139F /* sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBD31BD81CAF000C139F /* sprite.png */; };
 		10F3CBD81BD831AF000C139F /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBD61BD831AF000C139F /* GameScene.cpp */; };
 		10F3CBD91BD831AF000C139F /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBD61BD831AF000C139F /* GameScene.cpp */; };
 		10F3CBDC1BD83356000C139F /* Gem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBDA1BD83356000C139F /* Gem.cpp */; };
 		10F3CBDD1BD83356000C139F /* Gem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBDA1BD83356000C139F /* Gem.cpp */; };
 		10F3CBE01BD83642000C139F /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBDE1BD83642000C139F /* Grid.cpp */; };
 		10F3CBE11BD83642000C139F /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F3CBDE1BD83642000C139F /* Grid.cpp */; };
-		10F3CBE31BD83FE8000C139F /* gems in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBE21BD83FE8000C139F /* gems */; };
-		10F3CBE41BD83FE8000C139F /* gems in Resources */ = {isa = PBXBuildFile; fileRef = 10F3CBE21BD83FE8000C139F /* gems */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
-		46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
-		46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
-		46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
-		46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
-		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -117,30 +111,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		10292CAE1BEC8C8900D1EDE6 /* spells */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spells; sourceTree = "<group>"; };
+		101828271BEDDBA100A66FBC /* spritesheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spritesheet.plist; sourceTree = "<group>"; };
+		101828281BEDDBA100A66FBC /* spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet.png; sourceTree = "<group>"; };
+		1018282D1BEDDBB800A66FBC /* images-prepack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "images-prepack"; sourceTree = "<group>"; };
 		1039226B1BD6EC3F00233891 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = "../../../dev/cocos2d-x-3.8.1/build/cocos2d_libs.xcodeproj"; sourceTree = "<group>"; };
 		103922741BD6ECBC00233891 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		10DD2C161BED13F2004FBA37 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spell.cpp; sourceTree = "<group>"; };
 		10DD2C171BED13F2004FBA37 /* Spell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spell.hpp; sourceTree = "<group>"; };
 		10DD2C1A1BED4F9C004FBA37 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
 		10DD2C1B1BED6BF7004FBA37 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
-		10F3CBD31BD81CAF000C139F /* sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprite.png; sourceTree = "<group>"; };
 		10F3CBD61BD831AF000C139F /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		10F3CBD71BD831AF000C139F /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
 		10F3CBDA1BD83356000C139F /* Gem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gem.cpp; sourceTree = "<group>"; };
 		10F3CBDB1BD83356000C139F /* Gem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Gem.hpp; sourceTree = "<group>"; };
 		10F3CBDE1BD83642000C139F /* Grid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
 		10F3CBDF1BD83642000C139F /* Grid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Grid.hpp; sourceTree = "<group>"; };
-		10F3CBE21BD83FE8000C139F /* gems */ = {isa = PBXFileReference; lastKnownFileType = folder; path = gems; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* GemGame-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GemGame-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
-		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
-		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
-		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -312,15 +303,12 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				101828271BEDDBA100A66FBC /* spritesheet.plist */,
+				101828281BEDDBA100A66FBC /* spritesheet.png */,
+				1018282D1BEDDBB800A66FBC /* images-prepack */,
 				10DD2C1B1BED6BF7004FBA37 /* data */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
-				10F3CBE21BD83FE8000C139F /* gems */,
-				10292CAE1BEC8C8900D1EDE6 /* spells */,
-				46880B7619C43A67006E1F66 /* CloseNormal.png */,
-				46880B7719C43A67006E1F66 /* CloseSelected.png */,
-				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
-				10F3CBD31BD81CAF000C139F /* sprite.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -416,6 +404,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "GemGame-desktop" */;
 			buildPhases = (
+				101828341BEDDECE00A66FBC /* ShellScript */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
 				5087E75C17EB910900C73F5D /* Frameworks */,
@@ -490,9 +479,8 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				101828291BEDDBA100A66FBC /* spritesheet.plist in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
-				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
-				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
@@ -500,18 +488,16 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				10DD2C1C1BED6BF7004FBA37 /* data in Resources */,
-				10292CAF1BEC8C8900D1EDE6 /* spells in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				1018282E1BEDDBB800A66FBC /* images-prepack in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
-				10F3CBE31BD83FE8000C139F /* gems in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				1018282B1BEDDBA100A66FBC /* spritesheet.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
-				10F3CBD41BD81CAF000C139F /* sprite.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
-				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,20 +506,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10F3CBE41BD83FE8000C139F /* gems in Resources */,
-				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
+				1018282F1BEDDBB800A66FBC /* images-prepack in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
+				1018282A1BEDDBA100A66FBC /* spritesheet.plist in Resources */,
 				10DD2C1D1BED6BF7004FBA37 /* data in Resources */,
+				1018282C1BEDDBA100A66FBC /* spritesheet.png in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
-				10F3CBD51BD81CAF000C139F /* sprite.png in Resources */,
-				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
-				10292CB01BEC8C8900D1EDE6 /* spells in Resources */,
-				46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		101828341BEDDECE00A66FBC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n# Later:\n#TexturePacker --variant 2:-hd --variant 1: --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n#TexturePacker --variant 1:-hd:@2x --variant 1: --data main{v}.plist --sheet main{v}.png --format cocos2d assets";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {

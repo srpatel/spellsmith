@@ -105,6 +105,7 @@ bool Game::onCastSpell(Chain *chain) {
 		if (*s == chain) {
 			success = true;
 			// Spell shot
+			LOG(s->getName().c_str());
 			break;
 		}
 	}

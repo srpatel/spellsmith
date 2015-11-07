@@ -32,9 +32,7 @@ static int register_all_packages()
     return 0; //flag for packages manager
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
-	LOG("Game starting");
-	
+bool AppDelegate::applicationDidFinishLaunching() {	
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -78,7 +76,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     */
     
     register_all_packages();
-
+	
+	// Initalise objects like strings, sprites etc.
+	// load the Sprite Sheet
+	auto spritecache = SpriteFrameCache::getInstance();
+	spritecache->addSpriteFramesWithFile("spritesheet.plist");
+	
     // create a scene. it's an autorelease object
     // 'scene' is an autorelease object
     auto scene = Scene::create();

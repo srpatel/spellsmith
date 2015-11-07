@@ -80,6 +80,10 @@ Spell::~Spell() {
 	delete [] shape;
 }
 
+std::string Spell::getName() {
+	return name;
+}
+
 void Spell::setup() {
 	auto layer = Layer::create();
 	int width = 0, height = 0;
@@ -107,7 +111,7 @@ void Spell::setup() {
 				case WATER: element = "gems/mini_water.png"; break;
 				case NONE: /*hopefully won't happen!*/ break;
 			}
-			auto sprite = cocos2d::Sprite::create(element);
+			auto sprite = Sprite::createWithSpriteFrameName(element);
 			auto size = sprite->getContentSize();
 			float x = (i - width/2.f) * size.width;
 			float y = (j - height/2.f) * size.height;
