@@ -95,11 +95,12 @@ void Spell::setup() {
 			if (i > width) {
 				width = i;
 			}
-			if (j > width) {
+			if (j > height) {
 				height = j;
 			}
 		}
 	}
+	printf("%d %d\n", width, height);
 	// Populate with gems.
 	For2(Spell::max_width, Spell::max_height) {
 		auto type = shape at(i, j);
@@ -110,7 +111,7 @@ void Spell::setup() {
 				case EARTH: element = "gems/mini_earth.png"; break;
 				case FIRE: element = "gems/mini_fire.png"; break;
 				case WATER: element = "gems/mini_water.png"; break;
-				case NONE: /*hopefully won't happen!*/ break;
+				default: /*hopefully won't happen!*/ break;
 			}
 			auto sprite = Sprite::createWithSpriteFrameName(element);
 			auto size = sprite->getContentSize();
