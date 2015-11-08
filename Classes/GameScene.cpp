@@ -145,6 +145,11 @@ bool Game::init()
 	this->addChild(armfront);
 	
 	// Goblins
+	auto evilwizard = Sprite::createWithSpriteFrameName("characters/evil_wizard.png");
+	evilwizard->setAnchorPoint(Vec2(1, 0));
+	evilwizard->setPosition(this->getContentSize().width - 10, chars_y_start);
+	this->addChild(evilwizard);
+
 /*
  _    _ _    _ _____  
 | |  | | |  | |  __ \ 
@@ -169,7 +174,7 @@ bool Game::onCastSpell(Chain *chain) {
 			// Spell shot
 			LOG(s->getName().c_str());
 			break;
-		}break;
+		}
 	}
 	// Don't allow single gems.
 	// TODO : it might be possible to get locked out! Super unlikely to ever happen though...
