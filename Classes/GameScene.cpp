@@ -44,6 +44,7 @@ bool Game::init()
 	auto background = DrawNode::create();
 	background->drawSolidRect(Vec2::ZERO, Vec2(visibleSize), soil);
 	background->setPosition(origin.x, origin.y);
+	// The rest of the background is drawn after grid
 	this->addChild(background);
 
 /*
@@ -56,18 +57,17 @@ bool Game::init()
   __/ |             
  |___/              
 */
-    // Create the grid
     this->grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
     cocos2d::Vec2 gridSize = this->grid->getSize();
     //this->grid->setAnchorPoint(gridSize / 2);
-    float x = origin.x + visibleSize.width / 2;
-    float y = origin.y + gridSize.y / 2 + 20;
-    this->grid->setPosition(x, y);
+    float grid_x = origin.x + visibleSize.width / 2;
+    float grid_y = origin.y + gridSize.y / 2 + 20;
+    this->grid->setPosition(grid_x, grid_y);
     this->addChild(this->grid);
 	
 	// More background (must be done after grid because of sizing)
-	background->drawSolidRect(Vec2(0, y + gridSize.y/2 + 20), Vec2(visibleSize.width, y + gridSize.y/2 + 60), grass);
-	background->drawSolidRect(Vec2(0, y + gridSize.y/2 + 60), Vec2(visibleSize.width, visibleSize.height), sky);
+	background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 20), Vec2(visibleSize.width, grid_y + gridSize.y/2 + 60), grass);
+	background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 60), Vec2(visibleSize.width, visibleSize.height), sky);
 
 /*
  _                      _
@@ -93,29 +93,29 @@ bool Game::init()
 		
 		auto scroll = DrawNode::create();
 		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(origin.x, y - yoffset);
+		scroll->setPosition(origin.x, grid_y - yoffset);
 		this->addChild(scroll);
 		
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(origin.x + margin/4, y - yoffset);
+			sprite->setPosition(origin.x + margin/4, grid_y - yoffset);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			//sprite->setScale(1.f);
 			this->addChild(sprite);
 		}
 	}
-	
+	// Right-hand inventory
 	for (int i = 0; i < 3; i++) {
 		float yoffset = (i - 1) * (spellHeight + spellPadding);
 		
 		auto scroll = DrawNode::create();
 		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(origin.x + visibleSize.width - margin/2, y - yoffset);
+		scroll->setPosition(origin.x + visibleSize.width - margin/2, grid_y - yoffset);
 		this->addChild(scroll);
 		
 		if (inventory.size() > i) {
 			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(origin.x + visibleSize.width - margin/4, y - yoffset);
+			sprite->setPosition(origin.x + visibleSize.width - margin/4, grid_y - yoffset);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			//sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -130,7 +130,30 @@ bool Game::init()
 | (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
+	float chars_y_start = grid_y + gridSize.y/2 + 60;
+	float chars_y_end = visibleSize.height;
+	// TODO : Check there is room...
+	// Wizard
+	auto wizard = Sprite::createWithSpriteFrameName("characters/wizard_body.png");
+	wizard->setAnchorPoint(Vec2::ZERO);
+	wizard->setPosition(10, chars_y_start);
+	this->addChild(wizard);
 	
+	auto armfront = Sprite::createWithSpriteFrameName("characters/wizard_arm_front.png");
+	armfront->setAnchorPoint(Vec2(0.5f, 1));
+	armfront->setPosition(10 + wizard->getContentSize().width / 2, chars_y_start + wizard->getContentSize().height / 2);
+	this->addChild(armfront);
+	
+	// Goblins
+/*
+ _    _ _    _ _____  
+| |  | | |  | |  __ \ 
+| |__| | |  | | |  | |
+|  __  | |  | | |  | |
+| |  | | |__| | |__| |
+|_|  |_|\____/|_____/
+*/
+	// Hearts and options menu etc.
 	
     //this->scheduleUpdate();
     
@@ -146,7 +169,7 @@ bool Game::onCastSpell(Chain *chain) {
 			// Spell shot
 			LOG(s->getName().c_str());
 			break;
-		}
+		}break;
 	}
 	// Don't allow single gems.
 	// TODO : it might be possible to get locked out! Super unlikely to ever happen though...
