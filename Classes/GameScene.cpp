@@ -1,5 +1,7 @@
 #include "GameScene.hpp"
 #include "Spell.hpp"
+#include "Strings.hpp"
+#include "Constants.h"
 
 #define GRID_WIDTH 5
 #define GRID_HEIGHT 5
@@ -10,24 +12,30 @@ Game *Game::get() {
 	return instance;
 }
 
-bool Game::init()
-{
-    if ( !Layer::init() )
-    {
+bool Game::init() {
+    if ( !Layer::init() ) {
         return false;
     }
 	
 	instance = this;
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
+	setContentSize(visibleSize);
+	
+	// TODO : get rid of this, deal with it in the parent.
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
-	// Initialise spells
+	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	Spell::init(GRID_WIDTH, GRID_HEIGHT);
-	PlayerState::get()->inventory = Spell::spells;
+	wizard = new Wizard;
+	wizard->max_health = HEALTH_PER_HEART * 5;
+	wizard->health = HEALTH_PER_HEART * 5;
+	wizard->inventory = Spell::spells;
 	
-	
+	enemy = new Enemy;
+	enemy->max_health = HEALTH_PER_HEART * 2;
+	enemy->health = HEALTH_PER_HEART * 2;
 /*
  _                _                                   _     
 | |              | |                                 | |    
@@ -87,7 +95,7 @@ bool Game::init()
 	// Otherwise, at the top?
 	auto brown = Color4F(194/255.f,190/255.f,167/255.f, 255/255.f);
 	// Left hand inventory
-	auto inventory = PlayerState::get()->inventory;
+	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
 		float yoffset = (i - 1) * (spellHeight + spellPadding);
 		
@@ -131,17 +139,17 @@ bool Game::init()
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
 	float chars_y_start = grid_y + gridSize.y/2 + 60;
-	float chars_y_end = visibleSize.height;
+	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
 	// Wizard
-	auto wizard = Sprite::createWithSpriteFrameName("characters/wizard_body.png");
-	wizard->setAnchorPoint(Vec2::ZERO);
-	wizard->setPosition(10, chars_y_start);
-	this->addChild(wizard);
+	auto wizardsprite = Sprite::createWithSpriteFrameName("characters/wizard_body.png");
+	wizardsprite->setAnchorPoint(Vec2::ZERO);
+	wizardsprite->setPosition(10, chars_y_start);
+	this->addChild(wizardsprite);
 	
 	auto armfront = Sprite::createWithSpriteFrameName("characters/wizard_arm_front.png");
 	armfront->setAnchorPoint(Vec2(0.5f, 1));
-	armfront->setPosition(10 + wizard->getContentSize().width / 2, chars_y_start + wizard->getContentSize().height / 2);
+	armfront->setPosition(10 + wizardsprite->getContentSize().width / 2, chars_y_start + wizardsprite->getContentSize().height / 2);
 	this->addChild(armfront);
 	
 	// Goblins
@@ -160,19 +168,27 @@ bool Game::init()
 */
 	// Hearts and options menu etc.
 	
+	// More background (must be done after grid because of sizing) 60 high.
+	hud = GameHUD::create();
+	hud->updateValues(wizard, enemy);
+	hud->setPosition(Vec2(origin.x, origin.y + grid_y + gridSize.y/2 + 20));
+	this->addChild(hud);
+	
     //this->scheduleUpdate();
     
     return true;
 }
 
 bool Game::onCastSpell(Chain *chain) {
-	auto inventory = PlayerState::get()->inventory;
+	auto inventory = wizard->inventory;
 	bool success = false;
 	for (Spell *s : inventory) {
 		if (*s == chain) {
 			success = true;
 			// Spell shot
 			LOG(s->getName().c_str());
+			// Just deal 10 damage for now!
+			enemy->health -= 15;
 			break;
 		}
 	}
@@ -183,41 +199,71 @@ bool Game::onCastSpell(Chain *chain) {
 		// Always allow gems all of the same colour
 		auto t = chain->type;
 		auto sentinel = chain->next;
+		int length = 1;
 		while (sentinel != nullptr) {
 			if (sentinel->type != t) {
 				success = false;
 				break;
 			}
 			sentinel = sentinel->next;
+			length++;
 		}
 		
 		if (success) {
 			// vanilla shot!
+			// chain length?
+			enemy->health -= length;
+		}
+	}
+	
+	if (success) {
+		// enemy gets a shot at you!
+		wizard->health -= 5;
+		
+		hud->updateValues(wizard, enemy);
+		
+		if (wizard->health <= 0) {
+			// game over!
+		} else if (enemy->health <= 0) {
+			//need new enemy
 		}
 	}
 	return success;
 }
 
 void Game::update(float dt) {
-    /*
-    cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
-    cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-    cocos2d::Vec2 gridSize = this->grid->getSize();
-    
-    static float time = 0;
-    time += dt;
-    
-    float x, y;
-    this->grid->getPosition(&x, &y);
-    x = origin.x + visibleSize.width / 2 - gridSize.x / 2 + 100 * sin(time);
-    this->grid->setPosition(x, y);
-     */
 }
 
-PlayerState *PlayerState::get() {
-	static PlayerState *instance = nullptr;
-	if (!instance) {
-		instance = new PlayerState;
+bool GameHUD::init() {
+	if ( !Layer::init() )
+	{
+		return false;
 	}
-	return instance;
+	
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	
+	// Add a couple of cheeky TBs.
+	left_health = Label::createWithTTF(_("health"), Fonts::MAIN_FONT, 30);
+	right_health = Label::createWithTTF(_("health"), Fonts::MAIN_FONT, 30);
+	left_health->setTextColor(Color4B::WHITE);
+	right_health->setTextColor(Color4B::WHITE);
+	
+	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
+	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
+	
+	addChild(left_health);
+	addChild(right_health);
+	
+	return true;
+}
+
+void GameHUD::updateValues(Character *left, Character *right) {
+	
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	
+	left_health->setString(std::to_string(left->health));
+	right_health->setString(std::to_string(right->health));
+	
+	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
+	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
 }

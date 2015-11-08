@@ -15,6 +15,8 @@
 		101828381BEDE66500A66FBC /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101828351BEDE66500A66FBC /* Strings.cpp */; };
 		1039227B1BD6F11100233891 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922731BD6EC3F00233891 /* libcocos2d iOS.a */; };
 		1039227C1BD6F11500233891 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103922711BD6EC3F00233891 /* libcocos2d Mac.a */; };
+		106945401BEFB648001EF251 /* Characters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1069453E1BEFB648001EF251 /* Characters.cpp */; };
+		106945411BEFB648001EF251 /* Characters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1069453E1BEFB648001EF251 /* Characters.cpp */; };
 		10DD2C181BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
 		10DD2C191BED13F2004FBA37 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DD2C161BED13F2004FBA37 /* Spell.cpp */; };
 		10DD2C1C1BED6BF7004FBA37 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10DD2C1B1BED6BF7004FBA37 /* data */; };
@@ -118,6 +120,9 @@
 		101828361BEDE66500A66FBC /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
 		1039226B1BD6EC3F00233891 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = "../../../dev/cocos2d-x-3.8.1/build/cocos2d_libs.xcodeproj"; sourceTree = "<group>"; };
 		103922741BD6ECBC00233891 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		1069453E1BEFB648001EF251 /* Characters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Characters.cpp; sourceTree = "<group>"; };
+		1069453F1BEFB648001EF251 /* Characters.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Characters.hpp; sourceTree = "<group>"; };
+		106945431BEFBB4C001EF251 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		10DD2C161BED13F2004FBA37 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spell.cpp; sourceTree = "<group>"; };
 		10DD2C171BED13F2004FBA37 /* Spell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spell.hpp; sourceTree = "<group>"; };
 		10DD2C1A1BED4F9C004FBA37 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
@@ -331,6 +336,9 @@
 				10DD2C171BED13F2004FBA37 /* Spell.hpp */,
 				101828351BEDE66500A66FBC /* Strings.cpp */,
 				101828361BEDE66500A66FBC /* Strings.hpp */,
+				1069453E1BEFB648001EF251 /* Characters.cpp */,
+				1069453F1BEFB648001EF251 /* Characters.hpp */,
+				106945431BEFBB4C001EF251 /* Constants.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -564,6 +572,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				10F3CBD81BD831AF000C139F /* GameScene.cpp in Sources */,
 				10F3CBDC1BD83356000C139F /* Gem.cpp in Sources */,
+				106945401BEFB648001EF251 /* Characters.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				10F3CBE01BD83642000C139F /* Grid.cpp in Sources */,
 			);
@@ -580,6 +589,7 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				10F3CBE11BD83642000C139F /* Grid.cpp in Sources */,
 				10F3CBD91BD831AF000C139F /* GameScene.cpp in Sources */,
+				106945411BEFB648001EF251 /* Characters.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

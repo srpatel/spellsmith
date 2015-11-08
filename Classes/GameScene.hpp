@@ -4,9 +4,21 @@
 #include "Gem.hpp"
 #include "Grid.hpp"
 #include "Spell.hpp"
+#include "Characters.hpp"
 
-class Game : public cocos2d::Layer
-{
+
+class GameHUD : public cocos2d::Layer {
+public:
+	virtual bool init();
+	void updateValues(Character *left, Character *right);
+	
+	CREATE_FUNC(GameHUD);
+private:
+	Label *left_health;
+	Label *right_health;
+};
+
+class Game : public cocos2d::Layer {
 public:
 	static Game *get();
     Grid *grid;
@@ -14,18 +26,16 @@ public:
     virtual bool init();
     void update(float dt);
 	
+	// Called by Spell when you cast something
 	bool onCastSpell(Chain *chain);
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
 private:
 	static Game *instance;
-};
-
-struct PlayerState {
-	static PlayerState *get();
-	// Stuff which must get saved between plays...
-	std::vector<Spell *> inventory;
+	GameHUD *hud;
+	Enemy *enemy;
+	Wizard *wizard;
 };
 
 #endif /* GameScene_hpp */
