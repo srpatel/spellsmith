@@ -150,11 +150,13 @@ void Spell::align(GemType *grid) {
 		}
 	}
 	
-	// Offset each gem
-	for (int i = min_i; i < Spell::max_width; i++) {
-		for (int j = min_j; j < Spell::max_height; j++) {
-			grid at(i - min_i, j - min_j) = grid at(i, j);
-			grid at(i, j) = NONE;
+	// Offset each gem - if there is offsetting to do
+	if (min_i > 0 || min_j > 0) {
+		for (int i = min_i; i < Spell::max_width; i++) {
+			for (int j = min_j; j < Spell::max_height; j++) {
+				grid at(i - min_i, j - min_j) = grid at(i, j);
+				grid at(i, j) = NONE;
+			}
 		}
 	}
 }
@@ -200,6 +202,7 @@ void Spell::flip(GemType *grid) {
 bool Spell::operator==(Chain *chain) {
 	Zero(compare_temp);
 	copy(chain, compare_temp);
+	
 #if DEBUGGING_SPELLS
 	printf("\nSpell: \n");
 	for (int j = 0; j < Spell::max_height; j++) {
@@ -234,7 +237,5 @@ bool Spell::operator==(Chain *chain) {
 	}
 	done:;
 	
-	// Compare arrays!
-		// (then for each rotation, then flip and for each rotation again)
 	return success;
 }
