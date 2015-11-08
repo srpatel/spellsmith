@@ -100,7 +100,7 @@ void Spell::setup() {
 			}
 		}
 	}
-	printf("%d %d\n", width, height);
+	
 	// Populate with gems.
 	For2(Spell::max_width, Spell::max_height) {
 		auto type = shape at(i, j);
