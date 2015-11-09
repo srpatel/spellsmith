@@ -7,7 +7,7 @@
 #include "Characters.hpp"
 
 
-class GameHUD : public cocos2d::Layer {
+class GameHUD : public Layer {
 public:
 	virtual bool init();
 	void updateValues(Character *left, Character *right);
@@ -18,12 +18,12 @@ private:
 	Label *right_health;
 };
 
-class Game : public cocos2d::Layer {
+class Game : public Layer {
 public:
 	static Game *get();
     Grid *grid;
     
-    virtual bool init();
+    bool init();
     void update(float dt);
 	
 	// Called by Spell when you cast something

@@ -3,6 +3,8 @@
 #include "Strings.hpp"
 #include "Constants.h"
 
+#include <sstream>
+
 #define GRID_WIDTH 5
 #define GRID_HEIGHT 5
 
@@ -260,9 +262,18 @@ bool GameHUD::init() {
 void GameHUD::updateValues(Character *left, Character *right) {
 	
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	
+	/*
 	left_health->setString(std::to_string(left->health));
 	right_health->setString(std::to_string(right->health));
+	*/
+	std::ostringstream os ;
+	os << left->health;
+	left_health->setString(os.str());
+	
+	os.clear();
+	os.seekp(0);
+	os << right->health;
+	right_health->setString(os.str());
 	
 	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
 	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
