@@ -24,9 +24,6 @@ bool Game::init() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(visibleSize);
 	
-	// TODO : get rid of this, deal with it in the parent.
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	Spell::init(GRID_WIDTH, GRID_HEIGHT);
@@ -53,7 +50,6 @@ bool Game::init() {
 	auto sky = Color4F(177/255.f,240/255.f,243/255.f, 255/255.f);
 	auto background = DrawNode::create();
 	background->drawSolidRect(Vec2::ZERO, Vec2(visibleSize), soil);
-	background->setPosition(origin.x, origin.y);
 	// The rest of the background is drawn after grid
 	this->addChild(background);
 
@@ -70,8 +66,8 @@ bool Game::init() {
     this->grid = new Grid(GRID_WIDTH, GRID_HEIGHT);
     cocos2d::Vec2 gridSize = this->grid->getSize();
     //this->grid->setAnchorPoint(gridSize / 2);
-    float grid_x = origin.x + visibleSize.width / 2;
-    float grid_y = origin.y + gridSize.y / 2 + 20;
+    float grid_x = visibleSize.width / 2;
+    float grid_y = gridSize.y / 2 + 20;
     this->grid->setPosition(grid_x, grid_y);
     this->addChild(this->grid);
 	
@@ -103,12 +99,12 @@ bool Game::init() {
 		
 		auto scroll = DrawNode::create();
 		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(origin.x, grid_y - yoffset);
+		scroll->setPosition(0, grid_y - yoffset);
 		this->addChild(scroll);
 		
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(origin.x + margin/4, grid_y - yoffset);
+			sprite->setPosition(margin/4, grid_y - yoffset);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			//sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -120,12 +116,12 @@ bool Game::init() {
 		
 		auto scroll = DrawNode::create();
 		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(origin.x + visibleSize.width - margin/2, grid_y - yoffset);
+		scroll->setPosition(visibleSize.width - margin/2, grid_y - yoffset);
 		this->addChild(scroll);
 		
 		if (inventory.size() > i) {
 			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(origin.x + visibleSize.width - margin/4, grid_y - yoffset);
+			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			//sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -173,7 +169,7 @@ bool Game::init() {
 	// More background (must be done after grid because of sizing) 60 high.
 	hud = GameHUD::create();
 	hud->updateValues(wizard, enemy);
-	hud->setPosition(Vec2(origin.x, origin.y + grid_y + gridSize.y/2 + 20));
+	hud->setPosition(Vec2(0, grid_y + gridSize.y/2 + 20));
 	this->addChild(hud);
 	
     //this->scheduleUpdate();
@@ -220,7 +216,10 @@ bool Game::onCastSpell(Chain *chain) {
 	
 	if (success) {
 		// enemy gets a shot at you!
-		wizard->health -= 5;
+		auto projectile = Sprite::createWithSpriteFrameName("spells/fireball.png");
+		projectile->setPosition(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100);
+		addChild(projectile);
+		//wizard->health -= 5;
 		
 		hud->updateValues(wizard, enemy);
 		

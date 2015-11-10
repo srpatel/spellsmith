@@ -93,6 +93,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     // 'layer' is an autorelease object
     auto layer = Game::create();
+	auto origin = director->getVisibleOrigin();
+	layer->setPosition(origin);
     
     // add layer as a child to scene
     scene->addChild(layer);

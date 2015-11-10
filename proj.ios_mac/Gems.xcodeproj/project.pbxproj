@@ -418,10 +418,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Gems-mobile" */;
 			buildPhases = (
-				1D60588D0D05DD3D006BFB54 /* Resources */,
-				1D60588E0D05DD3D006BFB54 /* Sources */,
 				105E0D261BF14F110081D8F5 /* Minify JSON */,
 				105E0D251BF14EEE0081D8F5 /* Create Spritesheet */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
@@ -438,6 +438,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "Gems-desktop" */;
 			buildPhases = (
+				106E1ED31BF2A00E00C057C6 /* Spritesheet */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
 				5087E75C17EB910900C73F5D /* Frameworks */,
@@ -568,7 +569,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n\n# Later:\n#TexturePacker --variant 2:-hd --variant 1: --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n#TexturePacker --variant 1:-hd:@2x --variant 1: --data main{v}.plist --sheet main{v}.png --format cocos2d assets";
+			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack\n\n# Later:\n#TexturePacker --variant 2:-hd --variant 1: --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n#TexturePacker --variant 1:-hd:@2x --variant 1: --data main{v}.plist --sheet main{v}.png --format cocos2d assets";
 		};
 		105E0D261BF14F110081D8F5 /* Minify JSON */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -583,6 +584,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
+		};
+		106E1ED31BF2A00E00C057C6 /* Spritesheet */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Spritesheet;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack";
 		};
 /* End PBXShellScriptBuildPhase section */
 
