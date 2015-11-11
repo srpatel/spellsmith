@@ -2,6 +2,7 @@
 #include "Spell.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
+#include "Dialogs.hpp"
 
 #include <sstream>
 
@@ -69,6 +70,7 @@ bool Game::init() {
     float grid_x = visibleSize.width / 2;
     float grid_y = gridSize.y / 2 + 20;
     this->grid->setPosition(grid_x, grid_y);
+	grid->active = true;
     this->addChild(this->grid);
 	
 	// More background (must be done after grid because of sizing)
@@ -122,6 +124,10 @@ bool Game::init() {
 		if (inventory.size() > i) {
 			auto sprite = inventory[3 + i]->mininode;
 			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
+			// tap on a spell to see it's info. Use the "open dialog" mechanic.
+			// this opens a dialog which captures events for the whole screen?
+			// Dialogs::showModal(...);
+			// Dialogs::closeAll();
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			//sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -143,6 +149,7 @@ bool Game::init() {
 	auto wizardsprite = Sprite::createWithSpriteFrameName("characters/wizard_body.png");
 	wizardsprite->setAnchorPoint(Vec2::ZERO);
 	wizardsprite->setPosition(10, chars_y_start);
+	wizard->sprite = wizardsprite;
 	this->addChild(wizardsprite);
 	
 	auto armfront = Sprite::createWithSpriteFrameName("characters/wizard_arm_front.png");
@@ -155,6 +162,7 @@ bool Game::init() {
 	evilwizard->setAnchorPoint(Vec2(1, 0));
 	evilwizard->setPosition(this->getContentSize().width - 10, chars_y_start);
 	this->addChild(evilwizard);
+	enemy->sprite = evilwizard;
 
 /*
  _    _ _    _ _____  
@@ -180,13 +188,13 @@ bool Game::init() {
 bool Game::onCastSpell(Chain *chain) {
 	auto inventory = wizard->inventory;
 	bool success = false;
+	int damage;
 	for (Spell *s : inventory) {
 		if (*s == chain) {
 			success = true;
 			// Spell shot
 			LOG(s->getName().c_str());
-			// Just deal 10 damage for now!
-			enemy->health -= 15;
+			damage = 15;
 			break;
 		}
 	}
@@ -210,26 +218,100 @@ bool Game::onCastSpell(Chain *chain) {
 		if (success) {
 			// vanilla shot!
 			// chain length?
-			enemy->health -= length;
+			damage = length;
 		}
 	}
 	
 	if (success) {
-		// enemy gets a shot at you!
-		auto projectile = Sprite::createWithSpriteFrameName("spells/fireball.png");
-		projectile->setPosition(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100);
-		addChild(projectile);
-		//wizard->health -= 5;
+		// We can't draw until the enemy has had his turn
+		grid->active = false;
 		
-		hud->updateValues(wizard, enemy);
 		
-		if (wizard->health <= 0) {
-			// game over!
-		} else if (enemy->health <= 0) {
-			//need new enemy
+		// you shoot at enemy
+		auto projectile = Sprite::createWithSpriteFrameName("spells/blueball.png");
+		if (damage > 10) {
+			float scale = 1 + MIN(damage, 15) / 15.f;
+			projectile->setScale(scale, scale);
 		}
+		projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
+		
+		auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100));
+		auto delay = DelayTime::create(0.5f);
+		auto delFunc = CallFunc::create([this, damage, projectile](){
+			projectile->setVisible(false);
+			enemy->health -= damage;
+			hud->updateValues(wizard, enemy);
+		});
+		auto callFunc = CallFunc::create([this, damage, projectile](){
+			if (!checkGameOver()) {
+				// enemy gets a shot at you!
+				enemyDoTurn();
+			}
+			removeChild(projectile);
+		});
+		auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
+		
+		projectile->runAction(seq);
+		addChild(projectile);
+		
+		
 	}
 	return success;
+}
+bool Game::checkGameOver() {
+	// Returns if the game is over
+	auto gameOver = false;
+	if (wizard->health <= 0) {
+		gameOver = true;
+	} else if (enemy->health <= 0) {
+		//need new enemy
+		gameOver = true;
+	}
+	if (gameOver) {
+		// if level-mode, we show the "victory screen"
+		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
+		// 1. fade enemy out
+		// 2. reset health + fade new enemy in
+		// 3. set can use grid to true!
+		
+		auto fadeOut = FadeOut::create(0.2f);
+		auto run1 = CallFunc::create([this]() {
+			enemy->max_health = HEALTH_PER_HEART * 2;
+			enemy->health = HEALTH_PER_HEART * 2;
+			hud->updateValues(wizard, enemy);
+			grid->scramble();
+		});
+		auto fadeIn = FadeIn::create(0.2f);
+		auto run2 = CallFunc::create([this]() {
+			grid->active = true;
+		});
+		auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
+		enemy->sprite->runAction(seq);
+		
+		auto sid = SpellInfoDialog::create();
+		sid->setPosition(getContentSize()/2);
+		addChild(sid);
+		
+	}
+	return gameOver;
+}
+void Game::enemyDoTurn() {
+	auto projectile = Sprite::createWithSpriteFrameName("spells/fireball.png");
+	projectile->setPosition(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100);
+	
+	auto moveTo = MoveTo::create(1, Vec2(projectile->getContentSize().width, getContentSize().height - 100));
+	auto callFunc = CallFunc::create([this, projectile](){
+		removeChild(projectile);
+		wizard->health -= 5;
+		hud->updateValues(wizard, enemy);
+		if (!checkGameOver()) {
+			grid->active = true;
+		}
+	});
+	auto seq = Sequence::create(moveTo, callFunc, nullptr);
+	
+	projectile->runAction(seq);
+	addChild(projectile);
 }
 
 void Game::update(float dt) {
@@ -271,6 +353,9 @@ void GameHUD::updateValues(Character *left, Character *right) {
 	
 	os.clear();
 	os.seekp(0);
+	if (right->health < 10 && right->health >= 0) {
+		os << " ";
+	}
 	os << right->health;
 	right_health->setString(os.str());
 	

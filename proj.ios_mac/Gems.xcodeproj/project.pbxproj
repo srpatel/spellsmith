@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
+		102441791BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
 		105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0A1BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0B1BF14E3F0081D8F5 /* SpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF91BF14E3F0081D8F5 /* SpriteLoader.cpp */; };
@@ -123,6 +125,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		102441761BF3DD3700AEC8B4 /* Dialogs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dialogs.cpp; sourceTree = "<group>"; };
+		102441771BF3DD3700AEC8B4 /* Dialogs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dialogs.hpp; sourceTree = "<group>"; };
 		105E0CF61BF14E3F0081D8F5 /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
 		105E0CF71BF14E3F0081D8F5 /* Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Strings.cpp; sourceTree = "<group>"; };
 		105E0CF81BF14E3F0081D8F5 /* SpriteLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpriteLoader.hpp; sourceTree = "<group>"; };
@@ -359,6 +363,8 @@
 				105E0D061BF14E3F0081D8F5 /* Characters.cpp */,
 				105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
+				102441761BF3DD3700AEC8B4 /* Dialogs.cpp */,
+				102441771BF3DD3700AEC8B4 /* Dialogs.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -418,8 +424,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Gems-mobile" */;
 			buildPhases = (
-				105E0D261BF14F110081D8F5 /* Minify JSON */,
-				105E0D251BF14EEE0081D8F5 /* Create Spritesheet */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
@@ -438,6 +442,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "Gems-desktop" */;
 			buildPhases = (
+				102441741BF3B62600AEC8B4 /* Minify JSON */,
 				106E1ED31BF2A00E00C057C6 /* Spritesheet */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
@@ -557,21 +562,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		105E0D251BF14EEE0081D8F5 /* Create Spritesheet */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Create Spritesheet";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack\n\n# Later:\n#TexturePacker --variant 2:-hd --variant 1: --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x images-prepack\n#TexturePacker --variant 1:-hd:@2x --variant 1: --data main{v}.plist --sheet main{v}.png --format cocos2d assets";
-		};
-		105E0D261BF14F110081D8F5 /* Minify JSON */ = {
+		102441741BF3B62600AEC8B4 /* Minify JSON */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -609,6 +600,7 @@
 				105E0D0B1BF14E3F0081D8F5 /* SpriteLoader.cpp in Sources */,
 				105E0D0F1BF14E3F0081D8F5 /* HelloWorldScene.cpp in Sources */,
 				105E0D0D1BF14E3F0081D8F5 /* Spell.cpp in Sources */,
+				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				105E0D191BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				105E0D131BF14E3F0081D8F5 /* Gem.cpp in Sources */,
 				105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */,
@@ -632,6 +624,7 @@
 				105E0D101BF14E3F0081D8F5 /* HelloWorldScene.cpp in Sources */,
 				105E0D0E1BF14E3F0081D8F5 /* Spell.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
+				102441791BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				105E0D0A1BF14E3F0081D8F5 /* Strings.cpp in Sources */,
 				105E0D121BF14E3F0081D8F5 /* Grid.cpp in Sources */,
@@ -660,6 +653,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -696,6 +690,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;

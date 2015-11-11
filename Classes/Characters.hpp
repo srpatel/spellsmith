@@ -17,6 +17,7 @@ class Character {
 public:
 	int max_health;
 	int health;
+	Sprite *sprite;
 };
 
 class Enemy : public Character {

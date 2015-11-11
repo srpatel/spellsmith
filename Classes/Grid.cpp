@@ -160,6 +160,17 @@ void Grid::castCurrentSpell() {
 	line->clear();
 }
 
+void Grid::scramble() {
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			removeChild(get(i, j)->sprite);
+			set(i, j, nullptr);
+		}
+	}
+	
+	refill();
+}
+
 void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 	if (currentTouch && currentTouch->getID() == touch->getID()) {
 		// check we are on the last gem
@@ -261,6 +272,8 @@ void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 }
 
 bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
+	if (!active) return false;
+	
     cocos2d::Vec2 loc = touch->getLocation();
     cocos2d::Vec2 size = getSize();
     cocos2d::Vec2 pos = getPosition();

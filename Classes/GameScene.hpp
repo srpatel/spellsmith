@@ -31,11 +31,13 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
-private:
+private:	
 	static Game *instance;
 	GameHUD *hud;
 	Enemy *enemy;
 	Wizard *wizard;
+	bool checkGameOver();
+	void enemyDoTurn();
 };
 
 #endif /* GameScene_hpp */
