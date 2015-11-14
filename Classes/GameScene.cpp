@@ -31,7 +31,8 @@ bool Game::init() {
 	wizard = new Wizard;
 	wizard->max_health = HEALTH_PER_HEART * 5;
 	wizard->health = HEALTH_PER_HEART * 5;
-	wizard->inventory = Spell::spells;
+	for (int i = 0; i < 3; i++)
+		wizard->inventory.push_back(Spell::spells[i]);
 	
 	enemy = new Enemy;
 	enemy->max_health = HEALTH_PER_HEART * 2;
@@ -121,7 +122,7 @@ bool Game::init() {
 		scroll->setPosition(visibleSize.width - margin/2, grid_y - yoffset);
 		this->addChild(scroll);
 		
-		if (inventory.size() > i) {
+		if (inventory.size() > 3 + i) {
 			auto sprite = inventory[3 + i]->mininode;
 			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
 			// tap on a spell to see it's info. Use the "open dialog" mechanic.
@@ -189,12 +190,13 @@ bool Game::onCastSpell(Chain *chain) {
 	auto inventory = wizard->inventory;
 	bool success = false;
 	int damage;
+	Spell *spell = nullptr;
 	for (Spell *s : inventory) {
 		if (*s == chain) {
 			success = true;
 			// Spell shot
 			LOG(s->getName().c_str());
-			damage = 15;
+			spell = s;
 			break;
 		}
 	}
@@ -226,37 +228,98 @@ bool Game::onCastSpell(Chain *chain) {
 		// We can't draw until the enemy has had his turn
 		grid->active = false;
 		
-		
-		// you shoot at enemy
-		auto projectile = Sprite::createWithSpriteFrameName("spells/blueball.png");
-		if (damage > 10) {
-			float scale = 1 + MIN(damage, 15) / 15.f;
-			projectile->setScale(scale, scale);
-		}
-		projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
-		
-		auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100));
-		auto delay = DelayTime::create(0.5f);
-		auto delFunc = CallFunc::create([this, damage, projectile](){
-			projectile->setVisible(false);
-			enemy->health -= damage;
-			hud->updateValues(wizard, enemy);
-		});
-		auto callFunc = CallFunc::create([this, damage, projectile](){
-			if (!checkGameOver()) {
-				// enemy gets a shot at you!
-				enemyDoTurn();
+		if (spell) {
+			// cast a spell!
+			// hard code these for now.
+			
+			// MUD SHIELD = block the next shot
+			// FIREBALL = deal 15 damage
+			// REFRESH = clear all debuffs and heal for 10
+			doSpell(spell);
+		} else {
+			// cast a chain!
+			auto projectile = Sprite::createWithSpriteFrameName("spells/whiteball.png");
+			Color3B colour;
+			switch (chain->type) {
+				case FIRE:
+					colour = Color3B::RED; break;
+				case WATER:
+					colour = Color3B::BLUE; break;
+				case AIR:
+					colour = Color3B::WHITE; break;
+				case EARTH:
+					colour = Color3B::GREEN; break;
 			}
-			removeChild(projectile);
-		});
-		auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
-		
-		projectile->runAction(seq);
-		addChild(projectile);
-		
-		
+			projectile->setColor(colour);
+			float scale = 0.5 + MIN(damage, 20) / 4.f;
+			projectile->setScale(scale, scale);
+			projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
+			
+			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100));
+			auto delay = DelayTime::create(0.5f);
+			auto delFunc = CallFunc::create([this, damage, projectile](){
+				projectile->setVisible(false);
+				enemy->health -= damage;
+				hud->updateValues(wizard, enemy);
+			});
+			auto callFunc = CallFunc::create([this, damage, projectile](){
+				onWizardTurnOver();
+				removeChild(projectile);
+			});
+			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
+			
+			projectile->runAction(seq);
+			addChild(projectile);
+		}
 	}
 	return success;
+}
+void Game::doSpell(Spell *spell) {
+	float maxdelay = 0;
+	for (Effect *e : spell->effects) {
+		if (e->type == Projectile) {
+			EffectProjectile *projectile = (EffectProjectile *) e;
+			// Make a projectile!
+			auto sprite = Sprite::createWithSpriteFrameName("spells/whiteball.png");
+			sprite->setColor(Color3B::RED);
+			sprite->setScale(5);
+			sprite->setPosition(sprite->getContentSize().width, getContentSize().height - 100);
+			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - sprite->getContentSize().width, getContentSize().height - 100));
+			
+			auto delay = DelayTime::create(0.5f);
+			auto delFunc = CallFunc::create([this, projectile, sprite](){
+				sprite->setVisible(false);
+				enemy->health -= projectile->damage;
+				hud->updateValues(wizard, enemy);
+			});
+			auto callFunc = CallFunc::create([this, sprite](){
+				onWizardTurnOver();
+				removeChild(sprite);
+			});
+			
+			maxdelay = MAX(maxdelay, 1.5f);
+			
+			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
+			
+			sprite->runAction(seq);
+			addChild(sprite);
+		}
+	}
+	
+	{
+		auto delayTime = DelayTime::create(maxdelay);
+		auto callFunc = CallFunc::create([this](){
+			onWizardTurnOver();
+		});
+		auto seq = Sequence::create(delayTime, callFunc, nullptr);
+		runAction(seq);
+	}
+}
+void Game::onWizardTurnOver() {
+	if (!checkGameOver()) {
+		// enemy gets a shot at you!
+		enemyDoTurn();
+	}
 }
 bool Game::checkGameOver() {
 	// Returns if the game is over

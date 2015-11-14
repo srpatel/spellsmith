@@ -28,11 +28,15 @@ public:
 	
 	// Called by Spell when you cast something
 	bool onCastSpell(Chain *chain);
+	
+	// Called when the Wizard's animations etc. have finished
+	void onWizardTurnOver();
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
 private:	
 	static Game *instance;
+	void doSpell(Spell *);
 	GameHUD *hud;
 	Enemy *enemy;
 	Wizard *wizard;

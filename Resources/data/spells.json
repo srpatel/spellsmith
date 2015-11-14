@@ -1,5 +1,16 @@
 [
 	{
+		"name" : "mud shield",
+		"shape" : [
+			"     ",
+			"     ",
+			"E    ",
+			"W    ",
+			"E    "
+				   ],
+ "effects" : []
+	},
+	{
 		"name" : "fireball",
 		"shape" : [
 			"     ",
@@ -7,7 +18,36 @@
 			"     ",
 			"FF   ",
 			"FA   "
+		],
+		"effects" : [
+			{
+					"type" : "PROJECTILE",
+					"sprite" : "",
+					 "damage" : 15
+			}
 		]
+	},
+	{
+		"name" : "refresh",
+		"shape" : [
+		   "     ",
+		   "     ",
+		   " A   ",
+		   " W   ",
+		   "AW   "
+	   ],
+ "effects" : []
+	},
+	{
+	"name" : "roots",
+	"shape" : [
+			"     ",
+			"     ",
+			" E   ",
+			"E    ",
+			" W   "
+			   ],
+ "effects" : []
 	},
 	{
 		"name" : "waterring",
@@ -17,7 +57,8 @@
 			" W   ",
 			"W W  ",
 			" W   "
-		]
+				   ],
+ "effects" : []
 	},
 	{
 		"name" : "meteor",
@@ -27,17 +68,8 @@
 			" A   ",
 			"FEF  ",
 			" F   "
-		]
-	},
-	{
-		"name" : "roots",
-		"shape" : [
-			"     ",
-			"     ",
-			" E   ",
-			"E    ",
-			" W   "
-		]
+				   ],
+ "effects" : []
 	},
 	{
 		"name" : "tornado",
@@ -47,7 +79,8 @@
 			" A   ",
 			"A    ",
 			" A   "
-		]
+				   ],
+ "effects" : []
 	},
 	{
 		"name" : "groundspike",
@@ -57,6 +90,7 @@
 			"     ",
 			" E   ",
 			"EWE  "
-		]
+				   ],
+ "effects" : []
 	}
 ]

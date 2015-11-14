@@ -14,12 +14,25 @@
 
 USING_NS_CC;
 
+enum EffectType {
+	Projectile = 0
+};
+
+struct Effect {
+	EffectType type;
+};
+
+struct EffectProjectile : public Effect {
+	int damage;
+};
+
 class Spell {
 public:
 	Spell(std::string name);
 	~Spell();
 	static void init(int width, int height);
 	static std::vector<Spell *> spells;
+	std::vector<Effect *> effects;
 	void setup();
 	Node *mininode;
 	bool operator==(Chain *chain);

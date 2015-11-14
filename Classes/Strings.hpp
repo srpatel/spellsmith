@@ -12,7 +12,7 @@
 #include "json/document.h"
 
 // Translation shortcut: _("string")
-#define _(_x_) Strings::get()->translate((_x_))
+#define _(_x_) (Strings::get()->translate((_x_)))
 
 class Strings {
 public:

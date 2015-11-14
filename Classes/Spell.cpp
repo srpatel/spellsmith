@@ -8,6 +8,7 @@
 
 #include "Spell.hpp"
 #include "Gem.hpp"
+#include "GameScene.hpp"
 #include "Strings.hpp"
 
 #include "json/document.h"
@@ -36,6 +37,7 @@ void Spell::init(int width, int height) {
 	For (doc.Size()) {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
+		const rapidjson::Value& effects = spell["effects"];
 		auto s = new Spell(_(std::string("spell.") + spell["name"].GetString() + ".name"));
 #if DEBUG
 		if (shape.Size() != Spell::max_height) {
@@ -65,6 +67,21 @@ void Spell::init(int width, int height) {
 				}
 			}
 		}
+		
+		for (int j = 0; j < effects.Size(); j++) {
+			const rapidjson::Value& effect = effects[j];
+			// Switch type and create new type depending.
+			Effect *e = nullptr;
+			if (strcmp(effect["type"].GetString(), "PROJECTILE") == 0) {
+				EffectProjectile *theEffect = new EffectProjectile;
+				theEffect->damage = effect["damage"].GetInt();
+				e = theEffect;
+			}
+			if (e) {
+				s->effects.push_back(e);
+			}
+		}
+		
 		s->setup();
 		spells.push_back(s);
 	}

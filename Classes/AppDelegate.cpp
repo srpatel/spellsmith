@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "GameScene.hpp"
 #include "Strings.hpp"
+#include "GameController.hpp"
 
 static Size designResolutionSize = Size(320, 568);
 static Size smallResolutionSize  = Size(640, 1136);
@@ -87,17 +88,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Random
 	srand (time(NULL));
 	
-    // create a scene. it's an autorelease object
-    // 'scene' is an autorelease object
-    auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
-    auto layer = Game::create();
-	auto origin = director->getVisibleOrigin();
-	layer->setPosition(origin);
-    
-    // add layer as a child to scene
-    scene->addChild(layer);
+	
+	auto scene = Scene::create();
+	GameController::init(scene);
     
     // run
     director->runWithScene(scene);
