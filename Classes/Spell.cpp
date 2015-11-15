@@ -74,7 +74,13 @@ void Spell::init(int width, int height) {
 			Effect *e = nullptr;
 			if (strcmp(effect["type"].GetString(), "PROJECTILE") == 0) {
 				EffectProjectile *theEffect = new EffectProjectile;
+				theEffect->type = Projectile;
 				theEffect->damage = effect["damage"].GetInt();
+				e = theEffect;
+			} else if (strcmp(effect["type"].GetString(), "HEAL") == 0) {
+				EffectHeal *theEffect = new EffectHeal;
+				theEffect->type = Heal;
+				theEffect->amount = effect["amount"].GetInt();
 				e = theEffect;
 			}
 			if (e) {

@@ -15,7 +15,8 @@
 USING_NS_CC;
 
 enum EffectType {
-	Projectile = 0
+	Projectile = 0,
+	Heal
 };
 
 struct Effect {
@@ -24,6 +25,10 @@ struct Effect {
 
 struct EffectProjectile : public Effect {
 	int damage;
+};
+
+struct EffectHeal : public Effect {
+	int amount;
 };
 
 class Spell {

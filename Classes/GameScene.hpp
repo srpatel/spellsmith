@@ -6,6 +6,17 @@
 #include "Spell.hpp"
 #include "Characters.hpp"
 
+struct GameProjectile {
+	EffectProjectile *effect;
+	Character *target;
+	Sprite *sprite;
+};
+
+enum GameState {
+	PlayerTurn,
+	PlayerSpells,
+	EnemySpells
+};
 
 class GameHUD : public Layer {
 public:
@@ -36,12 +47,18 @@ public:
     CREATE_FUNC(Game);
 private:	
 	static Game *instance;
+	
+	// Actually create the projectiles and stuff
 	void doSpell(Spell *);
+	
+	std::vector<GameProjectile *> projectiles;
+	
 	GameHUD *hud;
 	Enemy *enemy;
 	Wizard *wizard;
 	bool checkGameOver();
 	void enemyDoTurn();
+	GameState state;
 };
 
 #endif /* GameScene_hpp */

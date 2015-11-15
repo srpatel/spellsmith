@@ -586,7 +586,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "cd ../Resources/\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json";
 		};
 		106E1ED31BF2A00E00C057C6 /* Spritesheet */ = {
 			isa = PBXShellScriptBuildPhase;

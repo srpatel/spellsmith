@@ -25,6 +25,8 @@ bool Game::init() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(visibleSize);
 	
+	state = PlayerTurn;
+	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	Spell::init(GRID_WIDTH, GRID_HEIGHT);
@@ -181,7 +183,7 @@ bool Game::init() {
 	hud->setPosition(Vec2(0, grid_y + gridSize.y/2 + 20));
 	this->addChild(hud);
 	
-    //this->scheduleUpdate();
+    this->scheduleUpdate();
     
     return true;
 }
@@ -229,6 +231,7 @@ bool Game::onCastSpell(Chain *chain) {
 		grid->active = false;
 		
 		if (spell) {
+			state = PlayerSpells;
 			// cast a spell!
 			// hard code these for now.
 			
@@ -254,16 +257,16 @@ bool Game::onCastSpell(Chain *chain) {
 			float scale = 0.5 + MIN(damage, 20) / 4.f;
 			projectile->setScale(scale, scale);
 			projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
-			
+			// MOVE THIS LOGIC ELSEWHERE
 			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100));
 			auto delay = DelayTime::create(0.5f);
 			auto delFunc = CallFunc::create([this, damage, projectile](){
 				projectile->setVisible(false);
 				enemy->health -= damage;
 				hud->updateValues(wizard, enemy);
+				state = PlayerSpells;
 			});
 			auto callFunc = CallFunc::create([this, damage, projectile](){
-				onWizardTurnOver();
 				removeChild(projectile);
 			});
 			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
@@ -284,40 +287,52 @@ void Game::doSpell(Spell *spell) {
 			sprite->setColor(Color3B::RED);
 			sprite->setScale(5);
 			sprite->setPosition(sprite->getContentSize().width, getContentSize().height - 100);
-			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - sprite->getContentSize().width, getContentSize().height - 100));
-			
-			auto delay = DelayTime::create(0.5f);
-			auto delFunc = CallFunc::create([this, projectile, sprite](){
-				sprite->setVisible(false);
-				enemy->health -= projectile->damage;
-				hud->updateValues(wizard, enemy);
-			});
-			auto callFunc = CallFunc::create([this, sprite](){
-				onWizardTurnOver();
-				removeChild(sprite);
-			});
-			
-			maxdelay = MAX(maxdelay, 1.5f);
-			
-			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
-			
-			sprite->runAction(seq);
 			addChild(sprite);
+			
+			GameProjectile *p = new GameProjectile;
+			p->sprite = sprite;
+			p->effect = projectile;
+			p->target = enemy;
+			projectiles.push_back(p);
+//			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - sprite->getContentSize().width, getContentSize().height - 100));
+//			
+//			auto delay = DelayTime::create(0.5f);
+//			auto delFunc = CallFunc::create([this, projectile, sprite](){
+//				sprite->setVisible(false);
+//				enemy->health -= projectile->damage;
+//				hud->updateValues(wizard, enemy);
+//			});
+//			auto callFunc = CallFunc::create([this, sprite](){
+//				onWizardTurnOver();
+//				removeChild(sprite);
+//			});
+//			
+//			maxdelay = MAX(maxdelay, 1.5f);
+//			
+//			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
+//			
+//			sprite->runAction(seq);
+//			addChild(sprite);
+		} else if (e->type == Heal) {
+			//nothing to wait for!
+			wizard->health += ((EffectHeal *) e)->amount;
+			hud->updateValues(wizard, enemy);
 		}
 	}
 	
-	{
-		auto delayTime = DelayTime::create(maxdelay);
-		auto callFunc = CallFunc::create([this](){
-			onWizardTurnOver();
-		});
-		auto seq = Sequence::create(delayTime, callFunc, nullptr);
-		runAction(seq);
-	}
+//	{
+//		auto delayTime = DelayTime::create(maxdelay);
+//		auto callFunc = CallFunc::create([this](){
+//			onWizardTurnOver();
+//		});
+//		auto seq = Sequence::create(delayTime, callFunc, nullptr);
+//		runAction(seq);
+//	}
 }
 void Game::onWizardTurnOver() {
 	if (!checkGameOver()) {
 		// enemy gets a shot at you!
+		state = EnemySpells;
 		enemyDoTurn();
 	}
 }
@@ -367,6 +382,7 @@ void Game::enemyDoTurn() {
 		removeChild(projectile);
 		wizard->health -= 5;
 		hud->updateValues(wizard, enemy);
+		state = PlayerTurn;
 		if (!checkGameOver()) {
 			grid->active = true;
 		}
@@ -378,6 +394,42 @@ void Game::enemyDoTurn() {
 }
 
 void Game::update(float dt) {
+	// move all projectiles.
+		// if at target = destroy it and deal damage
+		// if hit shield, fizzle self.
+	// if there are none, next turn?
+		// game state : enemyturn, enemyspells, playerturn, playerspells
+	
+	if (projectiles.empty()) {
+		// No projectiles, left the wizard has finished his turn
+		if (state == PlayerSpells) {
+			onWizardTurnOver();
+		} else if (state == EnemySpells) {
+			// now it's the player turn
+			// move logic out of enemyDoTurn
+		}
+	} else {
+		// tick projectiles
+		int i = 0;
+		while (i < projectiles.size()) {
+			auto p = projectiles[i];
+			if (p->target == enemy) {
+				// move towards enemy
+				p->sprite->setPosition(p->sprite->getPosition() + Vec2(5, 0));
+				if (p->sprite->getPosition().x > enemy->sprite->getPosition().x) {
+					// done!
+					enemy->health -= p->effect->damage;
+					hud->updateValues(wizard, enemy);
+					
+					removeChild(p->sprite);
+					
+					projectiles.erase(projectiles.begin() + i);
+					i--;
+				}
+			}
+			i++;
+		}
+	}
 }
 
 bool GameHUD::init() {
