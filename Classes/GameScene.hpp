@@ -7,7 +7,7 @@
 #include "Characters.hpp"
 
 struct GameProjectile {
-	EffectProjectile *effect;
+	int damage;
 	Character *target;
 	Sprite *sprite;
 };

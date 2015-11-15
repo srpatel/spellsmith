@@ -259,12 +259,9 @@ bool Game::onCastSpell(Chain *chain) {
 			projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
 			addChild(projectile);
 			
-			auto effect = new EffectProjectile;
-			effect->damage = damage;
-			
 			GameProjectile *p = new GameProjectile;
 			p->sprite = projectile;
-			p->effect = effect;
+			p->damage = damage;
 			p->target = enemy;
 			projectiles.push_back(p);
 		}
@@ -272,7 +269,6 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::doSpell(Spell *spell) {
-	float maxdelay = 0;
 	for (Effect *e : spell->effects) {
 		if (e->type == Projectile) {
 			EffectProjectile *projectile = (EffectProjectile *) e;
@@ -285,50 +281,20 @@ void Game::doSpell(Spell *spell) {
 			
 			GameProjectile *p = new GameProjectile;
 			p->sprite = sprite;
-			p->effect = projectile;
+			p->damage = projectile->damage;
 			p->target = enemy;
 			projectiles.push_back(p);
-//			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - sprite->getContentSize().width, getContentSize().height - 100));
-//			
-//			auto delay = DelayTime::create(0.5f);
-//			auto delFunc = CallFunc::create([this, projectile, sprite](){
-//				sprite->setVisible(false);
-//				enemy->health -= projectile->damage;
-//				hud->updateValues(wizard, enemy);
-//			});
-//			auto callFunc = CallFunc::create([this, sprite](){
-//				onWizardTurnOver();
-//				removeChild(sprite);
-//			});
-//			
-//			maxdelay = MAX(maxdelay, 1.5f);
-//			
-//			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
-//			
-//			sprite->runAction(seq);
-//			addChild(sprite);
 		} else if (e->type == Heal) {
 			//nothing to wait for!
 			wizard->health += ((EffectHeal *) e)->amount;
 			hud->updateValues(wizard, enemy);
 		}
 	}
-	
-//	{
-//		auto delayTime = DelayTime::create(maxdelay);
-//		auto callFunc = CallFunc::create([this](){
-//			onWizardTurnOver();
-//		});
-//		auto seq = Sequence::create(delayTime, callFunc, nullptr);
-//		runAction(seq);
-//	}
 }
 void Game::onWizardTurnOver() {
-	if (!checkGameOver()) {
-		// enemy gets a shot at you!
-		state = EnemySpells;
-		enemyDoTurn();
-	}
+	// enemy gets a shot at you!
+	state = EnemySpells;
+	enemyDoTurn();
 }
 bool Game::checkGameOver() {
 	// Returns if the game is over
@@ -370,21 +336,13 @@ bool Game::checkGameOver() {
 void Game::enemyDoTurn() {
 	auto projectile = Sprite::createWithSpriteFrameName("spells/fireball.png");
 	projectile->setPosition(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100);
-	
-	auto moveTo = MoveTo::create(1, Vec2(projectile->getContentSize().width, getContentSize().height - 100));
-	auto callFunc = CallFunc::create([this, projectile](){
-		removeChild(projectile);
-		wizard->health -= 5;
-		hud->updateValues(wizard, enemy);
-		state = PlayerTurn;
-		if (!checkGameOver()) {
-			grid->active = true;
-		}
-	});
-	auto seq = Sequence::create(moveTo, callFunc, nullptr);
-	
-	projectile->runAction(seq);
 	addChild(projectile);
+	
+	GameProjectile *p = new GameProjectile;
+	p->sprite = projectile;
+	p->damage = 5;
+	p->target = wizard;
+	projectiles.push_back(p);
 }
 
 void Game::update(float dt) {
@@ -400,10 +358,12 @@ void Game::update(float dt) {
 			onWizardTurnOver();
 		} else if (state == EnemySpells) {
 			// now it's the player turn
-			// move logic out of enemyDoTurn
+			state = PlayerTurn;
+			grid->active = true;
 		}
 	} else {
 		// tick projectiles
+		bool check = false;
 		int i = 0;
 		while (i < projectiles.size()) {
 			auto p = projectiles[i];
@@ -412,16 +372,34 @@ void Game::update(float dt) {
 				p->sprite->setPosition(p->sprite->getPosition() + Vec2(5, 0));
 				if (p->sprite->getPosition().x > enemy->sprite->getPosition().x) {
 					// done!
-					enemy->health -= p->effect->damage;
+					enemy->health -= p->damage;
 					hud->updateValues(wizard, enemy);
-					
+					check = true;
 					removeChild(p->sprite);
 					
 					projectiles.erase(projectiles.begin() + i);
+					delete p;
+					i--;
+				}
+			} else if (p->target == wizard) {
+				// move towards wiz
+				p->sprite->setPosition(p->sprite->getPosition() - Vec2(5, 0));
+				if (p->sprite->getPosition().x < wizard->sprite->getPosition().x) {
+					// done!
+					wizard->health -= p->damage;
+					hud->updateValues(wizard, enemy);
+					check = true;
+					removeChild(p->sprite);
+					
+					projectiles.erase(projectiles.begin() + i);
+					delete p;
 					i--;
 				}
 			}
 			i++;
+		}
+		if (check) {
+			checkGameOver();
 		}
 	}
 }
