@@ -183,6 +183,21 @@ bool Game::init() {
 	hud->setPosition(Vec2(0, grid_y + gridSize.y/2 + 20));
 	this->addChild(hud);
 	
+/*              _ _                  _ _
+               | | |                (_) |           
+ ___ _ __   ___| | |  ___ _ __  _ __ _| |_ ___  ___ 
+/ __| '_ \ / _ \ | | / __| '_ \| '__| | __/ _ \/ __|
+\__ \ |_) |  __/ | | \__ \ |_) | |  | | ||  __/\__ \
+|___/ .__/ \___|_|_| |___/ .__/|_|  |_|\__\___||___/
+    | |                  | |                        
+    |_|                  |_|
+*/
+	
+	mudshield = Sprite::createWithSpriteFrameName("spells/mudshield.png");
+	mudshield->setAnchorPoint(Vec2::ZERO);
+	mudshield->setPosition(wizard->sprite->getPositionX() + 80, wizard->sprite->getPositionY());
+	mudshield->retain();
+	
     this->scheduleUpdate();
     
     return true;
@@ -269,7 +284,7 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::doSpell(Spell *spell) {
-	for (Effect *e : spell->effects) {
+	for (BaseEffect *e : spell->effects) {
 		if (e->type == Projectile) {
 			EffectProjectile *projectile = (EffectProjectile *) e;
 			// Make a projectile!
@@ -288,6 +303,12 @@ void Game::doSpell(Spell *spell) {
 			//nothing to wait for!
 			wizard->health += ((EffectHeal *) e)->amount;
 			hud->updateValues(wizard, enemy);
+		} else if (e->type == Shield) {
+			//nothing to wait for!
+			if (mudshield_shots == 0) {
+				addChild(mudshield);
+			}
+			mudshield_shots+=((EffectShield *) e)->amount;
 		}
 	}
 }
@@ -330,6 +351,9 @@ bool Game::checkGameOver() {
 		sid->setPosition(getContentSize()/2);
 		addChild(sid);
 		
+		// Always start on your turn.
+		state = PlayerTurn;
+		
 	}
 	return gameOver;
 }
@@ -370,7 +394,7 @@ void Game::update(float dt) {
 			if (p->target == enemy) {
 				// move towards enemy
 				p->sprite->setPosition(p->sprite->getPosition() + Vec2(5, 0));
-				if (p->sprite->getPosition().x > enemy->sprite->getPosition().x) {
+				if (p->sprite->getPositionX() > enemy->sprite->getPositionX()) {
 					// done!
 					enemy->health -= p->damage;
 					hud->updateValues(wizard, enemy);
@@ -384,7 +408,17 @@ void Game::update(float dt) {
 			} else if (p->target == wizard) {
 				// move towards wiz
 				p->sprite->setPosition(p->sprite->getPosition() - Vec2(5, 0));
-				if (p->sprite->getPosition().x < wizard->sprite->getPosition().x) {
+				if (mudshield_shots > 0 && p->sprite->getPositionX() < mudshield->getPositionX()) {
+					mudshield_shots--;
+					if (mudshield_shots == 0) {
+						removeChild(mudshield);
+					}
+					// take noooo damage!
+					removeChild(p->sprite);
+					projectiles.erase(projectiles.begin() + i);
+					delete p;
+					i--;
+				} else if (p->sprite->getPosition().x < wizard->sprite->getPosition().x) {
 					// done!
 					wizard->health -= p->damage;
 					hud->updateValues(wizard, enemy);

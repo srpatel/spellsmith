@@ -2,6 +2,7 @@
 #define Grid_hpp
 
 #include "Gem.hpp"
+#include "EffectSprite/LightEffect.h"
 
 struct Chain {
 	int i;
@@ -36,6 +37,7 @@ private:
 	void cancelCurrentSpell();
 	void castCurrentSpell();
 	void drawChain();
+	LightEffect *lightEffect;
 };
 
 #endif /* Grid_hpp */

@@ -21,6 +21,7 @@ void Gem::init(GemType type) {
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;
+	
 	sprite = Sprite::createWithSpriteFrameName(element);
 	sprite->setScale(Gem::scale);
 }

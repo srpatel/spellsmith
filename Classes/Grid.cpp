@@ -198,6 +198,8 @@ void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		cocos2d::Vec2 size = getSize();
 		cocos2d::Vec2 pos = getPosition();
 		
+		lightEffect->setLightPos(Vec3(loc.x, loc.y, 100));
+		
 		float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
 		
 		// Is it in the grid?

@@ -51,7 +51,10 @@ private:
 	// Actually create the projectiles and stuff
 	void doSpell(Spell *);
 	
+	// gamey stuff
 	std::vector<GameProjectile *> projectiles;
+	int mudshield_shots = 0;
+	
 	
 	GameHUD *hud;
 	Enemy *enemy;
@@ -59,6 +62,7 @@ private:
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
+	Sprite *mudshield;
 };
 
 #endif /* GameScene_hpp */

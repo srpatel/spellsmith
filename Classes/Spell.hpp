@@ -16,18 +16,23 @@ USING_NS_CC;
 
 enum EffectType {
 	Projectile = 0,
-	Heal
+	Heal,
+	Shield
 };
 
-struct Effect {
+struct BaseEffect {
 	EffectType type;
 };
 
-struct EffectProjectile : public Effect {
+struct EffectProjectile : public BaseEffect {
 	int damage;
 };
 
-struct EffectHeal : public Effect {
+struct EffectHeal : public BaseEffect {
+	int amount;
+};
+
+struct EffectShield : public BaseEffect {
 	int amount;
 };
 
@@ -37,7 +42,7 @@ public:
 	~Spell();
 	static void init(int width, int height);
 	static std::vector<Spell *> spells;
-	std::vector<Effect *> effects;
+	std::vector<BaseEffect *> effects;
 	void setup();
 	Node *mininode;
 	bool operator==(Chain *chain);

@@ -8,7 +8,13 @@
       "W    ",
       "E    "
     ],
-    "effects": []
+    "effects": [
+      {
+        "type": "SHIELD",
+        "sprite": "",
+        "amount": 2
+      }
+    ]
   },
   {
     "name": "fireball",

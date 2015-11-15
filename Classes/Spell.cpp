@@ -71,7 +71,7 @@ void Spell::init(int width, int height) {
 		for (int j = 0; j < effects.Size(); j++) {
 			const rapidjson::Value& effect = effects[j];
 			// Switch type and create new type depending.
-			Effect *e = nullptr;
+			BaseEffect *e = nullptr;
 			if (strcmp(effect["type"].GetString(), "PROJECTILE") == 0) {
 				EffectProjectile *theEffect = new EffectProjectile;
 				theEffect->type = Projectile;
@@ -80,6 +80,11 @@ void Spell::init(int width, int height) {
 			} else if (strcmp(effect["type"].GetString(), "HEAL") == 0) {
 				EffectHeal *theEffect = new EffectHeal;
 				theEffect->type = Heal;
+				theEffect->amount = effect["amount"].GetInt();
+				e = theEffect;
+			} else if (strcmp(effect["type"].GetString(), "SHIELD") == 0) {
+				EffectShield *theEffect = new EffectShield;
+				theEffect->type = Shield;
 				theEffect->amount = effect["amount"].GetInt();
 				e = theEffect;
 			}
