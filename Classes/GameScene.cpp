@@ -229,9 +229,9 @@ bool Game::onCastSpell(Chain *chain) {
 	if (success) {
 		// We can't draw until the enemy has had his turn
 		grid->active = false;
+		state = PlayerSpells;
 		
 		if (spell) {
-			state = PlayerSpells;
 			// cast a spell!
 			// hard code these for now.
 			
@@ -257,22 +257,16 @@ bool Game::onCastSpell(Chain *chain) {
 			float scale = 0.5 + MIN(damage, 20) / 4.f;
 			projectile->setScale(scale, scale);
 			projectile->setPosition(projectile->getContentSize().width, getContentSize().height - 100);
-			// MOVE THIS LOGIC ELSEWHERE
-			auto moveTo = MoveTo::create(1, Vec2(getContentSize().width - projectile->getContentSize().width, getContentSize().height - 100));
-			auto delay = DelayTime::create(0.5f);
-			auto delFunc = CallFunc::create([this, damage, projectile](){
-				projectile->setVisible(false);
-				enemy->health -= damage;
-				hud->updateValues(wizard, enemy);
-				state = PlayerSpells;
-			});
-			auto callFunc = CallFunc::create([this, damage, projectile](){
-				removeChild(projectile);
-			});
-			auto seq = Sequence::create(moveTo, delFunc, delay, callFunc, nullptr);
-			
-			projectile->runAction(seq);
 			addChild(projectile);
+			
+			auto effect = new EffectProjectile;
+			effect->damage = damage;
+			
+			GameProjectile *p = new GameProjectile;
+			p->sprite = projectile;
+			p->effect = effect;
+			p->target = enemy;
+			projectiles.push_back(p);
 		}
 	}
 	return success;
