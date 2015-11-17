@@ -198,6 +198,21 @@ bool Game::init() {
 	mudshield->setPosition(wizard->sprite->getPositionX() + 80, wizard->sprite->getPositionY());
 	mudshield->retain();
 	
+
+/*   _ _       _
+    | (_)     | |                
+  __| |_  __ _| | ___   __ _ ___ 
+ / _` | |/ _` | |/ _ \ / _` / __|
+| (_| | | (_| | | (_) | (_| \__ \
+ \__,_|_|\__,_|_|\___/ \__, |___/
+                        __/ |    
+                       |___/
+ */
+	spellInfoDialog = SpellInfoDialog::create();
+	spellInfoDialog->retain();
+	levelEndDialog = LevelEndDialog::create();
+	levelEndDialog->retain();
+	
     this->scheduleUpdate();
     
     return true;
@@ -347,9 +362,8 @@ bool Game::checkGameOver() {
 		auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
 		enemy->sprite->runAction(seq);
 		
-		auto sid = SpellInfoDialog::create();
-		sid->setPosition(getContentSize()/2);
-		addChild(sid);
+		levelEndDialog->setPosition(getContentSize()/2);
+		addChild(levelEndDialog);
 		
 		// Always start on your turn.
 		state = PlayerTurn;

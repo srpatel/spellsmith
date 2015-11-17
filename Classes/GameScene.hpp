@@ -4,6 +4,7 @@
 #include "Gem.hpp"
 #include "Grid.hpp"
 #include "Spell.hpp"
+#include "Dialogs.hpp"
 #include "Characters.hpp"
 
 struct GameProjectile {
@@ -63,6 +64,9 @@ private:
 	void enemyDoTurn();
 	GameState state;
 	Sprite *mudshield;
+	
+	Dialog *levelEndDialog;
+	Dialog *spellInfoDialog;
 };
 
 #endif /* GameScene_hpp */

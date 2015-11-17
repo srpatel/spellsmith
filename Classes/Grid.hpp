@@ -37,7 +37,6 @@ private:
 	void cancelCurrentSpell();
 	void castCurrentSpell();
 	void drawChain();
-	LightEffect *lightEffect;
 };
 
 #endif /* Grid_hpp */
