@@ -13,7 +13,7 @@ struct Chain {
 
 class Grid : public cocos2d::Layer {
 public:
-    Grid(int w, int h, float width);
+    Grid(int w, int h, float width, bool diagonals);
     Gem *get(int column, int row);
     bool init(float width);
 	bool active;
@@ -37,6 +37,10 @@ private:
 	void cancelCurrentSpell();
 	void castCurrentSpell();
 	void drawChain();
+	void drawSelected();
+	
+	bool diagonals_allowed;
+	bool confirm_mode;
 };
 
 #endif /* Grid_hpp */

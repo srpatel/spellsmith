@@ -6,9 +6,10 @@
 
 #include <sstream>
 
-#define GRID_WIDTH 5
-#define GRID_HEIGHT 5
+#define GRID_WIDTH 4
+#define GRID_HEIGHT 4
 
+static int grid_size = 5;
 Game *Game::instance = nullptr;
 
 static struct {
@@ -35,7 +36,7 @@ bool Game::init() {
 	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
-	Spell::init(GRID_WIDTH, GRID_HEIGHT);
+	Spell::init(5, 5);
 	wizard = new Wizard;
 	wizard->max_health = HEALTH_PER_HEART * 5;
 	wizard->health = HEALTH_PER_HEART * 5;
@@ -97,7 +98,7 @@ bool Game::init() {
   __/ |             
  |___/              
 */
-    this->grid = new Grid(GRID_WIDTH, GRID_HEIGHT, layout.content_end_x - layout.content_begin_x - 10);
+    this->grid = new Grid(grid_size, grid_size, layout.content_end_x - layout.content_begin_x - 10, grid_size == 4);
     cocos2d::Vec2 gridSize = this->grid->getSize();
 	float grid_x = getContentSize().width / 2;
     float grid_y = (getContentSize().height - layout.background_height) / 2;
@@ -121,37 +122,24 @@ bool Game::init() {
 */
 	float padding = 10;
 	float margin = visibleSize.width - gridSize.x - padding;
+	float starty = getContentSize().height - layout.background_height - 110;
 	float spellHeight = gridSize.y/3 - padding*3;
-	float spellPadding = 20;
-	// If there is enough room at the sides, show spells there!
-	// Otherwise, at the top?
-	auto brown = Color4F(194/255.f,190/255.f,167/255.f, 255/255.f);
+	float spellPadding = 10;
+	
 	// Left hand inventory
 	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
-		float yoffset = (i - 1) * (spellHeight + spellPadding);
-		
-		auto scroll = DrawNode::create();
-		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(0, grid_y - yoffset);
-		//this->addChild(scroll);
-		
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(margin/4, grid_y - yoffset);
+			sprite->setPosition(25, starty - i * 55);
 			// TODO : Set scale that allows spell to fit completely in the scroll
-			//sprite->setScale(1.f);
-		//	this->addChild(sprite);
+			sprite->setScale(1.f);
+			this->addChild(sprite);
 		}
 	}
 	// Right-hand inventory
 	for (int i = 0; i < 3; i++) {
 		float yoffset = (i - 1) * (spellHeight + spellPadding);
-		
-		auto scroll = DrawNode::create();
-		scroll->drawSolidRect(Vec2(0, -spellHeight/2), Vec2(margin/2, spellHeight/2), brown);
-		scroll->setPosition(visibleSize.width - margin/2, grid_y - yoffset);
-		//this->addChild(scroll);
 		
 		if (inventory.size() > 3 + i) {
 			auto sprite = inventory[3 + i]->mininode;
@@ -360,12 +348,31 @@ bool Game::checkGameOver() {
 	// Returns if the game is over
 	auto gameOver = false;
 	if (wizard->health <= 0) {
+		wizard->health = wizard->max_health;
 		gameOver = true;
 	} else if (enemy->health <= 0) {
 		//need new enemy
 		gameOver = true;
 	}
 	if (gameOver) {
+		
+		// Create a new grid of a different size!
+		this->removeChild(this->grid);
+		
+		if (grid_size == 5)
+			grid_size = 4;
+		else
+		if (grid_size == 4)
+			grid_size = 5;
+		
+		this->grid = new Grid(grid_size, grid_size, layout.content_end_x - layout.content_begin_x - 10, grid_size == 4);
+		cocos2d::Vec2 gridSize = this->grid->getSize();
+		float grid_x = getContentSize().width / 2;
+		float grid_y = (getContentSize().height - layout.background_height) / 2;
+		this->grid->setPosition(grid_x, grid_y);
+		grid->active = true;
+		this->addChild(this->grid);
+		
 		// if level-mode, we show the "victory screen"
 		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
 		// 1. fade enemy out
@@ -377,7 +384,7 @@ bool Game::checkGameOver() {
 			enemy->max_health = HEALTH_PER_HEART * 2;
 			enemy->health = HEALTH_PER_HEART * 2;
 			hud->updateValues(wizard, enemy);
-			grid->scramble();
+			//grid->scramble();
 		});
 		auto fadeIn = FadeIn::create(0.2f);
 		auto run2 = CallFunc::create([this]() {
