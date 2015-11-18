@@ -15,17 +15,19 @@
 #define GEM_ANIMATION_TIME      0.1f
 #define COLUMN_STAGGER_AMOUNT   0.2f
 #define ROW_STAGGER_AMOUNT      0.1f
-#define GEM_CENTRAL_SENSITIVITY 0.5f
+//#define GEM_CENTRAL_SENSITIVITY 0.5f
+#define GEM_CENTRAL_SENSITIVITY 2
 #define SINGLE_BACKWARDS        1
+#define ORTHOGONAL_ONLY         1
 
-Grid::Grid(int w, int h) {
+Grid::Grid(int w, int h, float maxwidth) {
     this->width = w;
     this->height = h;
     
     // Fill with default constructed gems
     grid = new Gem*[w*h];
     
-    init();
+    init(maxwidth);
 }
 Grid::~Grid() {
     for (int i = 0; i < width * height; i++) {
@@ -65,7 +67,7 @@ cocos2d::Vec2 Grid::getSize() {
 	return cocos2d::Vec2(width * Gem::getWidth(), height * Gem::getHeight());
 }
 
-bool Grid::init()
+bool Grid::init(float maxwidth)
 {
     if ( !Layer::init() )
     {
@@ -76,11 +78,8 @@ bool Grid::init()
 	line->setPosition(cocos2d::Vec2::ZERO);
 	this->addChild(line, 1);
 	
-	// pick max scale to fit on screen
-	float spellMargins = 70; // save about 100px for spells
-	cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize() - cocos2d::Size(spellMargins, 0);
 	Gem::scale = 1;
-	float ratio = visibleSize.width/(Gem::getWidth() * width);
+	float ratio = maxwidth/(Gem::getWidth() * width);
 	Gem::scale = MIN(ratio, 1.2f);
 	
     // Setup the gems, and them to us
@@ -230,7 +229,13 @@ void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 				}
 				if (!unique) {
 					// Check we are actually going adjacent!
-					if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1) {
+					bool allowed = true;
+#if ORTHOGONAL_ONLY
+					if (abs(chain->i - column) == 1 && abs(chain->j - row) == 1) {
+						allowed = false;
+					}
+#endif
+					if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1 && allowed) {
 						Chain *oldChain = chain;
 						chain = new Chain;
 						chain->next = oldChain;

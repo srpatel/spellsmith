@@ -10,6 +10,7 @@
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
 #include "LevelSelect.hpp"
+#include "Constants.h"
 
 GameController *GameController::instance = nullptr;
 
@@ -30,7 +31,8 @@ void GameController::init(Scene *root) {
 	
 	instance->state = kStateMainMenu;
 	
-	auto grad = LayerGradient::create(Color4B(24,   24,  24,  255), Color4B(46,   46,  46,  255), Vec2(0, -1));
+	auto grad = LayerColor::create();
+	grad->initWithColor(Color4B(Colours::BACKGROUND));
 	grad->setPosition(Director::getInstance()->getVisibleOrigin());
 	grad->setContentSize(Director::getInstance()->getVisibleSize());
 	root->addChild(grad);

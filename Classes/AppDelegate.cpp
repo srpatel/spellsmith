@@ -91,7 +91,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
 	auto scene = Scene::create();
 	GameController::init(scene);
-    
+	GameController::get()->setState(kStateGame);
+	
     // run
     director->runWithScene(scene);
 

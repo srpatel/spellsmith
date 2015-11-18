@@ -17,6 +17,7 @@ struct Gem {
     bool didInit = false;
     void init();
 	void init(GemType type);
+	
 	static float getWidth();
 	static float getHeight();
 	static float scale;
