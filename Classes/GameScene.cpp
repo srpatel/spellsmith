@@ -98,7 +98,7 @@ bool Game::init() {
   __/ |             
  |___/              
 */
-    this->grid = new Grid(grid_size, grid_size, layout.content_end_x - layout.content_begin_x - 10, grid_size == 4);
+    this->grid = new Grid(grid_size, grid_size, getContentSize().width - 10);
     cocos2d::Vec2 gridSize = this->grid->getSize();
 	float grid_x = getContentSize().width / 2;
     float grid_y = (getContentSize().height - layout.background_height) / 2;
@@ -354,25 +354,7 @@ bool Game::checkGameOver() {
 		//need new enemy
 		gameOver = true;
 	}
-	if (gameOver) {
-		
-		// Create a new grid of a different size!
-		this->removeChild(this->grid);
-		
-		if (grid_size == 5)
-			grid_size = 4;
-		else
-		if (grid_size == 4)
-			grid_size = 5;
-		
-		this->grid = new Grid(grid_size, grid_size, layout.content_end_x - layout.content_begin_x - 10, grid_size == 4);
-		cocos2d::Vec2 gridSize = this->grid->getSize();
-		float grid_x = getContentSize().width / 2;
-		float grid_y = (getContentSize().height - layout.background_height) / 2;
-		this->grid->setPosition(grid_x, grid_y);
-		grid->active = true;
-		this->addChild(this->grid);
-		
+	if (gameOver) {		
 		// if level-mode, we show the "victory screen"
 		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
 		// 1. fade enemy out

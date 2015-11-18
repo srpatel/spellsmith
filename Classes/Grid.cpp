@@ -24,11 +24,13 @@
 //#define GEM_CENTRAL_SENSITIVITY 2
 //#define ORTHOGONAL_ONLY         0
 
-Grid::Grid(int w, int h, float maxwidth, bool diagonals) {
+static Vec2 startpos(-1000,-1000);
+static Vec2 endpos(-1000,-1000);
+
+Grid::Grid(int w, int h, float maxwidth) {
     this->width = w;
     this->height = h;
-	this->diagonals_allowed = diagonals;
-	this->confirm_mode = !diagonals;
+	this->diagonals_allowed = true;
     
     // Fill with default constructed gems
     grid = new Gem*[w*h];
@@ -53,9 +55,6 @@ void Grid::set(int column, int row, Gem *gem, bool init = false) {
     
     if (init) {
         gem->init();
-		if (confirm_mode) {
-			gem->sprite->setColor(Color3B(200, 200, 200));
-		}
 		
         gem->sprite->setOpacity(0);
         auto fadeIn = cocos2d::FadeIn::create(.1f);
@@ -107,24 +106,6 @@ bool Grid::init(float maxwidth)
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 	
-	if (confirm_mode) {
-		// Play button
-		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::TextureResType::PLIST);
-		button->setTitleFontName(Fonts::MAIN_FONT);
-		button->setTitleText("Cast");
-		
-		button->setPosition(Vec2(0, - getSize().y / 2 - 20));
-		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::BEGAN) {
-				// cast selected gems
-				castCurrentSpell();
-				chain = nullptr;
-				drawSelected();
-			}
-		});
-		this->addChild(button);
-	}
-	
     return true;
 }
 
@@ -146,6 +127,9 @@ void Grid::drawChain() {
 			sentinel = sentinel->next;
 		}
 	}
+	
+	line->drawSolidCircle(startpos, 10, 7, 20, Color4F::RED);
+	line->drawSolidCircle(endpos, 10, 7, 20, Color4F::BLACK);
 }
 
 void Grid::drawSelected() {
@@ -179,7 +163,7 @@ void Grid::cancelCurrentSpell() {
 		}
 	}
 	currentTouch = nullptr;
-	line->clear();
+	//line->clear();
 }
 
 void Grid::castCurrentSpell() {
@@ -201,7 +185,7 @@ void Grid::castCurrentSpell() {
 	currentTouch = nullptr;
 	
 	refill();
-	line->clear();
+	//line->clear();
 }
 
 void Grid::scramble() {
@@ -216,121 +200,120 @@ void Grid::scramble() {
 }
 
 void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-	if (!confirm_mode) {
-		if (currentTouch && currentTouch->getID() == touch->getID()) {
-			// check we are on the last gem
-			cocos2d::Vec2 loc = touch->getLocation();
-			float swidth = Gem::getWidth();
-			float sheight = Gem::getHeight();
-			cocos2d::Vec2 size = getSize();
-			cocos2d::Vec2 pos = getPosition();
-			float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
-			
-			auto centre = cocos2d::Vec2((chain->i + 0.5f) * swidth + left, (chain->j + 0.5f) * sheight + bottom);
-			
-			// You must finish close-ish to the last tile of the chain
-			if ((loc - centre).length() < Gem::getWidth()) {
-				castCurrentSpell();
-			} else {
-				cancelCurrentSpell();
-			}
-			chain = nullptr;
+	if (currentTouch && currentTouch->getID() == touch->getID()) {
+		// check we are on the last gem
+		cocos2d::Vec2 loc = touch->getLocation();
+		//line->drawSolidCircle(loc - getPosition(), 2, 7, 20, Color4F::BLACK);
+		endpos = loc - getPosition();
+		drawChain();
+		float swidth = Gem::getWidth();
+		float sheight = Gem::getHeight();
+		cocos2d::Vec2 size = getSize();
+		cocos2d::Vec2 pos = getPosition();
+		float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+		
+		auto centre = cocos2d::Vec2((chain->i + 0.5f) * swidth + left, (chain->j + 0.5f) * sheight + bottom);
+		
+		// You must finish close-ish to the last tile of the chain
+		if ((loc - centre).length() < Gem::getWidth()) {
+			castCurrentSpell();
+		} else {
+			cancelCurrentSpell();
 		}
+		chain = nullptr;
 	}
 }
 
 void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-	if (!confirm_mode) {
-		if (currentTouch && currentTouch->getID() == touch->getID()) {
-			cocos2d::Vec2 loc = touch->getLocation();
-			cocos2d::Vec2 size = getSize();
-			cocos2d::Vec2 pos = getPosition();
+	if (currentTouch && currentTouch->getID() == touch->getID()) {
+		cocos2d::Vec2 loc = touch->getLocation();
+		cocos2d::Vec2 size = getSize();
+		cocos2d::Vec2 pos = getPosition();
+		
+		float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+		
+		// Is it in the grid?
+		if (   loc.x > left
+			&& loc.x < pos.x + size.x/2
+			&& loc.y > bottom
+			&& loc.y < pos.y + size.y/2) {
 			
-			float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+			float swidth = Gem::getWidth();
+			float sheight = Gem::getHeight();
 			
-			// Is it in the grid?
-			if (   loc.x > left
-				&& loc.x < pos.x + size.x/2
-				&& loc.y > bottom
-				&& loc.y < pos.y + size.y/2) {
-				
-				float swidth = Gem::getWidth();
-				float sheight = Gem::getHeight();
-				
-				int column = (int) ((loc.x - left)/swidth);
-				int row = (int) ((loc.y - bottom)/sheight);
-				
-				// Check that we are central to gem
-					// make sure to add 1/2 onto the coords as we need gem-centre.
-				auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
-	//			bool central = (centre - loc).length() < Gem::getWidth() * GEM_CENTRAL_SENSITIVITY;
-				auto distance = centre - loc;
-				float sensitivity = diagonals_allowed ? 0.5f : 0.8f;
-				bool ongem = false;
-				
-				if (fabs(distance.y) < sheight * sensitivity * 0.5f && fabs(distance.x) < swidth * sensitivity * 0.5f) {
-					// We are over the gem!
-					ongem = true;
-				}
-				
-				if (ongem) {
-					// Check this isn't already in the chain!
-					Chain *sentinel = chain;
-					Chain *unique = nullptr;
-					while (sentinel) {
-						if (sentinel->i == column && sentinel->j == row) {
-							// We're already here...don't add
-							unique = sentinel;
-							break;
-						}
-						sentinel = sentinel->next;
-					}
-					if (!unique) {
-						// Check we are actually going adjacent!
-						bool allowed = true;
-						if (!diagonals_allowed) {
-							if (abs(chain->i - column) == 1 && abs(chain->j - row) == 1) {
-								allowed = false;
-							}
-						}
-						if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1 && allowed) {
-							Chain *oldChain = chain;
-							chain = new Chain;
-							chain->next = oldChain;
-							chain->i = column;
-							chain->j = row;
-							chain->type = get(column, row)->type;
-							
-							// draw line from previous to current
-							drawChain();
-						}
-					} else {
-						// If it's anywhere in the chain (except the first) revert to that point
-						if (unique != chain) {
-							
-							// Only allow going backwards?
-	#if SINGLE_BACKWARDS
-							if (unique == chain->next) {
-	#endif
-							Chain *oldChain = chain;
-							while (oldChain != unique) {
-								Chain *temp = oldChain;
-								oldChain = oldChain->next;
-								delete temp;
-							}
-							chain = unique;
-							
-							//redraw line...
-							drawChain();
-	#if SINGLE_BACKWARDS
-							}
-	#endif
-						}
-					}
-				}
-			} else {
-				//cancelCurrentSpell();
+			int column = (int) ((loc.x - left)/swidth);
+			int row = (int) ((loc.y - bottom)/sheight);
+			
+			// Check that we are central to gem
+				// make sure to add 1/2 onto the coords as we need gem-centre.
+			auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
+//			bool central = (centre - loc).length() < Gem::getWidth() * GEM_CENTRAL_SENSITIVITY;
+			auto distance = centre - loc;
+			float sensitivity = diagonals_allowed ? 0.5f : 0.8f;
+			bool ongem = false;
+			
+			if (fabs(distance.y) < sheight * sensitivity * 0.5f && fabs(distance.x) < swidth * sensitivity * 0.5f) {
+				// We are over the gem!
+				ongem = true;
 			}
+			
+			if (ongem) {
+				// Check this isn't already in the chain!
+				Chain *sentinel = chain;
+				Chain *unique = nullptr;
+				while (sentinel) {
+					if (sentinel->i == column && sentinel->j == row) {
+						// We're already here...don't add
+						unique = sentinel;
+						break;
+					}
+					sentinel = sentinel->next;
+				}
+				if (!unique) {
+					// Check we are actually going adjacent!
+					bool allowed = true;
+					if (!diagonals_allowed) {
+						if (abs(chain->i - column) == 1 && abs(chain->j - row) == 1) {
+							allowed = false;
+						}
+					}
+					if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1 && allowed) {
+						Chain *oldChain = chain;
+						chain = new Chain;
+						chain->next = oldChain;
+						chain->i = column;
+						chain->j = row;
+						chain->type = get(column, row)->type;
+						
+						// draw line from previous to current
+						drawChain();
+					}
+				} else {
+					// If it's anywhere in the chain (except the first) revert to that point
+					if (unique != chain) {
+						
+						// Only allow going backwards?
+#if SINGLE_BACKWARDS
+						if (unique == chain->next) {
+#endif
+						Chain *oldChain = chain;
+						while (oldChain != unique) {
+							Chain *temp = oldChain;
+							oldChain = oldChain->next;
+							delete temp;
+						}
+						chain = unique;
+						
+						//redraw line...
+						drawChain();
+#if SINGLE_BACKWARDS
+						}
+#endif
+					}
+				}
+			}
+		} else {
+			//cancelCurrentSpell();
 		}
 	}
 }
@@ -343,6 +326,8 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     cocos2d::Vec2 pos = getPosition();
     
     float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+	
+	line->drawSolidCircle(loc - pos, 10, 7, 20, Color4F::RED);
     
     // Is it in the grid?
     if (   loc.x > left
@@ -356,50 +341,16 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
         int column = (int) ((loc.x - left)/swidth);
         int row = (int) ((loc.y - bottom)/sheight);
 		
-		if (confirm_mode) {
-			
-			// if this exists, remove it
-			Chain *last = nullptr;
-			auto sentinel = chain;
-			bool found = false;
-			while (sentinel != nullptr) {
-				if (sentinel->i == column && sentinel->j == row) {
-					// remove it.
-					found = true;
-					if (last == nullptr) {
-						chain = sentinel->next;
-					} else {
-						last->next = sentinel->next;
-					}
-					delete sentinel;
-					break;
-				}
-				last = sentinel;
-				sentinel = sentinel->next;
-			}
-			
-			if (!found) {
-				// if not, add it to the end:
-				auto prevchain = chain;
-				chain = new Chain;
-				chain->i = column;
-				chain->j = row;
-				chain->type = get(column, row)->type;
-				chain->next = prevchain;
-			}
-			
-			drawSelected();
-		} else {
+		currentTouch = touch;
+		chain = new Chain;
+		chain->next = nullptr;
+		chain->i = column;
+		chain->j = row;
+		chain->type = get(column, row)->type;
+		line->clear();
 		
-			currentTouch = touch;
-			chain = new Chain;
-			chain->next = nullptr;
-			chain->i = column;
-			chain->j = row;
-			chain->type = get(column, row)->type;
-			line->clear();
-			
-		}
+		startpos = loc - pos;
+		endpos = Vec2(-1000,-1000);
 		
         return true;
 	}
