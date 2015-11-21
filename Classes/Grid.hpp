@@ -2,7 +2,6 @@
 #define Grid_hpp
 
 #include "Gem.hpp"
-#include "EffectSprite/LightEffect.h"
 
 struct Chain {
 	int i;
