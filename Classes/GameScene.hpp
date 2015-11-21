@@ -51,17 +51,12 @@ private:
 	// Actually create the projectiles and stuff
 	void doSpell(Spell *);
 	
-	// gamey stuff
-	int mudshield_shots = 0;
-	
-	
 	GameHUD *hud;
 	Enemy *enemy;
 	Wizard *wizard;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
-	Sprite *mudshield;
 	
 	Dialog *levelEndDialog;
 	Dialog *spellInfoDialog;

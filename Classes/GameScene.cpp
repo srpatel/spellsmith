@@ -211,11 +211,7 @@ bool Game::init() {
     | |                  | |                        
     |_|                  |_|
 */
-	
-	mudshield = Sprite::createWithSpriteFrameName("spells/mudshield.png");
-	mudshield->setAnchorPoint(Vec2::ZERO);
-	mudshield->setPosition(wizard->sprite->getPositionX() + 80, wizard->sprite->getPositionY());
-	mudshield->retain();
+
 	
 
 /*   _ _       _
@@ -298,8 +294,8 @@ bool Game::onCastSpell(Chain *chain) {
 					colour = Color3B::WHITE; break;
 				case EARTH:
 					colour = Color3B::GREEN; break;
+				default:break;
 			}
-			enemy->health -= damage;
 			makeProjectile(wizard, enemy, damage, colour);
 		}
 		
@@ -312,7 +308,6 @@ void Game::doSpell(Spell *spell) {
 		if (e->type == Projectile) {
 			EffectProjectile *projectile = (EffectProjectile *) e;
 			// Make a projectile!
-			enemy->health -= projectile->damage;
 			makeProjectile(wizard, enemy, projectile->damage, Color3B::RED);
 		} else if (e->type == Heal) {
 			//nothing to wait for!
@@ -320,11 +315,24 @@ void Game::doSpell(Spell *spell) {
 			wizard->ui_health += ((EffectHeal *) e)->amount;
 			hud->updateValues(wizard, enemy);
 		} else if (e->type == Shield) {
-			//nothing to wait for!
-			if (mudshield_shots == 0) {
-				addChild(mudshield);
+			Buff *shield = wizard->getBuffByType(BuffType::BARRIER);
+			
+			if (shield == nullptr) {
+				// give us mudshield_buff, and animate it in
+				auto shield = Buff::createMudshield();
+				
+				// put it in a good place and add it
+				shield->sprite->setPosition(wizard->sprite->getPosition() + Vec2(65, 0));
+				addChild(shield->sprite);
+				
+				// fade it in
+				auto fadeIn = FadeIn::create(0.2);
+				shield->sprite->runAction(fadeIn);
+				
+				wizard->buffs.push_back(shield);
+			} else {
+				shield->charges += 2;
 			}
-			mudshield_shots+=((EffectShield *) e)->amount;
 		}
 	}
 }
@@ -334,17 +342,58 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	float scale = 0.5 + MIN(damage, 20) / 4.f;
 	sprite->setScale(scale);
 	sprite->setPosition(source->sprite->getPosition().x, getContentSize().height - 100);
-	
-	auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
-	auto updateHealth = CallFunc::create([this, sprite, damage, target](){
-		removeChild(sprite);
-		target->ui_health -= damage;
-		hud->updateValues(wizard, enemy);
-	});
-	auto seq = Sequence::create(moveTo, updateHealth, nullptr);
-	
-	seq->retain();
 	sprite->retain();
+	
+	// if there's a shield, then stop early!
+	Buff *shield = target->getBuffByType(BuffType::BARRIER);
+	Sequence *seq;
+	if (shield) {
+		bool lastcharge = false;
+		if (shield->charges > 0) {
+			// Remove a charge
+			shield->charges--;
+			if (shield->charges == 0) {
+				// Animate the shield's sprite away.
+				lastcharge = true;
+			}
+		}
+		// Don't take away any health, and just animate to the shield instead!
+		//  ... and if it's the shield's last charge, fade it out too.
+		auto moveTo = MoveTo::create(1, Vec2(shield->sprite->getPosition().x, getContentSize().height - 100));
+		Sprite *shieldsprite = shield->sprite;
+		auto updateHealth = CallFunc::create([this, sprite, lastcharge, shieldsprite](){
+			removeChild(sprite);
+			if (lastcharge) {
+				// fade the shield out, then remove it.
+				auto fadeout = FadeOut::create(0.2);
+				auto func = CallFunc::create([this, shieldsprite](){
+					removeChild(shieldsprite);
+				});
+				auto seq = Sequence::create(fadeout, func, nullptr);
+				shieldsprite->runAction(seq);
+			}
+		});
+		
+		// Remove the buff from the character
+		if (lastcharge) {
+			auto it = std::find(target->buffs.begin(), target->buffs.end(), shield);
+			if(it != target->buffs.end()) {
+				target->buffs.erase(it);
+			}
+			delete shield;
+		}
+		seq = Sequence::create(moveTo, updateHealth, nullptr);
+	} else {
+		target->health -= damage;
+		auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
+		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
+			removeChild(sprite);
+			target->ui_health -= damage;
+			hud->updateValues(wizard, enemy);
+		});
+		seq = Sequence::create(moveTo, updateHealth, nullptr);
+	}
+	seq->retain();
 	
 	auto ga = new GameAnimation;
 	ga->target = sprite;
@@ -398,7 +447,6 @@ bool Game::checkGameOver() {
 }
 void Game::enemyDoTurn() {
 	int damage = 5;
-	wizard->health -= 5;
 	makeProjectile(enemy, wizard, damage, Color3B::RED);
 	
 	// it's now the player's turn
@@ -412,7 +460,9 @@ void Game::runAnimation(GameAnimation *ga) {
 		currentAnimation = ga;
 		
 		// add target and make it run the associated action
-		addChild(ga->target);
+		if (ga->target) {
+			addChild(ga->target);
+		}
 		auto onFinish = CallFunc::create([this, ga](){
 			currentAnimation = nullptr;
 			// this animation has finished, so run the next one if there is one
@@ -421,13 +471,19 @@ void Game::runAnimation(GameAnimation *ga) {
 				animation_queue.erase(animation_queue.begin() + 0);
 			}
 			// release the action/sprite because they were retained
-			ga->target->release();
+			if (ga->target) {
+				ga->target->release();
+			}
 			ga->action->release();
 			// free ga
 			delete ga;
 		});
 		auto seq = Sequence::create(ga->action, onFinish, nullptr);
-		ga->target->runAction(seq);
+		if (ga->target) {
+			ga->target->runAction(seq);
+		} else {
+			runAction(seq);
+		}
 	} else {
 		// There is something running, so add this to the end of the queue
 		animation_queue.push_back(ga);

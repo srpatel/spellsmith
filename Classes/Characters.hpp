@@ -20,12 +20,17 @@ enum BuffType {
 struct Buff {
 	BuffType type;
 	bool positive;
-	Sprite *sprite;
 	Sprite *icon;
+	Sprite *sprite;
 	int turns; // -1 = forever, n = lasts n more turns
 	int charges; // -1 = infinite, n = n charges remaining
 	
+	int priority;
+	
+	static Buff *createMudshield();
 };
+
+bool BuffComparator (Buff *left, Buff *right);
 
 class Character {
 public:
@@ -34,6 +39,7 @@ public:
 	int ui_health;
 	Sprite *sprite;
 	std::vector<Buff *> buffs;
+	Buff *getBuffByType(BuffType);
 };
 
 class Enemy : public Character {
