@@ -18,9 +18,11 @@
 #define GEM_ANIMATION_TIME      0.1f
 #define COLUMN_STAGGER_AMOUNT   0.2f
 #define ROW_STAGGER_AMOUNT      0.1f
-#define SINGLE_BACKWARDS        1
+#define SINGLE_BACKWARDS        0
 
-//#define GEM_CENTRAL_SENSITIVITY 0.5f
+#define PI 3.1415926535
+
+#define GEM_CENTRAL_SENSITIVITY 0.4f
 //#define GEM_CENTRAL_SENSITIVITY 2
 //#define ORTHOGONAL_ONLY         0
 
@@ -87,7 +89,7 @@ bool Grid::init(float maxwidth)
 	
 	Gem::scale = 1;
 	float ratio = maxwidth/(Gem::getWidth() * width);
-	Gem::scale = MIN(ratio, 1.2f);
+	Gem::scale = MIN(ratio, 1.6f);
 	
     // Setup the gems, and them to us
     for (int i = 0; i < width; i++) {
@@ -224,77 +226,110 @@ void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 	}
 }
 
-void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-	if (currentTouch && currentTouch->getID() == touch->getID()) {
-		cocos2d::Vec2 loc = touch->getLocation();
-		cocos2d::Vec2 size = getSize();
-		cocos2d::Vec2 pos = getPosition();
+bool Grid::isAboveLine(Vec2 start, Vec2 end, Vec2 point) {
+	return ((end.x - start.x)*(point.y - start.y) - (end.y - start.y)*(point.x - start.x)) > 0;
+}
+
+bool Grid::doesLineIntersectCell(Vec2 start, Vec2 end, int column, int row) {
+	Vec2 size = getSize();
+	Vec2 pos = getPosition();
+	float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+	
+	// Check if all four corners of the cell are on the same side of the line.
+	float swidth = Gem::getWidth();
+	float sheight = Gem::getHeight();
+	// centre of cell.
+	auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
+	Vec2 topleft  = centre + Vec2(-swidth/2, -sheight/2);
+	Vec2 topright = centre + Vec2( swidth/2, -sheight/2);
+	Vec2 btmleft  = centre + Vec2(-swidth/2,  sheight/2);
+	Vec2 btmright = centre + Vec2( swidth/2,  sheight/2);
+	
+	// at least one of the points has to be on the other side of the line to intersect.
+	auto match = isAboveLine(start, end, topleft);
+	return !(match == isAboveLine(start, end, topright) && match == isAboveLine(start, end, btmleft) && match == isAboveLine(start, end, btmright));
+}
+
+void Grid::onTouchMovePart(Vec2 loc) {
+	Vec2 size = getSize();
+	Vec2 pos = getPosition();
+	float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+	
+	// Is it in the grid?
+	if (   loc.x > left
+		&& loc.x < pos.x + size.x/2
+		&& loc.y > bottom
+		&& loc.y < pos.y + size.y/2) {
 		
-		float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
+		float swidth = Gem::getWidth();
+		float sheight = Gem::getHeight();
 		
-		// Is it in the grid?
-		if (   loc.x > left
-			&& loc.x < pos.x + size.x/2
-			&& loc.y > bottom
-			&& loc.y < pos.y + size.y/2) {
-			
-			float swidth = Gem::getWidth();
-			float sheight = Gem::getHeight();
-			
-			int column = (int) ((loc.x - left)/swidth);
-			int row = (int) ((loc.y - bottom)/sheight);
-			
-			// Check that we are central to gem
-				// make sure to add 1/2 onto the coords as we need gem-centre.
-			auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
-//			bool central = (centre - loc).length() < Gem::getWidth() * GEM_CENTRAL_SENSITIVITY;
-			auto distance = centre - loc;
-			float sensitivity = diagonals_allowed ? 0.5f : 0.8f;
-			bool ongem = false;
-			
-			if (fabs(distance.y) < sheight * sensitivity * 0.5f && fabs(distance.x) < swidth * sensitivity * 0.5f) {
-				// We are over the gem!
-				ongem = true;
-			}
-			
-			if (ongem) {
-				// Check this isn't already in the chain!
-				Chain *sentinel = chain;
-				Chain *unique = nullptr;
-				while (sentinel) {
-					if (sentinel->i == column && sentinel->j == row) {
-						// We're already here...don't add
-						unique = sentinel;
-						break;
-					}
-					sentinel = sentinel->next;
+		int column = (int) ((loc.x - left)/swidth);
+		int row = (int) ((loc.y - bottom)/sheight);
+		
+		// Check that we are central to gem
+		// make sure to add 1/2 onto the coords as we need gem-centre.
+		auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
+		//			bool central = (centre - loc).length() < Gem::getWidth() * GEM_CENTRAL_SENSITIVITY;
+		
+		bool ongem = true;
+		// METHOD 1 = central hitbox
+		ongem = (centre - loc).length() < GEM_CENTRAL_SENSITIVITY * Gem::getWidth();
+		
+		/*
+		// METHOD 2 = octagon hitbox
+		for (int I=-1; I<=1; I+=2) {
+			for (int J=-1; J<=1; J+=2) {
+				auto corner = centre + Vec2(I * Gem::getWidth()/2, J * Gem::getHeight()/2);
+				auto distance = (corner - loc).length();
+				if (distance < Gem::getWidth() / 3.0f) {
+					// too close!
+					ongem = false;
+					goto done;
 				}
-				if (!unique) {
-					// Check we are actually going adjacent!
-					bool allowed = true;
-					if (!diagonals_allowed) {
-						if (abs(chain->i - column) == 1 && abs(chain->j - row) == 1) {
-							allowed = false;
-						}
+			}
+		}
+		done:;
+		 */
+		
+		if (ongem) {
+			// Check this isn't already in the chain!
+			Chain *sentinel = chain;
+			Chain *unique = nullptr;
+			while (sentinel) {
+				if (sentinel->i == column && sentinel->j == row) {
+					// We're already here...don't add
+					unique = sentinel;
+					break;
+				}
+				sentinel = sentinel->next;
+			}
+			if (!unique) {
+				// Check we are actually going adjacent!
+				bool allowed = true;
+				if (!diagonals_allowed) {
+					if (abs(chain->i - column) == 1 && abs(chain->j - row) == 1) {
+						allowed = false;
 					}
-					if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1 && allowed) {
-						Chain *oldChain = chain;
-						chain = new Chain;
-						chain->next = oldChain;
-						chain->i = column;
-						chain->j = row;
-						chain->type = get(column, row)->type;
-						
-						// draw line from previous to current
-						drawChain();
-					}
-				} else {
-					// If it's anywhere in the chain (except the first) revert to that point
-					if (unique != chain) {
-						
-						// Only allow going backwards?
+				}
+				if (abs(chain->i - column) <= 1 && abs(chain->j - row) <= 1 && allowed) {
+					Chain *oldChain = chain;
+					chain = new Chain;
+					chain->next = oldChain;
+					chain->i = column;
+					chain->j = row;
+					chain->type = get(column, row)->type;
+					
+					// draw line from previous to current
+					drawChain();
+				}
+			} else {
+				// If it's anywhere in the chain (except the first) revert to that point
+				if (unique != chain) {
+					
+					// Only allow going backwards?
 #if SINGLE_BACKWARDS
-						if (unique == chain->next) {
+					if (unique == chain->next) {
 #endif
 						Chain *oldChain = chain;
 						while (oldChain != unique) {
@@ -307,23 +342,46 @@ void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 						//redraw line...
 						drawChain();
 #if SINGLE_BACKWARDS
-						}
-#endif
 					}
+#endif
 				}
 			}
-		} else {
-			//cancelCurrentSpell();
 		}
+	} else {
+		//cancelCurrentSpell();
+	}
+}
+
+void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
+	if (currentTouch && currentTouch->getID() == touch->getID()) {
+		Vec2 loc = touch->getLocation();
+		//Vec2 prevLoc = touch->getPreviousLocation();
+		
+		// check each cell that the line passes through (super cover)
+		// ...
+		// ...although for now just split it up into smaller bits.
+		/*Vec2 d = prevLoc - loc;
+		float angle = atan2f(d.y, d.x);
+		
+		float dd = Gem::getWidth() * 0.1f;
+		float distance = dd;
+		while (distance <= d.length()) {
+			Vec2 dloc = prevLoc + distance * Vec2(cosf(angle), -sinf(angle));
+			onTouchMovePart(dloc);
+			distance += dd;
+		}*/
+		
+		// if we've moved 
+		onTouchMovePart(loc);
 	}
 }
 
 bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 	if (!active) return false;
 	
-    cocos2d::Vec2 loc = touch->getLocation();
-    cocos2d::Vec2 size = getSize();
-    cocos2d::Vec2 pos = getPosition();
+    Vec2 loc = touch->getLocation();
+    Vec2 size = getSize();
+    Vec2 pos = getPosition();
     
     float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
 	

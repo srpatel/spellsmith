@@ -7,16 +7,15 @@
 #include "Dialogs.hpp"
 #include "Characters.hpp"
 
-struct GameProjectile {
-	int damage;
-	Character *target;
-	Sprite *sprite;
-};
-
 enum GameState {
 	PlayerTurn,
 	PlayerSpells,
 	EnemySpells
+};
+
+struct GameAnimation {
+	Sprite *target;
+	FiniteTimeAction *action;
 };
 
 class GameHUD : public Layer {
@@ -53,7 +52,6 @@ private:
 	void doSpell(Spell *);
 	
 	// gamey stuff
-	std::vector<GameProjectile *> projectiles;
 	int mudshield_shots = 0;
 	
 	
@@ -67,6 +65,11 @@ private:
 	
 	Dialog *levelEndDialog;
 	Dialog *spellInfoDialog;
+	
+	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
+	void runAnimation(GameAnimation *ga);
+	std::vector<GameAnimation *> animation_queue;
+	GameAnimation *currentAnimation = nullptr;
 };
 
 #endif /* GameScene_hpp */

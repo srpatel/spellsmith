@@ -38,6 +38,9 @@ private:
 	void castCurrentSpell();
 	void drawChain();
 	void drawSelected();
+	void onTouchMovePart(Vec2 loc);
+	bool doesLineIntersectCell(Vec2 start, Vec2 end, int column, int row);
+	bool isAboveLine(Vec2 start, Vec2 end, Vec2 point);
 	
 	bool diagonals_allowed;
 };

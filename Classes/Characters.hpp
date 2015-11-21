@@ -13,11 +13,27 @@
 
 #define HEALTH_PER_HEART 10
 
+enum BuffType {
+	BARRIER
+};
+
+struct Buff {
+	BuffType type;
+	bool positive;
+	Sprite *sprite;
+	Sprite *icon;
+	int turns; // -1 = forever, n = lasts n more turns
+	int charges; // -1 = infinite, n = n charges remaining
+	
+};
+
 class Character {
 public:
 	int max_health;
 	int health;
+	int ui_health;
 	Sprite *sprite;
+	std::vector<Buff *> buffs;
 };
 
 class Enemy : public Character {
