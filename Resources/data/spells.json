@@ -45,7 +45,28 @@
     "effects": [
       {
         "type": "HEAL",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "name": "healstrike",
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "WF   ",
+      "FW   "
+    ],
+    "effects": [
+      {
+        "type": "HEAL",
         "amount": 7
+      },
+      {
+        "type": "PROJECTILE",
+        "sprite": "",
+        "damage": 7
       }
     ]
   },

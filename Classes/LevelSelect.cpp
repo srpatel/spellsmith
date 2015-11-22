@@ -10,6 +10,7 @@
 #include "GameController.hpp"
 #include "Constants.h"
 #include "Strings.hpp"
+#include "GameScene.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -35,6 +36,7 @@ bool LevelSelect::init() {
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::BEGAN) {
+			Game::get()->mode = kModeLevel;
 			GameController::get()->setState(kStateGame);
 		}
 	});
@@ -47,7 +49,7 @@ bool LevelSelect::init() {
 	button->setPosition(Vec2(visibleSize.width/2, button->getContentSize().height));
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::BEGAN) {
-			GameController::get()->setState(kStateGame);
+			//GameController::get()->setState(kStateGame);
 		}
 	});
 	this->addChild(button);}
@@ -59,6 +61,7 @@ bool LevelSelect::init() {
 		button->setPosition(Vec2(visibleSize.width/2, 2 * button->getContentSize().height));
 		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::BEGAN) {
+				Game::get()->mode = kModeInfinite;
 				GameController::get()->setState(kStateGame);
 			}
 		});

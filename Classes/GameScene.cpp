@@ -436,34 +436,53 @@ void Game::attemptSetState(GameState nextstate) {
 			wizard->health = wizard->max_health;
 			wizard->ui_health = wizard->max_health;
 		}
-		
+		std::function<void()> func;
+		if (mode == kModeInfinite) {
+			// New level without level end dialog!
+			func = [this]() {
+				auto fadeOut = FadeOut::create(0.2f);
+				auto run1 = CallFunc::create([this]() {
+					enemy->max_health = HEALTH_PER_HEART * 2;
+					enemy->health = HEALTH_PER_HEART * 2;
+					enemy->ui_health = HEALTH_PER_HEART * 2;
+					hud->updateValues(wizard, enemy);
+					//grid->scramble();
+				});
+				auto fadeIn = FadeIn::create(0.2f);
+				auto run2 = CallFunc::create([this]() {
+					grid->active = true;
+				});
+				auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
+				enemy->sprite->runAction(seq);
+				
+				state = kStatePlayerTurn;
+			};
+		} else {
+			// Throw up level-end dialog
+			func = [this]() {
+				auto fadeOut = FadeOut::create(0.2f);
+				auto run1 = CallFunc::create([this]() {
+					enemy->max_health = HEALTH_PER_HEART * 2;
+					enemy->health = HEALTH_PER_HEART * 2;
+					enemy->ui_health = HEALTH_PER_HEART * 2;
+					hud->updateValues(wizard, enemy);
+					//grid->scramble();
+				});
+				auto seq = Sequence::create(fadeOut, run1, nullptr);
+				enemy->sprite->runAction(seq);
+				
+				levelEndDialog->setPosition(getContentSize()/2);
+				addChild(levelEndDialog);
+				
+				
+				// when the level end dialog closes, go back to level select?
+			};
+		}
 		// if level-mode, we show the "victory screen"
 		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
 		// 1. fade enemy out
 		// 2. reset health + fade new enemy in
 		// 3. set can use grid to true!
-		auto func = [this]() {
-			auto fadeOut = FadeOut::create(0.2f);
-			auto run1 = CallFunc::create([this]() {
-				enemy->max_health = HEALTH_PER_HEART * 2;
-				enemy->health = HEALTH_PER_HEART * 2;
-				enemy->ui_health = HEALTH_PER_HEART * 2;
-				hud->updateValues(wizard, enemy);
-				//grid->scramble();
-			});
-			auto fadeIn = FadeIn::create(0.2f);
-			auto run2 = CallFunc::create([this]() {
-				grid->active = true;
-			});
-			auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
-			enemy->sprite->runAction(seq);
-			
-			levelEndDialog->setPosition(getContentSize()/2);
-			addChild(levelEndDialog);
-				
-			state = kStatePlayerTurn;
-			grid->active = true;
-		};
 		auto callfunc = CallFunc::create(func);
 		callfunc->retain();
 		
