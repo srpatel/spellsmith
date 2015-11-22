@@ -42,7 +42,7 @@ bool LevelSelect::init() {
 	
 	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::TextureResType::PLIST);
 	button->setTitleFontName(Fonts::MAIN_FONT);
-	button->setTitleText _("inventory");
+	button->setTitleText _("spellbook");
 	
 	button->setPosition(Vec2(visibleSize.width/2, button->getContentSize().height));
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {

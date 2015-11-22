@@ -39,7 +39,9 @@ class Game : public Layer {
 public:
 	static Game *get();
     Grid *grid;
-    
+	
+	GameMode mode = kModeInfinite;
+	
     bool init();
     void update(float dt);
 	

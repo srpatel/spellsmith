@@ -392,7 +392,6 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		// Remove the buff from the character
 		if (lastcharge) {
 			removeBuff(target, shield);
-			delete shield;
 		}
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
@@ -593,4 +592,6 @@ void Game::removeBuff(Character *target, Buff *buff) {
 	
 	// Remove the buff's sprite
 	removeChild(buff->icon);
+	
+	delete buff;
 }

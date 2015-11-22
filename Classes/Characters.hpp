@@ -28,6 +28,7 @@ struct Buff {
 	int priority;
 	
 	static Buff *createMudshield();
+	~Buff();
 };
 
 bool BuffComparator (Buff *left, Buff *right);
