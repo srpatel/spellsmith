@@ -30,7 +30,7 @@ bool Game::init() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(visibleSize);
 	
-	state = PlayerTurn;
+	state = kStatePlayerTurn;
 	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
@@ -273,7 +273,7 @@ bool Game::onCastSpell(Chain *chain) {
 	
 	if (success) {
 		// We can't draw until the enemy has had his turn
-		state = PlayerSpells;
+		state = kStatePlayerSpells;
 		
 		if (spell) {
 			// cast a spell!
@@ -414,12 +414,12 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 void Game::onWizardTurnOver() {
 	// enemy gets a shot at you!
-	attemptSetState(EnemySpells);
+	attemptSetState(kStateEnemySpells);
 }
 void Game::attemptSetState(GameState nextstate) {
 	if (!checkGameOver()) {
 		state = nextstate;
-		if (state == EnemySpells) {
+		if (state == kStateEnemySpells) {
 			// enemy casts his spell
 			enemyDoTurn();
 		}
@@ -430,7 +430,7 @@ void Game::attemptSetState(GameState nextstate) {
 		
 		// state = gameend....
 		// but for now, it's infini-mode!
-		state = PlayerTurn;
+		state = kStatePlayerTurn;
 		
 		// for now, reset when we die!
 		if (wizard->health <= 0) {
@@ -462,7 +462,7 @@ void Game::attemptSetState(GameState nextstate) {
 			levelEndDialog->setPosition(getContentSize()/2);
 			addChild(levelEndDialog);
 				
-			state = PlayerTurn;
+			state = kStatePlayerTurn;
 			grid->active = true;
 		};
 		auto callfunc = CallFunc::create(func);
@@ -492,7 +492,7 @@ void Game::enemyDoTurn() {
 	makeProjectile(enemy, wizard, damage, Color3B::RED);
 	
 	// it's now the player's turn
-	attemptSetState(PlayerTurn);
+	attemptSetState(kStatePlayerTurn);
 }
 
 void Game::runAnimation(GameAnimation *ga) {

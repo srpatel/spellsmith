@@ -7,10 +7,16 @@
 #include "Dialogs.hpp"
 #include "Characters.hpp"
 
+enum GameMode {
+	kModeInfinite,
+	kModeLevel,
+	kModeMultiplayer
+};
+
 enum GameState {
-	PlayerTurn,
-	PlayerSpells,
-	EnemySpells
+	kStatePlayerTurn,
+	kStatePlayerSpells,
+	kStateEnemySpells
 };
 
 struct GameAnimation {
