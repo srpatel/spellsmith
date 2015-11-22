@@ -273,7 +273,6 @@ bool Game::onCastSpell(Chain *chain) {
 	
 	if (success) {
 		// We can't draw until the enemy has had his turn
-		grid->active = false;
 		state = PlayerSpells;
 		
 		if (spell) {
@@ -311,25 +310,40 @@ void Game::doSpell(Spell *spell) {
 			makeProjectile(wizard, enemy, projectile->damage, Color3B::RED);
 		} else if (e->type == Heal) {
 			//nothing to wait for!
-			wizard->health += ((EffectHeal *) e)->amount;
-			wizard->ui_health += ((EffectHeal *) e)->amount;
-			hud->updateValues(wizard, enemy);
+			int amount = ((EffectHeal *) e)->amount;
+			wizard->health += amount;
+			auto func = CallFunc::create([this, amount](){
+				wizard->ui_health += amount;
+				hud->updateValues(wizard, enemy);
+			});
+			func->retain();
+			
+			GameAnimation *ga = new GameAnimation;
+			ga->target = nullptr;
+			ga->action = func;
+			runAnimation(ga);
 		} else if (e->type == Shield) {
 			Buff *shield = wizard->getBuffByType(BuffType::BARRIER);
 			
 			if (shield == nullptr) {
-				// give us mudshield_buff, and animate it in
+				// give us mudshield_buff, and animate it in using ga.
 				auto shield = Buff::createMudshield();
 				
 				// put it in a good place and add it
-				shield->sprite->setPosition(wizard->sprite->getPosition() + Vec2(65, 0));
+				shield->sprite->setPosition(wizard->sprite->getPosition() + Vec2(75, 0));
+				shield->sprite->setOpacity(0);
 				addChild(shield->sprite);
 				
 				// fade it in
 				auto fadeIn = FadeIn::create(0.2);
-				shield->sprite->runAction(fadeIn);
+				fadeIn->retain();
 				
-				wizard->buffs.push_back(shield);
+				addBuff(wizard, shield);
+				
+				GameAnimation *ga = new GameAnimation;
+				ga->target = shield->sprite;
+				ga->action = fadeIn;
+				runAnimation(ga);
 			} else {
 				shield->charges += 2;
 			}
@@ -342,7 +356,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	float scale = 0.5 + MIN(damage, 20) / 4.f;
 	sprite->setScale(scale);
 	sprite->setPosition(source->sprite->getPosition().x, getContentSize().height - 100);
-	sprite->retain();
+	sprite->setVisible(false);
+	addChild(sprite);
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
@@ -376,13 +391,10 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		
 		// Remove the buff from the character
 		if (lastcharge) {
-			auto it = std::find(target->buffs.begin(), target->buffs.end(), shield);
-			if(it != target->buffs.end()) {
-				target->buffs.erase(it);
-			}
+			removeBuff(target, shield);
 			delete shield;
 		}
-		seq = Sequence::create(moveTo, updateHealth, nullptr);
+		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
 		target->health -= damage;
 		auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
@@ -391,7 +403,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			target->ui_health -= damage;
 			hud->updateValues(wizard, enemy);
 		});
-		seq = Sequence::create(moveTo, updateHealth, nullptr);
+		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	}
 	seq->retain();
 	
@@ -402,46 +414,76 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 void Game::onWizardTurnOver() {
 	// enemy gets a shot at you!
-	state = EnemySpells;
-	enemyDoTurn();
+	attemptSetState(EnemySpells);
 }
-bool Game::checkGameOver() {
-	// Returns if the game is over
-	auto gameOver = false;
-	if (wizard->health <= 0) {
-		wizard->health = wizard->max_health;
-		gameOver = true;
-	} else if (enemy->health <= 0) {
-		//need new enemy
-		gameOver = true;
-	}
-	if (gameOver) {		
+void Game::attemptSetState(GameState nextstate) {
+	if (!checkGameOver()) {
+		state = nextstate;
+		if (state == EnemySpells) {
+			// enemy casts his spell
+			enemyDoTurn();
+		}
+	} else {
+		grid->active = false;
+		// set faded out until the next level is ready.
+		grid->setOpacity(125);
+		
+		// state = gameend....
+		// but for now, it's infini-mode!
+		state = PlayerTurn;
+		
+		// for now, reset when we die!
+		if (wizard->health <= 0) {
+			wizard->health = wizard->max_health;
+			wizard->ui_health = wizard->max_health;
+		}
+		
 		// if level-mode, we show the "victory screen"
 		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
 		// 1. fade enemy out
 		// 2. reset health + fade new enemy in
 		// 3. set can use grid to true!
-		
-		auto fadeOut = FadeOut::create(0.2f);
-		auto run1 = CallFunc::create([this]() {
-			enemy->max_health = HEALTH_PER_HEART * 2;
-			enemy->health = HEALTH_PER_HEART * 2;
-			hud->updateValues(wizard, enemy);
-			//grid->scramble();
-		});
-		auto fadeIn = FadeIn::create(0.2f);
-		auto run2 = CallFunc::create([this]() {
+		auto func = [this]() {
+			auto fadeOut = FadeOut::create(0.2f);
+			auto run1 = CallFunc::create([this]() {
+				enemy->max_health = HEALTH_PER_HEART * 2;
+				enemy->health = HEALTH_PER_HEART * 2;
+				enemy->ui_health = HEALTH_PER_HEART * 2;
+				hud->updateValues(wizard, enemy);
+				//grid->scramble();
+			});
+			auto fadeIn = FadeIn::create(0.2f);
+			auto run2 = CallFunc::create([this]() {
+				grid->active = true;
+			});
+			auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
+			enemy->sprite->runAction(seq);
+			
+			levelEndDialog->setPosition(getContentSize()/2);
+			addChild(levelEndDialog);
+				
+			state = PlayerTurn;
 			grid->active = true;
-		});
-		auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
-		enemy->sprite->runAction(seq);
+		};
+		auto callfunc = CallFunc::create(func);
+		callfunc->retain();
 		
-		levelEndDialog->setPosition(getContentSize()/2);
-		addChild(levelEndDialog);
+		// add this func to the queue, so it happens when there's nothing left.
+		auto ga = new GameAnimation;
+		ga->target = nullptr;
+		ga->action = callfunc;
+		runAnimation(ga);
 		
-		// Always start on your turn.
-		state = PlayerTurn;
-		
+	}
+}
+bool Game::checkGameOver() {
+	// Returns if the game is over
+	auto gameOver = false;
+	if (wizard->health <= 0) {
+		gameOver = true;
+	} else if (enemy->health <= 0) {
+		//need new enemy
+		gameOver = true;
 	}
 	return gameOver;
 }
@@ -450,8 +492,7 @@ void Game::enemyDoTurn() {
 	makeProjectile(enemy, wizard, damage, Color3B::RED);
 	
 	// it's now the player's turn
-	state = PlayerTurn;
-	grid->active = true;
+	attemptSetState(PlayerTurn);
 }
 
 void Game::runAnimation(GameAnimation *ga) {
@@ -460,19 +501,12 @@ void Game::runAnimation(GameAnimation *ga) {
 		currentAnimation = ga;
 		
 		// add target and make it run the associated action
-		if (ga->target) {
-			addChild(ga->target);
-		}
 		auto onFinish = CallFunc::create([this, ga](){
 			currentAnimation = nullptr;
 			// this animation has finished, so run the next one if there is one
 			if (!animation_queue.empty()) {
 				runAnimation(animation_queue[0]);
 				animation_queue.erase(animation_queue.begin() + 0);
-			}
-			// release the action/sprite because they were retained
-			if (ga->target) {
-				ga->target->release();
 			}
 			ga->action->release();
 			// free ga
@@ -538,4 +572,25 @@ void GameHUD::updateValues(Character *left, Character *right) {
 	
 	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
 	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
+}
+
+void Game::addBuff(Character *target, Buff *buff) {
+	// if there is already one of this type...then ignore maybe?
+	// TODO
+	target->buffs.push_back(buff);
+	
+	// Add the buff's sprite
+	buff->icon->setAnchorPoint(Vec2::ZERO);
+	buff->icon->setPosition(Vec2(10, target->sprite->getPosition().y));
+	addChild(buff->icon);
+}
+
+void Game::removeBuff(Character *target, Buff *buff) {
+	auto it = std::find(target->buffs.begin(), target->buffs.end(), buff);
+	if(it != target->buffs.end()) {
+		target->buffs.erase(it);
+	}
+	
+	// Remove the buff's sprite
+	removeChild(buff->icon);
 }

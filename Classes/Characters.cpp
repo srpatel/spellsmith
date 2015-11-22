@@ -16,7 +16,7 @@ Buff *Buff::createMudshield() {
 	auto buff = new Buff;
 	buff->type = BuffType::BARRIER;
 	buff->positive = true;
-	buff->icon = nullptr;
+	buff->icon = Sprite::createWithSpriteFrameName("buffs/mudshield.png");
 	buff->sprite = Sprite::createWithSpriteFrameName("spells/mudshield.png");
 	buff->sprite->setAnchorPoint(Vec2(0.5, 0));
 	buff->turns = -1; // -1 = forever, n = lasts n more turns

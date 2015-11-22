@@ -57,9 +57,13 @@ private:
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
+	void attemptSetState(GameState);
 	
 	Dialog *levelEndDialog;
 	Dialog *spellInfoDialog;
+	
+	void addBuff(Character *target, Buff *buff);
+	void removeBuff(Character *target, Buff *buff);
 	
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
 	void runAnimation(GameAnimation *ga);
