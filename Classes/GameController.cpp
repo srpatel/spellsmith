@@ -60,3 +60,12 @@ void GameController::setState(State newstate) {
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer);
 }
+
+void GameController::showLevelEndDialog(bool victory) {
+	// Create the dialog and add it to the root
+	auto dialog = LevelEndDialog::create();
+	// There should be two types of dialog:
+	//	- success and failure...
+	dialog->setPosition(root->getContentSize()/2);
+	root->addChild(dialog);
+}

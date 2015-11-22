@@ -7,7 +7,11 @@
 //
 
 #include "Dialogs.hpp"
+#include "Strings.hpp"
+#include "Constants.h"
 #include "GameScene.hpp"
+
+#include "ui/CocosGUI.h"
 
 bool LevelEndDialog::init() {
 	if ( !Dialog::init() ) {
@@ -19,6 +23,32 @@ bool LevelEndDialog::init() {
 	float ymax = 100;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
+	
+	// stars!
+		// if you won, they animate in 1/2/3 of them
+		// if you'd already won it, the previous is shown somewhere?
+	// "congratulations!" or "Unlucky!"
+	// some stats?
+	// if lost: "retry": button
+	// "map" button
+	
+	auto label = Label::createWithTTF( _("win/lose"), Fonts::MAIN_FONT, 32);
+	label->setColor(Color3B::BLACK);
+	label->setPosition(Vec2(0, 80));
+	this->addChild(label, 1);
+	
+	// Play button
+	auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
+	button->setTitleFontName(Fonts::MAIN_FONT);
+	button->setTitleText _("Back");
+	
+	button->setPosition(Vec2(0, -80));
+	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::BEGAN) {
+			getParent()->removeChild(this);
+		}
+	});
+	this->addChild(button);
 	
 	return true;
 }
@@ -49,7 +79,7 @@ bool Dialog::init() {
 	touchListener->onTouchMoved = CC_CALLBACK_2(SpellInfoDialog::onTouchMoved, this);
 	//    touchListener->onTouchCancelled = CC_CALLBACK_2(Grid::onTouchCancelled, this);
 	
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 	
 	return true;
 }
@@ -57,7 +87,7 @@ bool Dialog::init() {
 bool Dialog::onTouchBegan(cocos2d::Touch *, cocos2d::Event *event) {
 	// Close the dialog!
 	event->stopPropagation();
-	Game::get()->removeChild(this);
+	getParent()->removeChild(this);
 	return false;
 }
 void Dialog::onTouchMoved(cocos2d::Touch *, cocos2d::Event *) {

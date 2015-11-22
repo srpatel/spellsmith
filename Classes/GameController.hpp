@@ -23,7 +23,11 @@ public:
 	static void init(Scene *root);
 	static GameController *get();
 	
+	// Game states
 	void setState(State state);
+	
+	// (Model) Dialogs
+	void showLevelEndDialog(bool victory);
 private:
 	static GameController *instance;
 	Scene *root;

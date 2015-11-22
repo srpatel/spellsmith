@@ -67,9 +67,6 @@ private:
 	GameState state;
 	void attemptSetState(GameState);
 	
-	Dialog *levelEndDialog;
-	Dialog *spellInfoDialog;
-	
 	void addBuff(Character *target, Buff *buff);
 	void removeBuff(Character *target, Buff *buff);
 	

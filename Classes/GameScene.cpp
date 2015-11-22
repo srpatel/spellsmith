@@ -2,7 +2,7 @@
 #include "Spell.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
-#include "Dialogs.hpp"
+#include "GameController.hpp"
 
 #include <sstream>
 
@@ -223,10 +223,6 @@ bool Game::init() {
                         __/ |    
                        |___/
  */
-	spellInfoDialog = SpellInfoDialog::create();
-	spellInfoDialog->retain();
-	levelEndDialog = LevelEndDialog::create();
-	levelEndDialog->retain();
 	
     this->scheduleUpdate();
     
@@ -431,8 +427,10 @@ void Game::attemptSetState(GameState nextstate) {
 		// but for now, it's infini-mode!
 		state = kStatePlayerTurn;
 		
+		bool success = true;
 		// for now, reset when we die!
 		if (wizard->health <= 0) {
+			success = false;
 			wizard->health = wizard->max_health;
 			wizard->ui_health = wizard->max_health;
 		}
@@ -459,7 +457,7 @@ void Game::attemptSetState(GameState nextstate) {
 			};
 		} else {
 			// Throw up level-end dialog
-			func = [this]() {
+			func = [this, success]() {
 				auto fadeOut = FadeOut::create(0.2f);
 				auto run1 = CallFunc::create([this]() {
 					enemy->max_health = HEALTH_PER_HEART * 2;
@@ -471,9 +469,8 @@ void Game::attemptSetState(GameState nextstate) {
 				auto seq = Sequence::create(fadeOut, run1, nullptr);
 				enemy->sprite->runAction(seq);
 				
-				levelEndDialog->setPosition(getContentSize()/2);
-				addChild(levelEndDialog);
-				
+				// Dialog takes all focus!
+				GameController::get()->showLevelEndDialog(success);
 				
 				// when the level end dialog closes, go back to level select?
 			};
