@@ -28,7 +28,7 @@ bool LevelSelect::init() {
 	this->addChild(label, 1);
 	
 	// Add a bunch of level buttons
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
 	button->setTitleFontName(Fonts::MAIN_FONT);
 	button->setTitleText _("single level");
 	
@@ -40,7 +40,7 @@ bool LevelSelect::init() {
 	});
 	this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
 	button->setTitleFontName(Fonts::MAIN_FONT);
 	button->setTitleText _("spellbook");
 	
@@ -52,7 +52,7 @@ bool LevelSelect::init() {
 	});
 	this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
 		button->setTitleFontName(Fonts::MAIN_FONT);
 		button->setTitleText _("infinite mode");
 		
