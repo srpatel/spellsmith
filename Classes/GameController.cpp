@@ -63,9 +63,12 @@ void GameController::setState(State newstate) {
 
 void GameController::showLevelEndDialog(bool victory) {
 	// Create the dialog and add it to the root
-	auto dialog = LevelEndDialog::create();
-	// There should be two types of dialog:
-	//	- success and failure...
+	Dialog *dialog;
+	if (victory) {
+		LevelWonDialog::create();
+	} else {
+		LevelLostDialog::create();
+	}
 	dialog->setPosition(root->getContentSize()/2);
 	root->addChild(dialog);
 }

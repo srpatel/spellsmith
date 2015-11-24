@@ -9,6 +9,13 @@
 #ifndef Dialogs_hpp
 #define Dialogs_hpp
 
+#define SIMPLE_DIALOG(_x_) class _x_ : public Dialog {\
+public:\
+bool init();\
+\
+CREATE_FUNC(_x_);\
+}
+
 class Dialog : public Layer {
 public:
 	bool init();
@@ -18,18 +25,8 @@ public:
 	virtual void onTouchEnded(cocos2d::Touch *, cocos2d::Event *);
 };
 
-class LevelEndDialog : public Dialog {
-public:
-	bool init();
-	
-	CREATE_FUNC(LevelEndDialog);
-};
-
-class SpellInfoDialog : public Dialog {
-public:
-	bool init();
-	
-	CREATE_FUNC(SpellInfoDialog);
-};
+SIMPLE_DIALOG(LevelWonDialog);
+SIMPLE_DIALOG(LevelLostDialog);
+SIMPLE_DIALOG(SpellInfoDialog);
 
 #endif /* Dialogs_hpp */

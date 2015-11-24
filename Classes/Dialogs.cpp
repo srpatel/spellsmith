@@ -13,7 +13,7 @@
 
 #include "ui/CocosGUI.h"
 
-bool LevelEndDialog::init() {
+bool LevelWonDialog::init() {
 	if ( !Dialog::init() ) {
 		return false;
 	}
@@ -32,23 +32,79 @@ bool LevelEndDialog::init() {
 	// if lost: "retry": button
 	// "map" button
 	
-	auto label = Label::createWithTTF( _("win/lose"), Fonts::MAIN_FONT, 32);
+	auto label = Label::createWithTTF( _("ui.LEVEL_WON"), Fonts::MAIN_FONT, 32);
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
 	
-	// Play button
-	auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-	button->setTitleFontName(Fonts::MAIN_FONT);
-	button->setTitleText _("Back");
+	{
+		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::MAIN_FONT);
+		button->setTitleText _("ui.RETURN_TO_MAP");
+		
+		button->setPosition(Vec2(0, -80));
+		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::BEGAN) {
+				getParent()->removeChild(this);
+			}
+		});
+		this->addChild(button);
+	}
 	
-	button->setPosition(Vec2(0, -80));
-	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::BEGAN) {
-			getParent()->removeChild(this);
-		}
-	});
-	this->addChild(button);
+	return true;
+}
+
+bool LevelLostDialog::init() {
+	if ( !Dialog::init() ) {
+		return false;
+	}
+	
+	auto background = cocos2d::DrawNode::create();
+	float xmax = 100;
+	float ymax = 100;
+	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
+	addChild(background);
+	
+	// stars!
+	// if you won, they animate in 1/2/3 of them
+	// if you'd already won it, the previous is shown somewhere?
+	// "congratulations!" or "Unlucky!"
+	// some stats?
+	// if lost: "retry": button
+	// "map" button
+	
+	auto label = Label::createWithTTF( _("ui.LEVEL_LOST"), Fonts::MAIN_FONT, 32);
+	label->setColor(Color3B::BLACK);
+	label->setPosition(Vec2(0, 80));
+	this->addChild(label, 1);
+	
+	{
+		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::MAIN_FONT);
+		button->setTitleText _("ui.RETRY_LEVEL");
+		
+		button->setPosition(Vec2(0, -40));
+		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::BEGAN) {
+				getParent()->removeChild(this);
+			}
+		});
+		this->addChild(button);
+	}
+	
+	{
+		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::MAIN_FONT);
+		button->setTitleText _("ui.RETURN_TO_MAP");
+		
+		button->setPosition(Vec2(0, -80));
+		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::BEGAN) {
+				getParent()->removeChild(this);
+			}
+		});
+		this->addChild(button);
+	}
 	
 	return true;
 }

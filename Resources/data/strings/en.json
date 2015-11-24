@@ -25,5 +25,12 @@
 			"name" : "groundspike",
 			"description" : "rock in the groin. ouch."
 		}
+	},
+	
+	"ui" : {
+		"LEVEL_WON" : "congratulations",
+		"LEVEL_LOST" : "you lost",
+		"RETRY_LEVEL" : "retry",
+		"RETURN_TO_MAP" : "back"
 	}
 }
