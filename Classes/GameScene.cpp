@@ -43,9 +43,9 @@ bool Game::init() {
 		wizard->inventory.push_back(Spell::spells[i]);
 	
 	enemy = new Enemy;
-	enemy->max_health = HEALTH_PER_HEART * 2;
-	enemy->health = HEALTH_PER_HEART * 2;
-	enemy->ui_health = HEALTH_PER_HEART * 2;
+	enemy->max_health = HEALTH_PER_HEART * 3;
+	enemy->health = HEALTH_PER_HEART * 3;
+	enemy->ui_health = HEALTH_PER_HEART * 3;
 	
 	
 	auto scenery_sprite = Sprite::createWithSpriteFrameName("ui/scenery.png");
@@ -428,14 +428,11 @@ void Game::attemptSetState(GameState nextstate) {
 		state = kStatePlayerTurn;
 		
 		bool success = true;
-		// for now, reset when we die!
 		if (wizard->health <= 0) {
 			success = false;
-			wizard->health = wizard->max_health;
-			wizard->ui_health = wizard->max_health;
 		}
 		std::function<void()> func;
-		if (mode == kModeInfinite) {
+		if (success && mode == kModeInfinite) {
 			// New level without level end dialog!
 			func = [this]() {
 				auto fadeOut = FadeOut::create(0.2f);
@@ -459,15 +456,7 @@ void Game::attemptSetState(GameState nextstate) {
 			// Throw up level-end dialog
 			func = [this, success]() {
 				auto fadeOut = FadeOut::create(0.2f);
-				auto run1 = CallFunc::create([this]() {
-					enemy->max_health = HEALTH_PER_HEART * 2;
-					enemy->health = HEALTH_PER_HEART * 2;
-					enemy->ui_health = HEALTH_PER_HEART * 2;
-					hud->updateValues(wizard, enemy);
-					//grid->scramble();
-				});
-				auto seq = Sequence::create(fadeOut, run1, nullptr);
-				enemy->sprite->runAction(seq);
+				enemy->sprite->runAction(fadeOut);
 				
 				// Dialog takes all focus!
 				GameController::get()->showLevelEndDialog(success);
@@ -508,6 +497,21 @@ void Game::enemyDoTurn() {
 	
 	// it's now the player's turn
 	attemptSetState(kStatePlayerTurn);
+}
+void Game::reset() {
+	// reset health
+	wizard->health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
+	enemy->health = enemy->max_health;
+	enemy->ui_health = enemy->max_health;
+	hud->updateValues(wizard, enemy);
+	
+	// reset enemy
+	enemy->sprite->setOpacity(255);
+	
+	// reset game state
+	state = kStatePlayerTurn;
+	grid->active = true;
 }
 
 void Game::runAnimation(GameAnimation *ga) {
@@ -552,8 +556,8 @@ bool GameHUD::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	
 	// Add a couple of cheeky TBs.
-	left_health = Label::createWithTTF(_("health"), Fonts::MAIN_FONT, 30);
-	right_health = Label::createWithTTF(_("health"), Fonts::MAIN_FONT, 30);
+	left_health = Label::createWithTTF(_("health"), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	right_health = Label::createWithTTF(_("health"), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 	left_health->setTextColor(Color4B::WHITE);
 	right_health->setTextColor(Color4B::WHITE);
 	

@@ -23,39 +23,39 @@ bool LevelSelect::init() {
 	setContentSize(visibleSize);
 	
 	// Title
-	auto label = Label::createWithTTF( _("level select"), Fonts::MAIN_FONT, 32);
+	auto label = Label::createWithTTF( _("level select"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setPosition(Vec2(visibleSize.width/2,
 							visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 	
 	// Add a bunch of level buttons
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-	button->setTitleFontName(Fonts::MAIN_FONT);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText _("single level");
 	
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::BEGAN) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
 			Game::get()->mode = kModeLevel;
 			GameController::get()->setState(kStateGame);
 		}
 	});
 	this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-	button->setTitleFontName(Fonts::MAIN_FONT);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText _("spellbook");
 	
 	button->setPosition(Vec2(visibleSize.width/2, button->getContentSize().height));
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::BEGAN) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
 			//GameController::get()->setState(kStateGame);
 		}
 	});
 	this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-		button->setTitleFontName(Fonts::MAIN_FONT);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("infinite mode");
 		
 		button->setPosition(Vec2(visibleSize.width/2, 2 * button->getContentSize().height));

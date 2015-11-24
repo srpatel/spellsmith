@@ -10,6 +10,7 @@
 #include "Strings.hpp"
 #include "Constants.h"
 #include "GameScene.hpp"
+#include "GameController.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -32,20 +33,22 @@ bool LevelWonDialog::init() {
 	// if lost: "retry": button
 	// "map" button
 	
-	auto label = Label::createWithTTF( _("ui.LEVEL_WON"), Fonts::MAIN_FONT, 32);
+	auto label = Label::createWithTTF( _("ui.LEVEL_WON"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-		button->setTitleFontName(Fonts::MAIN_FONT);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
 		button->setPosition(Vec2(0, -80));
 		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::BEGAN) {
-				getParent()->removeChild(this);
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				auto gc = GameController::get();
+				gc->popDialog();
+				gc->setState(kStateLevelSelect);
 			}
 		});
 		this->addChild(button);
@@ -73,34 +76,40 @@ bool LevelLostDialog::init() {
 	// if lost: "retry": button
 	// "map" button
 	
-	auto label = Label::createWithTTF( _("ui.LEVEL_LOST"), Fonts::MAIN_FONT, 32);
+	auto label = Label::createWithTTF( _("ui.LEVEL_LOST"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-		button->setTitleFontName(Fonts::MAIN_FONT);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETRY_LEVEL");
 		
 		button->setPosition(Vec2(0, -40));
 		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::BEGAN) {
-				getParent()->removeChild(this);
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				auto gc = GameController::get();
+				gc->popDialog();
+				
+				// Reset game state
+				Game::get()->reset();
 			}
 		});
 		this->addChild(button);
 	}
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-		button->setTitleFontName(Fonts::MAIN_FONT);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
 		button->setPosition(Vec2(0, -80));
 		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::BEGAN) {
-				getParent()->removeChild(this);
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				auto gc = GameController::get();
+				gc->popDialog();
+				gc->setState(kStateLevelSelect);
 			}
 		});
 		this->addChild(button);

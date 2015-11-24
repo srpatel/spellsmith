@@ -50,6 +50,9 @@ public:
 	
 	// Called when the Wizard's animations etc. have finished
 	void onWizardTurnOver();
+	
+	// Restart the current game!
+	void reset();
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);

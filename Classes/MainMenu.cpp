@@ -22,19 +22,19 @@ bool MainMenu::init() {
 	setContentSize(visibleSize);
 	
 	// Title
-	auto label = Label::createWithTTF( _("spellsmith"), Fonts::MAIN_FONT, 32);
+	auto label = Label::createWithTTF( _("spellsmith"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setPosition(Vec2(visibleSize.width/2,
 							visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 	
 	// Play button
-	auto button = ui::Button::create("ui/button.png", "ui/button.png", "ui/button.png", ui::Widget::TextureResType::PLIST);
-	button->setTitleFontName(Fonts::MAIN_FONT);
+	auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText _("Play");
 	
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::BEGAN) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
 			GameController::get()->setState(kStateLevelSelect);
 		}
 	});

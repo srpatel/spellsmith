@@ -9,8 +9,12 @@
 #ifndef Constants_h
 #define Constants_h
 
-namespace Fonts {
-	const std::string MAIN_FONT = "fonts/powerhouse-era.ttf";
+namespace Fonts {	
+	const std::string TITLE_FONT = "fonts/im_fell_english_sc.ttf";
+	const std::string TEXT_FONT = "fonts/eb_garamond.ttf";
+	
+	const int TITLE_SIZE = 32;
+	const int TEXT_SIZE = 18;
 };
 
 namespace Colours {

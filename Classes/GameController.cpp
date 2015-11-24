@@ -59,16 +59,29 @@ void GameController::setState(State newstate) {
 	
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer);
+	
+	if (newstate == kStateGame) {
+		Game::get()->reset();
+	}
 }
-
+void GameController::popDialog() {
+	if (dialog_stack.size()) {
+		Dialog *last_dialog = dialog_stack[dialog_stack.size() - 1];
+		root->removeChild(last_dialog);
+		dialog_stack.pop_back();
+	} else {
+		// shouldn't get here!
+	}
+}
 void GameController::showLevelEndDialog(bool victory) {
 	// Create the dialog and add it to the root
 	Dialog *dialog;
 	if (victory) {
-		LevelWonDialog::create();
+		dialog = LevelWonDialog::create();
 	} else {
-		LevelLostDialog::create();
+		dialog = LevelLostDialog::create();
 	}
 	dialog->setPosition(root->getContentSize()/2);
 	root->addChild(dialog);
+	dialog_stack.push_back(dialog);
 }

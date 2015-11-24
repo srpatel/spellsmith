@@ -9,6 +9,8 @@
 #ifndef GameController_hpp
 #define GameController_hpp
 
+#include "Dialogs.hpp"
+
 enum State {
 	kStateMainMenu = 0,
 	kStateLevelSelect,
@@ -27,11 +29,13 @@ public:
 	void setState(State state);
 	
 	// (Model) Dialogs
+	void popDialog();
 	void showLevelEndDialog(bool victory);
 private:
 	static GameController *instance;
 	Scene *root;
 	State state = kStateMainMenu;
+	std::vector<Dialog *> dialog_stack;
 };
 
 #endif /* GameController_hpp */
