@@ -94,8 +94,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// load the Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("spritesheet.plist");
-	// Load strings
+	
+	// Init JSON things
+	Spells::get()->init();
 	Strings::get()->init();
+	
+	
 	// Random
 	srand (time(NULL));
 	

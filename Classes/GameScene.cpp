@@ -34,13 +34,13 @@ bool Game::init() {
 	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
-	Spell::init(5, 5);
 	wizard = new Wizard;
 	wizard->max_health = HEALTH_PER_HEART * 5;
 	wizard->health = HEALTH_PER_HEART * 5;
 	wizard->ui_health = HEALTH_PER_HEART * 5;
-	for (int i = 0; i < 3; i++)
-		wizard->inventory.push_back(Spell::spells[i]);
+	for (int i = 0; i < 3; i++) {
+		wizard->inventory.push_back(Spells::get()->at(i));
+	}
 	
 	enemy = new Enemy;
 	enemy->max_health = HEALTH_PER_HEART * 3;

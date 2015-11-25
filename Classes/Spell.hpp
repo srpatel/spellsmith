@@ -37,11 +37,10 @@ struct EffectShield : public BaseEffect {
 };
 
 class Spell {
+	friend class Spells;
 public:
 	Spell(std::string name);
 	~Spell();
-	static void init(int width, int height);
-	static std::vector<Spell *> spells;
 	std::vector<BaseEffect *> effects;
 	void setup();
 	Node *mininode;
@@ -52,13 +51,22 @@ private:
 	GemType *shape;
 	int width;
 	int height;
-	static int max_width;
-	static int max_height;
-	static GemType *compare_temp;
 	static void rotate(GemType *grid);
 	static void align(GemType *grid);
 	static void flip(GemType *grid);
 	static void copy(Chain *chain, GemType *grid);
+};
+
+class Spells {
+public:
+	static Spells *get();
+	void init();
+	
+	inline int count() { return spells.size(); }
+	inline Spell *at(int i) { return spells[i]; }
+private:
+	static Spells *instance;
+	std::vector<Spell *> spells;
 };
 
 #endif /* Spell_hpp */

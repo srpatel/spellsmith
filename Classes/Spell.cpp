@@ -13,21 +13,26 @@
 
 #include "json/document.h"
 
-GemType *Spell::compare_temp;
-std::vector<Spell *> Spell::spells;
-int Spell::max_width;
-int Spell::max_height;
+#define MAX_WIDTH 5
+#define MAX_HEIGHT 5
+
+static GemType *compare_temp;
+Spells *Spells::instance = nullptr;
 
 #define DEBUGGING_SPELLS 0
-#define NewArray new GemType[Spell::max_width * Spell::max_height]
-#define Zero(grid) for (int i = 0; i < Spell::max_width; i++) for (int j = 0; j < Spell::max_height; j++)\
+#define NewArray new GemType[MAX_WIDTH * MAX_HEIGHT]
+#define Zero(grid) for (int i = 0; i < MAX_WIDTH; i++) for (int j = 0; j < MAX_HEIGHT; j++)\
 	grid at(i, j) = NONE;
-#define at(i, j) [(i) + (j) * Spell::max_width]
+#define at(i, j) [(i) + (j) * MAX_WIDTH]
 
-void Spell::init(int width, int height) {
-	Spell::max_width = width;
-	Spell::max_height = height;
-	
+Spells *Spells::get() {
+	if (instance == nullptr) {
+		instance = new Spells;
+	}
+	return instance;
+}
+
+void Spells::init() {
 	compare_temp = NewArray;
 	
 	std::string data = FileUtils::getInstance()->getStringFromFile("data/spells.json");
@@ -40,8 +45,8 @@ void Spell::init(int width, int height) {
 		const rapidjson::Value& effects = spell["effects"];
 		auto s = new Spell(_(std::string("spell.") + spell["name"].GetString() + ".name"));
 #if DEBUG
-		if (shape.Size() != Spell::max_height) {
-			LOG("height != Spell::max_height\n");
+		if (shape.Size() != MAX_HEIGHT) {
+			LOG("height != MAX_HEIGHT\n");
 		}
 #endif
 		for (int j = shape.Size() - 1; j >= 0; j--) {
@@ -49,11 +54,11 @@ void Spell::init(int width, int height) {
 			// TODO : should it be strlen?
 			int width = strlen(row);
 #if DEBUG
-			if (width != Spell::max_width) {
-				LOG("width != Spell::max_width\n");
+			if (width != MAX_WIDTH) {
+				LOG("width != MAX_WIDTH\n");
 			}
 #endif
-			for (int k = 0; k < Spell::max_width; k++) {
+			for (int k = 0; k < MAX_WIDTH; k++) {
 				GemType g = NONE;
 				switch (row[k]) {
 					case ' ': g = NONE; break;
@@ -63,7 +68,7 @@ void Spell::init(int width, int height) {
 					case 'A': g = AIR; break;
 				}
 				if (g != NONE) {
-					s->shape at(k, Spell::max_height - j - 1) = g;
+					s->shape at(k, MAX_HEIGHT - j - 1) = g;
 				}
 			}
 		}
@@ -118,7 +123,7 @@ void Spell::setup() {
 	int width = 0, height = 0;
 	// Find height and width of shape (so we can draw the spell centred)
 	// TODO : Could make this neater... not that it matters!
-	For2(Spell::max_width, Spell::max_height) {
+	For2(MAX_WIDTH, MAX_HEIGHT) {
 		if (shape at(i, j) != NONE) {
 			if (i > width) {
 				width = i;
@@ -130,7 +135,7 @@ void Spell::setup() {
 	}
 	
 	// Populate with gems.
-	For2(Spell::max_width, Spell::max_height) {
+	For2(MAX_WIDTH, MAX_HEIGHT) {
 		auto type = shape at(i, j);
 		if (type != NONE) {
 			const char *element;
@@ -169,7 +174,7 @@ void Spell::align(GemType *grid) {
 	int min_i = INT_MAX;
 	int min_j = INT_MAX;
 	
-	For2(Spell::max_width, Spell::max_height) {
+	For2(MAX_WIDTH, MAX_HEIGHT) {
 		if (grid at(i, j) != NONE) {
 			if (i < min_i)
 				min_i = i;
@@ -181,8 +186,8 @@ void Spell::align(GemType *grid) {
 	
 	// Offset each gem - if there is offsetting to do
 	if (min_i > 0 || min_j > 0) {
-		for (int i = min_i; i < Spell::max_width; i++) {
-			for (int j = min_j; j < Spell::max_height; j++) {
+		for (int i = min_i; i < MAX_WIDTH; i++) {
+			for (int j = min_j; j < MAX_HEIGHT; j++) {
 				grid at(i - min_i, j - min_j) = grid at(i, j);
 				grid at(i, j) = NONE;
 			}
@@ -191,9 +196,9 @@ void Spell::align(GemType *grid) {
 }
 // Rotate by 90 degs...
 void Spell::rotate(GemType *grid) {
-	GemType temp[Spell::max_width * Spell::max_height];
+	GemType temp[MAX_WIDTH * MAX_HEIGHT];
 	// Copy into temp grid
-	For2(Spell::max_width, Spell::max_height) {
+	For2(MAX_WIDTH, MAX_HEIGHT) {
 		temp at(i, j) = grid at(i, j);
 	}
 	
@@ -201,17 +206,17 @@ void Spell::rotate(GemType *grid) {
 	
 	// Copy each column into a row
 	// TODO : This rotatation assumes height = width!
-	for (int i = Spell::max_width - 1; i >= 0; i--) {
-		for (int j = 0; j < Spell::max_height; j++) {
-			grid at(j, Spell::max_height - i - 1) = temp at(i, j);
+	for (int i = MAX_WIDTH - 1; i >= 0; i--) {
+		for (int j = 0; j < MAX_HEIGHT; j++) {
+			grid at(j, MAX_HEIGHT - i - 1) = temp at(i, j);
 		}
 	}
 }
 // Flip by any axis
 void Spell::flip(GemType *grid) {
-	for (int i = 0; i < Spell::max_width; i++) {
-		for (int j = 0; j < Spell::max_height / 2; j++) {
-			int mirror_j = Spell::max_height - j - 1;
+	for (int i = 0; i < MAX_WIDTH; i++) {
+		for (int j = 0; j < MAX_HEIGHT / 2; j++) {
+			int mirror_j = MAX_HEIGHT - j - 1;
 			auto temp = grid at(i, j);
 			grid at(i, j) = grid at(i, mirror_j);
 			grid at(i, mirror_j) = temp;
@@ -234,8 +239,8 @@ bool Spell::operator==(Chain *chain) {
 	
 #if DEBUGGING_SPELLS
 	printf("\nSpell: \n");
-	for (int j = 0; j < Spell::max_height; j++) {
-		for (int i = 0; i < Spell::max_width; i++) {
+	for (int j = 0; j < MAX_HEIGHT; j++) {
+		for (int i = 0; i < MAX_WIDTH; i++) {
 			printf("%d", shape at(i,j));
 		}
 		printf("\n");
@@ -249,14 +254,14 @@ bool Spell::operator==(Chain *chain) {
 			// TODO : memcmp seems a bit crude... opt for going gem by gem. That way we can have wild-cards.
 #if DEBUGGING_SPELLS
 			printf("\nAttempt: \n");
-			for (int j = 0; j < Spell::max_height; j++) {
-				for (int i = 0; i < Spell::max_width; i++) {
+			for (int j = 0; j < MAX_HEIGHT; j++) {
+				for (int i = 0; i < MAX_WIDTH; i++) {
 					printf("%d", compare_temp at(i,j));
 				}
 				printf("\n");
 			}
 #endif
-			bool match = memcmp(compare_temp, shape, Spell::max_width * Spell::max_height * sizeof(GemType)) == 0;
+			bool match = memcmp(compare_temp, shape, MAX_WIDTH * MAX_HEIGHT * sizeof(GemType)) == 0;
 			if (match) {
 				success = true;
 				goto done;
