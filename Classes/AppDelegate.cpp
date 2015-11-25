@@ -3,8 +3,18 @@
 #include "Strings.hpp"
 #include "GameController.hpp"
 
+#define SIZE_IPHONE_3  Size(320, 480)
+#define SIZE_IPHONE_4  Size(640, 960)
+#define SIZE_IPHONE_5  Size(640, 1136)
+#define SIZE_IPHONE_6  Size(750, 1334)
+#define SIZE_IPHONE_6P Size(1080, 1920)
+#define SIZE_IPAD_RET  Size(1536, 2048)
+#define SIZE_IPAD      Size(768, 1024)
+static Size screenSize = SIZE_IPHONE_3;
+
 static Size designResolutionSize = Size(320, 568);
-static Size smallResolutionSize  = Size(640, 1136);
+
+static Size smallResolutionSize  = Size(320, 568);
 static Size mediumResolutionSize = Size(640, 1136);
 static Size largeResolutionSize  = Size(1536, 2048);
 
@@ -40,7 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("GemGame", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("GemGame", Rect(0, 0, screenSize.width, screenSize.height));
 #else
         glview = GLViewImpl::create("GemGame");
 #endif
@@ -54,11 +64,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
     Size frameSize = glview->getFrameSize();
     
-    // For now, always scale as per small resolution.
-	director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
+    // For now, always scale as per medium resolution.
+		// ie will need 50% and 150% assets
+	director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
     /*
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)

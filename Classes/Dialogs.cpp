@@ -20,8 +20,8 @@ bool LevelWonDialog::init() {
 	}
 	
 	auto background = cocos2d::DrawNode::create();
-	float xmax = 100;
-	float ymax = 100;
+	float xmax = 150;
+	float ymax = 150;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
@@ -63,8 +63,8 @@ bool LevelLostDialog::init() {
 	}
 	
 	auto background = cocos2d::DrawNode::create();
-	float xmax = 100;
-	float ymax = 100;
+	float xmax = 150;
+	float ymax = 150;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
