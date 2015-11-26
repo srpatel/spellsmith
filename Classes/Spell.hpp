@@ -37,7 +37,7 @@ struct EffectShield : public BaseEffect {
 };
 
 class Spell {
-	friend class Spells;
+	friend class SpellManager;
 public:
 	Spell(std::string name);
 	~Spell();
@@ -57,15 +57,15 @@ private:
 	static void copy(Chain *chain, GemType *grid);
 };
 
-class Spells {
+class SpellManager {
 public:
-	static Spells *get();
+	static SpellManager *get();
 	void init();
 	
 	inline int count() { return spells.size(); }
 	inline Spell *at(int i) { return spells[i]; }
 private:
-	static Spells *instance;
+	static SpellManager *instance;
 	std::vector<Spell *> spells;
 };
 

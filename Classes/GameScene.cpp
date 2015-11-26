@@ -39,7 +39,7 @@ bool Game::init() {
 	wizard->health = HEALTH_PER_HEART * 5;
 	wizard->ui_health = HEALTH_PER_HEART * 5;
 	for (int i = 0; i < 3; i++) {
-		wizard->inventory.push_back(Spells::get()->at(i));
+		wizard->inventory.push_back(SpellManager::get()->at(i));
 	}
 	
 	enemy = new Enemy;

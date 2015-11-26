@@ -1,36 +1,35 @@
 {
-	"spell" : {
-		"_comment" : "Names of spells which can be cast",
-		"fireball" : {
-			"name" : "fireball",
-			"description" : "a mighty fireball which will turn your enemies to ash!"
-		},
-		"waterring" : {
-			"name" : "waterring",
-			"description" : "trap your enemy in an aqua prison"
-		},
-		"meteor" : {
-			"name" : "meteor",
-			"description" : "what's the worse a huge lump of rock could do?"
-		},
-		"roots" : {
-			"name" : "roots",
-			"description" : "trap your foe by growing roots at their ankles"
-		},
-		"tornado" : {
-			"name" : "tornado",
-			"description" : "throw everything into chaos with a tornado"
-		},
-		"groundspike" : {
-			"name" : "groundspike",
-			"description" : "rock in the groin. ouch."
-		}
-	},
-	
-	"ui" : {
-		"LEVEL_WON" : "congratulations",
-		"LEVEL_LOST" : "you lost",
-		"RETRY_LEVEL" : "retry",
-		"RETURN_TO_MAP" : "back"
-	}
+  "spell": {
+    "_comment": "Names of spells which can be cast",
+    "fireball": {
+      "name": "fireball",
+      "description": "a mighty fireball which will turn your enemies to ash!"
+    },
+    "waterring": {
+      "name": "waterring",
+      "description": "trap your enemy in an aqua prison"
+    },
+    "meteor": {
+      "name": "meteor",
+      "description": "what's the worse a huge lump of rock could do?"
+    },
+    "roots": {
+      "name": "roots",
+      "description": "trap your foe by growing roots at their ankles"
+    },
+    "tornado": {
+      "name": "tornado",
+      "description": "throw everything into chaos with a tornado"
+    },
+    "groundspike": {
+      "name": "groundspike",
+      "description": "rock in the groin. ouch."
+    }
+  },
+  "ui": {
+    "LEVEL_WON": "congratulations",
+    "LEVEL_LOST": "you lost",
+    "RETRY_LEVEL": "retry",
+    "RETURN_TO_MAP": "back"
+  }
 }

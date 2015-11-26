@@ -17,7 +17,7 @@
 #define MAX_HEIGHT 5
 
 static GemType *compare_temp;
-Spells *Spells::instance = nullptr;
+SpellManager *SpellManager::instance = nullptr;
 
 #define DEBUGGING_SPELLS 0
 #define NewArray new GemType[MAX_WIDTH * MAX_HEIGHT]
@@ -25,14 +25,14 @@ Spells *Spells::instance = nullptr;
 	grid at(i, j) = NONE;
 #define at(i, j) [(i) + (j) * MAX_WIDTH]
 
-Spells *Spells::get() {
+SpellManager *SpellManager::get() {
 	if (instance == nullptr) {
-		instance = new Spells;
+		instance = new SpellManager;
 	}
 	return instance;
 }
 
-void Spells::init() {
+void SpellManager::init() {
 	compare_temp = NewArray;
 	
 	std::string data = FileUtils::getInstance()->getStringFromFile("data/spells.json");

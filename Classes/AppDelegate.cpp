@@ -2,6 +2,8 @@
 #include "GameScene.hpp"
 #include "Strings.hpp"
 #include "GameController.hpp"
+#include "Level.hpp"
+#include "Monster.hpp"
 
 #define SIZE_IPHONE_3  Size(320, 480)
 #define SIZE_IPHONE_4  Size(640, 960)
@@ -96,7 +98,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	spritecache->addSpriteFramesWithFile("spritesheet.plist");
 	
 	// Init JSON things
-	Spells::get()->init();
+	SpellManager::get()->init();
+	MonsterManager::get()->init();
+	LevelManager::get()->init();
 	Strings::get()->init();
 	
 	

@@ -1,0 +1,12 @@
+{
+  "goblin_halberd": {
+    "health": 30,
+    "attacks": [
+      {
+        "freq": 1,
+        "type": "melee",
+        "amount": 5
+      }
+    ]
+  }
+}
