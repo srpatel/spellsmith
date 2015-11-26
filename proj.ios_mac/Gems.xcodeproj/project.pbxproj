@@ -41,6 +41,14 @@
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
 		108747901C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
+		108747A71C07AAC50069DCAF /* spritesheet-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A31C07AAC50069DCAF /* spritesheet-hd.plist */; };
+		108747A81C07AAC50069DCAF /* spritesheet-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A31C07AAC50069DCAF /* spritesheet-hd.plist */; };
+		108747A91C07AAC50069DCAF /* spritesheet-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A41C07AAC50069DCAF /* spritesheet-hd.png */; };
+		108747AA1C07AAC50069DCAF /* spritesheet-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A41C07AAC50069DCAF /* spritesheet-hd.png */; };
+		108747AB1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */; };
+		108747AC1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */; };
+		108747AD1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */; };
+		108747AE1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */; };
 		10B465191BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651A1BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651B1BFA935E00DD5E9E /* AnimationState.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DE1BFA935E00DD5E9E /* AnimationState.c */; };
@@ -228,6 +236,10 @@
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		1087478E1C07A7920069DCAF /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
+		108747A31C07AAC50069DCAF /* spritesheet-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet-hd.plist"; sourceTree = "<group>"; };
+		108747A41C07AAC50069DCAF /* spritesheet-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet-hd.png"; sourceTree = "<group>"; };
+		108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet-ipadhd.plist"; sourceTree = "<group>"; };
+		108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet-ipadhd.png"; sourceTree = "<group>"; };
 		10A21C9F1C050548003CD8E2 /* DevResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DevResources; path = ../DevResources; sourceTree = "<group>"; };
 		10B464DC1BFA935E00DD5E9E /* Animation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Animation.c; sourceTree = "<group>"; };
 		10B464DD1BFA935E00DD5E9E /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
@@ -586,6 +598,10 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				108747A31C07AAC50069DCAF /* spritesheet-hd.plist */,
+				108747A41C07AAC50069DCAF /* spritesheet-hd.png */,
+				108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */,
+				108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */,
 				105E0D1B1BF14EA50081D8F5 /* spritesheet.plist */,
 				105E0D1C1BF14EA50081D8F5 /* spritesheet.png */,
 				10DC05011BF90E80003BA69E /* pointlight.frag */,
@@ -765,12 +781,15 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				105E0D1D1BF14EA50081D8F5 /* spritesheet.plist in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				108747A71C07AAC50069DCAF /* spritesheet-hd.plist in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				105E0D1F1BF14EA50081D8F5 /* spritesheet.png in Resources */,
+				108747AD1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
+				108747A91C07AAC50069DCAF /* spritesheet-hd.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
@@ -782,6 +801,7 @@
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				108747AB1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				10DC05021BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
@@ -798,7 +818,11 @@
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				105E0D201BF14EA50081D8F5 /* spritesheet.png in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
+				108747A81C07AAC50069DCAF /* spritesheet-hd.plist in Resources */,
+				108747AE1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */,
 				105E0D231BF14EB10081D8F5 /* data in Resources */,
+				108747AA1C07AAC50069DCAF /* spritesheet-hd.png in Resources */,
+				108747AC1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */,
 				10DC05031BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
 				10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */,
@@ -837,7 +861,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\n\n# apply sprite illuminator?\n\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
+			shellScript = "cd ../Resources/\n\n# apply sprite illuminator?\n\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

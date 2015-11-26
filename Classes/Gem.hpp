@@ -18,8 +18,7 @@ struct Gem {
     void init();
 	void init(GemType type);
 	
-	static float getWidth();
-	static float getHeight();
+	static Size getSize();
 	static float scale;
 };
 

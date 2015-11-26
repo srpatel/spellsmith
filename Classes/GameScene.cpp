@@ -51,11 +51,10 @@ bool Game::init() {
 	auto scenery_sprite = Sprite::createWithSpriteFrameName("ui/scenery.png");
 	
 	// Work out layout
-	float scale = Director::getInstance()->getContentScaleFactor();
 	float max_scenery_height = scenery_sprite->getBoundingBox().size.height;
-	float min_column_height = 635 / scale;
+	float min_column_height = 317;
 	
-	layout.column_height = MAX(min_column_height, getContentSize().height - max_scenery_height);
+	layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
 /*
  _                _                                   _     
 | |              | |                                 | |    
@@ -71,13 +70,13 @@ bool Game::init() {
 		
 		scenery_sprite->setAnchorPoint(Vec2(0.5, 0));
 		// Set scale so that scenery takes up the whole width
-		float targetWidth = getContentSize().width;
-		float actualWidth = scenery_sprite->getContentSize().width;
+		float targetWidth = getBoundingBox().size.width;
+		float actualWidth = scenery_sprite->getBoundingBox().size.width;
 		float ratio = targetWidth/actualWidth;
 		if (ratio > 1) {
 			scenery_sprite->setScale(targetWidth/actualWidth);
 		}
-		scenery_sprite->setPosition(Vec2(getContentSize().width/2, layout.column_height));
+		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
 		this->addChild(scenery_sprite);
 	}
 	
@@ -85,7 +84,7 @@ bool Game::init() {
 	{
 		auto sprite = Sprite::createWithSpriteFrameName("ui/column_right.png");
 		sprite->setAnchorPoint(Vec2(1, 1));
-		sprite->setPosition(Vec2(getContentSize().width + 8, layout.column_height));
+		sprite->setPosition(Vec2(getBoundingBox().size.width + 8, layout.column_height));
 		this->addChild(sprite);
 	}
 	{
@@ -105,9 +104,9 @@ bool Game::init() {
   __/ |             
  |___/              
 */
-    this->grid = new Grid(grid_size, grid_size, getContentSize().width - 94 * 2 / scale - 5);
+    this->grid = new Grid(grid_size, grid_size, getBoundingBox().size.width - 94 - 5);
     cocos2d::Vec2 gridSize = this->grid->getSize();
-	float grid_x = getContentSize().width / 2;
+	float grid_x = getBoundingBox().size.width / 2;
     float grid_y = (layout.column_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
 	grid->active = true;
@@ -182,7 +181,7 @@ bool Game::init() {
 	// Goblins
 	auto evilwizard = Sprite::createWithSpriteFrameName("characters/goblin_01.png");
 	evilwizard->setAnchorPoint(Vec2(1, 0));
-	evilwizard->setPosition(this->getContentSize().width - 10, chars_y_start);
+	evilwizard->setPosition(getBoundingBox().size.width - 10, chars_y_start);
 	this->addChild(evilwizard);
 	enemy->sprite = evilwizard;
 
@@ -199,7 +198,7 @@ bool Game::init() {
 	// More background (must be done after grid because of sizing) 60 high.
 	hud = GameHUD::create();
 	hud->updateValues(wizard, enemy);
-	hud->setPosition(Vec2(0, grid_y + gridSize.y/2 + 20));
+	hud->setPosition(Vec2(0, layout.column_height - 40));
 	this->addChild(hud);
 	
 /*              _ _                  _ _

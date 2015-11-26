@@ -30,10 +30,7 @@ void Gem::init() {
     init(static_cast<GemType>(1 + rand() % 4));
 }
 
-float Gem::getWidth() {
-	return 80 * Gem::scale / Director::getInstance()->getContentScaleFactor();
-}
-
-float Gem::getHeight() {
-	return 100 * Gem::scale / Director::getInstance()->getContentScaleFactor();
+Size Gem::getSize() {
+	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("gems/air_01.png");
+	return frame->getRect().size * scale;
 }

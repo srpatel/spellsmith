@@ -68,34 +68,31 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
     Size frameSize = glview->getFrameSize();
-    
-    // For now, always scale as per medium resolution.
-		// ie will need 50% and 150% assets
-	director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
-    /*
+	
+	// load the Sprite Sheet
+	auto spritecache = SpriteFrameCache::getInstance();
+	
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)
     {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
+        director->setContentScaleFactor(3);
+		spritecache->addSpriteFramesWithFile("spritesheet-ipadhd.plist");
     }
     // if the frame's height is larger than the height of small size.
     else if (frameSize.height > smallResolutionSize.height)
     {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
+        director->setContentScaleFactor(2);
+		spritecache->addSpriteFramesWithFile("spritesheet-hd.plist");
     }
     // if the frame's height is smaller than the height of medium size.
     else
     {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
-    }
-    */
+        director->setContentScaleFactor(1);
+		spritecache->addSpriteFramesWithFile("spritesheet.plist");
+	}
+	
     
     register_all_packages();
-	
-	// Initalise objects like strings, sprites etc.
-	// load the Sprite Sheet
-	auto spritecache = SpriteFrameCache::getInstance();
-	spritecache->addSpriteFramesWithFile("spritesheet.plist");
 	
 	// Init JSON things
 	SpellManager::get()->init();

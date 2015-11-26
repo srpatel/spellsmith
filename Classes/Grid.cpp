@@ -65,7 +65,7 @@ void Grid::set(int column, int row, Gem *gem, bool init = false) {
         // Center the grid
         float ii = column - (width - 1)/2.f;
         float jj = row - (height - 1)/2.f;
-		gem->sprite->setPosition(ii * Gem::getWidth(), jj * Gem::getHeight());
+		gem->sprite->setPosition(ii * Gem::getSize().width, jj * Gem::getSize().height);
         addChild(gem->sprite);
     }
 }
@@ -73,7 +73,7 @@ void Grid::set(int column, int row, Gem *gem, bool init = false) {
 cocos2d::Vec2 Grid::getSize() {
 	Gem *gem = get(0, 0);
 	if (!gem) return cocos2d::Vec2::ZERO;
-	return cocos2d::Vec2(width * Gem::getWidth(), height * Gem::getHeight());
+	return cocos2d::Vec2(width * Gem::getSize().width, height * Gem::getSize().height);
 }
 
 bool Grid::init(float maxwidth)
@@ -88,7 +88,7 @@ bool Grid::init(float maxwidth)
 	this->addChild(line, 1);
 	
 	Gem::scale = 1;
-	float ratio = maxwidth/(Gem::getWidth() * width);
+	float ratio = maxwidth/(Gem::getSize().width * width);
 	Gem::scale = MIN(ratio, 1.6f);
 	
     // Setup the gems, and them to us
@@ -123,7 +123,7 @@ void Grid::drawChain() {
 				float fj = sentinel->j - (height - 1)/2.f;
 				float ti = sentinel->next->i - (width - 1)/2.f;
 				float tj = sentinel->next->j - (height - 1)/2.f;
-				line->drawLine(cocos2d::Vec2(fi * Gem::getWidth(), fj * Gem::getHeight()), cocos2d::Vec2(ti * Gem::getWidth(), tj * Gem::getHeight()), cocos2d::Color4F::BLACK);
+				line->drawLine(cocos2d::Vec2(fi * Gem::getSize().width, fj * Gem::getSize().height), cocos2d::Vec2(ti * Gem::getSize().width, tj * Gem::getSize().height), cocos2d::Color4F::BLACK);
 			}
 			
 			sentinel = sentinel->next;
@@ -208,8 +208,8 @@ void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		//line->drawSolidCircle(loc - getPosition(), 2, 7, 20, Color4F::BLACK);
 		endpos = loc - getPosition();
 		drawChain();
-		float swidth = Gem::getWidth();
-		float sheight = Gem::getHeight();
+		float swidth = Gem::getSize().width;
+		float sheight = Gem::getSize().height;
 		cocos2d::Vec2 size = getSize();
 		cocos2d::Vec2 pos = getPosition();
 		float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
@@ -217,7 +217,7 @@ void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		auto centre = cocos2d::Vec2((chain->i + 0.5f) * swidth + left, (chain->j + 0.5f) * sheight + bottom);
 		
 		// You must finish close-ish to the last tile of the chain
-		if ((loc - centre).length() < Gem::getWidth()) {
+		if ((loc - centre).length() < Gem::getSize().width) {
 			castCurrentSpell();
 		} else {
 			cancelCurrentSpell();
@@ -236,8 +236,8 @@ bool Grid::doesLineIntersectCell(Vec2 start, Vec2 end, int column, int row) {
 	float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
 	
 	// Check if all four corners of the cell are on the same side of the line.
-	float swidth = Gem::getWidth();
-	float sheight = Gem::getHeight();
+	float swidth = Gem::getSize().width;
+	float sheight = Gem::getSize().height;
 	// centre of cell.
 	auto centre = cocos2d::Vec2((column + 0.5f) * swidth + left, (row + 0.5f) * sheight + bottom);
 	Vec2 topleft  = centre + Vec2(-swidth/2, -sheight/2);
@@ -261,8 +261,8 @@ void Grid::onTouchMovePart(Vec2 loc) {
 		&& loc.y > bottom
 		&& loc.y < pos.y + size.y/2) {
 		
-		float swidth = Gem::getWidth();
-		float sheight = Gem::getHeight();
+		float swidth = Gem::getSize().width;
+		float sheight = Gem::getSize().height;
 		
 		int column = (int) ((loc.x - left)/swidth);
 		int row = (int) ((loc.y - bottom)/sheight);
@@ -274,7 +274,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 		
 		bool ongem = true;
 		// METHOD 1 = central hitbox
-		ongem = (centre - loc).length() < GEM_CENTRAL_SENSITIVITY * Gem::getWidth();
+		ongem = (centre - loc).length() < GEM_CENTRAL_SENSITIVITY * Gem::getSize().width;
 		
 		/*
 		// METHOD 2 = octagon hitbox
@@ -393,8 +393,8 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
         && loc.y > bottom
         && loc.y < pos.y + size.y/2) {
 		
-		float swidth = Gem::getWidth();
-		float sheight = Gem::getHeight();
+		float swidth = Gem::getSize().width;
+		float sheight = Gem::getSize().height;
 		
         int column = (int) ((loc.x - left)/swidth);
         int row = (int) ((loc.y - bottom)/sheight);
@@ -457,7 +457,7 @@ void Grid::refill() {
 					maxdownby = g->downBy;
 				}
 #if GEM_ANIMATION
-				auto moveby = cocos2d::MoveBy::create(g->downBy * GEM_ANIMATION_TIME, cocos2d::Vec2(0, g->downBy * -Gem::getHeight()));
+				auto moveby = cocos2d::MoveBy::create(g->downBy * GEM_ANIMATION_TIME, cocos2d::Vec2(0, g->downBy * -Gem::getSize().height));
                 g->sprite->runAction(moveby);
 #else
 				g->sprite->setPosition(g->sprite->getPosition() + cocos2d::Vec2(0, g->downBy * -Gem::getHeight()));
@@ -482,7 +482,7 @@ void Grid::refill() {
 				g->sprite->setOpacity(0);
 				float ii = i - (width - 1)/2.f;
 				float jj = height - (height - 1)/2.f;
-				g->sprite->setPosition(ii * Gem::getWidth(), jj * Gem::getHeight());
+				g->sprite->setPosition(ii * Gem::getSize().width, jj * Gem::getSize().height);
 				int dj = height - j;
 				if (!colmaxdown) {
 					colmaxdown = g->downBy;
@@ -493,7 +493,7 @@ void Grid::refill() {
 #endif
 				auto delay = cocos2d::DelayTime::create((1 + colmaxdown - g->downBy - staggered + column_stagger) * (GEM_ANIMATION_TIME + staggered));
 				auto fadeIn = cocos2d::FadeIn::create(.1f);
-				auto moveby = cocos2d::MoveBy::create(dj * GEM_ANIMATION_TIME, cocos2d::Vec2(0, dj * -Gem::getHeight()));
+				auto moveby = cocos2d::MoveBy::create(dj * GEM_ANIMATION_TIME, cocos2d::Vec2(0, dj * -Gem::getSize().height));
 				auto spawn = cocos2d::Spawn::create(fadeIn, moveby, nullptr);
 				auto sequence = cocos2d::Sequence::create(delay, spawn, nullptr);
 				g->sprite->runAction(sequence);
