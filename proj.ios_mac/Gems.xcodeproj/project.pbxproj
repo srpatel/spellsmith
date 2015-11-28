@@ -847,7 +847,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json\njsonlint -i data/levels.json\njsonlint -i data/monsters.json\njsonlint -i data/strings/en.json";
+			shellScript = "cd ../Resources/\nexit 0\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json\njsonlint -i data/levels.json\njsonlint -i data/monsters.json\njsonlint -i data/strings/en.json";
 		};
 		106E1ED31BF2A00E00C057C6 /* Spritesheet */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -861,7 +861,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\n\n# apply sprite illuminator?\n\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
+			shellScript = "cd ../Resources/\n\n# apply sprite illuminator?\n\nexit 0\n\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

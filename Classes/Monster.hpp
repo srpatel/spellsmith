@@ -9,12 +9,31 @@
 #ifndef Monster_hpp
 #define Monster_hpp
 
-class Monster {};
+enum AttackType {
+	kAttackTypeMelee = 0
+};
+
+class Attack {
+public:
+	Attack(int frequency, AttackType type, int amount);
+	int frequency;
+	AttackType type;
+	int amount;
+};
+// this is just the monster as described by data.
+// Enemy is the actual thing you fight against.
+class Monster {
+public:
+	std::string name;
+	int hp;
+	std::vector<Attack *> attacks;
+};
 
 class MonsterManager {
 public:
 	static MonsterManager *get();
 	void init();
+	std::unordered_map<std::string, Monster *> monsters;
 private:
 	static MonsterManager *instance;
 };

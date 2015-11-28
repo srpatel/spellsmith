@@ -5,7 +5,7 @@
 //  Created by Sunil Patel on 13/11/2015.
 //
 //
-
+#include "Level.hpp"
 #include "LevelSelect.hpp"
 #include "GameController.hpp"
 #include "Constants.h"
@@ -31,16 +31,46 @@ bool LevelSelect::init() {
 	// Add a bunch of level buttons
 	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
 	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText _("single level");
+	button->setTitleText("1");
 	
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
-			Game::get()->mode = kModeLevel;
-			GameController::get()->setState(kStateGame);
+			if (LevelManager::get()->forest_levels.size() >= 1) {
+				Game::get()->mode = kModeLevel;
+				GameController::get()->setState(kStateGame);
+			}
 		}
 	});
 	this->addChild(button);}
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
+		button->setTitleText("2");
+		
+		button->setPosition(Vec2(visibleSize/2) + Vec2(0, button->getBoundingBox().size.height));
+		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::ENDED) {
+					if (LevelManager::get()->forest_levels.size() >= 2) {
+				Game::get()->mode = kModeLevel;
+				GameController::get()->setState(kStateGame);
+					}
+			}
+		});
+		this->addChild(button);}
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		button->setTitleFontName(Fonts::TEXT_FONT);
+		button->setTitleText("3");
+		
+		button->setPosition(Vec2(visibleSize/2) + Vec2(0, button->getBoundingBox().size.height) * 2);
+		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				if (LevelManager::get()->forest_levels.size() >= 3) {
+				Game::get()->mode = kModeLevel;
+				GameController::get()->setState(kStateGame);
+				}
+			}
+		});
+		this->addChild(button);}
 	
 	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
 	button->setTitleFontName(Fonts::TEXT_FONT);

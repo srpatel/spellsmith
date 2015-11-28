@@ -1,12 +1,12 @@
 [
-  {
-    "zone": "F",
-    "levels": [
       {
         "monsters": [
           "goblin_halberd"
         ]
+      },
+	  {
+		"monsters": [
+		  "goblin_halberd", "goblin_halberd"
+		]
       }
-    ]
-  }
 ]
