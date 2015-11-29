@@ -93,7 +93,7 @@ bool LevelLostDialog::init() {
 				gc->popDialog();
 				
 				// Reset game state
-				Game::get()->reset();
+				Game::get()->resetToStartOfLevel();
 			}
 		});
 		this->addChild(button);

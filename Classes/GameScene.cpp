@@ -431,36 +431,58 @@ void Game::attemptSetState(GameState nextstate) {
 			success = false;
 		}
 		std::function<void()> func;
-		if (success && mode == kModeInfinite) {
-			// New level without level end dialog!
-			func = [this]() {
-				auto fadeOut = FadeOut::create(0.2f);
-				auto run1 = CallFunc::create([this]() {
-					enemy->max_health = HEALTH_PER_HEART * 2;
-					enemy->health = HEALTH_PER_HEART * 2;
-					enemy->ui_health = HEALTH_PER_HEART * 2;
-					hud->updateValues(wizard, enemy);
-					//grid->scramble();
-				});
-				auto fadeIn = FadeIn::create(0.2f);
-				auto run2 = CallFunc::create([this]() {
-					grid->active = true;
-				});
-				auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
-				enemy->sprite->runAction(seq);
-				
-				state = kStatePlayerTurn;
-			};
+		if (mode == kModeInfinite) {
+			if (success) {
+				// New level without level end dialog!
+				func = [this]() {
+					auto fadeOut = FadeOut::create(0.2f);
+					auto run1 = CallFunc::create([this]() {
+						gotoNextEnemy();
+					});
+					auto fadeIn = FadeIn::create(0.2f);
+					auto run2 = CallFunc::create([this]() {
+						grid->active = true;
+					});
+					auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
+					enemy->sprite->runAction(seq);
+					
+					state = kStatePlayerTurn;
+				};
+			} else {
+				// You are dead!
+				func = [this, success]() {
+					auto fadeOut = FadeOut::create(0.2f);
+					auto nextLevel = CallFunc::create([this](){
+						// Dialog takes all focus!
+						GameController::get()->showLevelEndDialog(false);
+					});
+					
+					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
+					wizard->sprite->runAction(seq);
+					enemy->sprite->runAction(fadeOut->clone());
+				};
+			}
 		} else {
 			// Throw up level-end dialog
 			func = [this, success]() {
 				auto fadeOut = FadeOut::create(0.2f);
-				enemy->sprite->runAction(fadeOut);
+				auto nextLevel = CallFunc::create([this, success](){
+					bool more = gotoNextEnemy();
+					
+					if (more) {
+						// show the next enemy.
+					} else {
+						// You've won!
+						// Dialog takes all focus!
+						GameController::get()->showLevelEndDialog(success);
+					}
+				});
 				
-				// Dialog takes all focus!
-				GameController::get()->showLevelEndDialog(success);
-				
-				// when the level end dialog closes, go back to level select?
+				auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
+				enemy->sprite->runAction(seq);
+				if (!success) {
+					wizard->sprite->runAction(fadeOut->clone());
+				}
 			};
 		}
 		// if level-mode, we show the "victory screen"
@@ -497,12 +519,33 @@ void Game::enemyDoTurn() {
 	// it's now the player's turn
 	attemptSetState(kStatePlayerTurn);
 }
-void Game::reset() {
-	// reset health
-	wizard->health = wizard->max_health;
-	wizard->ui_health = wizard->max_health;
-	enemy->health = enemy->max_health;
-	enemy->ui_health = enemy->max_health;
+bool Game::gotoNextEnemy() {
+	stage++;
+	
+	bool more;
+	if (mode == kModeInfinite) {
+		more = true;
+	} else {
+		more = stage < level->monsters.size();
+	}
+	
+	if (more) {
+		prepareStartRound();
+	}
+	
+	return more;
+}
+void Game::prepareStartRound() {
+	// enemy health depends on level
+	int max_health;
+	if (level) {
+		max_health = level->monsters[stage]->hp;
+	} else {
+		max_health = 30 + 5 * stage;
+	}
+	enemy->max_health = max_health;
+	enemy->health     = max_health;
+	enemy->ui_health  = max_health;
 	hud->updateValues(wizard, enemy);
 	
 	// reset enemy
@@ -511,6 +554,25 @@ void Game::reset() {
 	// reset game state
 	state = kStatePlayerTurn;
 	grid->active = true;
+}
+void Game::resetToStartOfLevel() {
+	// apply all this based on the level!
+	stage = 0;
+	
+	// reset health
+	wizard->health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
+	
+	prepareStartRound();
+	
+	// shuffle grid
+	grid->scramble();
+}
+void Game::startLevel(Level *_level) {
+	mode = _level ? kModeLevel : kModeInfinite;
+	level = _level;
+	
+	resetToStartOfLevel();
 }
 
 void Game::runAnimation(GameAnimation *ga) {

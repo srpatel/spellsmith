@@ -37,8 +37,7 @@ bool LevelSelect::init() {
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			if (LevelManager::get()->forest_levels.size() >= 1) {
-				Game::get()->mode = kModeLevel;
-				GameController::get()->setState(kStateGame);
+				GameController::get()->startGame(LevelManager::get()->forest_levels[0]);
 			}
 		}
 	});
@@ -51,8 +50,7 @@ bool LevelSelect::init() {
 		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
 					if (LevelManager::get()->forest_levels.size() >= 2) {
-				Game::get()->mode = kModeLevel;
-				GameController::get()->setState(kStateGame);
+				GameController::get()->startGame(LevelManager::get()->forest_levels[1]);
 					}
 			}
 		});
@@ -65,8 +63,7 @@ bool LevelSelect::init() {
 		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
 				if (LevelManager::get()->forest_levels.size() >= 3) {
-				Game::get()->mode = kModeLevel;
-				GameController::get()->setState(kStateGame);
+				GameController::get()->startGame(LevelManager::get()->forest_levels[2]);
 				}
 			}
 		});
@@ -91,8 +88,7 @@ bool LevelSelect::init() {
 		button->setPosition(Vec2(visibleSize.width/2, 2 * button->getContentSize().height));
 		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::BEGAN) {
-				Game::get()->mode = kModeInfinite;
-				GameController::get()->setState(kStateGame);
+				GameController::get()->startGame(nullptr);
 			}
 		});
 		this->addChild(button);}

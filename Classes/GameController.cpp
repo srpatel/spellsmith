@@ -59,10 +59,10 @@ void GameController::setState(State newstate) {
 	
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer);
-	
-	if (newstate == kStateGame) {
-		Game::get()->reset();
-	}
+}
+void GameController::startGame(Level *level) {
+	Game::get()->startLevel(level);
+	setState(kStateGame);
 }
 void GameController::popDialog() {
 	if (dialog_stack.size()) {

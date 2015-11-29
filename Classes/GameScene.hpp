@@ -6,6 +6,7 @@
 #include "Spell.hpp"
 #include "Dialogs.hpp"
 #include "Characters.hpp"
+#include "Level.hpp"
 
 enum GameMode {
 	kModeInfinite,
@@ -40,7 +41,9 @@ public:
 	static Game *get();
     Grid *grid;
 	
-	GameMode mode = kModeInfinite;
+	// Restart the current game!
+	void resetToStartOfLevel();
+	void startLevel(Level *);
 	
     bool init();
     void update(float dt);
@@ -50,17 +53,21 @@ public:
 	
 	// Called when the Wizard's animations etc. have finished
 	void onWizardTurnOver();
-	
-	// Restart the current game!
-	void reset();
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
-private:	
+private:
 	static Game *instance;
 	
 	// Actually create the projectiles and stuff
 	void doSpell(Spell *);
+	
+	GameMode mode = kModeInfinite;
+	Level* level = nullptr;
+	int stage; // the current monster you are facing, or the level you are on in infinite mode.
+	
+	bool gotoNextEnemy();
+	void prepareStartRound();
 	
 	GameHUD *hud;
 	Enemy *enemy;

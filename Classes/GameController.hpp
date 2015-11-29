@@ -10,6 +10,7 @@
 #define GameController_hpp
 
 #include "Dialogs.hpp"
+#include "Level.hpp"
 
 enum State {
 	kStateMainMenu = 0,
@@ -27,6 +28,7 @@ public:
 	
 	// Game states
 	void setState(State state);
+	void startGame(Level *level);
 	
 	// (Model) Dialogs
 	void popDialog();
