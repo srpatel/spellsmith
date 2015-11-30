@@ -132,12 +132,39 @@ bool Game::init() {
 	float spellHeight = gridSize.y/3 - padding*3;
 	float spellPadding = 10;
 	
+	//
+	auto onSpellClick = EventListenerTouchOneByOne::create();
+	onSpellClick->setSwallowTouches(true);
+	// trigger when you push down
+	onSpellClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		bounds.origin -= bounds.size/2;
+		
+		if (bounds.containsPoint(touch->getLocation())){
+			GameController::get()->showSpellInfoDialog(wizard->inventory[0]);
+			return true;
+		}
+		
+		return false; // if you are consuming it
+	};
+	
+	// trigger when moving touch
+	onSpellClick->onTouchMoved = [](Touch* touch, Event* event){
+		// your code
+	};
+	
+	// trigger when you let up
+	onSpellClick->onTouchEnded = [=](Touch* touch, Event* event){
+		// your code
+	};
+	
 	// Left hand inventory
 	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
 			sprite->setPosition(17, starty - i * 55);
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick->clone(), sprite);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -150,6 +177,7 @@ bool Game::init() {
 		if (inventory.size() > 3 + i) {
 			auto sprite = inventory[3 + i]->mininode;
 			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick->clone(), sprite);
 			// tap on a spell to see it's info. Use the "open dialog" mechanic.
 			// this opens a dialog which captures events for the whole screen?
 			// Dialogs::showModal(...);

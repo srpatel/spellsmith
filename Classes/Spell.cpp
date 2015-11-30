@@ -43,7 +43,7 @@ void SpellManager::init() {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
 		const rapidjson::Value& effects = spell["effects"];
-		auto s = new Spell(_(std::string("spell.") + spell["name"].GetString() + ".name"));
+		auto s = new Spell(spell["name"].GetString());
 #if DEBUG
 		if (shape.Size() != MAX_HEIGHT) {
 			LOG("height != MAX_HEIGHT\n");
@@ -115,7 +115,8 @@ Spell::~Spell() {
 }
 
 std::string Spell::getName() {
-	return name;
+	std::string translated = _(std::string("spell.") + name + ".name");
+	return translated;
 }
 
 void Spell::setup() {
@@ -154,6 +155,7 @@ void Spell::setup() {
 			layer->addChild(sprite);
 		}
 	}
+	layer->setContentSize(Size(40, 40));
 	mininode = layer;
 	mininode->setAnchorPoint(Vec2::ZERO);
 }

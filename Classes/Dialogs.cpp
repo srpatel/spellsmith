@@ -118,7 +118,7 @@ bool LevelLostDialog::init() {
 	return true;
 }
 
-bool SpellInfoDialog::init() {
+bool SpellInfoDialog::init(Spell *spell) {
 	if ( !Dialog::init() ) {
 		return false;
 	}
@@ -129,6 +129,15 @@ bool SpellInfoDialog::init() {
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
+	auto label = Label::createWithTTF( spell->getName(), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	label->setColor(Color3B::BLACK);
+	label->setPosition(Vec2(0, 80));
+	this->addChild(label, 1);
+	
+	// Draw gems in the middle of the dialog
+	
+	// Put description at the bottom.
+	
 	return true;
 }
 
@@ -137,23 +146,32 @@ bool Dialog::init() {
 		return false;
 	}
 	
-	auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
+	auto size = Director::getInstance()->getVisibleSize();
 	
+	auto background = cocos2d::DrawNode::create();
+	background->drawSolidRect(Vec2(size / -2), Vec2(size / 2), Color4F(Colours::SEMIBLACK));
+	addChild(background);
+	
+	// Every dialog has a "close" button in the 
+	
+	auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
+	touchListener->setSwallowTouches(true);
 	touchListener->onTouchBegan = CC_CALLBACK_2(SpellInfoDialog::onTouchBegan, this);
 	touchListener->onTouchEnded = CC_CALLBACK_2(SpellInfoDialog::onTouchEnded, this);
 	touchListener->onTouchMoved = CC_CALLBACK_2(SpellInfoDialog::onTouchMoved, this);
 	//    touchListener->onTouchCancelled = CC_CALLBACK_2(Grid::onTouchCancelled, this);
 	
-	//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 	
 	return true;
 }
 
 bool Dialog::onTouchBegan(cocos2d::Touch *, cocos2d::Event *event) {
-	// Close the dialog!
 	event->stopPropagation();
-	getParent()->removeChild(this);
-	return false;
+	
+	// Do not let the game react to your touch!
+	
+	return true;
 }
 void Dialog::onTouchMoved(cocos2d::Touch *, cocos2d::Event *) {
 }

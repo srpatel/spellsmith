@@ -9,6 +9,8 @@
 #ifndef Dialogs_hpp
 #define Dialogs_hpp
 
+#include "Spell.hpp"
+
 #define SIMPLE_DIALOG(_x_) class _x_ : public Dialog {\
 public:\
 bool init();\
@@ -27,6 +29,12 @@ public:
 
 SIMPLE_DIALOG(LevelWonDialog);
 SIMPLE_DIALOG(LevelLostDialog);
-SIMPLE_DIALOG(SpellInfoDialog);
+
+class SpellInfoDialog : public Dialog {
+public:
+	bool init(Spell *);
+	
+	CREATE_FUNC_1(SpellInfoDialog, Spell *);
+};
 
 #endif /* Dialogs_hpp */

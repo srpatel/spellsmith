@@ -18,7 +18,8 @@ namespace Fonts {
 };
 
 namespace Colours {
-	const Color3B BACKGROUND(46,42,36);
+	const Color3B BACKGROUND ( 46, 42, 36    );
+	const Color4B SEMIBLACK  (  0,  0,  0, 40);
 };
 
 #endif /* Constants_h */

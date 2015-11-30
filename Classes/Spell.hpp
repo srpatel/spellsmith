@@ -43,7 +43,7 @@ public:
 	~Spell();
 	std::vector<BaseEffect *> effects;
 	void setup();
-	Node *mininode;
+	Layer *mininode;
 	bool operator==(Chain *chain);
 	std::string getName();
 private:

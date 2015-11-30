@@ -27,4 +27,56 @@ for (int j = 0; j < _j; j++)
 	#define RAPIDJSON_ASSERT(_x_)
 #endif
 
+// Arg-based create funcs
+#define CREATE_FUNC_1(__TYPE__, arg) \
+static __TYPE__* create(arg __var) \
+{ \
+__TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+if (pRet && pRet->init(__var)) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
+
+#define CREATE_FUNC_2(__TYPE__, arg1, arg2) \
+static __TYPE__* create(arg1 __var1, arg2 __var2) \
+{ \
+__TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+if (pRet && pRet->init(__var1, __var2)) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
+
+#define CREATE_FUNC_3(__TYPE__, arg1, arg2, arg3) \
+static __TYPE__* create(arg1 __var1, arg2 __var2, arg3 __var3) \
+{ \
+__TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+if (pRet && pRet->init(__var1, __var2, __var3)) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
+
 #endif /* CommonPrefix_h */

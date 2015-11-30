@@ -11,6 +11,7 @@
 
 #include "Dialogs.hpp"
 #include "Level.hpp"
+#include "Spell.hpp"
 
 enum State {
 	kStateMainMenu = 0,
@@ -33,6 +34,7 @@ public:
 	// (Model) Dialogs
 	void popDialog();
 	void showLevelEndDialog(bool victory);
+	void showSpellInfoDialog(Spell *);
 private:
 	static GameController *instance;
 	Scene *root;

@@ -2,8 +2,8 @@
   "spell": {
     "_comment": "Names of spells which can be cast",
     "fireball": {
-      "name": "fireball",
-      "description": "a mighty fireball which will turn your enemies to ash!"
+      "name": "Fireball",
+      "description": "Deal 15 damage."
     },
     "waterring": {
       "name": "waterring",
@@ -24,7 +24,19 @@
     "groundspike": {
       "name": "groundspike",
       "description": "rock in the groin. ouch."
-    }
+	},
+	  "mud_shield": {
+		  "name": "Mud Shield",
+		  "description": "Bring up a wall of mud to block two attacks."
+	  },
+	  "mud_shield": {
+		  "name": "Mud Shield",
+		  "description": "Block two attacks."
+	  },
+	  "refresh": {
+		  "name": "Refresh",
+		  "description": "Heal for 10."
+	  }
   },
   "ui": {
     "LEVEL_WON": "congratulations",

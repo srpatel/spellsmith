@@ -85,3 +85,9 @@ void GameController::showLevelEndDialog(bool victory) {
 	root->addChild(dialog);
 	dialog_stack.push_back(dialog);
 }
+void GameController::showSpellInfoDialog(Spell *spell) {
+	Dialog *dialog = SpellInfoDialog::create(spell);
+	dialog->setPosition(root->getContentSize()/2);
+	root->addChild(dialog);
+	dialog_stack.push_back(dialog);
+}
