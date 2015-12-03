@@ -210,7 +210,7 @@
                 <key>spriteSourceSize</key>
                 <string>{10,12}</string>
                 <key>textureRect</key>
-                <string>{{21,994},{10,12}}</string>
+                <string>{{40,994},{10,12}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -439,6 +439,21 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>ui/cross.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{17,18}</string>
+                <key>spriteSourceSize</key>
+                <string>{17,18}</string>
+                <key>textureRect</key>
+                <string>{{21,994},{17,18}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>ui/grid_background.png</key>
             <dict>
                 <key>aliases</key>
@@ -509,7 +524,7 @@
             <key>size</key>
             <string>{452,1013}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c95eb0338d865c0bb4b02342ff75c0e7:36a1b83b7030b3ffa7b54e180f0bde76:ed4222f1d24a3c8678b382d341162271$</string>
+            <string>$TexturePacker:SmartUpdate:b39300e84fae779fac1126debc22960d:8e93438767667797028d36b6c976e66c:ed4222f1d24a3c8678b382d341162271$</string>
             <key>textureFileName</key>
             <string>spritesheet.png</string>
         </dict>

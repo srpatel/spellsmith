@@ -134,6 +134,28 @@ bool SpellInfoDialog::init(Spell *spell) {
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
 	
+	auto onCloseClick = EventListenerTouchOneByOne::create();
+	onCloseClick->setSwallowTouches(true);
+	onCloseClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		//bounds.origin -= bounds.size/2;
+		bounds.origin += getBoundingBox().origin;
+		if (bounds.containsPoint(touch->getLocation())){
+			auto gc = GameController::get();
+			gc->popDialog();
+			return true;
+		}
+		
+		return false; // if you are consuming it
+	};
+	onCloseClick->onTouchMoved = [](Touch* touch, Event* event){};
+	onCloseClick->onTouchEnded = [=](Touch* touch, Event* event){};
+	
+	auto closebutton = Sprite::createWithSpriteFrameName("ui/cross.png");
+	closebutton->setPosition(Vec2(80, 80));
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onCloseClick, closebutton);
+	this->addChild(closebutton, 1);
+	
 	// Draw gems in the middle of the dialog
 	
 	// Put description at the bottom.
