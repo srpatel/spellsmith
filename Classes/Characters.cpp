@@ -17,10 +17,10 @@ Buff *Buff::createMudshield() {
 	buff->type = BuffType::BARRIER;
 	buff->positive = true;
 	
-	buff->icon = Sprite::createWithSpriteFrameName("buffs/mudshield.png");
+	buff->icon = LoadSprite("buffs/mudshield.png");
 	buff->icon->retain();
 	
-	buff->sprite = Sprite::createWithSpriteFrameName("spells/mudshield.png");
+	buff->sprite = LoadSprite("spells/mudshield.png");
 	buff->sprite->retain();
 	
 	buff->sprite->setAnchorPoint(Vec2(0.5, 0));

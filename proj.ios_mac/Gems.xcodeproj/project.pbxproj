@@ -25,10 +25,6 @@
 		105E0D181BF14E3F0081D8F5 /* Characters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D061BF14E3F0081D8F5 /* Characters.cpp */; };
 		105E0D191BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */; };
 		105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */; };
-		105E0D1D1BF14EA50081D8F5 /* spritesheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D1B1BF14EA50081D8F5 /* spritesheet.plist */; };
-		105E0D1E1BF14EA50081D8F5 /* spritesheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D1B1BF14EA50081D8F5 /* spritesheet.plist */; };
-		105E0D1F1BF14EA50081D8F5 /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D1C1BF14EA50081D8F5 /* spritesheet.png */; };
-		105E0D201BF14EA50081D8F5 /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D1C1BF14EA50081D8F5 /* spritesheet.png */; };
 		105E0D221BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		105E0D231BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		106156A41BF68A0700CF2D06 /* LevelSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106156A21BF68A0700CF2D06 /* LevelSelect.cpp */; };
@@ -41,14 +37,6 @@
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
 		108747901C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
-		108747A71C07AAC50069DCAF /* spritesheet-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A31C07AAC50069DCAF /* spritesheet-hd.plist */; };
-		108747A81C07AAC50069DCAF /* spritesheet-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A31C07AAC50069DCAF /* spritesheet-hd.plist */; };
-		108747A91C07AAC50069DCAF /* spritesheet-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A41C07AAC50069DCAF /* spritesheet-hd.png */; };
-		108747AA1C07AAC50069DCAF /* spritesheet-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A41C07AAC50069DCAF /* spritesheet-hd.png */; };
-		108747AB1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */; };
-		108747AC1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */; };
-		108747AD1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */; };
-		108747AE1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */; };
 		10B465191BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651A1BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651B1BFA935E00DD5E9E /* AnimationState.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DE1BFA935E00DD5E9E /* AnimationState.c */; };
@@ -109,6 +97,24 @@
 		10B465521BFA935E00DD5E9E /* SlotData.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B465141BFA935E00DD5E9E /* SlotData.c */; };
 		10B465531BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10B465161BFA935E00DD5E9E /* spine-cocos2dx.cpp */; };
 		10B465541BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10B465161BFA935E00DD5E9E /* spine-cocos2dx.cpp */; };
+		10C409381CC286C000DED2A9 /* spritesheet0-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409301CC286C000DED2A9 /* spritesheet0-hd.plist */; };
+		10C409391CC286C000DED2A9 /* spritesheet0-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409311CC286C000DED2A9 /* spritesheet0-hd.png */; };
+		10C4093A1CC286C000DED2A9 /* spritesheet0-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409321CC286C000DED2A9 /* spritesheet0-ipadhd.plist */; };
+		10C4093B1CC286C000DED2A9 /* spritesheet0-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409331CC286C000DED2A9 /* spritesheet0-ipadhd.png */; };
+		10C4093C1CC286C000DED2A9 /* spritesheet0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409341CC286C000DED2A9 /* spritesheet0.plist */; };
+		10C4093D1CC286C000DED2A9 /* spritesheet0.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409351CC286C000DED2A9 /* spritesheet0.png */; };
+		10C4093E1CC286C000DED2A9 /* spritesheet1-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409361CC286C000DED2A9 /* spritesheet1-ipadhd.plist */; };
+		10C4093F1CC286C000DED2A9 /* spritesheet1-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409371CC286C000DED2A9 /* spritesheet1-ipadhd.png */; };
+		10C409401CC2876F00DED2A9 /* spritesheet0-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409301CC286C000DED2A9 /* spritesheet0-hd.plist */; };
+		10C409411CC2877000DED2A9 /* spritesheet0-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409311CC286C000DED2A9 /* spritesheet0-hd.png */; };
+		10C409421CC2877000DED2A9 /* spritesheet0-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409321CC286C000DED2A9 /* spritesheet0-ipadhd.plist */; };
+		10C409431CC2877000DED2A9 /* spritesheet0-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409331CC286C000DED2A9 /* spritesheet0-ipadhd.png */; };
+		10C409441CC2877000DED2A9 /* spritesheet0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409341CC286C000DED2A9 /* spritesheet0.plist */; };
+		10C409451CC2877000DED2A9 /* spritesheet0.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409351CC286C000DED2A9 /* spritesheet0.png */; };
+		10C409461CC2877000DED2A9 /* spritesheet1-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C409361CC286C000DED2A9 /* spritesheet1-ipadhd.plist */; };
+		10C409471CC2877000DED2A9 /* spritesheet1-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 10C409371CC286C000DED2A9 /* spritesheet1-ipadhd.png */; };
+		10C409501CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */; };
+		10C409511CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */; };
 		10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */ = {isa = PBXBuildFile; fileRef = 10DC04E21BF90A1B003BA69E /* EffectSprite */; };
 		10DC05021BF90E80003BA69E /* pointlight.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10DC05011BF90E80003BA69E /* pointlight.frag */; };
 		10DC05031BF90E80003BA69E /* pointlight.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10DC05011BF90E80003BA69E /* pointlight.frag */; };
@@ -222,8 +228,6 @@
 		105E0D051BF14E3F0081D8F5 /* Characters.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Characters.hpp; sourceTree = "<group>"; };
 		105E0D061BF14E3F0081D8F5 /* Characters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Characters.cpp; sourceTree = "<group>"; };
 		105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
-		105E0D1B1BF14EA50081D8F5 /* spritesheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spritesheet.plist; sourceTree = "<group>"; };
-		105E0D1C1BF14EA50081D8F5 /* spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet.png; sourceTree = "<group>"; };
 		105E0D211BF14EB10081D8F5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		105E0D271BF14F910081D8F5 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
 		106156A21BF68A0700CF2D06 /* LevelSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelect.cpp; sourceTree = "<group>"; };
@@ -236,10 +240,6 @@
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		1087478E1C07A7920069DCAF /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
-		108747A31C07AAC50069DCAF /* spritesheet-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet-hd.plist"; sourceTree = "<group>"; };
-		108747A41C07AAC50069DCAF /* spritesheet-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet-hd.png"; sourceTree = "<group>"; };
-		108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet-ipadhd.plist"; sourceTree = "<group>"; };
-		108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet-ipadhd.png"; sourceTree = "<group>"; };
 		10A21C9F1C050548003CD8E2 /* DevResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DevResources; path = ../DevResources; sourceTree = "<group>"; };
 		10B464DC1BFA935E00DD5E9E /* Animation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Animation.c; sourceTree = "<group>"; };
 		10B464DD1BFA935E00DD5E9E /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
@@ -302,6 +302,15 @@
 		10B465161BFA935E00DD5E9E /* spine-cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "spine-cocos2dx.cpp"; sourceTree = "<group>"; };
 		10B465171BFA935E00DD5E9E /* spine-cocos2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "spine-cocos2dx.h"; sourceTree = "<group>"; };
 		10B465181BFA935E00DD5E9E /* spine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine.h; sourceTree = "<group>"; };
+		10C409301CC286C000DED2A9 /* spritesheet0-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet0-hd.plist"; sourceTree = "<group>"; };
+		10C409311CC286C000DED2A9 /* spritesheet0-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet0-hd.png"; sourceTree = "<group>"; };
+		10C409321CC286C000DED2A9 /* spritesheet0-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet0-ipadhd.plist"; sourceTree = "<group>"; };
+		10C409331CC286C000DED2A9 /* spritesheet0-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet0-ipadhd.png"; sourceTree = "<group>"; };
+		10C409341CC286C000DED2A9 /* spritesheet0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spritesheet0.plist; sourceTree = "<group>"; };
+		10C409351CC286C000DED2A9 /* spritesheet0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet0.png; sourceTree = "<group>"; };
+		10C409361CC286C000DED2A9 /* spritesheet1-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spritesheet1-ipadhd.plist"; sourceTree = "<group>"; };
+		10C409371CC286C000DED2A9 /* spritesheet1-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spritesheet1-ipadhd.png"; sourceTree = "<group>"; };
+		10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteLoader.cpp; sourceTree = "<group>"; };
 		10DC04E21BF90A1B003BA69E /* EffectSprite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectSprite; path = /Users/sunil/projects/Gems/Gems/Classes/EffectSprite; sourceTree = "<absolute>"; };
 		10DC05011BF90E80003BA69E /* pointlight.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.frag; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
@@ -536,6 +545,14 @@
 			path = spine;
 			sourceTree = "<group>";
 		};
+		10C409481CC287D400DED2A9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,12 +615,14 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				108747A31C07AAC50069DCAF /* spritesheet-hd.plist */,
-				108747A41C07AAC50069DCAF /* spritesheet-hd.png */,
-				108747A51C07AAC50069DCAF /* spritesheet-ipadhd.plist */,
-				108747A61C07AAC50069DCAF /* spritesheet-ipadhd.png */,
-				105E0D1B1BF14EA50081D8F5 /* spritesheet.plist */,
-				105E0D1C1BF14EA50081D8F5 /* spritesheet.png */,
+				10C409301CC286C000DED2A9 /* spritesheet0-hd.plist */,
+				10C409311CC286C000DED2A9 /* spritesheet0-hd.png */,
+				10C409321CC286C000DED2A9 /* spritesheet0-ipadhd.plist */,
+				10C409331CC286C000DED2A9 /* spritesheet0-ipadhd.png */,
+				10C409341CC286C000DED2A9 /* spritesheet0.plist */,
+				10C409351CC286C000DED2A9 /* spritesheet0.png */,
+				10C409361CC286C000DED2A9 /* spritesheet1-ipadhd.plist */,
+				10C409371CC286C000DED2A9 /* spritesheet1-ipadhd.png */,
 				10DC05011BF90E80003BA69E /* pointlight.frag */,
 				105E0D211BF14EB10081D8F5 /* data */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -619,6 +638,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				10C409481CC287D400DED2A9 /* Common */,
 				10B464DB1BFA935E00DD5E9E /* spine */,
 				105E0D271BF14F910081D8F5 /* CommonPrefix.h */,
 				105E0D041BF14E3F0081D8F5 /* Constants.h */,
@@ -686,6 +706,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Gems-mobile" */;
 			buildPhases = (
+				10C4094D1CC2891900DED2A9 /* Spritesheet */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
@@ -705,7 +726,6 @@
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "Gems-desktop" */;
 			buildPhases = (
 				102441741BF3B62600AEC8B4 /* Minify JSON */,
-				106E1ED31BF2A00E00C057C6 /* Spritesheet */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
 				5087E75C17EB910900C73F5D /* Frameworks */,
@@ -727,6 +747,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = UG55CM8S4N;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Gems" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -778,19 +803,20 @@
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
+				10C4093A1CC286C000DED2A9 /* spritesheet0-ipadhd.plist in Resources */,
+				10C4093B1CC286C000DED2A9 /* spritesheet0-ipadhd.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
-				105E0D1D1BF14EA50081D8F5 /* spritesheet.plist in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
-				108747A71C07AAC50069DCAF /* spritesheet-hd.plist in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
+				10C4093C1CC286C000DED2A9 /* spritesheet0.plist in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
-				105E0D1F1BF14EA50081D8F5 /* spritesheet.png in Resources */,
-				108747AD1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */,
+				10C4093E1CC286C000DED2A9 /* spritesheet1-ipadhd.plist in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
-				108747A91C07AAC50069DCAF /* spritesheet-hd.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
+				10C409391CC286C000DED2A9 /* spritesheet0-hd.png in Resources */,
+				10C409381CC286C000DED2A9 /* spritesheet0-hd.plist in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
@@ -798,10 +824,11 @@
 				105E0D221BF14EB10081D8F5 /* data in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				10C4093D1CC286C000DED2A9 /* spritesheet0.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				10C4093F1CC286C000DED2A9 /* spritesheet1-ipadhd.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
-				108747AB1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				10DC05021BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
@@ -815,19 +842,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
+				10C409401CC2876F00DED2A9 /* spritesheet0-hd.plist in Resources */,
+				10C409411CC2877000DED2A9 /* spritesheet0-hd.png in Resources */,
+				10C409421CC2877000DED2A9 /* spritesheet0-ipadhd.plist in Resources */,
+				10C409431CC2877000DED2A9 /* spritesheet0-ipadhd.png in Resources */,
+				10C409441CC2877000DED2A9 /* spritesheet0.plist in Resources */,
+				10C409451CC2877000DED2A9 /* spritesheet0.png in Resources */,
+				10C409461CC2877000DED2A9 /* spritesheet1-ipadhd.plist in Resources */,
+				10C409471CC2877000DED2A9 /* spritesheet1-ipadhd.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				105E0D201BF14EA50081D8F5 /* spritesheet.png in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
-				108747A81C07AAC50069DCAF /* spritesheet-hd.plist in Resources */,
-				108747AE1C07AAC50069DCAF /* spritesheet-ipadhd.png in Resources */,
 				105E0D231BF14EB10081D8F5 /* data in Resources */,
-				108747AA1C07AAC50069DCAF /* spritesheet-hd.png in Resources */,
-				108747AC1C07AAC50069DCAF /* spritesheet-ipadhd.plist in Resources */,
 				10DC05031BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
 				10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */,
 				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
-				105E0D1E1BF14EA50081D8F5 /* spritesheet.plist in Resources */,
 				46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -849,7 +878,7 @@
 			shellPath = /bin/sh;
 			shellScript = "cd ../Resources/\nexit 0\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json\njsonlint -i data/levels.json\njsonlint -i data/monsters.json\njsonlint -i data/strings/en.json";
 		};
-		106E1ED31BF2A00E00C057C6 /* Spritesheet */ = {
+		10C4094D1CC2891900DED2A9 /* Spritesheet */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -861,7 +890,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\n\n# apply sprite illuminator?\n\nexit 0\n\nTexturePacker --data spritesheet{v}.plist --sheet spritesheet{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
+			shellScript = "# Pack images for mobile only\n\ncd ../Resources/\n\nTexturePacker --data spritesheet{n}{v}.plist --multipack --sheet spritesheet{n}{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -901,6 +930,7 @@
 				10B4651F1BFA935E00DD5E9E /* Atlas.c in Sources */,
 				10B465491BFA935E00DD5E9E /* SkeletonRenderer.cpp in Sources */,
 				10B465251BFA935E00DD5E9E /* AttachmentLoader.c in Sources */,
+				10C409501CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1070E0AD1BF5188E007C06F9 /* GameController.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
@@ -957,6 +987,7 @@
 				10B465301BFA935E00DD5E9E /* EventData.c in Sources */,
 				102441791BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				10B465201BFA935E00DD5E9E /* Atlas.c in Sources */,
+				10C409511CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */,
 				10B4651C1BFA935E00DD5E9E /* AnimationState.c in Sources */,
 				105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */,
@@ -993,6 +1024,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1003,6 +1035,7 @@
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
+					"USE_SPRITE_SHEET=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -1019,6 +1052,7 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikka.gems;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
@@ -1031,6 +1065,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1040,6 +1075,7 @@
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"USE_SPRITE_SHEET=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1055,6 +1091,7 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikka.gems;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
@@ -1078,6 +1115,7 @@
 					CC_TARGET_OS_MAC,
 					"COCOS2D_DEBUG=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"USE_SPRITE_SHEET=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1110,6 +1148,7 @@
 					USE_FILE32API,
 					CC_TARGET_OS_MAC,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"USE_SPRITE_SHEET=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (

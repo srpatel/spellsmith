@@ -58,6 +58,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
         director->setOpenGLView(glview);
     }
+	
+	std::vector<std::string> searchPaths;
+	searchPaths.push_back("/Users/sunil/projects/Gems/Gems/DevResources/images-prepack/");
+	FileUtils::getInstance()->setSearchPaths(searchPaths);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -68,29 +72,33 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
     Size frameSize = glview->getFrameSize();
-	
+#if USE_SPRITE_SHEET
 	// load the Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();
 	
     // if the frame's height is larger than the height of medium size.
+	// TODO : Load all spritesheets ending with the correct prefix.
     if (frameSize.height > mediumResolutionSize.height)
-    {        
+    {
         director->setContentScaleFactor(3);
-		spritecache->addSpriteFramesWithFile("spritesheet-ipadhd.plist");
+		spritecache->addSpriteFramesWithFile("spritesheet0-ipadhd.plist");
+		spritecache->addSpriteFramesWithFile("spritesheet1-ipadhd.plist");
     }
     // if the frame's height is larger than the height of small size.
     else if (frameSize.height > smallResolutionSize.height)
     {        
         director->setContentScaleFactor(2);
-		spritecache->addSpriteFramesWithFile("spritesheet-hd.plist");
+		spritecache->addSpriteFramesWithFile("spritesheet0-hd.plist");
     }
     // if the frame's height is smaller than the height of medium size.
     else
     {        
         director->setContentScaleFactor(1);
-		spritecache->addSpriteFramesWithFile("spritesheet.plist");
+		spritecache->addSpriteFramesWithFile("spritesheet0.plist");
 	}
-	
+#else
+	director->setContentScaleFactor(2);
+#endif
     
     register_all_packages();
 	

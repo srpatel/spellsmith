@@ -39,7 +39,7 @@ bool LevelWonDialog::init() {
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
@@ -82,7 +82,7 @@ bool LevelLostDialog::init() {
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETRY_LEVEL");
 		
@@ -100,7 +100,7 @@ bool LevelLostDialog::init() {
 	}
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
@@ -123,7 +123,7 @@ bool SpellInfoDialog::init(Spell *spell) {
 		return false;
 	}
 	
-	auto background = cocos2d::DrawNode::create();
+	auto background = DrawNode::create();
 	float xmax = 100;
 	float ymax = 100;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
@@ -133,6 +133,12 @@ bool SpellInfoDialog::init(Spell *spell) {
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
+	
+	auto d = spell->getDescription();
+	ui::Text* text = ui::Text::create( spell->getDescription(), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	text->setColor(Color3B::BLACK);
+	text->setPosition(Vec2(0, -80));
+	this->addChild(text, 1);
 	
 	auto onCloseClick = EventListenerTouchOneByOne::create();
 	onCloseClick->setSwallowTouches(true);
@@ -151,7 +157,7 @@ bool SpellInfoDialog::init(Spell *spell) {
 	onCloseClick->onTouchMoved = [](Touch* touch, Event* event){};
 	onCloseClick->onTouchEnded = [=](Touch* touch, Event* event){};
 	
-	auto closebutton = Sprite::createWithSpriteFrameName("ui/cross.png");
+	auto closebutton = LoadSprite("ui/cross.png");
 	closebutton->setPosition(Vec2(80, 80));
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(onCloseClick, closebutton);
 	this->addChild(closebutton, 1);

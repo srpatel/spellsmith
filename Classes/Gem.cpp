@@ -22,8 +22,8 @@ void Gem::init(GemType type) {
 	}
 	this->type = type;
 	
-	sprite = Sprite::createWithSpriteFrameName(element);
-	sprite->setScale(Gem::scale);
+	sprite = LoadSprite(element);
+	//sprite->setScale(Gem::scale);
 }
 
 void Gem::init() {
@@ -31,6 +31,8 @@ void Gem::init() {
 }
 
 Size Gem::getSize() {
-	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("gems/air_01.png");
-	return frame->getRect().size * scale;
+	// TODO : Make this dynamic
+	//auto frame = SPRITE("gems/air_01.png");
+	//return frame->getRect().size * scale;
+	return Size(80, 100) * scale;
 }

@@ -114,6 +114,11 @@ Spell::~Spell() {
 	delete [] shape;
 }
 
+std::string Spell::getDescription() {
+	std::string translated = _(std::string("spell.") + name + ".description");
+	return translated;
+}
+
 std::string Spell::getName() {
 	std::string translated = _(std::string("spell.") + name + ".name");
 	return translated;
@@ -147,7 +152,7 @@ void Spell::setup() {
 				case WATER: element = "gems/mini_water.png"; break;
 				default: /*hopefully won't happen!*/ break;
 			}
-			auto sprite = Sprite::createWithSpriteFrameName(element);
+			auto sprite = LoadSprite(element);
 			auto size = sprite->getContentSize();
 			float x = (i - width/2.f) * size.width;
 			float y = (j - height/2.f) * size.height;

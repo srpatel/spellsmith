@@ -28,7 +28,7 @@ bool MainMenu::init() {
 	this->addChild(label, 1);
 	
 	// Play button
-	auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText _("Play");
 	

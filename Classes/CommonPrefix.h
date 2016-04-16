@@ -14,6 +14,13 @@
 USING_NS_CC;
 #endif
 
+#if USE_SPRITE_SHEET
+	#define TEXTURE_TYPE ui::Widget::TextureResType::PLIST
+#else
+	#define TEXTURE_TYPE ui::Widget::TextureResType::LOCAL
+#endif
+// || CC_PLATFORM_IOS || CC_PLATFORM_ANDROID
+
 #define For(_i) for (int i = 0; i < _i; i++)
 #define For2(_i, _j) for (int i = 0; i < _i; i++)\
 for (int j = 0; j < _j; j++)
@@ -78,5 +85,9 @@ pRet = NULL; \
 return NULL; \
 } \
 }
+
+#ifdef __cplusplus
+Sprite *LoadSprite(const char *path);
+#endif
 
 #endif /* CommonPrefix_h */

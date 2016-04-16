@@ -29,7 +29,7 @@ bool LevelSelect::init() {
 	this->addChild(label, 1);
 	
 	// Add a bunch of level buttons
-	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText("1");
 	
@@ -42,7 +42,7 @@ bool LevelSelect::init() {
 		}
 	});
 	this->addChild(button);}
-	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText("2");
 		
@@ -55,7 +55,7 @@ bool LevelSelect::init() {
 			}
 		});
 		this->addChild(button);}
-	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText("3");
 		
@@ -69,7 +69,7 @@ bool LevelSelect::init() {
 		});
 		this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText _("spellbook");
 	
@@ -81,7 +81,7 @@ bool LevelSelect::init() {
 	});
 	this->addChild(button);}
 	
-	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", ui::Widget::TextureResType::PLIST);
+	{auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("infinite mode");
 		

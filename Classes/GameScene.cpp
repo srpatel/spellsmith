@@ -48,13 +48,15 @@ bool Game::init() {
 	enemy->ui_health = HEALTH_PER_HEART * 3;
 	
 	
-	auto scenery_sprite = Sprite::createWithSpriteFrameName("ui/scenery.png");
+	auto scenery_sprite = LoadSprite("ui/scenery.png");
+	auto col_sprite = LoadSprite("ui/column_right.png");
 	
 	// Work out layout
 	float max_scenery_height = scenery_sprite->getBoundingBox().size.height;
 	float min_column_height = 317;
 	
-	layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
+	//layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
+	layout.column_height = col_sprite->getBoundingBox().size.height;
 /*
  _                _                                   _     
 | |              | |                                 | |    
@@ -65,6 +67,30 @@ bool Game::init() {
                        __/ |                                
                       |___/
 */
+	// Bar top
+	{
+		auto sprite = LoadSprite("ui/bar_top.png");
+		sprite->setAnchorPoint(Vec2(0.5, 1));
+		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
+		this->addChild(sprite);
+	}
+	
+	// bar bottom
+	{
+		auto sprite = LoadSprite("ui/bar_bottom.png");
+		sprite->setAnchorPoint(Vec2(0.5, 0));
+		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
+		this->addChild(sprite);
+	}
+	
+	// Smokey
+	{
+		auto sprite = LoadSprite("ui/smokey.png");
+		sprite->setAnchorPoint(Vec2(0.5, 0.5));
+		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height/2));
+		this->addChild(sprite);
+	}
+	
 	// Scenery
 	{
 		
@@ -82,15 +108,15 @@ bool Game::init() {
 	
 	// Columns
 	{
-		auto sprite = Sprite::createWithSpriteFrameName("ui/column_right.png");
+		auto sprite = LoadSprite("ui/column_right.png");
 		sprite->setAnchorPoint(Vec2(1, 1));
-		sprite->setPosition(Vec2(getBoundingBox().size.width + 8, layout.column_height));
+		sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
 		this->addChild(sprite);
 	}
 	{
-		auto sprite = Sprite::createWithSpriteFrameName("ui/column_left.png");
+		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
-		sprite->setPosition(Vec2(-8, layout.column_height));
+		sprite->setPosition(Vec2(0, layout.column_height));
 		this->addChild(sprite);
 	}
 
@@ -110,7 +136,7 @@ bool Game::init() {
     float grid_y = (layout.column_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
 	grid->active = true;
-    this->addChild(this->grid);
+    //this->addChild(this->grid);
 	
 	// More background (must be done after grid because of sizing)
 	//background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 20), Vec2(visibleSize.width, grid_y + gridSize.y/2 + 60), grass);
@@ -132,39 +158,27 @@ bool Game::init() {
 	float spellHeight = gridSize.y/3 - padding*3;
 	float spellPadding = 10;
 	
-	//
-	auto onSpellClick = EventListenerTouchOneByOne::create();
-	onSpellClick->setSwallowTouches(true);
-	// trigger when you push down
-	onSpellClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		bounds.origin -= bounds.size/2;
-		
-		if (bounds.containsPoint(touch->getLocation())){
-			GameController::get()->showSpellInfoDialog(wizard->inventory[0]);
-			return true;
-		}
-		
-		return false; // if you are consuming it
-	};
-	
-	// trigger when moving touch
-	onSpellClick->onTouchMoved = [](Touch* touch, Event* event){
-		// your code
-	};
-	
-	// trigger when you let up
-	onSpellClick->onTouchEnded = [=](Touch* touch, Event* event){
-		// your code
-	};
-	
 	// Left hand inventory
 	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
 			sprite->setPosition(17, starty - i * 55);
-			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick->clone(), sprite);
+			auto onSpellClick = EventListenerTouchOneByOne::create();
+			onSpellClick->setSwallowTouches(true);
+			// trigger when you push down
+			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
+				auto bounds = event->getCurrentTarget()->getBoundingBox();
+				bounds.origin -= bounds.size/2;
+				
+				if (bounds.containsPoint(touch->getLocation())){
+					GameController::get()->showSpellInfoDialog(wizard->inventory[i]);
+					return true;
+				}
+				
+				return false; // if you are consuming it
+			};
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			// TODO : Set scale that allows spell to fit completely in the scroll
 			sprite->setScale(1.f);
 			this->addChild(sprite);
@@ -175,9 +189,23 @@ bool Game::init() {
 		float yoffset = (i - 1) * (spellHeight + spellPadding);
 		
 		if (inventory.size() > 3 + i) {
+			auto onSpellClick = EventListenerTouchOneByOne::create();
+			onSpellClick->setSwallowTouches(true);
+			// trigger when you push down
+			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
+				auto bounds = event->getCurrentTarget()->getBoundingBox();
+				bounds.origin -= bounds.size/2;
+				
+				if (bounds.containsPoint(touch->getLocation())){
+					GameController::get()->showSpellInfoDialog(wizard->inventory[3 + i]);
+					return true;
+				}
+				
+				return false; // if you are consuming it
+			};
 			auto sprite = inventory[3 + i]->mininode;
 			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
-			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick->clone(), sprite);
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			// tap on a spell to see it's info. Use the "open dialog" mechanic.
 			// this opens a dialog which captures events for the whole screen?
 			// Dialogs::showModal(...);
@@ -200,14 +228,14 @@ bool Game::init() {
 	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
 	// Wizard
-	auto wizardsprite = Sprite::createWithSpriteFrameName("characters/wizard.png");
+	auto wizardsprite = LoadSprite("characters/wizard.png");
 	wizardsprite->setAnchorPoint(Vec2(0, 0));
 	wizardsprite->setPosition(10, chars_y_start);
 	wizard->sprite = wizardsprite;
 	this->addChild(wizardsprite);
 	
 	// Goblins
-	auto evilwizard = Sprite::createWithSpriteFrameName("characters/goblin_01.png");
+	auto evilwizard = LoadSprite("characters/goblin_01.png");
 	evilwizard->setAnchorPoint(Vec2(1, 0));
 	evilwizard->setPosition(getBoundingBox().size.width - 10, chars_y_start);
 	this->addChild(evilwizard);
@@ -374,7 +402,7 @@ void Game::doSpell(Spell *spell) {
 	}
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
-	auto sprite = Sprite::createWithSpriteFrameName("spells/whiteball.png");
+	auto sprite = LoadSprite("spells/whiteball.png");
 	sprite->setColor(type);
 	float scale = 0.5 + MIN(damage, 20) / 4.f;
 	sprite->setScale(scale);
@@ -604,7 +632,7 @@ void Game::startLevel(Level *_level) {
 }
 
 void Game::runAnimation(GameAnimation *ga) {
-	if (currentAnimation == nullptr) {
+	if (currentAnimation == nullptr || true) {
 		// no animation is currently running - so run this animation now!
 		currentAnimation = ga;
 		

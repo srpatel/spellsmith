@@ -46,8 +46,10 @@ public:
 	Layer *mininode;
 	bool operator==(Chain *chain);
 	std::string getName();
+	std::string getDescription();
 private:
 	std::string name;
+	std::string description;
 	GemType *shape;
 	int width;
 	int height;
