@@ -22,6 +22,7 @@ private:
 };
 
 class Round {
+public:
 	// For now, just a list of monsters.
 	std::vector<Monster *> monsters;
 };

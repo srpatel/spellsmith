@@ -87,7 +87,7 @@ return NULL; \
 }
 
 #ifdef __cplusplus
-Sprite *LoadSprite(const char *path);
+Sprite *LoadSprite(std::string);
 #endif
 
 #endif /* CommonPrefix_h */

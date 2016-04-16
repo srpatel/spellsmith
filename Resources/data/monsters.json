@@ -1,6 +1,19 @@
 [
   {
-	"name": "goblin_halberd",
+    "name": "goblin_halberd",
+    "sprite": "goblin_01",
+    "health": 30,
+    "attacks": [
+      {
+        "freq": 1,
+        "type": "melee",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "goblin_sword",
+    "sprite": "goblin_02",
     "health": 30,
     "attacks": [
       {

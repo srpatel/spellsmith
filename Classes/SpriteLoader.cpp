@@ -14,7 +14,7 @@
 #define SET_SPRITE_SCALE(_var_)
 #endif
 
-Sprite *LoadSprite(const char *path) {
+Sprite *LoadSprite(std::string path) {
 	auto sprite = SPRITE(path);
 	SET_SPRITE_SCALE(sprite);
 	return sprite;

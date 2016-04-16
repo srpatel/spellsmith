@@ -24,19 +24,15 @@
     "groundspike": {
       "name": "groundspike",
       "description": "rock in the groin. ouch."
-	},
-	  "mud_shield": {
-		  "name": "Mud Shield",
-		  "description": "Bring up a wall of mud to block two attacks."
-	  },
-	  "mud_shield": {
-		  "name": "Mud Shield",
-		  "description": "Block two attacks."
-	  },
-	  "refresh": {
-		  "name": "Refresh",
-		  "description": "Heal for 10."
-	  }
+    },
+    "mud_shield": {
+      "name": "Mud Shield",
+      "description": "Block two attacks."
+    },
+    "refresh": {
+      "name": "Refresh",
+      "description": "Heal for 10."
+    }
   },
   "ui": {
     "LEVEL_WON": "congratulations",

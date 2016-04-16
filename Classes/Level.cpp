@@ -20,5 +20,9 @@ LevelManager *LevelManager::get() {
 }
 
 Round *LevelManager::generateRound(int stage) {
-	return nullptr;
+	// TODO : Garbo this!
+	auto r = new Round;
+	r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
+	r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
+	return r;
 }

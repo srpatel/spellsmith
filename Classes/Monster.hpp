@@ -25,6 +25,7 @@ public:
 class Monster {
 public:
 	std::string name;
+	Sprite *sprite;
 	int hp;
 	std::vector<Attack *> attacks;
 };
@@ -32,6 +33,7 @@ public:
 class MonsterManager {
 public:
 	static MonsterManager *get();
+	Monster *get(std::string name);
 	void init();
 	std::unordered_map<std::string, Monster *> monsters;
 private:

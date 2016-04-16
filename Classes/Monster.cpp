@@ -23,6 +23,11 @@ static AttackType getAttackType(std::string s) {
 	return kAttackTypeMelee;
 }
 
+Monster *MonsterManager::get(std::string name) {
+	auto m = MonsterManager::get();
+	return m->monsters[name];
+}
+
 void MonsterManager::init() {
 	// Load monsters from JSON
 	std::string data = FileUtils::getInstance()->getStringFromFile("data/monsters.json");
@@ -33,6 +38,7 @@ void MonsterManager::init() {
 		const rapidjson::Value& json_monster = doc[i];
 		
 		const rapidjson::Value& json_name = json_monster["name"];
+		const rapidjson::Value& json_sprite = json_monster["sprite"];
 		const rapidjson::Value& json_health = json_monster["health"];
 		const rapidjson::Value& json_attacks = json_monster["attacks"];
 		
@@ -41,9 +47,11 @@ void MonsterManager::init() {
 		
 		auto m = new Monster;
 		m->hp = health;
+		m->sprite = LoadSprite(
+			std::string("characters/") + json_sprite.GetString() + ".png");
 
 		for (int j = json_attacks.Size() - 1; j >= 0; j--) {
-			const rapidjson::Value& json_attack = json_attacks[i];
+			const rapidjson::Value& json_attack = json_attacks[j];
 			const rapidjson::Value& json_frequency = json_attack["freq"];
 			const rapidjson::Value& json_type = json_attack["type"];
 			const rapidjson::Value& json_amount = json_attack["amount"];

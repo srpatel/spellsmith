@@ -582,11 +582,16 @@ void Game::enemyDoTurn() {
 	attemptSetState(kStatePlayerTurn);
 }
 void Game::gotoNextEnemy() {
+	// we are in charge of free'ing round.
 	Round *round = LevelManager::get()->generateRound(stage);
 	stage++;
 	showRound(round);
+	delete round;
 }
 void Game::showRound(Round *round) {
+	// for each enemy, place the correct sprite at the correct location.
+	// maintain a valid enemy list.
+	
 	// enemy health depends on level
 	int max_health;
 	/*if (level) {
