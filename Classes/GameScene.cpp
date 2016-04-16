@@ -17,6 +17,7 @@ static struct {
 	float column_width;
 	float bar_top_height;
 	float bar_bottom_height;
+	float scenery_height;
 } layout;
 
 Game *Game::get() {
@@ -71,6 +72,21 @@ bool Game::init() {
                        __/ |                                
                       |___/
 */
+	// Scenery
+	{
+		scenery_sprite->setAnchorPoint(Vec2(0.5, 0.5));
+		// Set scale so that scenery takes up the whole width
+		float targetWidth = getBoundingBox().size.width;
+		float actualWidth = scenery_sprite->getBoundingBox().size.width;
+		float ratio = targetWidth/actualWidth;
+		if (ratio > 1) {
+			scenery_sprite->setScale(targetWidth/actualWidth);
+		}
+		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
+		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, (getBoundingBox().size.height + layout.column_height)/2));
+		this->addChild(scenery_sprite);
+	}
+	
 	// Bar top
 	{
 		auto sprite = LoadSprite("ui/bar_top.png");
@@ -87,29 +103,6 @@ bool Game::init() {
 		sprite->setAnchorPoint(Vec2(0.5, 0));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
 		this->addChild(sprite);
-	}
-	
-	// Smokey
-	{
-		auto sprite = LoadSprite("ui/smokey.png");
-		sprite->setAnchorPoint(Vec2(0.5, 0.5));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height/2));
-		this->addChild(sprite);
-	}
-	
-	// Scenery
-	{
-		
-		scenery_sprite->setAnchorPoint(Vec2(0.5, 0));
-		// Set scale so that scenery takes up the whole width
-		float targetWidth = getBoundingBox().size.width;
-		float actualWidth = scenery_sprite->getBoundingBox().size.width;
-		float ratio = targetWidth/actualWidth;
-		if (ratio > 1) {
-			scenery_sprite->setScale(targetWidth/actualWidth);
-		}
-		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
-		this->addChild(scenery_sprite);
 	}
 	
 	// Columns
@@ -142,7 +135,6 @@ bool Game::init() {
     float grid_y = (layout.column_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
 	grid->active = true;
-    this->addChild(this->grid);
 	
 	// More background (must be done after grid because of sizing)
 	//background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 20), Vec2(visibleSize.width, grid_y + gridSize.y/2 + 60), grass);
@@ -222,6 +214,14 @@ bool Game::init() {
 		}
 	}
 	
+	// Smokey
+	{
+		auto sprite = LoadSprite("ui/smokey.png");
+		sprite->setAnchorPoint(Vec2(0.5, 0.5));
+		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height/2));
+		this->addChild(sprite);
+	}
+	
 /*
       _                          _                
      | |                        | |               
@@ -231,12 +231,14 @@ bool Game::init() {
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
 	float chars_y_start = layout.column_height;
+	float char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height;
 	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
 	// Wizard
 	auto wizardsprite = LoadSprite("characters/wizard.png");
 	wizardsprite->setAnchorPoint(Vec2(0, 0));
 	wizardsprite->setPosition(10, chars_y_start);
+	wizardsprite->setScale(char_scale);
 	wizard->sprite = wizardsprite;
 	this->addChild(wizardsprite);
 	
@@ -244,6 +246,7 @@ bool Game::init() {
 	auto evilwizard = LoadSprite("characters/goblin_01.png");
 	evilwizard->setAnchorPoint(Vec2(1, 0));
 	evilwizard->setPosition(getBoundingBox().size.width - 10, chars_y_start);
+	evilwizard->setScale(char_scale);
 	this->addChild(evilwizard);
 	enemy->sprite = evilwizard;
 
@@ -284,6 +287,9 @@ bool Game::init() {
                         __/ |    
                        |___/
  */
+	
+	// Grid must be topmost.
+	this->addChild(this->grid);
 	
     this->scheduleUpdate();
     
@@ -468,10 +474,12 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	ga->action = seq;
 	runAnimation(ga);
 }
+
 void Game::onWizardTurnOver() {
 	// enemy gets a shot at you!
 	attemptSetState(kStateEnemySpells);
 }
+
 void Game::attemptSetState(GameState nextstate) {
 	if (!checkGameOver()) {
 		state = nextstate;
