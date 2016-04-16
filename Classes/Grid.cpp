@@ -29,7 +29,7 @@
 static Vec2 startpos(-1000,-1000);
 static Vec2 endpos(-1000,-1000);
 
-Grid::Grid(int w, int h, float maxwidth) {
+Grid::Grid(int w, int h, float maxWidth, float maxHeight) {
     this->width = w;
     this->height = h;
 	this->diagonals_allowed = true;
@@ -37,7 +37,7 @@ Grid::Grid(int w, int h, float maxwidth) {
     // Fill with default constructed gems
     grid = new Gem*[w*h];
     
-    init(maxwidth);
+    init(maxWidth, maxHeight);
 }
 Grid::~Grid() {
     for (int i = 0; i < width * height; i++) {
@@ -76,7 +76,7 @@ cocos2d::Vec2 Grid::getSize() {
 	return cocos2d::Vec2(width * Gem::getSize().width, height * Gem::getSize().height);
 }
 
-bool Grid::init(float maxwidth)
+bool Grid::init(float maxWidth, float maxHeight)
 {
     if ( !Layer::init() )
     {
@@ -88,7 +88,9 @@ bool Grid::init(float maxwidth)
 	this->addChild(line, 1);
 	
 	Gem::scale = 1;
-	float ratio = maxwidth/(Gem::getSize().width * width);
+	float ratioX = maxWidth/(Gem::getSize().width * width);
+	float ratioY = maxHeight/(Gem::getSize().height * height);
+	float ratio = MIN(ratioY, ratioX);
 	Gem::scale = MIN(ratio, 1.6f);
 	
     // Setup the gems, and them to us

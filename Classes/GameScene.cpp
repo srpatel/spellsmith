@@ -14,6 +14,9 @@ Game *Game::instance = nullptr;
 
 static struct {
 	float column_height;
+	float column_width;
+	float bar_top_height;
+	float bar_bottom_height;
 } layout;
 
 Game *Game::get() {
@@ -49,14 +52,15 @@ bool Game::init() {
 	
 	
 	auto scenery_sprite = LoadSprite("ui/scenery.png");
-	auto col_sprite = LoadSprite("ui/column_right.png");
+	auto right_col_sprite = LoadSprite("ui/column_right.png");
 	
 	// Work out layout
 	float max_scenery_height = scenery_sprite->getBoundingBox().size.height;
 	float min_column_height = 317;
 	
 	//layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
-	layout.column_height = col_sprite->getBoundingBox().size.height;
+	layout.column_height = right_col_sprite->getBoundingBox().size.height;
+	layout.column_width = right_col_sprite->getBoundingBox().size.width;
 /*
  _                _                                   _     
 | |              | |                                 | |    
@@ -70,6 +74,7 @@ bool Game::init() {
 	// Bar top
 	{
 		auto sprite = LoadSprite("ui/bar_top.png");
+		layout.bar_top_height = sprite->getBoundingBox().size.height;
 		sprite->setAnchorPoint(Vec2(0.5, 1));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
 		this->addChild(sprite);
@@ -78,6 +83,7 @@ bool Game::init() {
 	// bar bottom
 	{
 		auto sprite = LoadSprite("ui/bar_bottom.png");
+		layout.bar_bottom_height = sprite->getBoundingBox().size.height;
 		sprite->setAnchorPoint(Vec2(0.5, 0));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
 		this->addChild(sprite);
@@ -108,10 +114,10 @@ bool Game::init() {
 	
 	// Columns
 	{
-		auto sprite = LoadSprite("ui/column_right.png");
-		sprite->setAnchorPoint(Vec2(1, 1));
-		sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
-		this->addChild(sprite);
+		//auto sprite = LoadSprite("ui/column_right.png");
+		right_col_sprite->setAnchorPoint(Vec2(1, 1));
+		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
+		this->addChild(right_col_sprite);
 	}
 	{
 		auto sprite = LoadSprite("ui/column_left.png");
@@ -130,13 +136,13 @@ bool Game::init() {
   __/ |             
  |___/              
 */
-    this->grid = new Grid(grid_size, grid_size, getBoundingBox().size.width - 94 - 5);
+    this->grid = new Grid(grid_size, grid_size, getBoundingBox().size.width - layout.column_width * 2, layout.column_height - layout.bar_top_height - layout.bar_bottom_height);
     cocos2d::Vec2 gridSize = this->grid->getSize();
 	float grid_x = getBoundingBox().size.width / 2;
     float grid_y = (layout.column_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
 	grid->active = true;
-    //this->addChild(this->grid);
+    this->addChild(this->grid);
 	
 	// More background (must be done after grid because of sizing)
 	//background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 20), Vec2(visibleSize.width, grid_y + gridSize.y/2 + 60), grass);

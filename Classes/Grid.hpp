@@ -12,9 +12,9 @@ struct Chain {
 
 class Grid : public cocos2d::Layer {
 public:
-    Grid(int w, int h, float width);
+    Grid(int w, int h, float maxWidth, float maxHeight);
     Gem *get(int column, int row);
-    bool init(float width);
+    bool init(float maxWidth, float maxHeight);
 	bool active;
 	void scramble();
     cocos2d::Vec2 getSize();
