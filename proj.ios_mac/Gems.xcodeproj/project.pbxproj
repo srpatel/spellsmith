@@ -890,7 +890,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Pack images for mobile only\n\ncd ../Resources/\n\nTexturePacker --data spritesheet{n}{v}.plist --multipack --sheet spritesheet{n}{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
+			shellScript = "# Pack images for mobile only\necho \"Packing textures\"\n\ncd ../Resources/\n\nTexturePacker --data spritesheet{n}{v}.plist --multipack --sheet spritesheet{n}{v}.png --format cocos2d-x ../DevResources/images-prepack \\\n--variant \"0.5:\" \\\n--variant \"1:-hd\" \\\n--variant \"1.5:-ipadhd\"\n\n# TexturePacker --data spritesheet_n{v}.plist --sheet spritesheet_n{v}.png --format cocos2d-x ../DevResources/images-prepack_n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1054,6 +1054,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikka.gems;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
@@ -1093,6 +1094,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikka.gems;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";

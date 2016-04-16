@@ -59,10 +59,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 	
-	std::vector<std::string> searchPaths;
-	searchPaths.push_back("/Users/sunil/projects/Gems/Gems/DevResources/images-prepack/");
-	FileUtils::getInstance()->setSearchPaths(searchPaths);
-
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -98,6 +94,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 #else
 	director->setContentScaleFactor(2);
+	std::vector<std::string> searchPaths;
+	searchPaths.push_back("/Users/sunil/projects/Gems/Gems/DevResources/images-prepack/");
+	FileUtils::getInstance()->setSearchPaths(searchPaths);
 #endif
     
     register_all_packages();
