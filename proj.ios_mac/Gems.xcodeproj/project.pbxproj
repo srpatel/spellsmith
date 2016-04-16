@@ -27,8 +27,6 @@
 		105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */; };
 		105E0D221BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		105E0D231BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
-		106156A41BF68A0700CF2D06 /* LevelSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106156A21BF68A0700CF2D06 /* LevelSelect.cpp */; };
-		106156A51BF68A0700CF2D06 /* LevelSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106156A21BF68A0700CF2D06 /* LevelSelect.cpp */; };
 		1070E0AD1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
 		1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
 		1070E0B11BF54FCE007C06F9 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */; };
@@ -230,8 +228,6 @@
 		105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		105E0D211BF14EB10081D8F5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		105E0D271BF14F910081D8F5 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
-		106156A21BF68A0700CF2D06 /* LevelSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelect.cpp; sourceTree = "<group>"; };
-		106156A31BF68A0700CF2D06 /* LevelSelect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSelect.hpp; sourceTree = "<group>"; };
 		1070E0AB1BF5188E007C06F9 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		1070E0AC1BF5188E007C06F9 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
@@ -471,8 +467,6 @@
 				1070E0AC1BF5188E007C06F9 /* GameController.hpp */,
 				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
 				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
-				106156A21BF68A0700CF2D06 /* LevelSelect.cpp */,
-				106156A31BF68A0700CF2D06 /* LevelSelect.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -876,7 +870,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../Resources/\nexit 0\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json\njsonlint -i data/levels.json\njsonlint -i data/monsters.json\njsonlint -i data/strings/en.json";
+			shellScript = "cd ../Resources/\n# For now, prettify it.\n# In the future, minify and copy into resource.\njsonlint -i data/spells.json\njsonlint -i data/levels.json\njsonlint -i data/monsters.json\njsonlint -i data/strings/en.json";
 		};
 		10C4094D1CC2891900DED2A9 /* Spritesheet */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -926,7 +920,6 @@
 				10B465391BFA935E00DD5E9E /* MeshAttachment.c in Sources */,
 				10B4654D1BFA935E00DD5E9E /* SkinnedMeshAttachment.c in Sources */,
 				10B465271BFA935E00DD5E9E /* Bone.c in Sources */,
-				106156A41BF68A0700CF2D06 /* LevelSelect.cpp in Sources */,
 				10B4651F1BFA935E00DD5E9E /* Atlas.c in Sources */,
 				10B465491BFA935E00DD5E9E /* SkeletonRenderer.cpp in Sources */,
 				10B465251BFA935E00DD5E9E /* AttachmentLoader.c in Sources */,
@@ -992,7 +985,6 @@
 				105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */,
 				10B4652A1BFA935E00DD5E9E /* BoneData.c in Sources */,
-				106156A51BF68A0700CF2D06 /* LevelSelect.cpp in Sources */,
 				10B465281BFA935E00DD5E9E /* Bone.c in Sources */,
 				10B465461BFA935E00DD5E9E /* SkeletonData.c in Sources */,
 				10B465241BFA935E00DD5E9E /* Attachment.c in Sources */,
