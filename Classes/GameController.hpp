@@ -15,9 +15,7 @@
 
 enum State {
 	kStateMainMenu = 0,
-	kStateLevelSelect,
 	kStateGame,
-	
 	
 	kStateCount
 };
@@ -29,7 +27,7 @@ public:
 	
 	// Game states
 	void setState(State state);
-	void startGame(Level *level);
+	void startGame(SaveGame *save);
 	
 	// (Model) Dialogs
 	void popDialog();

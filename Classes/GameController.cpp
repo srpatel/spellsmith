@@ -9,7 +9,6 @@
 #include "GameController.hpp"
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
-#include "LevelSelect.hpp"
 #include "Constants.h"
 
 GameController *GameController::instance = nullptr;
@@ -26,8 +25,6 @@ void GameController::init(Scene *root) {
 	stateScreens[kStateMainMenu]->retain();
 	stateScreens[kStateGame] = Game::create();
 	stateScreens[kStateGame]->retain();
-	stateScreens[kStateLevelSelect] = LevelSelect::create();
-	stateScreens[kStateLevelSelect]->retain();
 	
 	instance->state = kStateMainMenu;
 	
@@ -60,8 +57,8 @@ void GameController::setState(State newstate) {
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer);
 }
-void GameController::startGame(Level *level) {
-	Game::get()->startLevel(level);
+void GameController::startGame(SaveGame *saveGame) {
+	Game::get()->startGame(saveGame);
 	setState(kStateGame);
 }
 void GameController::popDialog() {

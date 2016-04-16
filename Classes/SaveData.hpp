@@ -13,10 +13,7 @@
 
 class SaveData {
 	// Get level scores
-	int getLevelScore(Level *);
 	int getInfScore();
-	
-	void setLevelScore(Level *, int);
 	void setInfScore(int);
 };
 

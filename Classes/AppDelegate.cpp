@@ -104,7 +104,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Init JSON things
 	SpellManager::get()->init();
 	MonsterManager::get()->init();
-	LevelManager::get()->init();
 	Strings::get()->init();
 	
 	

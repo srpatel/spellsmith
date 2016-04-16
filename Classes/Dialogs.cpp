@@ -48,7 +48,7 @@ bool LevelWonDialog::init() {
 			if (type == ui::Widget::TouchEventType::ENDED) {
 				auto gc = GameController::get();
 				gc->popDialog();
-				gc->setState(kStateLevelSelect);
+				gc->setState(kStateMainMenu);
 			}
 		});
 		this->addChild(button);
@@ -93,7 +93,7 @@ bool LevelLostDialog::init() {
 				gc->popDialog();
 				
 				// Reset game state
-				Game::get()->resetToStartOfLevel();
+				Game::get()->startGame(nullptr);
 			}
 		});
 		this->addChild(button);
@@ -109,7 +109,7 @@ bool LevelLostDialog::init() {
 			if (type == ui::Widget::TouchEventType::ENDED) {
 				auto gc = GameController::get();
 				gc->popDialog();
-				gc->setState(kStateLevelSelect);
+				gc->setState(kStateMainMenu);
 			}
 		});
 		this->addChild(button);

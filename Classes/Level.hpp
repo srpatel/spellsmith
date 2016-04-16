@@ -11,26 +11,23 @@
 
 #include "Monster.hpp"
 
-const char kZoneForest = 'F';
-const char kZoneLaboratory = 'L';
-
-class Level {
-	friend class LevelManager;
-public:
-	char zone = kZoneForest;
-	int level = 0;
-	std::vector<Monster *> monsters;
-	// monsters...
-};
+class Round;
 
 class LevelManager {
 public:
 	static LevelManager *get();
-	void init();
-	std::vector<Level *> forest_levels;
-	//std::vector<Level *> laboratory_levels; etc.
+	Round *generateRound(int stage);
 private:
 	static LevelManager *instance;
+};
+
+class Round {
+	// For now, just a list of monsters.
+	std::vector<Monster *> monsters;
+};
+
+class SaveGame {
+	// For now - does nothing!
 };
 
 #endif /* Level_hpp */

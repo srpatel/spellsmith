@@ -35,7 +35,8 @@ bool MainMenu::init() {
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
-			GameController::get()->setState(kStateLevelSelect);
+			// For now, from scratch always!
+			GameController::get()->startGame(nullptr);
 		}
 	});
 	this->addChild(button);

@@ -537,15 +537,7 @@ void Game::attemptSetState(GameState nextstate) {
 			func = [this, success]() {
 				auto fadeOut = FadeOut::create(0.2f);
 				auto nextLevel = CallFunc::create([this, success](){
-					bool more = gotoNextEnemy();
-					
-					if (more) {
-						// show the next enemy.
-					} else {
-						// You've won!
-						// Dialog takes all focus!
-						GameController::get()->showLevelEndDialog(success);
-					}
+					gotoNextEnemy();
 				});
 				
 				auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
@@ -589,30 +581,20 @@ void Game::enemyDoTurn() {
 	// it's now the player's turn
 	attemptSetState(kStatePlayerTurn);
 }
-bool Game::gotoNextEnemy() {
+void Game::gotoNextEnemy() {
+	Round *round = LevelManager::get()->generateRound(stage);
 	stage++;
-	
-	bool more;
-	if (mode == kModeInfinite) {
-		more = true;
-	} else {
-		more = stage < level->monsters.size();
-	}
-	
-	if (more) {
-		prepareStartRound();
-	}
-	
-	return more;
+	showRound(round);
 }
-void Game::prepareStartRound() {
+void Game::showRound(Round *round) {
 	// enemy health depends on level
 	int max_health;
-	if (level) {
+	/*if (level) {
 		max_health = level->monsters[stage]->hp;
 	} else {
 		max_health = 30 + 5 * stage;
-	}
+	}*/
+	max_health = 30 + 5 * stage;
 	enemy->max_health = max_health;
 	enemy->health     = max_health;
 	enemy->ui_health  = max_health;
@@ -625,24 +607,33 @@ void Game::prepareStartRound() {
 	state = kStatePlayerTurn;
 	grid->active = true;
 }
-void Game::resetToStartOfLevel() {
-	// apply all this based on the level!
-	stage = 0;
-	
-	// reset health
-	wizard->health = wizard->max_health;
-	wizard->ui_health = wizard->max_health;
-	
-	prepareStartRound();
-	
-	// shuffle grid
-	grid->scramble();
-}
-void Game::startLevel(Level *_level) {
-	mode = _level ? kModeLevel : kModeInfinite;
-	level = _level;
-	
-	resetToStartOfLevel();
+void Game::startGame(SaveGame *save) {
+	if (save != nullptr) {
+		// TODO
+		// Load up the previous save.
+		// - Current monster group (round)
+		// - Look/name/hash of wizard
+		// - Current score
+		// - Current spells
+		// - Current talents?
+	} else {
+		// Load a completely fresh level!
+		stage = 0;
+		
+		// reset health
+		wizard->health = wizard->max_health;
+		wizard->ui_health = wizard->max_health;
+		
+		// Create a round based on the current stage.
+		gotoNextEnemy();
+		
+		// shuffle grid
+		grid->scramble();
+		
+		// reset game state
+		state = kStatePlayerTurn;
+		grid->active = true;
+	}
 }
 
 void Game::runAnimation(GameAnimation *ga) {

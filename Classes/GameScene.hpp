@@ -42,8 +42,7 @@ public:
     Grid *grid;
 	
 	// Restart the current game!
-	void resetToStartOfLevel();
-	void startLevel(Level *);
+	void startGame(SaveGame *save);
 	
     bool init();
     void update(float dt);
@@ -63,11 +62,10 @@ private:
 	void doSpell(Spell *);
 	
 	GameMode mode = kModeInfinite;
-	Level* level = nullptr;
 	int stage; // the current monster you are facing, or the level you are on in infinite mode.
 	
-	bool gotoNextEnemy();
-	void prepareStartRound();
+	void gotoNextEnemy();
+	void showRound(Round *);
 	
 	GameHUD *hud;
 	Enemy *enemy;
