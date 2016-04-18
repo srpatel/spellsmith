@@ -6,6 +6,8 @@
 #include "Spell.hpp"
 #include "Dialogs.hpp"
 #include "Characters.hpp"
+#include "GameHUD.hpp"
+#include "GameScenery.hpp"
 #include "Level.hpp"
 
 enum GameMode {
@@ -23,17 +25,6 @@ enum GameState {
 struct GameAnimation {
 	Sprite *target;
 	FiniteTimeAction *action;
-};
-
-class GameHUD : public Layer {
-public:
-	virtual bool init();
-	void updateValues(Character *left, Character *right);
-	
-	CREATE_FUNC(GameHUD);
-private:
-	Label *left_health;
-	Label *right_health;
 };
 
 class Game : public Layer {
@@ -68,7 +59,10 @@ private:
 	void showRound(Round *);
 	
 	GameHUD *hud;
-	Enemy *enemy;
+	GameScenery *scenery;
+	std::vector<Enemy *> enemies;
+	int currentEnemy;
+	Sprite *redring;
 	Wizard *wizard;
 	bool checkGameOver();
 	void enemyDoTurn();

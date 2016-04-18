@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100AEB971CC3E61400182962 /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100AEB951CC3E61400182962 /* GameHUD.cpp */; };
+		100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100AEB951CC3E61400182962 /* GameHUD.cpp */; };
 		1020FEED1C06759400019EB9 /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1020FEEB1C06759400019EB9 /* SaveData.cpp */; };
 		1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1020FEEB1C06759400019EB9 /* SaveData.cpp */; };
 		102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
@@ -27,6 +29,8 @@
 		105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */; };
 		105E0D221BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		105E0D231BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
+		1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
+		1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
 		1070E0AD1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
 		1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
 		1070E0B11BF54FCE007C06F9 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */; };
@@ -208,6 +212,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		100AEB951CC3E61400182962 /* GameHUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHUD.cpp; sourceTree = "<group>"; };
+		100AEB961CC3E61400182962 /* GameHUD.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHUD.hpp; sourceTree = "<group>"; };
 		1020FEEB1C06759400019EB9 /* SaveData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SaveData.cpp; sourceTree = "<group>"; };
 		1020FEEC1C06759400019EB9 /* SaveData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SaveData.hpp; sourceTree = "<group>"; };
 		102441761BF3DD3700AEC8B4 /* Dialogs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dialogs.cpp; sourceTree = "<group>"; };
@@ -228,6 +234,8 @@
 		105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		105E0D211BF14EB10081D8F5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		105E0D271BF14F910081D8F5 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
+		1070AEF41CC56BB5009DA840 /* GameScenery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScenery.cpp; sourceTree = "<group>"; };
+		1070AEF51CC56BB5009DA840 /* GameScenery.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScenery.hpp; sourceTree = "<group>"; };
 		1070E0AB1BF5188E007C06F9 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		1070E0AC1BF5188E007C06F9 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
@@ -454,6 +462,10 @@
 				105E0D011BF14E3F0081D8F5 /* Gem.cpp */,
 				105E0D021BF14E3F0081D8F5 /* GameScene.hpp */,
 				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
+				100AEB951CC3E61400182962 /* GameHUD.cpp */,
+				100AEB961CC3E61400182962 /* GameHUD.hpp */,
+				1070AEF41CC56BB5009DA840 /* GameScenery.cpp */,
+				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -900,6 +912,7 @@
 				10B4654B1BFA935E00DD5E9E /* Skin.c in Sources */,
 				10B4654F1BFA935E00DD5E9E /* Slot.c in Sources */,
 				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
+				100AEB971CC3E61400182962 /* GameHUD.cpp in Sources */,
 				10B4653B1BFA935E00DD5E9E /* PolygonBatch.cpp in Sources */,
 				105E0D191BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				10B465291BFA935E00DD5E9E /* BoneData.c in Sources */,
@@ -931,6 +944,7 @@
 				10B465531BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */,
 				10B465311BFA935E00DD5E9E /* extension.c in Sources */,
 				10B465211BFA935E00DD5E9E /* AtlasAttachmentLoader.c in Sources */,
+				1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */,
 				10B465451BFA935E00DD5E9E /* SkeletonData.c in Sources */,
 				105E0D151BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
 				105E0D171BF14E3F0081D8F5 /* Characters.cpp in Sources */,
@@ -974,10 +988,12 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				1070E0B21BF54FCE007C06F9 /* MainMenu.cpp in Sources */,
 				10B4653A1BFA935E00DD5E9E /* MeshAttachment.c in Sources */,
+				100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */,
 				10B465381BFA935E00DD5E9E /* Json.c in Sources */,
 				10B465521BFA935E00DD5E9E /* SlotData.c in Sources */,
 				10B4652C1BFA935E00DD5E9E /* BoundingBoxAttachment.c in Sources */,
 				10B465301BFA935E00DD5E9E /* EventData.c in Sources */,
+				1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */,
 				102441791BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				10B465201BFA935E00DD5E9E /* Atlas.c in Sources */,
 				10C409511CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */,

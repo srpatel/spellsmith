@@ -47,3 +47,15 @@ Buff *Character::getBuffByType(BuffType type) {
 	}
 	return ret;
 }
+
+Enemy::Enemy(Monster *m) {
+	monster = m;
+	max_health = monster->hp;
+	health = monster->hp;
+	ui_health = monster->hp;
+	sprite = LoadSprite(monster->sprite_path);
+	sprite->retain();
+}
+Enemy::~Enemy() {
+	sprite->autorelease();
+}

@@ -18,6 +18,10 @@ static struct {
 	float bar_top_height;
 	float bar_bottom_height;
 	float scenery_height;
+	float char_scale;
+	Vec2 enemy_positions3[3];
+	Vec2 enemy_positions2[3];
+	Vec2 enemy_positions1[3];
 } layout;
 
 Game *Game::get() {
@@ -36,6 +40,10 @@ bool Game::init() {
 	
 	state = kStatePlayerTurn;
 	
+	redring = LoadSprite("ui/redring.png");
+	redring->setAnchorPoint(Vec2(0.5, 0.2));
+	redring->setVisible(false);
+	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	wizard = new Wizard;
@@ -45,12 +53,6 @@ bool Game::init() {
 	for (int i = 0; i < 3; i++) {
 		wizard->inventory.push_back(SpellManager::get()->at(i));
 	}
-	
-	enemy = new Enemy;
-	enemy->max_health = HEALTH_PER_HEART * 3;
-	enemy->health = HEALTH_PER_HEART * 3;
-	enemy->ui_health = HEALTH_PER_HEART * 3;
-	
 	
 	auto scenery_sprite = LoadSprite("ui/scenery.png");
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
@@ -85,8 +87,16 @@ bool Game::init() {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, (getBoundingBox().size.height + layout.column_height)/2));
 		this->addChild(scenery_sprite);
+		addChild(redring);
 	}
-	
+	// Gem background
+	{
+		auto grad = LayerColor::create();
+		grad->initWithColor(Color4B(Colours::GEM_BACKGROUND));
+		grad->setPosition(Director::getInstance()->getVisibleOrigin());
+		grad->setContentSize(Size(getBoundingBox().size.width, layout.column_height));
+		this->addChild(grad);
+	}
 	// Bar top
 	{
 		auto sprite = LoadSprite("ui/bar_top.png");
@@ -132,7 +142,7 @@ bool Game::init() {
     this->grid = new Grid(grid_size, grid_size, getBoundingBox().size.width - layout.column_width * 2, layout.column_height - layout.bar_top_height - layout.bar_bottom_height);
     cocos2d::Vec2 gridSize = this->grid->getSize();
 	float grid_x = getBoundingBox().size.width / 2;
-    float grid_y = (layout.column_height) / 2;
+    float grid_y = layout.bar_bottom_height + (layout.column_height - layout.bar_bottom_height - layout.bar_top_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
 	grid->active = true;
 	
@@ -161,7 +171,7 @@ bool Game::init() {
 	for (int i = 0; i < 3; i++) {
 		if (inventory.size() > i) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(17, starty - i * 55);
+			sprite->setPosition(18, starty - i * 55);
 			auto onSpellClick = EventListenerTouchOneByOne::create();
 			onSpellClick->setSwallowTouches(true);
 			// trigger when you push down
@@ -202,7 +212,7 @@ bool Game::init() {
 				return false; // if you are consuming it
 			};
 			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(visibleSize.width - margin/4, grid_y - yoffset);
+			sprite->setPosition(getBoundingBox().size.width - 18, grid_y - yoffset);
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			// tap on a spell to see it's info. Use the "open dialog" mechanic.
 			// this opens a dialog which captures events for the whole screen?
@@ -217,8 +227,8 @@ bool Game::init() {
 	// Smokey
 	{
 		auto sprite = LoadSprite("ui/smokey.png");
-		sprite->setAnchorPoint(Vec2(0.5, 0.5));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height/2));
+		sprite->setAnchorPoint(Vec2(0.5, 1));
+		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
 		this->addChild(sprite);
 	}
 	
@@ -230,25 +240,46 @@ bool Game::init() {
 | (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
+	layout.char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
+	redring->setScale(layout.char_scale);
+	float ydiff = getBoundingBox().size.height - layout.column_height;
+	for (int i = 0; i < 3; i++) {
+		layout.enemy_positions3[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * i;
+		layout.enemy_positions3[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
+	}
+	// make sure middle one is the first one drawn
+	{
+		auto temp = layout.enemy_positions3[1];
+		layout.enemy_positions3[1] = layout.enemy_positions3[0];
+		layout.enemy_positions3[0] = temp;
+	}
+	
+	for (int i = 0; i < 2; i++) {
+		layout.enemy_positions2[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * (i + 0.5);
+		layout.enemy_positions2[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
+	}
+	// make sure top one is the first one drawn
+	{
+		auto temp = layout.enemy_positions2[1];
+		layout.enemy_positions2[1] = layout.enemy_positions2[0];
+		layout.enemy_positions2[0] = temp;
+	}
+	
+	for (int i = 0; i < 1; i++) {
+		layout.enemy_positions1[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * (i + 0.5);
+		layout.enemy_positions1[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
+	}
+	
 	float chars_y_start = layout.column_height;
-	float char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height;
 	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
 	// Wizard
 	auto wizardsprite = LoadSprite("characters/wizard.png");
 	wizardsprite->setAnchorPoint(Vec2(0, 0));
-	wizardsprite->setPosition(10, chars_y_start);
-	wizardsprite->setScale(char_scale);
+	wizardsprite->setPosition(15, chars_y_start);
+	wizardsprite->setScale(layout.char_scale);
 	wizard->sprite = wizardsprite;
 	this->addChild(wizardsprite);
-	
-	// Goblins
-	auto evilwizard = LoadSprite("characters/goblin_01.png");
-	evilwizard->setAnchorPoint(Vec2(1, 0));
-	evilwizard->setPosition(getBoundingBox().size.width - 10, chars_y_start);
-	evilwizard->setScale(char_scale);
-	this->addChild(evilwizard);
-	enemy->sprite = evilwizard;
 
 /*
  _    _ _    _ _____  
@@ -262,8 +293,9 @@ bool Game::init() {
 	
 	// More background (must be done after grid because of sizing) 60 high.
 	hud = GameHUD::create();
-	hud->updateValues(wizard, enemy);
-	hud->setPosition(Vec2(0, layout.column_height - 40));
+	hud->setContentSize(
+		Size(getBoundingBox().size.width - layout.column_width * 2, 20 * 2));
+	hud->setPosition(Vec2(layout.column_width, layout.column_height - layout.bar_top_height + 15));
 	this->addChild(hud);
 	
 /*              _ _                  _ _
@@ -358,7 +390,7 @@ bool Game::onCastSpell(Chain *chain) {
 					colour = Color3B::GREEN; break;
 				default:break;
 			}
-			makeProjectile(wizard, enemy, damage, colour);
+			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
 		}
 		
 		onWizardTurnOver();
@@ -370,14 +402,14 @@ void Game::doSpell(Spell *spell) {
 		if (e->type == Projectile) {
 			EffectProjectile *projectile = (EffectProjectile *) e;
 			// Make a projectile!
-			makeProjectile(wizard, enemy, projectile->damage, Color3B::RED);
+			makeProjectile(wizard, enemies[currentEnemy], projectile->damage, Color3B::RED);
 		} else if (e->type == Heal) {
 			//nothing to wait for!
 			int amount = ((EffectHeal *) e)->amount;
 			wizard->health += amount;
 			auto func = CallFunc::create([this, amount](){
 				wizard->ui_health += amount;
-				hud->updateValues(wizard, enemy);
+				//hud->updateValues(wizard, enemy);
 			});
 			func->retain();
 			
@@ -463,7 +495,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
 			target->ui_health -= damage;
-			hud->updateValues(wizard, enemy);
+			//hud->updateValues(wizard, enemy);
 		});
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	}
@@ -514,7 +546,7 @@ void Game::attemptSetState(GameState nextstate) {
 						grid->active = true;
 					});
 					auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
-					enemy->sprite->runAction(seq);
+					//enemy->sprite->runAction(seq);
 					
 					state = kStatePlayerTurn;
 				};
@@ -529,7 +561,7 @@ void Game::attemptSetState(GameState nextstate) {
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
 					wizard->sprite->runAction(seq);
-					enemy->sprite->runAction(fadeOut->clone());
+					//enemy->sprite->runAction(fadeOut->clone());
 				};
 			}
 		} else {
@@ -541,7 +573,7 @@ void Game::attemptSetState(GameState nextstate) {
 				});
 				
 				auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
-				enemy->sprite->runAction(seq);
+				//enemy->sprite->runAction(seq);
 				if (!success) {
 					wizard->sprite->runAction(fadeOut->clone());
 				}
@@ -568,15 +600,16 @@ bool Game::checkGameOver() {
 	auto gameOver = false;
 	if (wizard->health <= 0) {
 		gameOver = true;
-	} else if (enemy->health <= 0) {
+	} else if (enemies.size() == 0) {
 		//need new enemy
 		gameOver = true;
 	}
 	return gameOver;
 }
 void Game::enemyDoTurn() {
+	// TODO : All enemies should get a chance to shoot
 	int damage = 5;
-	makeProjectile(enemy, wizard, damage, Color3B::RED);
+	makeProjectile(enemies[currentEnemy], wizard, damage, Color3B::RED);
 	
 	// it's now the player's turn
 	attemptSetState(kStatePlayerTurn);
@@ -589,24 +622,34 @@ void Game::gotoNextEnemy() {
 	delete round;
 }
 void Game::showRound(Round *round) {
-	// for each enemy, place the correct sprite at the correct location.
-	// maintain a valid enemy list.
-	
-	// enemy health depends on level
-	int max_health;
-	/*if (level) {
-		max_health = level->monsters[stage]->hp;
-	} else {
-		max_health = 30 + 5 * stage;
-	}*/
-	max_health = 30 + 5 * stage;
-	enemy->max_health = max_health;
-	enemy->health     = max_health;
-	enemy->ui_health  = max_health;
-	hud->updateValues(wizard, enemy);
-	
-	// reset enemy
-	enemy->sprite->setOpacity(255);
+	// TODO : Remove all old sprites:
+	for (Enemy *e : enemies) {
+		delete e;
+	}
+	enemies.clear();
+	int i = 0;
+	Vec2 *enemy_positions;
+	if (round->monsters.size() == 3)
+		enemy_positions = layout.enemy_positions3;
+	else if (round->monsters.size() == 2)
+		enemy_positions = layout.enemy_positions2;
+	else
+		enemy_positions = layout.enemy_positions1;
+	for (Monster *m : round->monsters) {
+		// create an enemy from the monster
+		Enemy *enemy = new Enemy(m);
+		enemies.push_back( enemy );
+		
+		enemy->sprite->setAnchorPoint(Vec2(0.77, 0));
+		enemy->sprite->setPosition(enemy_positions[i++]);
+		enemy->sprite->setScale(layout.char_scale);
+		this->addChild(enemy->sprite);
+	}
+	currentEnemy = 0;
+	redring->setVisible(true);
+	redring->setPosition(enemy_positions[currentEnemy]);
+	hud->setupMonsterList(enemies);
+	// scenery->showMonsters(enemies);
 	
 	// reset game state
 	state = kStatePlayerTurn;
@@ -672,52 +715,6 @@ void Game::runAnimation(GameAnimation *ga) {
 
 void Game::update(float dt) {
 	// ???
-}
-
-bool GameHUD::init() {
-	if ( !Layer::init() )
-	{
-		return false;
-	}
-	
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	
-	// Add a couple of cheeky TBs.
-	left_health = Label::createWithTTF(_("health"), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-	right_health = Label::createWithTTF(_("health"), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-	left_health->setTextColor(Color4B::WHITE);
-	right_health->setTextColor(Color4B::WHITE);
-	
-	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
-	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
-	
-	addChild(left_health);
-	addChild(right_health);
-	
-	return true;
-}
-
-void GameHUD::updateValues(Character *left, Character *right) {
-	
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	/*
-	left_health->setString(std::to_string(left->ui_health));
-	right_health->setString(std::to_string(right->ui_health));
-	*/
-	std::ostringstream os ;
-	os << left->ui_health;
-	left_health->setString(os.str());
-	
-	os.clear();
-	os.seekp(0);
-	if (right->ui_health < 10 && right->ui_health >= 0) {
-		os << " ";
-	}
-	os << right->ui_health;
-	right_health->setString(os.str());
-	
-	left_health->setPosition(Vec2(left_health->getContentSize().width/2 + 5, left_health->getContentSize().height/2));
-	right_health->setPosition(Vec2(visibleSize.width - right_health->getContentSize().width/2 - 5, right_health->getContentSize().height/2));
 }
 
 void Game::addBuff(Character *target, Buff *buff) {

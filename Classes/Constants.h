@@ -15,11 +15,14 @@ namespace Fonts {
 	
 	const int TITLE_SIZE = 32;
 	const int TEXT_SIZE = 18;
+	const int SMALL_SIZE = 12;
 };
 
 namespace Colours {
-	const Color3B BACKGROUND ( 46, 42, 36    );
-	const Color4B SEMIBLACK  (  0,  0,  0, 40);
+	const Color3B BACKGROUND     ( 46, 42, 36    );
+	const Color3B GEM_BACKGROUND ( 46, 19, 19    );
+	const Color4B SEMIBLACK      (  0,  0,  0, 40);
 };
+
 
 #endif /* Constants_h */

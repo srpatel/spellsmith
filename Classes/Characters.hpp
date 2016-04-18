@@ -10,6 +10,7 @@
 #define Characters_hpp
 
 #include "Spell.hpp"
+#include "Monster.hpp"
 
 #define HEALTH_PER_HEART 10
 
@@ -44,6 +45,10 @@ public:
 };
 
 class Enemy : public Character {
+public:
+	Monster *monster;
+	Enemy(Monster *);
+	virtual ~Enemy();
 };
 
 class Wizard : public Character {

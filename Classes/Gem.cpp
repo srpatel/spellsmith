@@ -14,10 +14,10 @@ void Gem::init(GemType type) {
 	didInit = true;
 	const char *element;
 	switch (type) {
-		case AIR: element = "gems/air_01.png"; break;
-		case EARTH: element = "gems/earth_01.png"; break;
-		case FIRE: element = "gems/fire_01.png"; break;
-		case WATER: element = "gems/water_01.png"; break;
+		case AIR: element = "gems/air.png"; break;
+		case EARTH: element = "gems/earth.png"; break;
+		case FIRE: element = "gems/fire.png"; break;
+		case WATER: element = "gems/water.png"; break;
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;

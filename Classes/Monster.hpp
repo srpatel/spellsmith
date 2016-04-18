@@ -25,7 +25,7 @@ public:
 class Monster {
 public:
 	std::string name;
-	Sprite *sprite;
+	std::string sprite_path;
 	int hp;
 	std::vector<Attack *> attacks;
 };

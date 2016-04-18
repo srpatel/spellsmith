@@ -24,8 +24,11 @@ static AttackType getAttackType(std::string s) {
 }
 
 Monster *MonsterManager::get(std::string name) {
-	auto m = MonsterManager::get();
-	return m->monsters[name];
+	auto m = MonsterManager::get()->monsters[name];
+	if (m == nullptr) {
+		LOG("Monster not found");
+	}
+	return m;
 }
 
 void MonsterManager::init() {
@@ -46,9 +49,9 @@ void MonsterManager::init() {
 		int health = json_health.GetInt();
 		
 		auto m = new Monster;
+		m->name = name;
 		m->hp = health;
-		m->sprite = LoadSprite(
-			std::string("characters/") + json_sprite.GetString() + ".png");
+		m->sprite_path = (std::string("characters/") + json_sprite.GetString() + ".png");
 
 		for (int j = json_attacks.Size() - 1; j >= 0; j--) {
 			const rapidjson::Value& json_attack = json_attacks[j];
