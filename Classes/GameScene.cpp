@@ -19,9 +19,6 @@ static struct {
 	float bar_bottom_height;
 	float scenery_height;
 	float char_scale;
-	Vec2 enemy_positions3[3];
-	Vec2 enemy_positions2[3];
-	Vec2 enemy_positions1[3];
 } layout;
 
 Game *Game::get() {
@@ -39,10 +36,6 @@ bool Game::init() {
 	setContentSize(visibleSize);
 	
 	state = kStatePlayerTurn;
-	
-	redring = LoadSprite("ui/redring.png");
-	redring->setAnchorPoint(Vec2(0.5, 0.2));
-	redring->setVisible(false);
 	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
@@ -87,7 +80,12 @@ bool Game::init() {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, (getBoundingBox().size.height + layout.column_height)/2));
 		this->addChild(scenery_sprite);
-		addChild(redring);
+		
+		layout.char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
+		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height), layout.char_scale);
+		scenery->setAnchorPoint(Vec2(0, 0));
+		scenery->setPosition(0, layout.column_height);
+		addChild(scenery);
 	}
 	// Gem background
 	{
@@ -240,36 +238,6 @@ bool Game::init() {
 | (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
-	layout.char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
-	redring->setScale(layout.char_scale);
-	float ydiff = getBoundingBox().size.height - layout.column_height;
-	for (int i = 0; i < 3; i++) {
-		layout.enemy_positions3[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * i;
-		layout.enemy_positions3[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
-	}
-	// make sure middle one is the first one drawn
-	{
-		auto temp = layout.enemy_positions3[1];
-		layout.enemy_positions3[1] = layout.enemy_positions3[0];
-		layout.enemy_positions3[0] = temp;
-	}
-	
-	for (int i = 0; i < 2; i++) {
-		layout.enemy_positions2[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * (i + 0.5);
-		layout.enemy_positions2[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
-	}
-	// make sure top one is the first one drawn
-	{
-		auto temp = layout.enemy_positions2[1];
-		layout.enemy_positions2[1] = layout.enemy_positions2[0];
-		layout.enemy_positions2[0] = temp;
-	}
-	
-	for (int i = 0; i < 1; i++) {
-		layout.enemy_positions1[i].x = getBoundingBox().size.width - 25 - layout.char_scale * 52.5 * (i + 0.5);
-		layout.enemy_positions1[i].y = layout.column_height + 8 + (i % 2) * ydiff * 0.1;
-	}
-	
 	float chars_y_start = layout.column_height;
 	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
@@ -627,29 +595,14 @@ void Game::showRound(Round *round) {
 		delete e;
 	}
 	enemies.clear();
-	int i = 0;
-	Vec2 *enemy_positions;
-	if (round->monsters.size() == 3)
-		enemy_positions = layout.enemy_positions3;
-	else if (round->monsters.size() == 2)
-		enemy_positions = layout.enemy_positions2;
-	else
-		enemy_positions = layout.enemy_positions1;
 	for (Monster *m : round->monsters) {
 		// create an enemy from the monster
 		Enemy *enemy = new Enemy(m);
 		enemies.push_back( enemy );
-		
-		enemy->sprite->setAnchorPoint(Vec2(0.77, 0));
-		enemy->sprite->setPosition(enemy_positions[i++]);
-		enemy->sprite->setScale(layout.char_scale);
-		this->addChild(enemy->sprite);
 	}
+	scenery->placeMonsters(enemies);
 	currentEnemy = 0;
-	redring->setVisible(true);
-	redring->setPosition(enemy_positions[currentEnemy]);
 	hud->setupMonsterList(enemies);
-	// scenery->showMonsters(enemies);
 	
 	// reset game state
 	state = kStatePlayerTurn;

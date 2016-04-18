@@ -62,7 +62,6 @@ private:
 	GameScenery *scenery;
 	std::vector<Enemy *> enemies;
 	int currentEnemy;
-	Sprite *redring;
 	Wizard *wizard;
 	bool checkGameOver();
 	void enemyDoTurn();
