@@ -23,25 +23,13 @@ bool GameScenery::init(Size size, float scale) {
 	
 	float ydiff = size.height;
 	for (int i = 0; i < 3; i++) {
-		enemy_positions3[i].x = size.width - 25 - char_scale * 52.5 * i;
-		enemy_positions3[i].y = 8 + (i % 2) * ydiff * 0.1;
-	}
-	// make sure middle one is the first one drawn
-	{
-		auto temp = enemy_positions3[1];
-		enemy_positions3[1] = enemy_positions3[0];
-		enemy_positions3[0] = temp;
+		enemy_positions3[2 - i].x = size.width - 25 - char_scale * 52.5 * i;
+		enemy_positions3[2 - i].y = 8 + (i % 2) * ydiff * 0.1;
 	}
 	
 	for (int i = 0; i < 2; i++) {
-		enemy_positions2[i].x = size.width - 25 - char_scale * 52.5 * (i + 0.5);
-		enemy_positions2[i].y = 8 + (i % 2) * ydiff * 0.1;
-	}
-	// make sure top one is the first one drawn
-	{
-		auto temp = enemy_positions2[1];
-		enemy_positions2[1] = enemy_positions2[0];
-		enemy_positions2[0] = temp;
+		enemy_positions2[1 - i].x = size.width - 25 - char_scale * 52.5 * (i + 0.5);
+		enemy_positions2[1 - i].y = 8 + (i % 2) * ydiff * 0.1;
 	}
 	
 	for (int i = 0; i < 1; i++) {

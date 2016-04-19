@@ -61,6 +61,7 @@ private:
 	GameHUD *hud;
 	GameScenery *scenery;
 	std::vector<Enemy *> enemies;
+	void setSelected(int);
 	int currentEnemy;
 	Wizard *wizard;
 	bool checkGameOver();

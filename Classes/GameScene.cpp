@@ -86,6 +86,32 @@ bool Game::init() {
 		scenery->setAnchorPoint(Vec2(0, 0));
 		scenery->setPosition(0, layout.column_height);
 		addChild(scenery);
+		
+		// Click on scenery to select the enemy at that x-pos (ish)
+		auto onEnemyClick = EventListenerTouchOneByOne::create();
+		onEnemyClick->setSwallowTouches(true);
+		// trigger when you push down
+		onEnemyClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+			Vec2 p = touch->getLocation();
+			Rect rect = scenery->getBoundingBox();
+			if(rect.containsPoint(p)) {
+				float halfredring = 30 * layout.char_scale;
+				float startx = enemies[0]->sprite->getPositionX() - halfredring;
+				float endx = enemies[enemies.size() - 1]->sprite->getPositionX() + halfredring;
+				// within half red-ring size of either side
+				if (p.x > startx
+					&&
+					p.x < endx) {
+					int multiples = (int) (0.3 * layout.char_scale + (p.x - startx) / (halfredring * 2));
+					if (multiples > enemies.size()) multiples = enemies.size() - 1;
+					setSelected(multiples);
+					return true;
+				}
+			}
+			
+			return false; // if you are consuming it
+		};
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onEnemyClick, scenery);
 	}
 	// Gem background
 	{
@@ -110,11 +136,10 @@ bool Game::init() {
 			Vec2 p = touch->getLocation();
 			Rect rect = sprite->getBoundingBox();
 			
-			if(rect.containsPoint(p))
+			// Hard coded because we don't want to include the top part of the bar.
+			if(rect.containsPoint(p) && p.y < rect.origin.y + 61)
 			{
-				currentEnemy = (currentEnemy + 1) % enemies.size();
-				scenery->setSelected(currentEnemy);
-				hud->setSelected(currentEnemy);
+				setSelected(currentEnemy + 1);
 				return true; // to indicate that we have consumed it.
 			}
 			
@@ -313,6 +338,12 @@ bool Game::init() {
     this->scheduleUpdate();
     
     return true;
+}
+
+void Game::setSelected(int index) {
+	currentEnemy = (index + enemies.size()) % enemies.size();
+	scenery->setSelected(currentEnemy);
+	hud->setSelected(currentEnemy);
 }
 
 bool Game::onCastSpell(Chain *chain) {
@@ -616,7 +647,7 @@ void Game::showRound(Round *round) {
 	enemies.clear();
 	for (Monster *m : round->monsters) {
 		// create an enemy from the monster
-		Enemy *enemy = new Enemy(m);
+		Enemy *enemy = new Enemy(m, enemies.size());
 		enemies.push_back( enemy );
 	}
 	scenery->placeMonsters(&enemies);

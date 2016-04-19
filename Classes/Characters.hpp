@@ -47,8 +47,10 @@ public:
 class Enemy : public Character {
 public:
 	Monster *monster;
-	Enemy(Monster *);
+	int index;
+	Enemy(Monster *, int index);
 	virtual ~Enemy();
+private:
 };
 
 class Wizard : public Character {

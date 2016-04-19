@@ -48,7 +48,8 @@ Buff *Character::getBuffByType(BuffType type) {
 	return ret;
 }
 
-Enemy::Enemy(Monster *m) {
+Enemy::Enemy(Monster *m, int index) {
+	this->index = index;
 	monster = m;
 	max_health = monster->hp;
 	health = monster->hp;
