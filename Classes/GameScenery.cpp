@@ -52,27 +52,30 @@ bool GameScenery::init(Size size, float scale) {
 	return true;
 }
 
-void GameScenery::placeMonsters(std::vector<Enemy *> &enemies) {
+void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
+	enemies = e;
 	removeAllChildren();
 	addChild(redring);
 	Vec2 *enemy_positions;
-	if (enemies.size() == 3)
+	if (enemies->size() == 3)
 		enemy_positions = enemy_positions3;
-	else if (enemies.size() == 2)
+	else if (enemies->size() == 2)
 		enemy_positions = enemy_positions2;
 	else
 		enemy_positions = enemy_positions1;
 	int i = 0;
-	for (Enemy *enemy : enemies) {
+	for (Enemy *enemy : *enemies) {
 		enemy->sprite->setAnchorPoint(Vec2(0.77, 0));
 		enemy->sprite->setPosition(enemy_positions[i++]);
 		enemy->sprite->setScale(char_scale);
 		addChild(enemy->sprite);
 	}
 	redring->setScale(char_scale);
-	redring->setPosition(enemies[0]->sprite->getPosition());
+	redring->setPosition((*enemies)[0]->sprite->getPosition());
 }
-
+void GameScenery::setSelected(int selected) {
+	redring->setPosition((*enemies)[selected]->sprite->getPosition());
+}
 GameScenery::~GameScenery() {
 	redring->autorelease();
 }

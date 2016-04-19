@@ -102,6 +102,25 @@ bool Game::init() {
 		sprite->setAnchorPoint(Vec2(0.5, 1));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
 		this->addChild(sprite);
+		
+		auto listener = EventListenerTouchOneByOne::create();
+		listener->setSwallowTouches(true);
+		listener->onTouchBegan = [sprite, this](Touch* touch, Event* event)
+		{
+			Vec2 p = touch->getLocation();
+			Rect rect = sprite->getBoundingBox();
+			
+			if(rect.containsPoint(p))
+			{
+				currentEnemy = (currentEnemy + 1) % enemies.size();
+				scenery->setSelected(currentEnemy);
+				hud->setSelected(currentEnemy);
+				return true; // to indicate that we have consumed it.
+			}
+			
+			return false;
+		};
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
 	}
 	
 	// bar bottom
@@ -600,9 +619,9 @@ void Game::showRound(Round *round) {
 		Enemy *enemy = new Enemy(m);
 		enemies.push_back( enemy );
 	}
-	scenery->placeMonsters(enemies);
+	scenery->placeMonsters(&enemies);
 	currentEnemy = 0;
-	hud->setupMonsterList(enemies);
+	hud->setupMonsterList(&enemies);
 	
 	// reset game state
 	state = kStatePlayerTurn;

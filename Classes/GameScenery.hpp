@@ -14,9 +14,11 @@ class GameScenery : public Layer {
 public:
 	virtual bool init(Size size, float scale);
 	virtual ~GameScenery();
-	void placeMonsters(std::vector<Enemy *> &);
+	void placeMonsters(std::vector<Enemy *> *);
+	void setSelected(int);
 	CREATE_FUNC_2(GameScenery, Size, float);
 private:
+	std::vector<Enemy *> *enemies;
 	Sprite *redring;
 	Vec2 enemy_positions3[3];
 	Vec2 enemy_positions2[3];

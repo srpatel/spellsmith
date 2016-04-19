@@ -16,10 +16,22 @@ class GameHUD : public Layer {
 public:
 	virtual bool init();
 	virtual ~GameHUD();
-	void setupMonsterList(std::vector<Enemy *>&);
+	void setupMonsterList(std::vector<Enemy *> *);
+	void setSelected(int);
 	CREATE_FUNC(GameHUD);
 private:
+	std::vector<Enemy *> *enemies;
 	Sprite *arrow;
+};
+
+class HealthBar : public Layer {
+public:
+	virtual bool init();
+	void setPercentage(float);
+	CREATE_FUNC(HealthBar);
+private:
+	Sprite *bg;
+	Sprite *hp;
 };
 
 #endif /* GameHUD_hpp */
