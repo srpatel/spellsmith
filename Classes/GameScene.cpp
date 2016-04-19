@@ -199,7 +199,7 @@ bool Game::init() {
 	float grid_x = getBoundingBox().size.width / 2;
     float grid_y = layout.bar_bottom_height + (layout.column_height - layout.bar_bottom_height - layout.bar_top_height) / 2;
     this->grid->setPosition(grid_x, grid_y);
-	grid->active = true;
+	grid->setActive(true);
 	
 	// More background (must be done after grid because of sizing)
 	//background->drawSolidRect(Vec2(0, grid_y + gridSize.y/2 + 20), Vec2(visibleSize.width, grid_y + gridSize.y/2 + 60), grass);
@@ -570,19 +570,15 @@ void Game::attemptSetState(GameState nextstate) {
 		state = nextstate;
 		if (state == kStateEnemySpells) {
 			// cannot use grid until enemy done
-			grid->active = false;
-			grid->setOpacity(125);
+			grid->setActive(false);
 			
 			// enemy casts his spell
 			enemyDoTurn();
 		} else {
-			grid->active = true;
-			grid->setOpacity(255);
+			grid->setActive(true);
 		}
 	} else {
-		grid->active = false;
-		// set faded out until the next level is ready.
-		grid->setOpacity(125);
+		grid->setActive(false);
 		
 		// state = gameend....
 		// but for now, it's infini-mode!
@@ -603,7 +599,7 @@ void Game::attemptSetState(GameState nextstate) {
 					});
 					auto fadeIn = FadeIn::create(0.2f);
 					auto run2 = CallFunc::create([this]() {
-						grid->active = true;
+						grid->setActive(true);
 					});
 					auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
 					//enemy->sprite->runAction(seq);
@@ -724,7 +720,7 @@ void Game::showRound(Round *round) {
 	
 	// reset game state
 	state = kStatePlayerTurn;
-	grid->active = true;
+	grid->setActive(true);
 }
 void Game::startGame(SaveGame *save) {
 	if (save != nullptr) {
@@ -751,7 +747,7 @@ void Game::startGame(SaveGame *save) {
 		
 		// reset game state
 		state = kStatePlayerTurn;
-		grid->active = true;
+		grid->setActive(true);
 	}
 }
 

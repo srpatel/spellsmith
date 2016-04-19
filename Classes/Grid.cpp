@@ -83,6 +83,11 @@ bool Grid::init(float maxWidth, float maxHeight)
         return false;
     }
 	
+	overlay = LayerColor::create(Colours::SEMIBLACK, maxWidth, maxHeight);
+	overlay->setPosition(-maxWidth/2, -maxHeight/2);
+	overlay->setVisible(false);
+	addChild(overlay);
+	
 	line = cocos2d::DrawNode::create();
 	line->setPosition(cocos2d::Vec2::ZERO);
 	this->addChild(line, 1);
@@ -168,6 +173,12 @@ void Grid::cancelCurrentSpell() {
 	}
 	currentTouch = nullptr;
 	//line->clear();
+}
+
+void Grid::setActive(bool active) {
+	this->active = active;
+	overlay->setVisible(! active);
+	overlay->setLocalZOrder(1);
 }
 
 void Grid::castCurrentSpell() {
