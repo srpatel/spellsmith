@@ -43,6 +43,7 @@ void MonsterManager::init() {
 		const rapidjson::Value& json_name = json_monster["name"];
 		const rapidjson::Value& json_sprite = json_monster["sprite"];
 		const rapidjson::Value& json_health = json_monster["health"];
+		const rapidjson::Value& json_attack_frequency = json_monster["attack_frequency"];
 		const rapidjson::Value& json_attacks = json_monster["attacks"];
 		
 		std::string name = json_name.GetString();
@@ -52,17 +53,18 @@ void MonsterManager::init() {
 		m->name = name;
 		m->hp = health;
 		m->sprite_path = (std::string("characters/") + json_sprite.GetString() + ".png");
+		m->attack_frequency = json_attack_frequency.GetInt();
 
 		for (int j = json_attacks.Size() - 1; j >= 0; j--) {
 			const rapidjson::Value& json_attack = json_attacks[j];
-			const rapidjson::Value& json_frequency = json_attack["freq"];
+			const rapidjson::Value& json_ratio = json_attack["ratio"];
 			const rapidjson::Value& json_type = json_attack["type"];
 			const rapidjson::Value& json_amount = json_attack["amount"];
 			
 			auto type = getAttackType(json_type.GetString());
 			
 			auto attack = new Attack(
-				json_frequency.GetInt(),
+				json_ratio.GetInt(),
 				type,
 				json_amount.GetInt()
 			);
@@ -73,8 +75,8 @@ void MonsterManager::init() {
 	}
 }
 
-Attack::Attack(int _frequency, AttackType _type, int _amount) :
-	frequency(_frequency),
+Attack::Attack(int _ratio, AttackType _type, int _amount) :
+	ratio(_ratio),
 	type(_type),
 	amount(_amount)
 {}

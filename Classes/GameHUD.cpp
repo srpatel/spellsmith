@@ -38,6 +38,14 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		monsterName->setPosition(15, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 		addChild(monsterName);
 		
+		auto attackclock = Label::createWithTTF(std::to_string(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		attackclock->setHorizontalAlignment(TextHAlignment::RIGHT);
+		attackclock->setColor(Color3B::BLACK);
+		attackclock->setAnchorPoint(Vec2(0, 0.5));
+		attackclock->setPosition(getContentSize().width - 85, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
+		addChild(attackclock);
+		attackclocks[i] = attackclock;
+		
 		auto hpBar = HealthBar::create();
 		hpBar->setAnchorPoint(Vec2(1, 0.5));
 		hpBar->setPosition(getContentSize().width - 35, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
@@ -55,6 +63,16 @@ void GameHUD::updateHealthBars() {
 	for (int i = 0; i < enemies->size(); i++) {
 		auto c = enemies->at(i);
 		healthbars[i]->setPercentage(MAX(0, c->ui_health / (float) c->max_health));
+	}
+}
+void GameHUD::updateAttackClocks() {
+	for (int i = 0; i < enemies->size(); i++) {
+		auto c = enemies->at(i);
+		if (c->dead()) {
+			attackclocks[i]->setString(std::string(""));
+		} else {
+			attackclocks[i]->setString(std::to_string(c->attack_clock));
+		}
 	}
 }
 void GameHUD::setSelected(int i) {

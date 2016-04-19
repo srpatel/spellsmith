@@ -15,8 +15,8 @@ enum AttackType {
 
 class Attack {
 public:
-	Attack(int frequency, AttackType type, int amount);
-	int frequency;
+	Attack(int ratio, AttackType type, int amount);
+	int ratio;
 	AttackType type;
 	int amount;
 };
@@ -27,6 +27,7 @@ public:
 	std::string name;
 	std::string sprite_path;
 	int hp;
+	int attack_frequency;
 	std::vector<Attack *> attacks;
 };
 

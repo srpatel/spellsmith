@@ -51,6 +51,7 @@ Buff *Character::getBuffByType(BuffType type) {
 Enemy::Enemy(Monster *m, int index) {
 	this->index = index;
 	monster = m;
+	attack_clock = monster->attack_frequency;
 	max_health = monster->hp;
 	health = monster->hp;
 	ui_health = monster->hp;

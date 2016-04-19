@@ -42,12 +42,14 @@ public:
 	Sprite *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
+	inline bool dead() { return health <= 0; }
 };
 
 class Enemy : public Character {
 public:
 	Monster *monster;
 	int index;
+	int attack_clock;
 	Enemy(Monster *, int index);
 	virtual ~Enemy();
 private:

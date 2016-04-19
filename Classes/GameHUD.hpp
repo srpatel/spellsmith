@@ -21,10 +21,12 @@ public:
 	void setupMonsterList(std::vector<Enemy *> *);
 	void setSelected(int);
 	void updateHealthBars();
+	void updateAttackClocks();
 	CREATE_FUNC(GameHUD);
 private:
 	std::vector<Enemy *> *enemies;
 	HealthBar *healthbars[3];
+	Label *attackclocks[3];
 	Sprite *arrow;
 };
 

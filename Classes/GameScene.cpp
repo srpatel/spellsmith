@@ -355,6 +355,17 @@ bool Game::init() {
 
 void Game::setSelected(int index) {
 	currentEnemy = (index + enemies.size()) % enemies.size();
+	
+	int initial = currentEnemy;
+	while (enemies[currentEnemy]->dead()) {
+		currentEnemy = (currentEnemy + 1) % enemies.size();
+		if (currentEnemy == initial) {
+			// We've tried them all!
+			// Shouldn't happen.
+			break;
+		}
+	}
+	
 	scenery->setSelected(currentEnemy);
 	hud->setSelected(currentEnemy);
 }
@@ -445,7 +456,7 @@ void Game::doSpell(Spell *spell) {
 			wizard->health += amount;
 			auto func = CallFunc::create([this, amount](){
 				wizard->ui_health += amount;
-				//hud->updateValues(wizard, enemy);
+				updateHealthBars();
 			});
 			func->retain();
 			
@@ -531,6 +542,10 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
 			target->ui_health -= damage;
+			if (target->ui_health <= 0) {
+				target->sprite->setColor(Color3B(125, 125, 125));
+				target->sprite->removeFromParent();
+			}
 			updateHealthBars();
 		});
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
@@ -544,6 +559,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 
 void Game::onWizardTurnOver() {
+	// If the selected enemy has 0 hp, then you can't select it!
+	setSelected(currentEnemy); // We just select the current one - the logic is in here.
 	// enemy gets a shot at you!
 	attemptSetState(kStateEnemySpells);
 }
@@ -552,8 +569,15 @@ void Game::attemptSetState(GameState nextstate) {
 	if (!checkGameOver()) {
 		state = nextstate;
 		if (state == kStateEnemySpells) {
+			// cannot use grid until enemy done
+			grid->active = false;
+			grid->setOpacity(125);
+			
 			// enemy casts his spell
 			enemyDoTurn();
+		} else {
+			grid->active = true;
+			grid->setOpacity(255);
 		}
 	} else {
 		grid->active = false;
@@ -636,19 +660,45 @@ bool Game::checkGameOver() {
 	auto gameOver = false;
 	if (wizard->health <= 0) {
 		gameOver = true;
-	} else if (enemies.size() == 0) {
-		//need new enemy
+	} else {
+		// If every enemy dead?
 		gameOver = true;
+		for (Enemy *e : enemies) {
+			if (e->health > 0) {
+				gameOver = false;
+				break;
+			}
+		}
 	}
 	return gameOver;
 }
 void Game::enemyDoTurn() {
-	// TODO : All enemies should get a chance to shoot
-	int damage = 5;
-	makeProjectile(enemies[currentEnemy], wizard, damage, Color3B::RED);
+	// Reduce counter on each enemy!
+	bool enemyTurn = false;
+	for (Enemy *e : enemies) {
+		if (! e->dead() && ! e->attack_clock--) {
+			enemyTurn = true;
+			// Attack!
+			// Wait until your spells are done.
+			runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
+				int damage = 5;
+				makeProjectile(e, wizard, damage, Color3B::RED);
+			}), nullptr));
+			
+			e->attack_clock = e->monster->attack_frequency;
+		}
+	}
+	hud->updateAttackClocks();
 	
-	// it's now the player's turn
-	attemptSetState(kStatePlayerTurn);
+	if (!enemyTurn) {
+		// it's now the player's turn
+		attemptSetState(kStatePlayerTurn);
+	} else {
+		// Cannot use the grid until all enemies are done!
+		runAction(Sequence::create(DelayTime::create(2), CallFunc::create([this]() {
+			attemptSetState(kStatePlayerTurn);
+		}), nullptr));
+	}
 }
 void Game::gotoNextEnemy() {
 	// we are in charge of free'ing round.

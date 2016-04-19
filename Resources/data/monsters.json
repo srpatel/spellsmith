@@ -3,9 +3,10 @@
     "name": "goblin_halberd",
     "sprite": "goblin_01",
     "health": 30,
+    "attack_frequency": 4,
     "attacks": [
       {
-        "freq": 1,
+        "ratio": 1,
         "type": "melee",
         "amount": 5
       }
@@ -15,9 +16,10 @@
     "name": "goblin_sword",
     "sprite": "goblin_02",
     "health": 30,
+    "attack_frequency": 1,
     "attacks": [
       {
-        "freq": 1,
+        "ratio": 1,
         "type": "melee",
         "amount": 5
       }
