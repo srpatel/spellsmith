@@ -58,6 +58,11 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
 		enemy->sprite->setScale(char_scale);
 		addChild(enemy->sprite);
 	}
+	if (enemies->size() == 3) {
+		(*enemies)[1]->sprite->setLocalZOrder(-1);
+	} else if (enemies->size() == 2) {
+		(*enemies)[0]->sprite->setLocalZOrder(-1);
+	}
 	redring->setScale(char_scale);
 	redring->setPosition((*enemies)[0]->sprite->getPosition());
 }

@@ -35,22 +35,24 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		auto monsterName = Label::createWithTTF(e->monster->name, Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		monsterName->setColor(Color3B::BLACK);
 		monsterName->setAnchorPoint(Vec2(0, 0.5));
-		monsterName->setPosition(15, i * heightPerItem + heightPerItem/2);
+		monsterName->setPosition(15, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 		addChild(monsterName);
 		
 		auto hpBar = HealthBar::create();
 		hpBar->setAnchorPoint(Vec2(1, 0.5));
-		hpBar->setPosition(getContentSize().width - 35, i++ * heightPerItem + heightPerItem/2);
+		hpBar->setPosition(getContentSize().width - 35, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 		hpBar->setPercentage(1);
 		addChild(hpBar);
+		
+		i++;
 	}
 	
 	addChild(arrow);
-	arrow->setPosition(5, heightPerItem/2);
+	setSelected(0);
 }
 void GameHUD::setSelected(int i) {
 	float heightPerItem = getContentSize().height / enemies->size();
-	arrow->setPosition(5, i * heightPerItem + heightPerItem/2);
+	arrow->setPosition(5, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 }
 GameHUD::~GameHUD() {
 	arrow->autorelease();
