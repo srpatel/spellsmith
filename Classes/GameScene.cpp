@@ -165,6 +165,19 @@ bool Game::init() {
 		this->addChild(right_col_sprite);
 	}
 	{
+		auto grad = LayerColor::create();
+		grad->initWithColor(Color4B(255, 255, 255, 255));
+		grad->setPosition(0, 342);
+		grad->setContentSize(Size(35, 24));
+		addChild(grad);
+		
+		wizard_hp_bar = LayerColor::create();
+		wizard_hp_bar->initWithColor(Color4B(255, 0, 0, 255));
+		wizard_hp_bar->setPosition(0, 342);
+		wizard_hp_bar->setContentSize(Size(35, 24));
+		wizard_hp_bar->setAnchorPoint(Vec2(0, 0));
+		addChild(wizard_hp_bar);
+		
 		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
 		sprite->setPosition(Vec2(0, layout.column_height));
@@ -346,6 +359,11 @@ void Game::setSelected(int index) {
 	hud->setSelected(currentEnemy);
 }
 
+void Game::updateHealthBars() {
+	wizard_hp_bar->setScaleY(wizard->ui_health / (float) wizard->max_health);
+	hud->updateHealthBars();
+}
+
 bool Game::onCastSpell(Chain *chain) {
 	auto inventory = wizard->inventory;
 	bool success = false;
@@ -513,7 +531,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
 			target->ui_health -= damage;
-			//hud->updateValues(wizard, enemy);
+			updateHealthBars();
 		});
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	}

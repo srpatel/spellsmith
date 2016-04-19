@@ -58,12 +58,15 @@ private:
 	void gotoNextEnemy();
 	void showRound(Round *);
 	
+	void updateHealthBars();
+	
 	GameHUD *hud;
 	GameScenery *scenery;
 	std::vector<Enemy *> enemies;
 	void setSelected(int);
 	int currentEnemy;
 	Wizard *wizard;
+	LayerColor *wizard_hp_bar;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;

@@ -12,15 +12,19 @@
 #include "Characters.hpp"
 #include "Monster.hpp"
 
+class HealthBar;
+
 class GameHUD : public Layer {
 public:
 	virtual bool init();
 	virtual ~GameHUD();
 	void setupMonsterList(std::vector<Enemy *> *);
 	void setSelected(int);
+	void updateHealthBars();
 	CREATE_FUNC(GameHUD);
 private:
 	std::vector<Enemy *> *enemies;
+	HealthBar *healthbars[3];
 	Sprite *arrow;
 };
 

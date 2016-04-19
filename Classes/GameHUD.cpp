@@ -41,14 +41,21 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		auto hpBar = HealthBar::create();
 		hpBar->setAnchorPoint(Vec2(1, 0.5));
 		hpBar->setPosition(getContentSize().width - 35, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
-		hpBar->setPercentage(1);
+		hpBar->setPercentage(e->ui_health / (float) e->max_health);
 		addChild(hpBar);
+		healthbars[i] = hpBar;
 		
 		i++;
 	}
 	
 	addChild(arrow);
 	setSelected(0);
+}
+void GameHUD::updateHealthBars() {
+	for (int i = 0; i < enemies->size(); i++) {
+		auto c = enemies->at(i);
+		healthbars[i]->setPercentage(MAX(0, c->ui_health / (float) c->max_health));
+	}
 }
 void GameHUD::setSelected(int i) {
 	float heightPerItem = getContentSize().height / enemies->size();
