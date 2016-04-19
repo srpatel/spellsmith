@@ -15,13 +15,13 @@
 #include "ui/CocosGUI.h"
 
 bool LevelWonDialog::init() {
-	if ( !Dialog::init() ) {
+	float xmax = 150;
+	float ymax = 150;
+	if ( !Dialog::init(false, xmax*2, ymax*2) ) {
 		return false;
 	}
 	
 	auto background = cocos2d::DrawNode::create();
-	float xmax = 150;
-	float ymax = 150;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
@@ -58,13 +58,15 @@ bool LevelWonDialog::init() {
 }
 
 bool LevelLostDialog::init() {
-	if ( !Dialog::init() ) {
+	float xmax = 150;
+	float ymax = 150;
+	
+	if ( !Dialog::init(false, xmax*2, ymax*2) ) {
 		return false;
 	}
 	
 	auto background = cocos2d::DrawNode::create();
-	float xmax = 150;
-	float ymax = 150;
+	
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
@@ -119,13 +121,13 @@ bool LevelLostDialog::init() {
 }
 
 bool SpellInfoDialog::init(Spell *spell) {
-	if ( !Dialog::init() ) {
+	float xmax = 100;
+	float ymax = 100;
+	if ( !Dialog::init(true, xmax*2, ymax*2) ) {
 		return false;
 	}
 	
 	auto background = DrawNode::create();
-	float xmax = 100;
-	float ymax = 100;
 	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
 	addChild(background);
 	
@@ -140,28 +142,6 @@ bool SpellInfoDialog::init(Spell *spell) {
 	text->setPosition(Vec2(0, -80));
 	this->addChild(text, 1);
 	
-	auto onCloseClick = EventListenerTouchOneByOne::create();
-	onCloseClick->setSwallowTouches(true);
-	onCloseClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		//bounds.origin -= bounds.size/2;
-		bounds.origin += getBoundingBox().origin;
-		if (bounds.containsPoint(touch->getLocation())){
-			auto gc = GameController::get();
-			gc->popDialog();
-			return true;
-		}
-		
-		return false; // if you are consuming it
-	};
-	onCloseClick->onTouchMoved = [](Touch* touch, Event* event){};
-	onCloseClick->onTouchEnded = [=](Touch* touch, Event* event){};
-	
-	auto closebutton = LoadSprite("ui/cross.png");
-	closebutton->setPosition(Vec2(80, 80));
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onCloseClick, closebutton);
-	this->addChild(closebutton, 1);
-	
 	// Draw gems in the middle of the dialog
 	
 	// Put description at the bottom.
@@ -169,10 +149,13 @@ bool SpellInfoDialog::init(Spell *spell) {
 	return true;
 }
 
-bool Dialog::init() {
+bool Dialog::init(bool closeable, float centralWidth, float centralHeight) {
 	if ( !Layer::init() ) {
 		return false;
 	}
+	this->closeable = closeable;
+	this->centralWidth = centralWidth;
+	this->centralHeight = centralHeight;
 	
 	auto size = Director::getInstance()->getVisibleSize();
 	
@@ -180,13 +163,18 @@ bool Dialog::init() {
 	background->drawSolidRect(Vec2(size / -2), Vec2(size / 2), Color4F(Colours::SEMIBLACK));
 	addChild(background);
 	
-	// Every dialog has a "close" button in the 
+	if (closeable) {
+		auto closebutton = LoadSprite("ui/cross.png");
+		closebutton->setAnchorPoint(Vec2(1, 1));
+		closebutton->setPosition(Vec2(size.width/2 - 10, size.height/2 - 10));
+		this->addChild(closebutton, 1);
+	}
 	
 	auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
 	touchListener->setSwallowTouches(true);
-	touchListener->onTouchBegan = CC_CALLBACK_2(SpellInfoDialog::onTouchBegan, this);
-	touchListener->onTouchEnded = CC_CALLBACK_2(SpellInfoDialog::onTouchEnded, this);
-	touchListener->onTouchMoved = CC_CALLBACK_2(SpellInfoDialog::onTouchMoved, this);
+	touchListener->onTouchBegan = CC_CALLBACK_2(Dialog::onTouchBegan, this);
+	touchListener->onTouchEnded = CC_CALLBACK_2(Dialog::onTouchEnded, this);
+	touchListener->onTouchMoved = CC_CALLBACK_2(Dialog::onTouchMoved, this);
 	//    touchListener->onTouchCancelled = CC_CALLBACK_2(Grid::onTouchCancelled, this);
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -194,11 +182,22 @@ bool Dialog::init() {
 	return true;
 }
 
-bool Dialog::onTouchBegan(cocos2d::Touch *, cocos2d::Event *event) {
+bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 	event->stopPropagation();
-	
-	// Do not let the game react to your touch!
-	
+	if (closeable) {
+		// don't close if clicking the dialog!
+		auto size = Director::getInstance()->getVisibleSize();
+		auto bounds = Rect(
+			(size.width - centralWidth)/2,
+			(size.height - centralHeight)/2,
+			centralWidth,
+			centralHeight
+		);
+		if (! bounds.containsPoint(touch->getLocation())) {
+			auto gc = GameController::get();
+			gc->popDialog();
+		}
+	}
 	return true;
 }
 void Dialog::onTouchMoved(cocos2d::Touch *, cocos2d::Event *) {

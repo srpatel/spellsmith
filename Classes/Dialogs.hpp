@@ -20,11 +20,14 @@ CREATE_FUNC(_x_);\
 
 class Dialog : public Layer {
 public:
-	bool init();
+	bool init(bool closeable, float centralWidth, float centralHeight);
 	
 	virtual bool onTouchBegan(cocos2d::Touch *, cocos2d::Event *);
 	virtual void onTouchMoved(cocos2d::Touch *, cocos2d::Event *);
 	virtual void onTouchEnded(cocos2d::Touch *, cocos2d::Event *);
+private:
+	bool closeable;
+	float centralWidth, centralHeight;
 };
 
 SIMPLE_DIALOG(LevelWonDialog);
