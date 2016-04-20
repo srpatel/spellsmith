@@ -12,8 +12,6 @@
 #include "Spell.hpp"
 #include "Monster.hpp"
 
-#define HEALTH_PER_HEART 10
-
 enum BuffType {
 	BARRIER
 };

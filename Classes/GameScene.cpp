@@ -40,9 +40,9 @@ bool Game::init() {
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	wizard = new Wizard;
-	wizard->max_health = HEALTH_PER_HEART * 5;
-	wizard->health = HEALTH_PER_HEART * 5;
-	wizard->ui_health = HEALTH_PER_HEART * 5;
+	wizard->max_health = 40;
+	wizard->health = 40;
+	wizard->ui_health = 40;
 	for (int i = 0; i < 3; i++) {
 		wizard->inventory.push_back(SpellManager::get()->at(i));
 	}
@@ -542,8 +542,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
 			target->ui_health -= damage;
-			if (target->ui_health <= 0) {
-				target->sprite->setColor(Color3B(125, 125, 125));
+			if (target->ui_health <= 0 && target != wizard) {
 				target->sprite->removeFromParent();
 			}
 			updateHealthBars();
@@ -592,18 +591,12 @@ void Game::attemptSetState(GameState nextstate) {
 		if (mode == kModeInfinite) {
 			if (success) {
 				// New level without level end dialog!
+				// Should we clear buffs?
+				// Should we animate going to the next level?
+				// Should we wait for all current projectiles to finish?
 				func = [this]() {
-					auto fadeOut = FadeOut::create(0.2f);
-					auto run1 = CallFunc::create([this]() {
-						gotoNextEnemy();
-					});
-					auto fadeIn = FadeIn::create(0.2f);
-					auto run2 = CallFunc::create([this]() {
-						grid->setActive(true);
-					});
-					auto seq = Sequence::create(fadeOut, run1, fadeIn, run2, nullptr);
-					//enemy->sprite->runAction(seq);
-					
+					gotoNextEnemy();
+					grid->setActive(true);
 					state = kStatePlayerTurn;
 				};
 			} else {
@@ -617,23 +610,10 @@ void Game::attemptSetState(GameState nextstate) {
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
 					wizard->sprite->runAction(seq);
-					//enemy->sprite->runAction(fadeOut->clone());
 				};
 			}
 		} else {
-			// Throw up level-end dialog
-			func = [this, success]() {
-				auto fadeOut = FadeOut::create(0.2f);
-				auto nextLevel = CallFunc::create([this, success](){
-					gotoNextEnemy();
-				});
-				
-				auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
-				//enemy->sprite->runAction(seq);
-				if (!success) {
-					wizard->sprite->runAction(fadeOut->clone());
-				}
-			};
+			// Not planning on this :)
 		}
 		// if level-mode, we show the "victory screen"
 		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
@@ -738,9 +718,12 @@ void Game::startGame(SaveGame *save) {
 		// reset health
 		wizard->health = wizard->max_health;
 		wizard->ui_health = wizard->max_health;
+		wizard->sprite->setOpacity(255);
 		
 		// Create a round based on the current stage.
 		gotoNextEnemy();
+		
+		updateHealthBars();
 		
 		// shuffle grid
 		grid->scramble();

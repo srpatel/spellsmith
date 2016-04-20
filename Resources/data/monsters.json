@@ -8,7 +8,7 @@
       {
         "ratio": 1,
         "type": "melee",
-        "amount": 5
+        "amount": 8
       }
     ]
   },
@@ -16,7 +16,7 @@
     "name": "goblin_sword",
     "sprite": "goblin_02",
     "health": 30,
-    "attack_frequency": 1,
+    "attack_frequency": 3,
     "attacks": [
       {
         "ratio": 1,
