@@ -28,6 +28,8 @@ public:
 	std::string sprite_path;
 	int hp;
 	int attack_frequency;
+	Attack *getAttack();
+	int total_attack_ratio;
 	std::vector<Attack *> attacks;
 };
 

@@ -10,6 +10,8 @@
 #include "GameScenery.hpp"
 #include "Level.hpp"
 
+typedef std::function<void()> PendingAction;
+
 enum GameMode {
 	kModeInfinite,
 	kModeLevel,
@@ -20,11 +22,6 @@ enum GameState {
 	kStatePlayerTurn,
 	kStatePlayerSpells,
 	kStateEnemySpells
-};
-
-struct GameAnimation {
-	Sprite *target;
-	FiniteTimeAction *action;
 };
 
 class Game : public Layer {
@@ -67,6 +64,7 @@ private:
 	int currentEnemy;
 	Wizard *wizard;
 	LayerColor *wizard_hp_bar;
+	Label *currentRound;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
@@ -76,9 +74,12 @@ private:
 	void removeBuff(Character *target, Buff *buff);
 	
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
-	void runAnimation(GameAnimation *ga);
-	std::vector<GameAnimation *> animation_queue;
-	GameAnimation *currentAnimation = nullptr;
+	
+	int numCurrentActions;
+	void actionDone();
+	void actionQueued();
+	void runPendingAction(PendingAction);
+	std::vector<PendingAction> pendingActions;
 };
 
 #endif /* GameScene_hpp */

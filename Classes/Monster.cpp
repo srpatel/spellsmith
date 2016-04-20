@@ -54,7 +54,7 @@ void MonsterManager::init() {
 		m->hp = health;
 		m->sprite_path = (std::string("characters/") + json_sprite.GetString() + ".png");
 		m->attack_frequency = json_attack_frequency.GetInt();
-
+		int total_attack_ratio = 0;
 		for (int j = json_attacks.Size() - 1; j >= 0; j--) {
 			const rapidjson::Value& json_attack = json_attacks[j];
 			const rapidjson::Value& json_ratio = json_attack["ratio"];
@@ -62,17 +62,34 @@ void MonsterManager::init() {
 			const rapidjson::Value& json_amount = json_attack["amount"];
 			
 			auto type = getAttackType(json_type.GetString());
+			int ratio = json_ratio.GetInt();
+			
+			total_attack_ratio += ratio;
 			
 			auto attack = new Attack(
-				json_ratio.GetInt(),
+				ratio,
 				type,
 				json_amount.GetInt()
 			);
 			m->attacks.push_back(attack);
 		}
-		
+		m->total_attack_ratio = total_attack_ratio;
 		monsters[name] = m;
 	}
+}
+
+Attack *Monster::getAttack() {
+	// pick a random int up to the sum
+	int pivot = rand() % total_attack_ratio;
+	int current = 0;
+	for (Attack *attack : attacks) {
+		current += attack->ratio;
+		if (pivot < current) {
+			return attack;
+		}
+	}
+	// should never happen!
+	return attacks[0];
 }
 
 Attack::Attack(int _ratio, AttackType _type, int _amount) :

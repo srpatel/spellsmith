@@ -163,6 +163,14 @@ bool Game::init() {
 		right_col_sprite->setAnchorPoint(Vec2(1, 1));
 		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
 		this->addChild(right_col_sprite);
+		
+		currentRound = Label::createWithTTF(std::to_string(0), Fonts::TEXT_FONT, Fonts::TITLE_SIZE);
+		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
+		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
+		currentRound->setPosition(
+			getBoundingBox().size.width - right_col_sprite->getContentSize().width/2 + 3,
+			358);
+		addChild(currentRound);
 	}
 	{
 		auto grad = LayerColor::create();
@@ -454,16 +462,8 @@ void Game::doSpell(Spell *spell) {
 			//nothing to wait for!
 			int amount = ((EffectHeal *) e)->amount;
 			wizard->health += amount;
-			auto func = CallFunc::create([this, amount](){
-				wizard->ui_health += amount;
-				updateHealthBars();
-			});
-			func->retain();
-			
-			GameAnimation *ga = new GameAnimation;
-			ga->target = nullptr;
-			ga->action = func;
-			runAnimation(ga);
+			wizard->ui_health += amount;
+			updateHealthBars();
 		} else if (e->type == Shield) {
 			Buff *shield = wizard->getBuffByType(BuffType::BARRIER);
 			
@@ -478,14 +478,10 @@ void Game::doSpell(Spell *spell) {
 				
 				// fade it in
 				auto fadeIn = FadeIn::create(0.2);
-				fadeIn->retain();
 				
 				addBuff(wizard, shield);
 				
-				GameAnimation *ga = new GameAnimation;
-				ga->target = shield->sprite;
-				ga->action = fadeIn;
-				runAnimation(ga);
+				shield->sprite->runAction(fadeIn);
 			} else {
 				shield->charges += 2;
 			}
@@ -529,6 +525,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 				auto seq = Sequence::create(fadeout, func, nullptr);
 				shieldsprite->runAction(seq);
 			}
+			actionDone();
 		});
 		
 		// Remove the buff from the character
@@ -542,19 +539,17 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
 			target->ui_health -= damage;
+			LOG("Enemy now has no health! %d v %d\n", target->ui_health, target->health);
 			if (target->ui_health <= 0 && target != wizard) {
 				target->sprite->removeFromParent();
 			}
 			updateHealthBars();
+			actionDone();
 		});
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	}
-	seq->retain();
-	
-	auto ga = new GameAnimation;
-	ga->target = sprite;
-	ga->action = seq;
-	runAnimation(ga);
+	actionQueued();
+	sprite->runAction(seq);
 }
 
 void Game::onWizardTurnOver() {
@@ -579,29 +574,29 @@ void Game::attemptSetState(GameState nextstate) {
 	} else {
 		grid->setActive(false);
 		
-		// state = gameend....
-		// but for now, it's infini-mode!
-		state = kStatePlayerTurn;
-		
-		bool success = true;
-		if (wizard->health <= 0) {
-			success = false;
-		}
-		std::function<void()> func;
-		if (mode == kModeInfinite) {
-			if (success) {
-				// New level without level end dialog!
-				// Should we clear buffs?
-				// Should we animate going to the next level?
-				// Should we wait for all current projectiles to finish?
-				func = [this]() {
+		// defer all of this until all actions are done!
+		PendingAction action = [this] {
+			// state = gameend....
+			// but for now, it's infini-mode!
+			state = kStatePlayerTurn;
+			
+			bool success = true;
+			if (wizard->health <= 0) {
+				success = false;
+			}
+			std::function<void()> func;
+			if (mode == kModeInfinite) {
+				if (success) {
+					// TODO
+					// New level without level end dialog!
+					// Should we clear buffs?
+					// Should we animate going to the next level?
+					// Should we wait for all current projectiles to finish?
 					gotoNextEnemy();
 					grid->setActive(true);
 					state = kStatePlayerTurn;
-				};
-			} else {
-				// You are dead!
-				func = [this, success]() {
+				} else {
+					// You are dead!
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
@@ -610,25 +605,33 @@ void Game::attemptSetState(GameState nextstate) {
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
 					wizard->sprite->runAction(seq);
-				};
+				}
+			} else {
+				// Not planning on this :)
 			}
-		} else {
-			// Not planning on this :)
+		};
+		runPendingAction(action);
+	}
+}
+void Game::actionQueued() {
+	numCurrentActions++;
+}
+void Game::actionDone() {
+	numCurrentActions--;
+	if (numCurrentActions == 0) {
+		for (PendingAction a : pendingActions) {
+			a();
 		}
-		// if level-mode, we show the "victory screen"
-		// if infini-mode, we show the next enemy -that's what we'll do in testing for now.
-		// 1. fade enemy out
-		// 2. reset health + fade new enemy in
-		// 3. set can use grid to true!
-		auto callfunc = CallFunc::create(func);
-		callfunc->retain();
-		
-		// add this func to the queue, so it happens when there's nothing left.
-		auto ga = new GameAnimation;
-		ga->target = nullptr;
-		ga->action = callfunc;
-		runAnimation(ga);
-		
+		pendingActions.clear();
+	}
+}
+void Game::runPendingAction(PendingAction a) {
+	if (numCurrentActions == 0) {
+		// Run it now!
+		a();
+	} else {
+		// Run it later...
+		pendingActions.push_back(a);
 	}
 }
 bool Game::checkGameOver() {
@@ -639,9 +642,11 @@ bool Game::checkGameOver() {
 	} else {
 		// If every enemy dead?
 		gameOver = true;
+		LOG("Checking if enemies are dead\n");
 		for (Enemy *e : enemies) {
 			if (e->health > 0) {
 				gameOver = false;
+				LOG("An enemy has %d health.\n", e->health);
 				break;
 			}
 		}
@@ -657,7 +662,7 @@ void Game::enemyDoTurn() {
 			// Attack!
 			// Wait until your spells are done.
 			runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
-				int damage = 5;
+				int damage = e->monster->getAttack()->amount;
 				makeProjectile(e, wizard, damage, Color3B::RED);
 			}), nullptr));
 			
@@ -679,6 +684,7 @@ void Game::enemyDoTurn() {
 void Game::gotoNextEnemy() {
 	// we are in charge of free'ing round.
 	Round *round = LevelManager::get()->generateRound(stage);
+	currentRound->setString(std::to_string(stage));
 	stage++;
 	showRound(round);
 	delete round;
@@ -731,35 +737,6 @@ void Game::startGame(SaveGame *save) {
 		// reset game state
 		state = kStatePlayerTurn;
 		grid->setActive(true);
-	}
-}
-
-void Game::runAnimation(GameAnimation *ga) {
-	if (currentAnimation == nullptr || true) {
-		// no animation is currently running - so run this animation now!
-		currentAnimation = ga;
-		
-		// add target and make it run the associated action
-		auto onFinish = CallFunc::create([this, ga](){
-			currentAnimation = nullptr;
-			// this animation has finished, so run the next one if there is one
-			if (!animation_queue.empty()) {
-				runAnimation(animation_queue[0]);
-				animation_queue.erase(animation_queue.begin() + 0);
-			}
-			ga->action->release();
-			// free ga
-			delete ga;
-		});
-		auto seq = Sequence::create(ga->action, onFinish, nullptr);
-		if (ga->target) {
-			ga->target->runAction(seq);
-		} else {
-			runAction(seq);
-		}
-	} else {
-		// There is something running, so add this to the end of the queue
-		animation_queue.push_back(ga);
 	}
 }
 
