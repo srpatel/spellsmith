@@ -38,7 +38,7 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		monsterName->setPosition(15, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 		addChild(monsterName);
 		
-		auto attackclock = Label::createWithTTF(std::to_string(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		auto attackclock = Label::createWithTTF(ToString(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		attackclock->setHorizontalAlignment(TextHAlignment::RIGHT);
 		attackclock->setColor(Color3B::BLACK);
 		attackclock->setAnchorPoint(Vec2(0, 0.5));
@@ -71,7 +71,7 @@ void GameHUD::updateAttackClocks() {
 		if (c->dead()) {
 			attackclocks[i]->setString(std::string(""));
 		} else {
-			attackclocks[i]->setString(std::to_string(c->attack_clock));
+			attackclocks[i]->setString(ToString(c->attack_clock));
 		}
 	}
 }

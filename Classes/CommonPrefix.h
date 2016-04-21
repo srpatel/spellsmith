@@ -89,6 +89,14 @@ return NULL; \
 
 #ifdef __cplusplus
 Sprite *LoadSprite(std::string);
+// Need this for android:
+template <typename T>
+std::string ToString(T value)
+{
+	std::ostringstream os ;
+	os << value ;
+	return os.str() ;
+}
 #endif
 
 #endif /* CommonPrefix_h */

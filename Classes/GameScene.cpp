@@ -164,7 +164,7 @@ bool Game::init() {
 		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
 		this->addChild(right_col_sprite);
 		
-		currentRound = Label::createWithTTF(std::to_string(0), Fonts::TEXT_FONT, Fonts::TITLE_SIZE);
+		currentRound = Label::createWithTTF(ToString(0), Fonts::TEXT_FONT, Fonts::TITLE_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
 		currentRound->setPosition(
@@ -392,7 +392,7 @@ bool Game::onCastSpell(Chain *chain) {
 		if (*s == chain) {
 			success = true;
 			// Spell shot
-			LOG(s->getName().c_str());
+			LOG("%s\n", s->getName().c_str());
 			spell = s;
 			break;
 		}
@@ -684,7 +684,7 @@ void Game::enemyDoTurn() {
 void Game::gotoNextEnemy() {
 	// we are in charge of free'ing round.
 	Round *round = LevelManager::get()->generateRound(stage);
-	currentRound->setString(std::to_string(stage));
+	currentRound->setString(ToString(stage));
 	stage++;
 	showRound(round);
 	delete round;
