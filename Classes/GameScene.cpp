@@ -352,7 +352,10 @@ bool Game::init() {
                         __/ |    
                        |___/
  */
-	
+	Sprite *optionsButton = LoadSprite("ui/options.png");
+	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
+	optionsButton->setPosition(layout.column_width/2, optionsButton->getContentSize().height);
+	addChild(optionsButton);
 	// Grid must be topmost.
 	this->addChild(this->grid);
 	

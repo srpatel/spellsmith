@@ -61,6 +61,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/spine/SlotData.c \
 ../../Classes/spine/spine-cocos2dx.cpp \
 
+
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
 # _COCOS_HEADER_ANDROID_BEGIN
