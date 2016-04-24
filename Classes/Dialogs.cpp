@@ -14,6 +14,25 @@
 
 #include "ui/CocosGUI.h"
 
+bool OptionsDialog::init() {
+	float xmax = 150;
+	float ymax = 150;
+	if ( !Dialog::init(true, xmax*2, ymax*2) ) {
+		return false;
+	}
+	
+	auto background = cocos2d::DrawNode::create();
+	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
+	addChild(background);
+	
+	auto label = Label::createWithTTF( "Options", Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	label->setColor(Color3B::BLACK);
+	label->setPosition(Vec2(0, 80));
+	this->addChild(label, 1);
+	
+	return true;
+}
+
 bool LevelWonDialog::init() {
 	float xmax = 150;
 	float ymax = 150;

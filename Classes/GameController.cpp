@@ -88,3 +88,9 @@ void GameController::showSpellInfoDialog(Spell *spell) {
 	root->addChild(dialog);
 	dialog_stack.push_back(dialog);
 }
+void GameController::showOptionsDialog() {
+	Dialog *dialog = OptionsDialog::create();
+	dialog->setPosition(root->getContentSize()/2);
+	root->addChild(dialog);
+	dialog_stack.push_back(dialog);
+}

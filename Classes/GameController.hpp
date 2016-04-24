@@ -33,6 +33,7 @@ public:
 	void popDialog();
 	void showLevelEndDialog(bool victory);
 	void showSpellInfoDialog(Spell *);
+	void showOptionsDialog();
 private:
 	static GameController *instance;
 	Scene *root;

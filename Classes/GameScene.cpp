@@ -354,8 +354,24 @@ bool Game::init() {
  */
 	Sprite *optionsButton = LoadSprite("ui/options.png");
 	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
-	optionsButton->setPosition(layout.column_width/2, optionsButton->getContentSize().height);
+	optionsButton->setPosition(layout.column_width/2 - 6, optionsButton->getContentSize().height - 3);
 	addChild(optionsButton);
+	
+	auto onOptionsClick = EventListenerTouchOneByOne::create();
+	onOptionsClick->setSwallowTouches(true);
+	// trigger when you push down
+	onOptionsClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		
+		if (bounds.containsPoint(touch->getLocation())){
+			GameController::get()->showOptionsDialog();
+			return true;
+		}
+		
+		return false; // if you are consuming it
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onOptionsClick, optionsButton);
+	
 	// Grid must be topmost.
 	this->addChild(this->grid);
 	
