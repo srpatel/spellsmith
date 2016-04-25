@@ -34,6 +34,7 @@ public:
 	void showLevelEndDialog(bool victory);
 	void showSpellInfoDialog(Spell *);
 	void showOptionsDialog();
+	void showSpellPickDialog(Spell *, Spell *, std::function<void(Spell*)>);
 private:
 	static GameController *instance;
 	Scene *root;

@@ -43,16 +43,12 @@ bool Game::init() {
 	wizard->max_health = 40;
 	wizard->health = 40;
 	wizard->ui_health = 40;
-	for (int i = 0; i < 3; i++) {
-		wizard->inventory.push_back(SpellManager::get()->at(i));
-	}
+	//for (int i = 0; i < 3; i++) {
+	//	wizard->inventory.push_back(SpellManager::get()->at(i));
+	//}
 	
 	auto scenery_sprite = LoadSprite("ui/scenery.png");
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
-	
-	// Work out layout
-	float max_scenery_height = scenery_sprite->getBoundingBox().size.height;
-	float min_column_height = 317;
 	
 	//layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
 	layout.column_height = right_col_sprite->getBoundingBox().size.height;
@@ -223,69 +219,9 @@ bool Game::init() {
                                        __/ |
                                       |___/
 */
-	float padding = 10;
-	float margin = visibleSize.width - gridSize.x - padding;
-	float starty = layout.column_height - 110;
-	float spellHeight = gridSize.y/3 - padding*3;
-	float spellPadding = 10;
-	
-	// Left hand inventory
-	auto inventory = wizard->inventory;
-	for (int i = 0; i < 3; i++) {
-		if (inventory.size() > i) {
-			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(18, starty - i * 55);
-			auto onSpellClick = EventListenerTouchOneByOne::create();
-			onSpellClick->setSwallowTouches(true);
-			// trigger when you push down
-			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
-				auto bounds = event->getCurrentTarget()->getBoundingBox();
-				bounds.origin -= bounds.size/2;
-				
-				if (bounds.containsPoint(touch->getLocation())){
-					GameController::get()->showSpellInfoDialog(wizard->inventory[i]);
-					return true;
-				}
-				
-				return false; // if you are consuming it
-			};
-			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
-			// TODO : Set scale that allows spell to fit completely in the scroll
-			sprite->setScale(1.f);
-			this->addChild(sprite);
-		}
-	}
-	// Right-hand inventory
-	for (int i = 0; i < 3; i++) {
-		float yoffset = (i - 1) * (spellHeight + spellPadding);
-		
-		if (inventory.size() > 3 + i) {
-			auto onSpellClick = EventListenerTouchOneByOne::create();
-			onSpellClick->setSwallowTouches(true);
-			// trigger when you push down
-			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
-				auto bounds = event->getCurrentTarget()->getBoundingBox();
-				bounds.origin -= bounds.size/2;
-				
-				if (bounds.containsPoint(touch->getLocation())){
-					GameController::get()->showSpellInfoDialog(wizard->inventory[3 + i]);
-					return true;
-				}
-				
-				return false; // if you are consuming it
-			};
-			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(getBoundingBox().size.width - 18, grid_y - yoffset);
-			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
-			// tap on a spell to see it's info. Use the "open dialog" mechanic.
-			// this opens a dialog which captures events for the whole screen?
-			// Dialogs::showModal(...);
-			// Dialogs::closeAll();
-			// TODO : Set scale that allows spell to fit completely in the scroll
-			//sprite->setScale(1.f);
-		//	this->addChild(sprite);
-		}
-	}
+	inventoryHolder = Layer::create();
+	addChild(inventoryHolder);
+	updateInventory();
 	
 	// Smokey
 	{
@@ -378,6 +314,70 @@ bool Game::init() {
     this->scheduleUpdate();
     
     return true;
+}
+
+void Game::updateInventory() {
+	float padding = 10;
+	auto gridSize = grid->getSize();
+	auto visibleSize = getContentSize();
+	
+	float starty = layout.column_height - 110;
+	float spellHeight = gridSize.y/3 - padding*3;
+	float spellPadding = 10;
+	
+	inventoryHolder->removeAllChildren();
+	
+	// Left hand inventory
+	auto inventory = wizard->inventory;
+	for (int i = 0; i < 3; i++) {
+		if (inventory.size() > i) {
+			auto sprite = inventory[i]->mininode;
+			sprite->setPosition(18, starty - i * 55);
+			auto onSpellClick = EventListenerTouchOneByOne::create();
+			onSpellClick->setSwallowTouches(true);
+			// trigger when you push down
+			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
+				auto bounds = event->getCurrentTarget()->getBoundingBox();
+				bounds.origin -= bounds.size/2;
+				
+				if (bounds.containsPoint(touch->getLocation())){
+					GameController::get()->showSpellInfoDialog(wizard->inventory[i]);
+					return true;
+				}
+				
+				return false; // if you are consuming it
+			};
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
+			// TODO : Set scale that allows spell to fit completely in the scroll
+			sprite->setScale(1.f);
+			inventoryHolder->addChild(sprite);
+		}
+	}
+	// Right-hand inventory
+	for (int i = 0; i < 3; i++) {
+		float yoffset = (i - 1) * (spellHeight + spellPadding);
+		
+		if (inventory.size() > 3 + i) {
+			auto onSpellClick = EventListenerTouchOneByOne::create();
+			onSpellClick->setSwallowTouches(true);
+			// trigger when you push down
+			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
+				auto bounds = event->getCurrentTarget()->getBoundingBox();
+				bounds.origin -= bounds.size/2;
+				
+				if (bounds.containsPoint(touch->getLocation())){
+					GameController::get()->showSpellInfoDialog(wizard->inventory[3 + i]);
+					return true;
+				}
+				
+				return false; // if you are consuming it
+			};
+			auto sprite = inventory[3 + i]->mininode;
+			sprite->setPosition(getBoundingBox().size.width - 18, grid->getPosition().y - yoffset);
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
+			inventoryHolder->addChild(sprite);
+		}
+	}
 }
 
 void Game::setSelected(int index) {
@@ -611,6 +611,19 @@ void Game::attemptSetState(GameState nextstate) {
 					// Should we clear buffs?
 					// Should we animate going to the next level?
 					// Should we wait for all current projectiles to finish?
+					
+					// pick a new spell maybe?
+					if (true) {
+						GameController::get()->showSpellPickDialog(
+							SpellManager::get()->at(0),
+							SpellManager::get()->at(1),
+							[this](Spell *chosen) {
+								wizard->inventory.push_back(chosen);
+								updateInventory();
+							}
+						);
+					}
+					
 					gotoNextEnemy();
 					grid->setActive(true);
 					state = kStatePlayerTurn;

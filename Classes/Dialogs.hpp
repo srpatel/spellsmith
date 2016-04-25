@@ -41,4 +41,11 @@ public:
 	CREATE_FUNC_1(SpellInfoDialog, Spell *);
 };
 
+class SpellPickDialog : public Dialog {
+public:
+	bool init(Spell *, Spell *, std::function<void(Spell*)>);
+	
+	CREATE_FUNC_3(SpellPickDialog, Spell *, Spell *, std::function<void(Spell*)>);
+};
+
 #endif /* Dialogs_hpp */

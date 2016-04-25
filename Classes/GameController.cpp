@@ -88,6 +88,12 @@ void GameController::showSpellInfoDialog(Spell *spell) {
 	root->addChild(dialog);
 	dialog_stack.push_back(dialog);
 }
+void GameController::showSpellPickDialog(Spell *spell1, Spell *spell2, std::function<void(Spell*)> choose) {
+	Dialog *dialog = SpellPickDialog::create(spell1, spell2, choose);
+	dialog->setPosition(root->getContentSize()/2);
+	root->addChild(dialog);
+	dialog_stack.push_back(dialog);
+}
 void GameController::showOptionsDialog() {
 	Dialog *dialog = OptionsDialog::create();
 	dialog->setPosition(root->getContentSize()/2);

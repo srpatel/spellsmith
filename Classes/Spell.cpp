@@ -161,6 +161,7 @@ void Spell::setup() {
 		}
 	}
 	layer->setContentSize(Size(40, 40));
+	layer->retain();
 	mininode = layer;
 	mininode->setAnchorPoint(Vec2::ZERO);
 }

@@ -56,6 +56,7 @@ private:
 	void showRound(Round *);
 	
 	void updateHealthBars();
+	void updateInventory();
 	
 	GameHUD *hud;
 	GameScenery *scenery;
@@ -65,6 +66,7 @@ private:
 	Wizard *wizard;
 	LayerColor *wizard_hp_bar;
 	Label *currentRound;
+	Layer *inventoryHolder;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
