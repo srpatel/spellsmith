@@ -27,6 +27,7 @@ private:
 	std::vector<Enemy *> *enemies;
 	HealthBar *healthbars[3];
 	Label *attackclocks[3];
+	Sprite *attackclock_reds[3];
 	Sprite *arrow;
 };
 

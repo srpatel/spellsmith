@@ -290,7 +290,7 @@ bool Game::init() {
  */
 	Sprite *optionsButton = LoadSprite("ui/options.png");
 	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
-	optionsButton->setPosition(layout.column_width/2 - 6, optionsButton->getContentSize().height - 3);
+	optionsButton->setPosition(layout.column_width/2 - 4, 34);
 	addChild(optionsButton);
 	
 	auto onOptionsClick = EventListenerTouchOneByOne::create();

@@ -16,7 +16,7 @@ bool GameHUD::init() {
 		return false;
 	}
 	
-	arrow = LoadSprite("ui/redarrow.png");
+	arrow = LoadSprite("ui/arrow.png");
 	arrow->retain();
 	arrow->setAnchorPoint(Vec2(0, 0.5));
 	
@@ -47,7 +47,10 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		attackclocksprite_black->setAnchorPoint(Vec2(0, 0.5));
 		attackclocksprite_red->setPosition(x, y);
 		attackclocksprite_black->setPosition(x, y);
+		attackclock_reds[i] = attackclocksprite_red;
+		attackclocksprite_red->setVisible(false);
 		addChild(attackclocksprite_black);
+		addChild(attackclocksprite_red);
 		
 		auto attackclock = Label::createWithTTF(ToString(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		attackclock->setHorizontalAlignment(TextHAlignment::RIGHT);
@@ -79,7 +82,8 @@ void GameHUD::updateHealthBars() {
 void GameHUD::updateAttackClocks() {
 	for (int i = 0; i < enemies->size(); i++) {
 		auto c = enemies->at(i);
-		if (c->dead()) {
+		attackclock_reds[i]->setVisible(c->attack_clock == 0);
+		if (c->dead() || c->attack_clock == 0) {
 			attackclocks[i]->setString(std::string(""));
 		} else {
 			attackclocks[i]->setString(ToString(c->attack_clock));
@@ -105,6 +109,12 @@ bool HealthBar::init() {
 	hp->setAnchorPoint(Vec2(0, 0.5));
 	hp->setPositionX(-bg->getContentSize().width/2 + 2);
 	setContentSize(bg->getContentSize());
+	
+	auto grad = LayerColor::create();
+	grad->initWithColor(Color4B(67, 61, 54, 255));
+	grad->setPosition(bg->getContentSize()/-2 + Size(2, 2));
+	grad->setContentSize(bg->getContentSize() - Size(4, 4));
+	addChild(grad);
 	
 	addChild(hp);
 	addChild(bg);
