@@ -12,7 +12,7 @@
 #define SIZE_IPHONE_6P Size(1080, 1920)
 #define SIZE_IPAD_RET  Size(1536, 2048)
 #define SIZE_IPAD      Size(768, 1024)
-static Size screenSize = SIZE_IPHONE_3;
+static Size screenSize = SIZE_IPHONE_5/2;
 
 static Size designResolutionSize = Size(320, 568);
 

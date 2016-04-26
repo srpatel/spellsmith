@@ -166,18 +166,16 @@ bool Game::init() {
 		addChild(currentRound);
 	}
 	{
-		auto grad = LayerColor::create();
-		grad->initWithColor(Color4B(255, 255, 255, 255));
-		grad->setPosition(0, 342);
-		grad->setContentSize(Size(35, 24));
+		auto grad = LoadSprite("ui/orb_bg.png");
+		grad->setAnchorPoint(Vec2(0.5, 0.5));
+		grad->setPosition(20, 354);
 		addChild(grad);
 		
-		wizard_hp_bar = LayerColor::create();
-		wizard_hp_bar->initWithColor(Color4B(255, 0, 0, 255));
-		wizard_hp_bar->setPosition(0, 342);
-		wizard_hp_bar->setContentSize(Size(35, 24));
-		wizard_hp_bar->setAnchorPoint(Vec2(0, 0));
-		addChild(wizard_hp_bar);
+		auto hp = LoadSprite("ui/orb_red.png");
+		hp->setAnchorPoint(Vec2(0.5, 0));
+		hp->setPosition(20, 342);
+		addChild(hp);
+		wizard_hp_bar = hp;
 		
 		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
@@ -619,6 +617,7 @@ void Game::attemptSetState(GameState nextstate) {
 								updateInventory();
 							}
 						);
+						// todo - also remove another 1 or 2 randomly?
 						spellpool.erase(spellpool.begin(), spellpool.begin()+2);
 					}
 					

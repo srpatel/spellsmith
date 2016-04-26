@@ -65,7 +65,7 @@ private:
 	int currentEnemy;
 	Wizard *wizard;
 	std::vector<Spell *> spellpool;
-	LayerColor *wizard_hp_bar;
+	Node *wizard_hp_bar;
 	Label *currentRound;
 	Layer *inventoryHolder;
 	bool checkGameOver();
