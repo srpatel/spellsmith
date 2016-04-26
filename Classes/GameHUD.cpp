@@ -38,11 +38,22 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		monsterName->setPosition(15, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
 		addChild(monsterName);
 		
+		float x = getContentSize().width - 85;
+		float y = (enemies->size() - i - 1) * heightPerItem + heightPerItem/2;
+		
+		auto attackclocksprite_red = LoadSprite("ui/attack_counter_red.png");
+		auto attackclocksprite_black = LoadSprite("ui/attack_counter_black.png");
+		attackclocksprite_red->setAnchorPoint(Vec2(0, 0.5));
+		attackclocksprite_black->setAnchorPoint(Vec2(0, 0.5));
+		attackclocksprite_red->setPosition(x, y);
+		attackclocksprite_black->setPosition(x, y);
+		addChild(attackclocksprite_black);
+		
 		auto attackclock = Label::createWithTTF(ToString(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		attackclock->setHorizontalAlignment(TextHAlignment::RIGHT);
-		attackclock->setColor(Color3B::BLACK);
+		attackclock->setColor(Color3B::WHITE);
 		attackclock->setAnchorPoint(Vec2(0, 0.5));
-		attackclock->setPosition(getContentSize().width - 85, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
+		attackclock->setPosition(x, y);
 		addChild(attackclock);
 		attackclocks[i] = attackclock;
 		
