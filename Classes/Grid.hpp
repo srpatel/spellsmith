@@ -31,6 +31,7 @@ private:
 	cocos2d::Touch* currentTouch = nullptr;
 	Chain *chain = nullptr;
 	LayerColor *overlay;
+	Layer *selectedLayer;
     void set(int column, int row, Gem *gem, bool);
     void refill();
 	cocos2d::DrawNode *line;

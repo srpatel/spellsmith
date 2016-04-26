@@ -83,6 +83,9 @@ bool Grid::init(float maxWidth, float maxHeight)
         return false;
     }
 	
+	selectedLayer = Layer::create();
+	addChild(selectedLayer);
+	
 	overlay = LayerColor::create(Colours::SEMIBLACK, maxWidth, maxHeight);
 	overlay->setPosition(-maxWidth/2, -maxHeight/2);
 	overlay->setVisible(false);
@@ -142,11 +145,7 @@ void Grid::drawChain() {
 }
 
 void Grid::drawSelected() {
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
-			get(i, j)->sprite->setColor(Color3B(200, 200, 200));
-		}
-	}
+	selectedLayer->removeAllChildren();
 	
 	if (chain) {
 		Chain *sentinel = chain;
@@ -154,7 +153,10 @@ void Grid::drawSelected() {
 			// Draw from us to next
 			auto gem = get(sentinel->i, sentinel->j);
 			gem->sprite->setColor(Color3B::WHITE);
-			
+			auto glow = LoadSprite("gems/glow.png");
+			glow->setScale(gem->sprite->getScale());
+			glow->setPosition(gem->sprite->getPosition());
+			selectedLayer->addChild(glow);
 			sentinel = sentinel->next;
 		}
 	}
@@ -237,6 +239,7 @@ void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		}
 		chain = nullptr;
 	}
+	drawSelected();
 }
 
 bool Grid::isAboveLine(Vec2 start, Vec2 end, Vec2 point) {
@@ -335,6 +338,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 					
 					// draw line from previous to current
 					drawChain();
+					drawSelected();
 				}
 			} else {
 				// If it's anywhere in the chain (except the first) revert to that point
@@ -354,6 +358,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 						
 						//redraw line...
 						drawChain();
+						drawSelected();
 #if SINGLE_BACKWARDS
 					}
 #endif
@@ -368,23 +373,6 @@ void Grid::onTouchMovePart(Vec2 loc) {
 void Grid::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 	if (currentTouch && currentTouch->getID() == touch->getID()) {
 		Vec2 loc = touch->getLocation();
-		//Vec2 prevLoc = touch->getPreviousLocation();
-		
-		// check each cell that the line passes through (super cover)
-		// ...
-		// ...although for now just split it up into smaller bits.
-		/*Vec2 d = prevLoc - loc;
-		float angle = atan2f(d.y, d.x);
-		
-		float dd = Gem::getWidth() * 0.1f;
-		float distance = dd;
-		while (distance <= d.length()) {
-			Vec2 dloc = prevLoc + distance * Vec2(cosf(angle), -sinf(angle));
-			onTouchMovePart(dloc);
-			distance += dd;
-		}*/
-		
-		// if we've moved 
 		onTouchMovePart(loc);
 	}
 }
@@ -423,7 +411,7 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		
 		startpos = loc - pos;
 		endpos = Vec2(-1000,-1000);
-		
+		drawSelected();
         return true;
 	}
 #if GEM_WIGGLE
@@ -437,7 +425,7 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		}
 	}
 #endif
-	
+	drawSelected();
     return false;
 }
 
