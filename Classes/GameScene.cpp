@@ -157,7 +157,12 @@ bool Game::init() {
 		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
 		this->addChild(right_col_sprite);
 		
-		currentRound = Label::createWithTTF(ToString(0), Fonts::TEXT_FONT, Fonts::TITLE_SIZE);
+		auto level_counter = LoadSprite("ui/level_counter.png");
+		level_counter->setAnchorPoint(Vec2(0.5, 0.5));
+		level_counter->setPosition(getBoundingBox().size.width - 20, 354);
+		addChild(level_counter);
+		
+		currentRound = Label::createWithTTF(ToString(0), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
 		currentRound->setPosition(
