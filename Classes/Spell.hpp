@@ -47,6 +47,7 @@ public:
 	bool operator==(Chain *chain);
 	std::string getName();
 	std::string getDescription();
+	int tier;
 private:
 	std::string name;
 	std::string description;
@@ -63,12 +64,9 @@ class SpellManager {
 public:
 	static SpellManager *get();
 	void init();
-	
-	inline int count() { return spells.size(); }
-	inline Spell *at(int i) { return spells[i]; }
+	std::vector<Spell *> spells;
 private:
 	static SpellManager *instance;
-	std::vector<Spell *> spells;
 };
 
 #endif /* Spell_hpp */

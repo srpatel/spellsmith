@@ -43,9 +43,6 @@ bool Game::init() {
 	wizard->max_health = 40;
 	wizard->health = 40;
 	wizard->ui_health = 40;
-	//for (int i = 0; i < 3; i++) {
-	//	wizard->inventory.push_back(SpellManager::get()->at(i));
-	//}
 	
 	auto scenery_sprite = LoadSprite("ui/scenery.png");
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
@@ -612,16 +609,17 @@ void Game::attemptSetState(GameState nextstate) {
 					// Should we animate going to the next level?
 					// Should we wait for all current projectiles to finish?
 					
-					// pick a new spell maybe?
-					if (true) {
+					// pick a new spell if there are enough left
+					if (spellpool.size() >= 2) {
 						GameController::get()->showSpellPickDialog(
-							SpellManager::get()->at(0),
-							SpellManager::get()->at(1),
+							spellpool[0],
+							spellpool[1],
 							[this](Spell *chosen) {
 								wizard->inventory.push_back(chosen);
 								updateInventory();
 							}
 						);
+						spellpool.erase(spellpool.begin(), spellpool.begin()+2);
 					}
 					
 					gotoNextEnemy();
@@ -757,6 +755,14 @@ void Game::startGame(SaveGame *save) {
 		wizard->health = wizard->max_health;
 		wizard->ui_health = wizard->max_health;
 		wizard->sprite->setOpacity(255);
+		// copy spells across
+		spellpool = SpellManager::get()->spells;
+		
+		// sort spells by tier, but otherwise random.
+		std::random_shuffle(spellpool.begin(), spellpool.end());
+		std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
+			return a->tier < b->tier;
+		});
 		
 		// Create a round based on the current stage.
 		gotoNextEnemy();

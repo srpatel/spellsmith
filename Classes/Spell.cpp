@@ -43,7 +43,9 @@ void SpellManager::init() {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
 		const rapidjson::Value& effects = spell["effects"];
+		const rapidjson::Value& tier = spell["tier"];
 		auto s = new Spell(spell["name"].GetString());
+		s->tier = tier.GetInt();
 #if DEBUG
 		if (shape.Size() != MAX_HEIGHT) {
 			LOG("height != MAX_HEIGHT\n");

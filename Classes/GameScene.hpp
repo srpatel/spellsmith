@@ -64,6 +64,7 @@ private:
 	void setSelected(int);
 	int currentEnemy;
 	Wizard *wizard;
+	std::vector<Spell *> spellpool;
 	LayerColor *wizard_hp_bar;
 	Label *currentRound;
 	Layer *inventoryHolder;
