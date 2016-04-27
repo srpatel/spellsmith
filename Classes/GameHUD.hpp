@@ -34,9 +34,10 @@ private:
 class HealthBar : public Layer {
 public:
 	virtual bool init();
-	void setPercentage(float);
+	void setHealths(int current, int max);
 	CREATE_FUNC(HealthBar);
 private:
+	Label *text;
 	Sprite *bg;
 	Sprite *hp;
 };

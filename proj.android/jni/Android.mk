@@ -27,6 +27,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/MainMenu.cpp \
 ../../Classes/Monster.cpp \
 ../../Classes/SaveData.cpp \
+../../Classes/Shaders.cpp \
 ../../Classes/Spell.cpp \
 ../../Classes/SpriteLoader.cpp \
 ../../Classes/Strings.cpp \

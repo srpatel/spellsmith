@@ -13,6 +13,10 @@
 		1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1020FEEB1C06759400019EB9 /* SaveData.cpp */; };
 		102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
 		102441791BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
+		103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
+		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
+		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
+		103FB49F1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
 		105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0A1BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0D1BF14E3F0081D8F5 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CFB1BF14E3F0081D8F5 /* Spell.cpp */; };
@@ -214,6 +218,9 @@
 		1020FEEC1C06759400019EB9 /* SaveData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SaveData.hpp; sourceTree = "<group>"; };
 		102441761BF3DD3700AEC8B4 /* Dialogs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dialogs.cpp; sourceTree = "<group>"; };
 		102441771BF3DD3700AEC8B4 /* Dialogs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dialogs.hpp; sourceTree = "<group>"; };
+		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
+		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
+		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
 		105E0CF61BF14E3F0081D8F5 /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
 		105E0CF71BF14E3F0081D8F5 /* Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Strings.cpp; sourceTree = "<group>"; };
 		105E0CFA1BF14E3F0081D8F5 /* Spell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spell.hpp; sourceTree = "<group>"; };
@@ -441,6 +448,8 @@
 				1087478A1C0797CD0069DCAF /* Level.hpp */,
 				1087478D1C07A7920069DCAF /* Monster.cpp */,
 				1087478E1C07A7920069DCAF /* Monster.hpp */,
+				103FB4991CD13B0D00AEB60D /* Shaders.cpp */,
+				103FB49A1CD13B0D00AEB60D /* Shaders.hpp */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -615,6 +624,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				103FB49D1CD13D9E00AEB60D /* shaders */,
 				10C409301CC286C000DED2A9 /* spritesheet0-hd.plist */,
 				10C409311CC286C000DED2A9 /* spritesheet0-hd.png */,
 				10C409321CC286C000DED2A9 /* spritesheet0-ipadhd.plist */,
@@ -817,6 +827,7 @@
 				10C409381CC286C000DED2A9 /* spritesheet0-hd.plist in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				103FB49E1CD13D9E00AEB60D /* shaders in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				105E0D221BF14EB10081D8F5 /* data in Resources */,
@@ -839,6 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
+				103FB49F1CD13D9E00AEB60D /* shaders in Resources */,
 				10C409401CC2876F00DED2A9 /* spritesheet0-hd.plist in Resources */,
 				10C409411CC2877000DED2A9 /* spritesheet0-hd.png in Resources */,
 				10C409421CC2877000DED2A9 /* spritesheet0-ipadhd.plist in Resources */,
@@ -946,6 +958,7 @@
 				10B465331BFA935E00DD5E9E /* IkConstraint.c in Sources */,
 				10B465531BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */,
 				10B465311BFA935E00DD5E9E /* extension.c in Sources */,
+				103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				10B465211BFA935E00DD5E9E /* AtlasAttachmentLoader.c in Sources */,
 				1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */,
 				10B465451BFA935E00DD5E9E /* SkeletonData.c in Sources */,
@@ -970,6 +983,7 @@
 				10B465261BFA935E00DD5E9E /* AttachmentLoader.c in Sources */,
 				1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */,
 				10B465501BFA935E00DD5E9E /* Slot.c in Sources */,
+				103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				1087478C1C0797CD0069DCAF /* Level.cpp in Sources */,
 				10B465541BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */,
 				10B4651E1BFA935E00DD5E9E /* AnimationStateData.c in Sources */,

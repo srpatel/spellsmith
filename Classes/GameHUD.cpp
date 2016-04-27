@@ -43,8 +43,8 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		
 		auto attackclocksprite_red = LoadSprite("ui/attack_counter_red.png");
 		auto attackclocksprite_black = LoadSprite("ui/attack_counter_black.png");
-		attackclocksprite_red->setAnchorPoint(Vec2(0, 0.5));
-		attackclocksprite_black->setAnchorPoint(Vec2(0, 0.5));
+		attackclocksprite_red->setAnchorPoint(Vec2(0.5, 0.5));
+		attackclocksprite_black->setAnchorPoint(Vec2(0.5, 0.5));
 		attackclocksprite_red->setPosition(x, y);
 		attackclocksprite_black->setPosition(x, y);
 		attackclock_reds[i] = attackclocksprite_red;
@@ -52,18 +52,18 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		addChild(attackclocksprite_black);
 		addChild(attackclocksprite_red);
 		
-		auto attackclock = Label::createWithTTF(ToString(e->attack_clock), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
-		attackclock->setHorizontalAlignment(TextHAlignment::RIGHT);
+		auto attackclock = Label::createWithTTF(ToString(e->attack_clock), Fonts::NUMBER_FONT, 10);
+		attackclock->setHorizontalAlignment(TextHAlignment::CENTER);
 		attackclock->setColor(Color3B::WHITE);
-		attackclock->setAnchorPoint(Vec2(0, 0.5));
-		attackclock->setPosition(x, y);
+		attackclock->setAnchorPoint(Vec2(0.5, 0.5));
+		attackclock->setPosition(x - 1, y);
 		addChild(attackclock);
 		attackclocks[i] = attackclock;
 		
 		auto hpBar = HealthBar::create();
 		hpBar->setAnchorPoint(Vec2(1, 0.5));
 		hpBar->setPosition(getContentSize().width - 35, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
-		hpBar->setPercentage(e->ui_health / (float) e->max_health);
+		hpBar->setHealths(e->ui_health, e->max_health);
 		addChild(hpBar);
 		healthbars[i] = hpBar;
 		
@@ -76,7 +76,7 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 void GameHUD::updateHealthBars() {
 	for (int i = 0; i < enemies->size(); i++) {
 		auto c = enemies->at(i);
-		healthbars[i]->setPercentage(MAX(0, c->ui_health / (float) c->max_health));
+		healthbars[i]->setHealths(c->ui_health, c->max_health);
 	}
 }
 void GameHUD::updateAttackClocks() {
@@ -116,12 +116,24 @@ bool HealthBar::init() {
 	grad->setContentSize(bg->getContentSize() - Size(4, 4));
 	addChild(grad);
 	
+	text = Label::createWithTTF("100/100", Fonts::NUMBER_FONT, 8);
+	text->setHorizontalAlignment(TextHAlignment::CENTER);
+	text->setColor(Color3B::WHITE);
+	text->setAnchorPoint(Vec2(0.5, 0.5));
+	
 	addChild(hp);
 	addChild(bg);
+	addChild(text);
 	
 	return true;
 }
 
-void HealthBar::setPercentage(float perc) {
+void HealthBar::setHealths(int current, int max) {
+	if (current <= 0) {
+		text->setString("");
+	} else {
+		text->setString(ToString(current) + "/" + ToString(max));
+	}
+	float perc = MAX(0, (float) current / max);
 	hp->setScaleX(perc * 102);
 }

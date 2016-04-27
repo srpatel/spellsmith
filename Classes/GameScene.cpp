@@ -2,6 +2,7 @@
 #include "Spell.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
+#include "Shaders.hpp"
 #include "GameController.hpp"
 
 #include <sstream>
@@ -162,12 +163,12 @@ bool Game::init() {
 		level_counter->setPosition(getBoundingBox().size.width - 20, 354);
 		addChild(level_counter);
 		
-		currentRound = Label::createWithTTF(ToString(0), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		currentRound = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
 		currentRound->setPosition(
 			getBoundingBox().size.width - right_col_sprite->getContentSize().width/2 + 3,
-			358);
+			354);
 		addChild(currentRound);
 	}
 	{
@@ -179,6 +180,7 @@ bool Game::init() {
 		auto hp = LoadSprite("ui/orb_red.png");
 		hp->setAnchorPoint(Vec2(0.5, 0));
 		hp->setPosition(20, 342);
+		hp->setGLProgram(Shaders::smokey());
 		addChild(hp);
 		wizard_hp_bar = hp;
 		
