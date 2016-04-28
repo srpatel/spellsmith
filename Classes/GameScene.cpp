@@ -765,7 +765,7 @@ void Game::startGame(SaveGame *save) {
 		spellpool = SpellManager::get()->spells;
 		
 		// sort spells by tier, but otherwise random.
-		std::random_shuffle(spellpool.begin(), spellpool.end());
+		std::random_shuffle(spellpool.begin(), spellpool.end(), [](int i) { return std::rand()%i;});
 		std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
 			return a->tier < b->tier;
 		});

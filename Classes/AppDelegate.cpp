@@ -21,7 +21,7 @@ static Size mediumResolutionSize = Size(640, 1136);
 static Size largeResolutionSize  = Size(1536, 2048);
 
 AppDelegate::AppDelegate() {
-
+	std::srand(time(0));
 }
 
 AppDelegate::~AppDelegate() 
