@@ -271,7 +271,24 @@ bool Spell::operator==(Chain *chain) {
 				printf("\n");
 			}
 #endif
-			bool match = memcmp(compare_temp, shape, MAX_WIDTH * MAX_HEIGHT * sizeof(GemType)) == 0;
+			bool match = true;
+			
+			for (int n = 0; n < MAX_WIDTH; n++) {
+				for (int m = 0; m < MAX_HEIGHT; m++) {
+					if (shape at(n, m) != compare_temp at(n, m)) {
+						// There is a difference!
+						// If the user has drawn a crystal, that's a match!
+						// Crystal doesn't match "none", though.
+						if (shape at(n, m) == GemType::NONE ||
+							compare_temp at(n, m) != GemType::CRYSTAL) {
+							match = false;
+							goto next;
+						}
+					}
+				}
+			}
+			next:;
+			//bool match = memcmp(compare_temp, shape, MAX_WIDTH * MAX_HEIGHT * sizeof(GemType)) == 0;
 			if (match) {
 				success = true;
 				goto done;

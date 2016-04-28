@@ -18,6 +18,7 @@ void Gem::init(GemType type) {
 		case EARTH: element = "gems/earth.png"; break;
 		case FIRE: element = "gems/fire.png"; break;
 		case WATER: element = "gems/water.png"; break;
+		case CRYSTAL: element = "gems/crystal.png"; break;
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;

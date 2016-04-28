@@ -7,7 +7,8 @@ enum GemType {
 	FIRE = 1,
 	EARTH,
 	WATER,
-	AIR
+	AIR,
+	CRYSTAL
 };
 
 struct Gem {
