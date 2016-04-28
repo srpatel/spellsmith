@@ -11,7 +11,7 @@
     ],
     "effects": [
       {
-        "type": "SHIELD",
+        "type": "shield",
         "sprite": "",
         "amount": 2
       }
@@ -29,9 +29,16 @@
     ],
     "effects": [
       {
-        "type": "PROJECTILE",
+        "type": "projectile",
+        "target": "target",
         "sprite": "",
-        "damage": 15
+        "key": 0
+      },
+      {
+        "type": "change_health",
+        "target": "target",
+        "amount": -15,
+        "wait_key": 0
       }
     ]
   },
@@ -47,91 +54,36 @@
     ],
     "effects": [
       {
-        "type": "HEAL",
-        "amount": 10
+        "type": "change_health",
+        "amount": 10,
+        "target": "self"
       }
     ]
   },
   {
-    "name": "healstrike",
-    "tier": 2,
-    "shape": [
-      "     ",
-      "     ",
-      "     ",
-      "WF   ",
-      "FW   "
-    ],
-    "effects": [
-      {
-        "type": "HEAL",
-        "amount": 7
-      },
-      {
-        "type": "PROJECTILE",
-        "sprite": "",
-        "damage": 7
-      }
-    ]
-  },
-  {
-    "name": "roots",
+    "name": "lightening_bolt",
     "tier": 1,
     "shape": [
       "     ",
       "     ",
-      " E   ",
-      "E    ",
-      " W   "
-    ],
-    "effects": []
-  },
-  {
-    "name": "waterring",
-    "tier": 1,
-    "shape": [
       "     ",
-      "     ",
-      " W   ",
-      "W W  ",
-      " W   "
-    ],
-    "effects": []
-  },
-  {
-    "name": "meteor",
-    "tier": 2,
-    "shape": [
-      "     ",
-      "     ",
-      " A   ",
-      "FEF  ",
-      " F   "
-    ],
-    "effects": []
-  },
-  {
-    "name": "tornado",
-    "tier": 1,
-    "shape": [
-      "     ",
-      "A    ",
-      " A   ",
       "A    ",
       " A   "
     ],
-    "effects": []
-  },
-  {
-    "name": "groundspike",
-    "tier": 1,
-    "shape": [
-      "     ",
-      "     ",
-      "     ",
-      " E   ",
-      "EWE  "
-    ],
-    "effects": []
+    "effects": [
+      {
+        "type": "projectile",
+        "sprite": "",
+        "target": "target",
+        "key": 0
+      },
+      {
+        "type": "change_health",
+        "min": -6,
+        "max": -1,
+        "target": "target",
+        "wait_key": 0
+      }
+    ]
   }
 ]

@@ -8,7 +8,6 @@
 
 #include "Spell.hpp"
 #include "Gem.hpp"
-#include "GameScene.hpp"
 #include "Strings.hpp"
 
 #include "json/document.h"
@@ -24,6 +23,59 @@ SpellManager *SpellManager::instance = nullptr;
 #define Zero(grid) for (int i = 0; i < MAX_WIDTH; i++) for (int j = 0; j < MAX_HEIGHT; j++)\
 	grid at(i, j) = NONE;
 #define at(i, j) [(i) + (j) * MAX_WIDTH]
+
+static int MakeOptionalNumber(const rapidjson::Value& e, const char* key) {
+	if (e.HasMember(key)) {
+		return e[key].GetInt();
+	} else {
+		return -1;
+	}
+}
+
+static EffectType MakeType(const char *type) {
+	if (strcmp(type, "projectile") == 0) {
+		return Projectile;
+	} else if (strcmp(type, "change_health") == 0) {
+		return ChangeHealth;
+	} else if (strcmp(type, "shield") == 0) {
+		return Shield;
+	} else {
+		printf("Invalid target for spell: %s\n", type);
+		return Invalid;
+	}
+}
+
+static EffectTarget MakeTarget(const rapidjson::Value& e, const char *key) {
+	if (! e.HasMember(key)) {
+		return None;
+	}
+	
+	const char *target = e[key].GetString();
+	
+	if (strcmp(target, "target") == 0) {
+		return Target;
+	} else if (strcmp(target, "other") == 0) {
+		return Other;
+	} else if (strcmp(target, "self") == 0) {
+		return Self;
+	} else {
+		return None;
+	}
+}
+
+static std::function<int(Game *)> MakeAmountGenerator(const rapidjson::Value& e) {
+	// If it has "amount" use that.
+	if (e.HasMember("amount")) {
+		int i = e["amount"].GetInt();
+		return [i](Game *){ return i; };
+	} else if (e.HasMember("min") && e.HasMember("max")) {
+		int min = e["min"].GetInt();
+		int max = e["max"].GetInt();
+		return [min, max](Game *){ return (std::rand()%(max-min)) + min; };
+	} else {
+		return [](Game *){ return 0; };
+	}
+}
 
 SpellManager *SpellManager::get() {
 	if (instance == nullptr) {
@@ -77,27 +129,16 @@ void SpellManager::init() {
 		
 		for (int j = 0; j < effects.Size(); j++) {
 			const rapidjson::Value& effect = effects[j];
-			// Switch type and create new type depending.
-			BaseEffect *e = nullptr;
-			if (strcmp(effect["type"].GetString(), "PROJECTILE") == 0) {
-				EffectProjectile *theEffect = new EffectProjectile;
-				theEffect->type = Projectile;
-				theEffect->damage = effect["damage"].GetInt();
-				e = theEffect;
-			} else if (strcmp(effect["type"].GetString(), "HEAL") == 0) {
-				EffectHeal *theEffect = new EffectHeal;
-				theEffect->type = Heal;
-				theEffect->amount = effect["amount"].GetInt();
-				e = theEffect;
-			} else if (strcmp(effect["type"].GetString(), "SHIELD") == 0) {
-				EffectShield *theEffect = new EffectShield;
-				theEffect->type = Shield;
-				theEffect->amount = effect["amount"].GetInt();
-				e = theEffect;
-			}
-			if (e) {
-				s->effects.push_back(e);
-			}
+			
+			SpellEffect *e = new SpellEffect;
+			
+			e->amountGenerator = MakeAmountGenerator(effect);
+			e->target = MakeTarget(effect, "target");
+			e->type = MakeType(effect["type"].GetString());
+			e->key = MakeOptionalNumber(effect, "key");
+			e->wait_key = MakeOptionalNumber(effect, "wait_key");
+			
+			s->effects.push_back(e);
 		}
 		
 		s->setup();

@@ -14,26 +14,31 @@
 
 USING_NS_CC;
 
+class Game;
+
+typedef std::function<int(Game *)> AmountGenerator;
+
 enum EffectType {
-	Projectile = 0,
-	Heal,
+	Invalid,
+	Projectile,
+	ChangeHealth,
 	Shield
 };
 
-struct BaseEffect {
+enum EffectTarget {
+	None,
+	Target,
+	Other,
+	Self,
+	All
+};
+
+struct SpellEffect {
 	EffectType type;
-};
-
-struct EffectProjectile : public BaseEffect {
-	int damage;
-};
-
-struct EffectHeal : public BaseEffect {
-	int amount;
-};
-
-struct EffectShield : public BaseEffect {
-	int amount;
+	EffectTarget target;
+	int key;
+	int wait_key;
+	AmountGenerator amountGenerator;
 };
 
 class Spell {
@@ -41,7 +46,7 @@ class Spell {
 public:
 	Spell(std::string name);
 	~Spell();
-	std::vector<BaseEffect *> effects;
+	std::vector<SpellEffect *> effects;
 	void setup();
 	Layer *mininode;
 	bool operator==(Chain *chain);

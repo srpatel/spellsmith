@@ -428,8 +428,17 @@ bool Game::onCastSpell(Chain *chain) {
 		int length = 1;
 		while (sentinel != nullptr) {
 			if (sentinel->type != t) {
-				success = false;
-				break;
+				if (t == CRYSTAL || sentinel->type != CRYSTAL) {
+					// crystal always matches
+					// if the first gem is crystal, the type is the first non-crystal gem.
+					if (t == CRYSTAL) {
+						chain->type = sentinel->type;
+						t = chain->type;
+					}
+				} else {
+					success = false;
+					break;
+				}
 			}
 			sentinel = sentinel->next;
 			length++;
@@ -467,6 +476,8 @@ bool Game::onCastSpell(Chain *chain) {
 				default:break;
 			}
 			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
+			enemies[currentEnemy]->ui_health -= damage;
+			enemies[currentEnemy]->health -= damage;
 		}
 		
 		onWizardTurnOver();
@@ -474,16 +485,20 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::doSpell(Spell *spell) {
-	for (BaseEffect *e : spell->effects) {
+	for (SpellEffect *e : spell->effects) {
 		if (e->type == Projectile) {
-			EffectProjectile *projectile = (EffectProjectile *) e;
 			// Make a projectile!
-			makeProjectile(wizard, enemies[currentEnemy], projectile->damage, Color3B::RED);
-		} else if (e->type == Heal) {
-			//nothing to wait for!
-			int amount = ((EffectHeal *) e)->amount;
-			wizard->health += amount;
-			wizard->ui_health += amount;
+			makeProjectile(wizard, enemies[currentEnemy], 5, Color3B::RED);
+		} else if (e->type == ChangeHealth) {
+			// do checks to see if it hits a shield or not!
+			int amount = e->amountGenerator(this);
+			if (e->target == Self) {
+				wizard->health += amount;
+				wizard->ui_health += amount;
+			} else if (e->target == Target) {
+				enemies[currentEnemy]->health += amount;
+				enemies[currentEnemy]->ui_health += amount;
+			}
 			updateHealthBars();
 		} else if (e->type == Shield) {
 			Buff *shield = wizard->getBuffByType(BuffType::BARRIER);
@@ -555,11 +570,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		}
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
-		target->health -= damage;
 		auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
-			target->ui_health -= damage;
 			LOG("Enemy now has no health! %d v %d\n", target->ui_health, target->health);
 			if (target->ui_health <= 0 && target != wizard) {
 				target->sprite->removeFromParent();
