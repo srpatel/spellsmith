@@ -55,7 +55,7 @@ void DoSpell::run(Game *game, Spell *spell) {
 		int amount = AmountGenerator::between(1, 6);
 		game->makeProjectile(
 			 game->wizard,
-			 game->enemies[game->currentEnemy], amount, Color3B::RED);
+			 game->enemies[game->currentEnemy], amount, Color3B::YELLOW);
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}
