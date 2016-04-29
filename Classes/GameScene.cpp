@@ -429,7 +429,7 @@ bool Game::onCastSpell(Chain *chain) {
 		int length = 1;
 		while (sentinel != nullptr) {
 			if (sentinel->type != t) {
-				if (t == CRYSTAL || sentinel->type != CRYSTAL) {
+				if (t == CRYSTAL || sentinel->type == CRYSTAL) {
 					// crystal always matches
 					// if the first gem is crystal, the type is the first non-crystal gem.
 					if (t == CRYSTAL) {
