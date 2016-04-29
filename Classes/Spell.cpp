@@ -23,43 +23,12 @@ SpellManager *SpellManager::instance = nullptr;
 #define Zero(grid) for (int i = 0; i < MAX_WIDTH; i++) for (int j = 0; j < MAX_HEIGHT; j++)\
 	grid at(i, j) = NONE;
 #define at(i, j) [(i) + (j) * MAX_WIDTH]
-
+/*
 static int MakeOptionalNumber(const rapidjson::Value& e, const char* key) {
 	if (e.HasMember(key)) {
 		return e[key].GetInt();
 	} else {
 		return -1;
-	}
-}
-
-static EffectType MakeType(const char *type) {
-	if (strcmp(type, "projectile") == 0) {
-		return Projectile;
-	} else if (strcmp(type, "change_health") == 0) {
-		return ChangeHealth;
-	} else if (strcmp(type, "shield") == 0) {
-		return Shield;
-	} else {
-		printf("Invalid target for spell: %s\n", type);
-		return Invalid;
-	}
-}
-
-static EffectTarget MakeTarget(const rapidjson::Value& e, const char *key) {
-	if (! e.HasMember(key)) {
-		return None;
-	}
-	
-	const char *target = e[key].GetString();
-	
-	if (strcmp(target, "target") == 0) {
-		return Target;
-	} else if (strcmp(target, "other") == 0) {
-		return Other;
-	} else if (strcmp(target, "self") == 0) {
-		return Self;
-	} else {
-		return None;
 	}
 }
 
@@ -76,7 +45,7 @@ static std::function<int(Game *)> MakeAmountGenerator(const rapidjson::Value& e)
 		return [](Game *){ return 0; };
 	}
 }
-
+*/
 SpellManager *SpellManager::get() {
 	if (instance == nullptr) {
 		instance = new SpellManager;
@@ -94,7 +63,6 @@ void SpellManager::init() {
 	For (doc.Size()) {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
-		const rapidjson::Value& effects = spell["effects"];
 		const rapidjson::Value& tier = spell["tier"];
 		auto s = new Spell(spell["name"].GetString());
 		s->tier = tier.GetInt();
@@ -127,26 +95,12 @@ void SpellManager::init() {
 			}
 		}
 		
-		for (int j = 0; j < effects.Size(); j++) {
-			const rapidjson::Value& effect = effects[j];
-			
-			SpellEffect *e = new SpellEffect;
-			
-			e->amountGenerator = MakeAmountGenerator(effect);
-			e->target = MakeTarget(effect, "target");
-			e->type = MakeType(effect["type"].GetString());
-			e->key = MakeOptionalNumber(effect, "key");
-			e->wait_key = MakeOptionalNumber(effect, "wait_key");
-			
-			s->effects.push_back(e);
-		}
-		
 		s->setup();
 		spells.push_back(s);
 	}
 }
 
-Spell::Spell(std::string name) {
+Spell::Spell(const char *name) {
 	this->name = name;
 	shape = NewArray;
 	// Zero it!

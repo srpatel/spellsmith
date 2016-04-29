@@ -4,6 +4,7 @@
 #include "Constants.h"
 #include "Shaders.hpp"
 #include "GameController.hpp"
+#include "DoSpell.hpp"
 
 #include <sstream>
 
@@ -457,7 +458,7 @@ bool Game::onCastSpell(Chain *chain) {
 		
 		if (spell) {
 			// cast a spell!
-			doSpell(spell);
+			DoSpell::run(this, spell);
 		} else {
 			// cast a chain!
 			
@@ -476,53 +477,11 @@ bool Game::onCastSpell(Chain *chain) {
 				default:break;
 			}
 			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
-			enemies[currentEnemy]->ui_health -= damage;
-			enemies[currentEnemy]->health -= damage;
 		}
 		
 		onWizardTurnOver();
 	}
 	return success;
-}
-void Game::doSpell(Spell *spell) {
-	for (SpellEffect *e : spell->effects) {
-		if (e->type == Projectile) {
-			// Make a projectile!
-			makeProjectile(wizard, enemies[currentEnemy], 5, Color3B::RED);
-		} else if (e->type == ChangeHealth) {
-			// do checks to see if it hits a shield or not!
-			int amount = e->amountGenerator(this);
-			if (e->target == Self) {
-				wizard->health += amount;
-				wizard->ui_health += amount;
-			} else if (e->target == Target) {
-				enemies[currentEnemy]->health += amount;
-				enemies[currentEnemy]->ui_health += amount;
-			}
-			updateHealthBars();
-		} else if (e->type == Shield) {
-			Buff *shield = wizard->getBuffByType(BuffType::BARRIER);
-			
-			if (shield == nullptr) {
-				// give us mudshield_buff, and animate it in using ga.
-				auto shield = Buff::createMudshield();
-				
-				// put it in a good place and add it
-				shield->sprite->setPosition(wizard->sprite->getPosition() + Vec2(75, 0));
-				shield->sprite->setOpacity(0);
-				addChild(shield->sprite);
-				
-				// fade it in
-				auto fadeIn = FadeIn::create(0.2);
-				
-				addBuff(wizard, shield);
-				
-				shield->sprite->runAction(fadeIn);
-			} else {
-				shield->charges += 2;
-			}
-		}
-	}
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
 	auto sprite = LoadSprite("spells/whiteball.png");
@@ -570,9 +529,11 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		}
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
+		target->health -= damage;
 		auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
 		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
 			removeChild(sprite);
+			target->ui_health -= damage;
 			LOG("Enemy now has no health! %d v %d\n", target->ui_health, target->health);
 			if (target->ui_health <= 0 && target != wizard) {
 				target->sprite->removeFromParent();

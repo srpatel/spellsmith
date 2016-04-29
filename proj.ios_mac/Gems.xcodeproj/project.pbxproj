@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		100AEB971CC3E61400182962 /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100AEB951CC3E61400182962 /* GameHUD.cpp */; };
 		100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100AEB951CC3E61400182962 /* GameHUD.cpp */; };
+		100F9E551CD332E5001118C1 /* DoSpell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F9E531CD332E5001118C1 /* DoSpell.cpp */; };
+		100F9E561CD332E5001118C1 /* DoSpell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F9E531CD332E5001118C1 /* DoSpell.cpp */; };
 		1020FEED1C06759400019EB9 /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1020FEEB1C06759400019EB9 /* SaveData.cpp */; };
 		1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1020FEEB1C06759400019EB9 /* SaveData.cpp */; };
 		102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102441761BF3DD3700AEC8B4 /* Dialogs.cpp */; };
@@ -214,6 +216,8 @@
 /* Begin PBXFileReference section */
 		100AEB951CC3E61400182962 /* GameHUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHUD.cpp; sourceTree = "<group>"; };
 		100AEB961CC3E61400182962 /* GameHUD.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHUD.hpp; sourceTree = "<group>"; };
+		100F9E531CD332E5001118C1 /* DoSpell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoSpell.cpp; sourceTree = "<group>"; };
+		100F9E541CD332E5001118C1 /* DoSpell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DoSpell.hpp; sourceTree = "<group>"; };
 		1020FEEB1C06759400019EB9 /* SaveData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SaveData.cpp; sourceTree = "<group>"; };
 		1020FEEC1C06759400019EB9 /* SaveData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SaveData.hpp; sourceTree = "<group>"; };
 		102441761BF3DD3700AEC8B4 /* Dialogs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dialogs.cpp; sourceTree = "<group>"; };
@@ -469,6 +473,8 @@
 				100AEB961CC3E61400182962 /* GameHUD.hpp */,
 				1070AEF41CC56BB5009DA840 /* GameScenery.cpp */,
 				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
+				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
+				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -961,6 +967,7 @@
 				103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				10B465211BFA935E00DD5E9E /* AtlasAttachmentLoader.c in Sources */,
 				1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */,
+				100F9E551CD332E5001118C1 /* DoSpell.cpp in Sources */,
 				10B465451BFA935E00DD5E9E /* SkeletonData.c in Sources */,
 				105E0D151BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
 				105E0D171BF14E3F0081D8F5 /* Characters.cpp in Sources */,
@@ -983,6 +990,7 @@
 				10B465261BFA935E00DD5E9E /* AttachmentLoader.c in Sources */,
 				1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */,
 				10B465501BFA935E00DD5E9E /* Slot.c in Sources */,
+				100F9E561CD332E5001118C1 /* DoSpell.cpp in Sources */,
 				103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				1087478C1C0797CD0069DCAF /* Level.cpp in Sources */,
 				10B465541BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */,

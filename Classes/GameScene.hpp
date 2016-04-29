@@ -25,6 +25,7 @@ enum GameState {
 };
 
 class Game : public Layer {
+	friend class DoSpell;
 public:
 	static Game *get();
     Grid *grid;
@@ -45,9 +46,6 @@ public:
     CREATE_FUNC(Game);
 private:
 	static Game *instance;
-	
-	// Actually create the projectiles and stuff
-	void doSpell(Spell *);
 	
 	GameMode mode = kModeInfinite;
 	int stage; // the current monster you are facing, or the level you are on in infinite mode.
