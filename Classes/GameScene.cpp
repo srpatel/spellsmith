@@ -731,6 +731,7 @@ void Game::startGame(SaveGame *save) {
 		wizard->health = wizard->max_health;
 		wizard->ui_health = wizard->max_health;
 		wizard->sprite->setOpacity(255);
+		wizard->inventory.clear();
 		// copy spells across
 		spellpool = SpellManager::get()->spells;
 		
