@@ -324,9 +324,7 @@ void Game::updateInventory() {
 	auto gridSize = grid->getSize();
 	auto visibleSize = getContentSize();
 	
-	float starty = layout.column_height - 110;
-	float spellHeight = gridSize.y/3 - padding*3;
-	float spellPadding = 10;
+	const float starty = layout.column_height - 110;
 	
 	inventoryHolder->removeAllChildren();
 	
@@ -358,8 +356,6 @@ void Game::updateInventory() {
 	}
 	// Right-hand inventory
 	for (int i = 0; i < 3; i++) {
-		float yoffset = (i - 1) * (spellHeight + spellPadding);
-		
 		if (inventory.size() > 3 + i) {
 			auto onSpellClick = EventListenerTouchOneByOne::create();
 			onSpellClick->setSwallowTouches(true);
@@ -376,7 +372,7 @@ void Game::updateInventory() {
 				return false; // if you are consuming it
 			};
 			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(getBoundingBox().size.width - 18, grid->getPosition().y - yoffset);
+			sprite->setPosition(getBoundingBox().size.width - 18, starty - i * 55);
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			inventoryHolder->addChild(sprite);
 		}
@@ -748,6 +744,7 @@ void Game::startGame(SaveGame *save) {
 		gotoNextEnemy();
 		
 		updateHealthBars();
+		updateInventory();
 		
 		// shuffle grid
 		grid->scramble();
