@@ -16,6 +16,7 @@ public:
     Gem *get(int column, int row);
     bool init(float maxWidth, float maxHeight);
 	void scramble();
+	void createRandomCrystalGems(int, Chain *);
 	void setActive(bool);
     cocos2d::Vec2 getSize();
     virtual bool onTouchBegan(cocos2d::Touch *, cocos2d::Event *);
@@ -32,7 +33,7 @@ private:
 	Chain *chain = nullptr;
 	LayerColor *overlay;
 	Layer *selectedLayer;
-    void set(int column, int row, Gem *gem, bool);
+    void set(int column, int row, Gem *gem, bool init, GemType);
     void refill();
 	cocos2d::DrawNode *line;
 	void cancelCurrentSpell();

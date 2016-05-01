@@ -17,7 +17,16 @@ public:
 	}
 };
 
-void DoSpell::run(Game *game, Spell *spell) {
+#define HEAL(_n_) {auto amt = _n_; game->wizard->ui_health += amt;\
+game->wizard->health += amt;\
+if (game->wizard->health > game->wizard->max_health) {\
+	game->wizard->ui_health = game->wizard->max_health;\
+	game->wizard->health = game->wizard->max_health;\
+}}
+
+void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
+	//firewisp
+	//
 	IF_SPELL(fireball) {
 		// deal 10 damage
 		game->makeProjectile(
@@ -45,17 +54,46 @@ void DoSpell::run(Game *game, Spell *spell) {
 		} else {
 			shield->charges += 2;
 		}
-	} else IF_SPELL(refresh) {
-		// gain 7
-		game->wizard->ui_health += 7;
-		game->wizard->health += 7;
+	} else IF_SPELL(forest_breeze) {
+		// gain 5
+		HEAL(5);
 		game->updateHealthBars();
 	} else IF_SPELL(lightening_bolt) {
-		// deal 1-6
-		int amount = AmountGenerator::between(1, 6);
+		// deal 1-12
+		int amount = AmountGenerator::between(1, 12);
 		game->makeProjectile(
-			 game->wizard,
-			 game->enemies[game->currentEnemy], amount, Color3B::YELLOW);
+							 game->wizard,
+							 game->enemies[game->currentEnemy], amount, Color3B::YELLOW);
+	} else IF_SPELL(chill) {
+		// slow enemy by 2 turns
+		game->enemies[game->currentEnemy]->attack_clock += 2;
+		game->hud->updateAttackClocks();
+	} else IF_SPELL(firewisp) {
+		// deal 6 damage
+		game->makeProjectile(
+							 game->wizard,
+							 game->enemies[game->currentEnemy], 6, Color3B::RED);
+	} else IF_SPELL(healstrike) {
+		// gain 5, deal 5 damage
+		HEAL(5);
+		game->updateHealthBars();
+		game->makeProjectile(
+							 game->wizard,
+							 game->enemies[game->currentEnemy], 5, Color3B::RED);
+	} else IF_SPELL(volcanic) {
+		// deal 10 damage to everyone
+		game->wizard->ui_health -= 10;
+		game->wizard->health -= 10;
+		for (Enemy *e : game->enemies) {
+			e->ui_health -= 10;
+			e->health -= 10;
+		}
+		game->updateHealthBars();
+	} else IF_SPELL(crystalise) {
+		// heal 3, create 3 crystal gems
+		HEAL(3);
+		game->grid->createRandomCrystalGems(3, chain);
+		game->updateHealthBars();
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}

@@ -12,7 +12,7 @@
   },
   {
     "name": "fireball",
-    "tier": 1,
+    "tier": 2,
     "shape": [
       "     ",
       "     ",
@@ -22,14 +22,36 @@
     ]
   },
   {
-    "name": "refresh",
+    "name": "firewisp",
+    "tier": 1,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      " F   ",
+      "FA   "
+    ]
+  },
+  {
+    "name": "forest_breeze",
     "tier": 1,
     "shape": [
       "     ",
       "     ",
       "     ",
       "A    ",
-      "WWA  "
+      "EEA  "
+    ]
+  },
+  {
+    "name": "chill",
+    "tier": 1,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "  A  ",
+      "WW   "
     ]
   },
   {
@@ -38,9 +60,42 @@
     "shape": [
       "     ",
       "     ",
-      "     ",
       "A    ",
-      " A   "
+      " A   ",
+      "A    "
+    ]
+  },
+  {
+    "name": "healstrike",
+    "tier": 1,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "FW   ",
+      "WF   "
+    ]
+  },
+  {
+    "name": "volcanic",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      " E   ",
+      "EFE  "
+    ]
+  },
+  {
+    "name": "crystalise",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      " A   ",
+      "F E  ",
+      " W   "
     ]
   }
 ]

@@ -14,7 +14,7 @@
 
 class DoSpell {
 public:
-	static void run(Game *, Spell *);
+	static void run(Game *, Spell *, Chain *);
 };
 
 #endif /* DoSpell_hpp */

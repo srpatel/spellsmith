@@ -29,6 +29,18 @@
 static Vec2 startpos(-1000,-1000);
 static Vec2 endpos(-1000,-1000);
 
+static bool ChainContainsCoords(Chain *chain, int i, int j) {
+	Chain *sentinel = chain;
+	while (sentinel) {
+		if (sentinel->i == i && sentinel->j == j) {
+			// We're already here...don't add
+			return true;
+		}
+		sentinel = sentinel->next;
+	}
+	return false;
+}
+
 Grid::Grid(int w, int h, float maxWidth, float maxHeight) {
     this->width = w;
     this->height = h;
@@ -49,14 +61,18 @@ Gem *Grid::get(int column, int row) {
     int index = column + row * width;
     return grid[index];
 }
-void Grid::set(int column, int row, Gem *gem, bool init = false) {
+void Grid::set(int column, int row, Gem *gem, bool init = false, GemType type = NONE) {
     int index = column + row * width;
     if (!gem)
         delete grid[index];
     grid[index] = gem;
     
     if (init) {
-        gem->init();
+		if (type == NONE) {
+			gem->init();
+		} else {
+			gem->init(type);
+		}
 		
         gem->sprite->setOpacity(0);
         auto fadeIn = cocos2d::FadeIn::create(.1f);
@@ -214,6 +230,31 @@ void Grid::scramble() {
 	}
 	
 	refill();
+}
+
+void Grid::createRandomCrystalGems(int amount, Chain *chain) {
+	// pick three _different_ locations
+	// create list of coords, and shuffle it.
+	std::vector<std::pair<int, int> > coords;
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			coords.push_back(std::pair<int, int>(i,j));
+		}
+	}
+	std::random_shuffle(coords.begin(), coords.end());
+	int i = 0;
+	while (amount > 0 && i < coords.size()) {
+		int x = coords[i].first;
+		int y = coords[i].second;
+		i++;
+		// If this is in chain, skip it.
+		if (! ChainContainsCoords(chain, x, y)) {
+			removeChild(get(x, y)->sprite);
+			auto g = new Gem;
+			set(x, y, g, true, CRYSTAL);
+			amount--;
+		}
+	}
 }
 
 void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {

@@ -454,7 +454,7 @@ bool Game::onCastSpell(Chain *chain) {
 		
 		if (spell) {
 			// cast a spell!
-			DoSpell::run(this, spell);
+			DoSpell::run(this, spell, chain);
 		} else {
 			// cast a chain!
 			
