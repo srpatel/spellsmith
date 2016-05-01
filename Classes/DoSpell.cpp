@@ -94,6 +94,19 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 		HEAL(3);
 		game->grid->createRandomCrystalGems(3, chain);
 		game->updateHealthBars();
+	} else IF_SPELL(zap) {
+		// deal 10 to a random enemy
+		int i = game->getNextAliveEnemy(rand() % game->enemies.size());
+		game->makeProjectile(
+							 game->wizard,
+							 game->enemies[i], 10, Color3B::YELLOW);
+	} else IF_SPELL(smelt) {
+		// deal 6 damage, create 1 crystal gem
+		game->makeProjectile(
+							 game->wizard,
+							 game->enemies[game->currentEnemy], 6, Color3B::RED);
+		game->grid->createRandomCrystalGems(1, chain);
+		game->updateHealthBars();
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}

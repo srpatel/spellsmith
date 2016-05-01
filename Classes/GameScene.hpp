@@ -55,6 +55,7 @@ private:
 	
 	void updateHealthBars();
 	void updateInventory();
+	int getNextAliveEnemy(int start);
 	
 	GameHUD *hud;
 	GameScenery *scenery;

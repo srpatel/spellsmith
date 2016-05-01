@@ -320,7 +320,6 @@ bool Game::init() {
 }
 
 void Game::updateInventory() {
-	float padding = 10;
 	auto gridSize = grid->getSize();
 	auto visibleSize = getContentSize();
 	
@@ -379,18 +378,22 @@ void Game::updateInventory() {
 	}
 }
 
-void Game::setSelected(int index) {
-	currentEnemy = (index + enemies.size()) % enemies.size();
-	
-	int initial = currentEnemy;
-	while (enemies[currentEnemy]->dead()) {
-		currentEnemy = (currentEnemy + 1) % enemies.size();
-		if (currentEnemy == initial) {
+int Game::getNextAliveEnemy(int start) {
+	start = (start + enemies.size()) % enemies.size();
+	int initial = start;
+	while (enemies[start]->dead()) {
+		start = (start + 1) % enemies.size();
+		if (start == initial) {
 			// We've tried them all!
 			// Shouldn't happen.
 			break;
 		}
 	}
+	return start;
+}
+
+void Game::setSelected(int index) {
+	currentEnemy = getNextAliveEnemy(index);
 	
 	scenery->setSelected(currentEnemy);
 	hud->setSelected(currentEnemy);
