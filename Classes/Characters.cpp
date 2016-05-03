@@ -32,6 +32,46 @@ Buff *Buff::createMudshield() {
 	return buff;
 }
 
+Buff *Buff::createFreeze(int amount){
+	auto buff = new Buff;
+	buff->type = BuffType::FREEZE;
+	buff->positive = true;
+	
+	buff->icon = LoadSprite("buffs/mudshield.png");
+	buff->icon->retain();
+	
+	buff->sprite = LoadSprite("spells/mudshield.png");
+	buff->sprite->retain();
+	
+	buff->sprite->setAnchorPoint(Vec2(0.5, 0));
+	buff->turns = -1; // -1 = forever, n = lasts n more turns
+	buff->charges = amount; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
+Buff *Buff::createStun(){
+	auto buff = new Buff;
+	buff->type = BuffType::STUN;
+	buff->positive = true;
+	
+	buff->icon = LoadSprite("buffs/mudshield.png");
+	buff->icon->retain();
+	
+	buff->sprite = LoadSprite("spells/mudshield.png");
+	buff->sprite->retain();
+	
+	buff->sprite->setAnchorPoint(Vec2(0.5, 0));
+	buff->turns = -1; // -1 = forever, n = lasts n more turns
+	buff->charges = 1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
 Buff::~Buff() {
 	icon->release();
 	sprite->release();
@@ -46,6 +86,23 @@ Buff *Character::getBuffByType(BuffType type) {
 		}
 	}
 	return ret;
+}
+
+void Character::addBuff(Buff *buff) {
+	Buff *existing = getBuffByType(buff->type);
+	if (existing != nullptr) {
+		// remove the old one first (to-do, only remove if the new one is better?)
+		removeBuff(existing);
+	}
+	buffs.push_back(buff);
+}
+
+void Character::removeBuff(Buff *existing) {
+	auto position = std::find(buffs.begin(), buffs.end(), existing);
+	if (position != buffs.end()) {
+		buffs.erase(position);
+	}
+	delete existing;
 }
 
 Enemy::Enemy(Monster *m, int index) {

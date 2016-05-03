@@ -181,7 +181,7 @@ bool Game::init() {
 		auto hp = LoadSprite("ui/orb_red.png");
 		hp->setAnchorPoint(Vec2(0.5, 0));
 		hp->setPosition(20, 342);
-		hp->setGLProgram(Shaders::smokey());
+		//hp->setGLProgram(Shaders::smokey());
 		addChild(hp);
 		wizard_hp_bar = hp;
 		
@@ -465,14 +465,10 @@ bool Game::onCastSpell(Chain *chain) {
 			// create a projectile which, when appropriate, change ui_health
 			Color3B colour;
 			switch (chain->type) {
-				case FIRE:
-					colour = Color3B::RED; break;
-				case WATER:
-					colour = Color3B::BLUE; break;
-				case AIR:
-					colour = Color3B::WHITE; break;
-				case EARTH:
-					colour = Color3B::GREEN; break;
+				case FIRE:  colour = Color3B::RED; break;
+				case WATER: colour = Color3B::BLUE; break;
+				case AIR:   colour = Color3B::WHITE; break;
+				case EARTH: colour = Color3B::GREEN; break;
 				default:break;
 			}
 			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
@@ -524,7 +520,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		
 		// Remove the buff from the character
 		if (lastcharge) {
-			removeBuff(target, shield);
+			target->removeBuff(shield);
 		}
 		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
@@ -666,20 +662,45 @@ void Game::enemyDoTurn() {
 	// Reduce counter on each enemy!
 	bool enemyTurn = false;
 	for (Enemy *e : enemies) {
-		if (! e->dead() && ! e->attack_clock--) {
-			enemyTurn = true;
-			// Attack!
-			// Wait until your spells are done.
-			runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
-				int damage = e->monster->getAttack()->amount;
-				makeProjectile(e, wizard, damage, Color3B::RED);
-			}), nullptr));
-			
-			e->attack_clock = e->monster->attack_frequency;
+		if (! e->dead()) {
+			// if frozen, reduce that instead
+			Buff *freeze = e->getBuffByType(BuffType::FREEZE);
+			if (freeze != nullptr) {
+				if (! freeze->charges--) {
+					// Remove the buff
+					e->removeBuff(freeze);
+				}
+			} else if (! e->attack_clock--) {
+				enemyTurn = true;
+				// Attack!
+				
+				Buff *stun = e->getBuffByType(BuffType::STUN);
+				
+				// TODO : Not 1 second - actual length of character attack
+				if (stun != nullptr) {
+					if (! stun->charges--) {
+						// Remove the buff
+						e->removeBuff(stun);
+					}
+					// Get up instead of attacking
+					runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
+						// Get up!
+					}), nullptr));
+				} else {
+					// attack
+					runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
+						int damage = e->monster->getAttack()->amount;
+						makeProjectile(e, wizard, damage, Color3B::RED);
+					}), nullptr));
+				}
+				
+				e->attack_clock = e->monster->attack_frequency;
+			}
 		}
 	}
 	hud->updateAttackClocks();
-	
+	// TODO : Don't just wait 2 seconds - needs to be once things are done.
+	// Use action system.
 	if (!enemyTurn) {
 		// it's now the player's turn
 		attemptSetState(kStatePlayerTurn);
@@ -761,27 +782,4 @@ void Game::startGame(SaveGame *save) {
 
 void Game::update(float dt) {
 	// ???
-}
-
-void Game::addBuff(Character *target, Buff *buff) {
-	// if there is already one of this type...then ignore maybe?
-	// TODO
-	target->buffs.push_back(buff);
-	
-	// Add the buff's sprite
-	buff->icon->setAnchorPoint(Vec2::ZERO);
-	buff->icon->setPosition(Vec2(10, target->sprite->getPosition().y));
-	addChild(buff->icon);
-}
-
-void Game::removeBuff(Character *target, Buff *buff) {
-	auto it = std::find(target->buffs.begin(), target->buffs.end(), buff);
-	if(it != target->buffs.end()) {
-		target->buffs.erase(it);
-	}
-	
-	// Remove the buff's sprite
-	removeChild(buff->icon);
-	
-	delete buff;
 }

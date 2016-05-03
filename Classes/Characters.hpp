@@ -13,7 +13,9 @@
 #include "Monster.hpp"
 
 enum BuffType {
-	BARRIER
+	BARRIER,
+	FREEZE,
+	STUN
 };
 
 struct Buff {
@@ -27,6 +29,8 @@ struct Buff {
 	int priority;
 	
 	static Buff *createMudshield();
+	static Buff *createFreeze(int amount);
+	static Buff *createStun();
 	~Buff();
 };
 
@@ -40,6 +44,8 @@ public:
 	Sprite *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
+	void addBuff(Buff *);
+	void removeBuff(Buff *);
 	inline bool dead() { return health <= 0; }
 };
 

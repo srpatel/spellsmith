@@ -7,6 +7,7 @@
 //
 
 #include "DoSpell.hpp"
+#include "Characters.hpp"
 
 #define IF_SPELL(s) if (strcmp(spell->getRawName().c_str(), #s) == 0)
 
@@ -48,11 +49,11 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 			// fade it in
 			auto fadeIn = FadeIn::create(0.2);
 			
-			game->addBuff(game->wizard, shield);
+			game->wizard->addBuff(shield);
 			
 			shield->sprite->runAction(fadeIn);
 		} else {
-			shield->charges += 2;
+			shield->charges = 2;
 		}
 	} else IF_SPELL(forest_breeze) {
 		// gain 5
@@ -107,6 +108,20 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 							 game->enemies[game->currentEnemy], 6, Color3B::RED);
 		game->grid->createRandomCrystalGems(1, chain);
 		game->updateHealthBars();
+	} else IF_SPELL(ice_bolt) {
+		// deal 3 damage, 50% chance to freeze 2
+		game->makeProjectile(
+							 game->wizard,
+							 game->enemies[game->currentEnemy], 3, Color3B::BLUE);
+		game->enemies[game->currentEnemy]->addBuff(
+												   Buff::createFreeze(2)
+												   );
+		game->updateHealthBars();
+	} else IF_SPELL(stun_strike) {
+		// stun
+		game->enemies[game->currentEnemy]->addBuff(
+												   Buff::createStun()
+												   );
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}

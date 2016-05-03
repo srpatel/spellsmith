@@ -72,9 +72,6 @@ private:
 	GameState state;
 	void attemptSetState(GameState);
 	
-	void addBuff(Character *target, Buff *buff);
-	void removeBuff(Character *target, Buff *buff);
-	
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
 	
 	int numCurrentActions;

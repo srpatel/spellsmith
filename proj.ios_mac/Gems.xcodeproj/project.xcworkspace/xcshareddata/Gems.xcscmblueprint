@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "4C18471EF559B56508EA1C3DD6AC2888A35F863C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4C18471EF559B56508EA1C3DD6AC2888A35F863C" : 0,
+    "2830E25F39E2A5841FC4155F9309E6538ECB691A" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3663BDBC-DFD6-4283-BC0D-16B95140623A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4C18471EF559B56508EA1C3DD6AC2888A35F863C" : "Gems\/",
+    "2830E25F39E2A5841FC4155F9309E6538ECB691A" : "Gems\/DevResources\/images-prepack\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Gems",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "proj.ios_mac\/Gems.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:archdukefranz\/gem-game-art.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2830E25F39E2A5841FC4155F9309E6538ECB691A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:archdukefranz\/gem-game.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4C18471EF559B56508EA1C3DD6AC2888A35F863C"
+    }
+  ]
+}
