@@ -107,21 +107,29 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 							 game->wizard,
 							 game->enemies[game->currentEnemy], 6, Color3B::RED);
 		game->grid->createRandomCrystalGems(1, chain);
-		game->updateHealthBars();
 	} else IF_SPELL(ice_bolt) {
 		// deal 3 damage, 50% chance to freeze 2
 		game->makeProjectile(
 							 game->wizard,
 							 game->enemies[game->currentEnemy], 3, Color3B::BLUE);
-		game->enemies[game->currentEnemy]->addBuff(
+		if (rand() % 2) {
+			game->enemies[game->currentEnemy]->addBuff(
 												   Buff::createFreeze(2)
 												   );
-		game->updateHealthBars();
+		}
 	} else IF_SPELL(stun_strike) {
 		// stun
-		game->enemies[game->currentEnemy]->addBuff(
-												   Buff::createStun()
-												   );
+		game->enemies[game->currentEnemy]->addBuff(Buff::createStun());
+	} else IF_SPELL(earthquake) {
+		// 5 damage to each enemy. 50% chance to stun.
+		for (Enemy *e : game->enemies) {
+			e->ui_health -= 5;
+			e->health -= 5;
+			if (rand() % 2) {
+				e->addBuff(Buff::createStun());
+			}
+		}
+		game->updateHealthBars();
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}
