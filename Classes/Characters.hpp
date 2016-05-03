@@ -21,7 +21,7 @@ enum BuffType {
 struct Buff {
 	BuffType type;
 	bool positive;
-	Sprite *icon;
+	std::string icon;
 	Sprite *sprite;
 	int turns; // -1 = forever, n = lasts n more turns
 	int charges; // -1 = infinite, n = n charges remaining
@@ -46,7 +46,9 @@ public:
 	Buff *getBuffByType(BuffType);
 	void addBuff(Buff *);
 	void removeBuff(Buff *);
+	void updateBuffs();
 	inline bool dead() { return health <= 0; }
+	Layer *buffHolder;
 };
 
 class Enemy : public Character {

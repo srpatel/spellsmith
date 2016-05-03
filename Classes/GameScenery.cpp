@@ -56,6 +56,7 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
 		enemy->sprite->setAnchorPoint(Vec2(0.77, 0));
 		enemy->sprite->setPosition(enemy_positions[i++]);
 		enemy->sprite->setScale(char_scale);
+		enemy->buffHolder->setPosition(0.77 * enemy->sprite->getContentSize().width, enemy->sprite->getContentSize().height);
 		addChild(enemy->sprite);
 	}
 	if (enemies->size() == 3) {

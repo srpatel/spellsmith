@@ -17,8 +17,7 @@ Buff *Buff::createMudshield() {
 	buff->type = BuffType::BARRIER;
 	buff->positive = true;
 	
-	buff->icon = LoadSprite("buffs/mudshield.png");
-	buff->icon->retain();
+	buff->icon = "buffs/mudshield.png";
 	
 	buff->sprite = LoadSprite("spells/mudshield.png");
 	buff->sprite->retain();
@@ -37,8 +36,7 @@ Buff *Buff::createFreeze(int amount){
 	buff->type = BuffType::FREEZE;
 	buff->positive = true;
 	
-	buff->icon = LoadSprite("buffs/mudshield.png");
-	buff->icon->retain();
+	buff->icon = "buffs/frozen.png";
 	
 	buff->sprite = LoadSprite("spells/mudshield.png");
 	buff->sprite->retain();
@@ -57,8 +55,7 @@ Buff *Buff::createStun(){
 	buff->type = BuffType::STUN;
 	buff->positive = true;
 	
-	buff->icon = LoadSprite("buffs/mudshield.png");
-	buff->icon->retain();
+	buff->icon = "buffs/stun.png";
 	
 	buff->sprite = LoadSprite("spells/mudshield.png");
 	buff->sprite->retain();
@@ -73,7 +70,6 @@ Buff *Buff::createStun(){
 }
 
 Buff::~Buff() {
-	icon->release();
 	sprite->release();
 }
 
@@ -95,6 +91,8 @@ void Character::addBuff(Buff *buff) {
 		removeBuff(existing);
 	}
 	buffs.push_back(buff);
+	
+	updateBuffs();
 }
 
 void Character::removeBuff(Buff *existing) {
@@ -103,6 +101,21 @@ void Character::removeBuff(Buff *existing) {
 		buffs.erase(position);
 	}
 	delete existing;
+	
+	updateBuffs();
+}
+
+void Character::updateBuffs() {
+	buffHolder->removeAllChildren();
+	float totalWidth = 15 * buffs.size() + 10 * (buffs.size() - 1);
+	float x = totalWidth/2, y = 0;
+	for (Buff *b : buffs) {
+		Sprite *s = LoadSprite(b->icon);
+		s->setAnchorPoint(Vec2(0.5, 0.5));
+		buffHolder->addChild(s);
+		// also draw num charges
+		s->setPosition(x += 25, y);
+	}
 }
 
 Enemy::Enemy(Monster *m, int index) {
@@ -114,6 +127,8 @@ Enemy::Enemy(Monster *m, int index) {
 	ui_health = monster->hp;
 	sprite = LoadSprite(monster->sprite_path);
 	sprite->retain();
+	buffHolder = Layer::create();
+	sprite->addChild(buffHolder);
 }
 Enemy::~Enemy() {
 	sprite->autorelease();

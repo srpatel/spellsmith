@@ -251,6 +251,8 @@ bool Game::init() {
 	wizardsprite->setPosition(15, chars_y_start);
 	wizardsprite->setScale(layout.char_scale);
 	wizard->sprite = wizardsprite;
+	wizard->buffHolder = Layer::create();
+	wizard->sprite->addChild(wizard->buffHolder);
 	this->addChild(wizardsprite);
 
 /*
@@ -666,7 +668,8 @@ void Game::enemyDoTurn() {
 			// if frozen, reduce that instead
 			Buff *freeze = e->getBuffByType(BuffType::FREEZE);
 			if (freeze != nullptr) {
-				if (! freeze->charges--) {
+				freeze->charges--;
+				if (freeze->charges == 0) {
 					// Remove the buff
 					e->removeBuff(freeze);
 				}
@@ -678,7 +681,8 @@ void Game::enemyDoTurn() {
 				
 				// TODO : Not 1 second - actual length of character attack
 				if (stun != nullptr) {
-					if (! stun->charges--) {
+					stun->charges--;
+					if (stun->charges == 0) {
 						// Remove the buff
 						e->removeBuff(stun);
 					}
