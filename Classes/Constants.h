@@ -23,6 +23,7 @@ namespace Colours {
 	const Color3B BACKGROUND     ( 46, 42, 36    );
 	const Color3B GEM_BACKGROUND ( 46, 19, 19    );
 	const Color4B SEMIBLACK      (  0,  0,  0, 60);
+	const Color3B ORANGE         (232,165, 62    );
 };
 
 

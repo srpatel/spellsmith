@@ -109,13 +109,14 @@ bool Grid::init(float maxWidth, float maxHeight)
 	
 	line = cocos2d::DrawNode::create();
 	line->setPosition(cocos2d::Vec2::ZERO);
-	this->addChild(line, 1);
+	this->addChild(line);
 	
 	Gem::scale = 1;
 	float ratioX = maxWidth/(Gem::getSize().width * width);
 	float ratioY = maxHeight/(Gem::getSize().height * height);
 	float ratio = MIN(ratioY, ratioX);
 	Gem::scale = MIN(ratio, 1.6f);
+	printf("%g\n", Gem::scale);
 	
     // Setup the gems, and them to us
     for (int i = 0; i < width; i++) {
@@ -149,15 +150,38 @@ void Grid::drawChain() {
 				float fj = sentinel->j - (height - 1)/2.f;
 				float ti = sentinel->next->i - (width - 1)/2.f;
 				float tj = sentinel->next->j - (height - 1)/2.f;
-				line->drawLine(cocos2d::Vec2(fi * Gem::getSize().width, fj * Gem::getSize().height), cocos2d::Vec2(ti * Gem::getSize().width, tj * Gem::getSize().height), cocos2d::Color4F::BLACK);
+				auto from = Vec2(fi * Gem::getSize().width, fj * Gem::getSize().height);
+				auto to = Vec2(ti * Gem::getSize().width, tj * Gem::getSize().height);
+				// if the line is going diagonally, we need to make an adjustment
+				if (sentinel->i != sentinel->next->i && sentinel->j != sentinel->next->j) {
+					auto offset = Vec2(10, 20) * get(sentinel->i, sentinel->j)->sprite->getScale();
+					if (sentinel->i > sentinel->next->i) {
+						from.x -= offset.x;
+						to.x += offset.x;
+					} else {
+						from.x += offset.x;
+						to.x -= offset.x;
+					}
+					
+					if (sentinel->j < sentinel->next->j) {
+						from.y += offset.y;
+						to.y -= offset.y;
+					} else {
+						from.y -= offset.y;
+						to.y += offset.y;
+					}
+				}
+				line->drawSegment(from, to,
+						2.0f * CC_CONTENT_SCALE_FACTOR(),
+						Color4F(Colours::ORANGE));
 			}
 			
 			sentinel = sentinel->next;
 		}
 	}
 	
-	line->drawSolidCircle(startpos, 10, 7, 20, Color4F::RED);
-	line->drawSolidCircle(endpos, 10, 7, 20, Color4F::BLACK);
+	//line->drawSolidCircle(startpos, 10, 7, 20, Color4F::RED);
+	//line->drawSolidCircle(endpos, 10, 7, 20, Color4F::BLACK);
 }
 
 void Grid::drawSelected() {
@@ -281,6 +305,7 @@ void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
 		chain = nullptr;
 	}
 	drawSelected();
+	line->clear();
 }
 
 bool Grid::isAboveLine(Vec2 start, Vec2 end, Vec2 point) {

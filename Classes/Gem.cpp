@@ -18,17 +18,38 @@ void Gem::init(GemType type) {
 		case EARTH: element = "gems/earth.png"; break;
 		case FIRE: element = "gems/fire.png"; break;
 		case WATER: element = "gems/water.png"; break;
-		case CRYSTAL: element = "gems/crystal.png"; break;
+		case CRYSTAL: element = "gems/crystal_01.png"; break;
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;
 	
-	sprite = LoadSprite(element);
-	//sprite->setScale(Gem::scale);
+	
+	
+	if (type == CRYSTAL) {
+		sprite = Sprite::create();
+		sprite->setContentSize(getSize());
+		// Animate it!
+		auto size = 8;
+		Vector<SpriteFrame*> animFrames(size);
+		char str[100] = {0};
+		for(int i = 1; i <= size; i++)
+		{
+			sprintf(str, "gems/crystal_%02d.png", i);
+			auto frame = LoadSpriteFrame( std::string(str), Rect(0, 0, 80 / CC_CONTENT_SCALE_FACTOR(), 100 / CC_CONTENT_SCALE_FACTOR()) );
+			animFrames.pushBack(frame);
+		}
+		
+		auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+		auto animate = RepeatForever::create(Sequence::create(Animate::create(animation), DelayTime::create(01.2f), nullptr));
+		sprite->runAction(animate);
+	} else {
+		sprite = LoadSprite(element);
+		printf("%g, %g\n", sprite->getContentSize().width, sprite->getContentSize().height);
+	}
 }
 
 void Gem::init() {
-    init(static_cast<GemType>(1 + rand() % 4));
+    init(static_cast<GemType>(1 + rand() % 5));
 }
 
 Size Gem::getSize() {
