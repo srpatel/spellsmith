@@ -21,6 +21,11 @@ bool MainMenu::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(visibleSize);
 	
+	auto sprite = LoadSprite("ui/smokey.png");
+	sprite->setAnchorPoint(Vec2(0.5, 0.5));
+	sprite->setPosition(visibleSize/2);
+	this->addChild(sprite);
+	
 	// Title
 	auto label = Label::createWithTTF( _("spellsmith"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setPosition(Vec2(visibleSize.width/2,

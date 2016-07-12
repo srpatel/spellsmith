@@ -24,6 +24,15 @@ enum GameState {
 	kStateEnemySpells
 };
 
+struct layout_t {
+	float column_height;
+	float column_width;
+	float bar_top_height;
+	float bar_bottom_height;
+	float scenery_height;
+	float char_scale;
+};
+
 class Game : public Layer {
 	friend class DoSpell;
 public:
@@ -33,6 +42,10 @@ public:
 	// Restart the current game!
 	void startGame(SaveGame *save);
 	
+	Wizard *getWizard();
+	void updateInventory();
+	void spellPicked();
+	
     bool init();
     void update(float dt);
 	
@@ -41,6 +54,8 @@ public:
 	
 	// Called when the Wizard's animations etc. have finished
 	void onWizardTurnOver();
+	
+	layout_t getLayout();
     
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
@@ -54,7 +69,6 @@ private:
 	void showRound(Round *);
 	
 	void updateHealthBars();
-	void updateInventory();
 	int getNextAliveEnemy(int start);
 	
 	GameHUD *hud;

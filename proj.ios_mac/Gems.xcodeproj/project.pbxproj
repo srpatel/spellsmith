@@ -19,6 +19,8 @@
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
 		103FB49F1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
+		105C355F1D326E0100368FB5 /* SpellPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C355D1D326E0100368FB5 /* SpellPicker.cpp */; };
+		105C35601D326E0100368FB5 /* SpellPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C355D1D326E0100368FB5 /* SpellPicker.cpp */; };
 		105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0A1BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
 		105E0D0D1BF14E3F0081D8F5 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CFB1BF14E3F0081D8F5 /* Spell.cpp */; };
@@ -225,6 +227,8 @@
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
+		105C355D1D326E0100368FB5 /* SpellPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellPicker.cpp; sourceTree = "<group>"; };
+		105C355E1D326E0100368FB5 /* SpellPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpellPicker.hpp; sourceTree = "<group>"; };
 		105E0CF61BF14E3F0081D8F5 /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
 		105E0CF71BF14E3F0081D8F5 /* Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Strings.cpp; sourceTree = "<group>"; };
 		105E0CFA1BF14E3F0081D8F5 /* Spell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spell.hpp; sourceTree = "<group>"; };
@@ -475,6 +479,8 @@
 				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
 				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
 				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
+				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
+				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -972,6 +978,7 @@
 				105E0D151BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
 				105E0D171BF14E3F0081D8F5 /* Characters.cpp in Sources */,
 				10B4651B1BFA935E00DD5E9E /* AnimationState.c in Sources */,
+				105C355F1D326E0100368FB5 /* SpellPicker.cpp in Sources */,
 				10B465371BFA935E00DD5E9E /* Json.c in Sources */,
 				10B465411BFA935E00DD5E9E /* SkeletonAnimation.cpp in Sources */,
 				10B4652F1BFA935E00DD5E9E /* EventData.c in Sources */,
@@ -998,6 +1005,7 @@
 				10B4653E1BFA935E00DD5E9E /* RegionAttachment.c in Sources */,
 				10B465481BFA935E00DD5E9E /* SkeletonJson.c in Sources */,
 				10B465341BFA935E00DD5E9E /* IkConstraint.c in Sources */,
+				105C35601D326E0100368FB5 /* SpellPicker.cpp in Sources */,
 				10B465401BFA935E00DD5E9E /* Skeleton.c in Sources */,
 				105E0D181BF14E3F0081D8F5 /* Characters.cpp in Sources */,
 				10B465321BFA935E00DD5E9E /* extension.c in Sources */,

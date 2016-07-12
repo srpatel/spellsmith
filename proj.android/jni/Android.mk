@@ -30,6 +30,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/SaveData.cpp \
 ../../Classes/Shaders.cpp \
 ../../Classes/Spell.cpp \
+../../Classes/SpellPicker.cpp \
 ../../Classes/SpriteLoader.cpp \
 ../../Classes/Strings.cpp \
 ../../Classes/spine/Animation.c \

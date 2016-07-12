@@ -3,6 +3,7 @@
 #include "Strings.hpp"
 #include "Constants.h"
 #include "Shaders.hpp"
+#include "SpellPicker.hpp"
 #include "GameController.hpp"
 #include "DoSpell.hpp"
 
@@ -14,14 +15,11 @@
 static int grid_size = 5;
 Game *Game::instance = nullptr;
 
-static struct {
-	float column_height;
-	float column_width;
-	float bar_top_height;
-	float bar_bottom_height;
-	float scenery_height;
-	float char_scale;
-} layout;
+static layout_t layout;
+
+layout_t Game::getLayout() {
+	return layout;
+}
 
 Game *Game::get() {
 	return instance;
@@ -321,6 +319,10 @@ bool Game::init() {
     return true;
 }
 
+Wizard *Game::getWizard() {
+	return wizard;
+}
+
 void Game::updateInventory() {
 	auto gridSize = grid->getSize();
 	auto visibleSize = getContentSize();
@@ -332,7 +334,7 @@ void Game::updateInventory() {
 	// Left hand inventory
 	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
-		if (inventory.size() > i) {
+		if (inventory.size() > i && inventory[i] != nullptr) {
 			auto sprite = inventory[i]->mininode;
 			sprite->setPosition(18, starty - i * 55);
 			auto onSpellClick = EventListenerTouchOneByOne::create();
@@ -357,7 +359,7 @@ void Game::updateInventory() {
 	}
 	// Right-hand inventory
 	for (int i = 0; i < 3; i++) {
-		if (inventory.size() > 3 + i) {
+		if (inventory.size() > 3 + i && inventory[3+i] != nullptr) {
 			auto onSpellClick = EventListenerTouchOneByOne::create();
 			onSpellClick->setSwallowTouches(true);
 			// trigger when you push down
@@ -412,7 +414,7 @@ bool Game::onCastSpell(Chain *chain) {
 	int damage;
 	Spell *spell = nullptr;
 	for (Spell *s : inventory) {
-		if (*s == chain) {
+		if (s != nullptr && *s == chain) {
 			success = true;
 			// Spell shot
 			LOG("%s\n", s->getName().c_str());
@@ -587,21 +589,32 @@ void Game::attemptSetState(GameState nextstate) {
 					
 					// pick a new spell if there are enough left
 					if (spellpool.size() >= 2) {
-						GameController::get()->showSpellPickDialog(
+						grid->setActive(false);
+						// fade grid out
+						auto spellPicker = SpellPicker::create(spellpool[0], spellpool[1]);
+						// put it in the middle of the grid
+						spellPicker->setPosition(grid->getPosition());
+						addChild(spellPicker);
+						// setup spell-picker
+						// fade in spell-picker
+						// tap to get spell-info
+						// drag to learn spell
+						
+						/*GameController::get()->showSpellPickDialog(
 							spellpool[0],
 							spellpool[1],
 							[this](Spell *chosen) {
-								wizard->inventory.push_back(chosen);
+								Fwizard->inventory.push_back(chosen);
 								updateInventory();
 							}
-						);
-						// todo - also remove another 1 or 2 randomly?
+						);*/
+						// also remove another 1 or 2 randomly?
 						spellpool.erase(spellpool.begin(), spellpool.begin()+2);
 					}
 					
-					gotoNextEnemy();
+					/*gotoNextEnemy();
 					grid->setActive(true);
-					state = kStatePlayerTurn;
+					state = kStatePlayerTurn;*/
 				} else {
 					// You are dead!
 					auto fadeOut = FadeOut::create(0.2f);
@@ -620,6 +633,13 @@ void Game::attemptSetState(GameState nextstate) {
 		runPendingAction(action);
 	}
 }
+
+void Game::spellPicked() {
+	gotoNextEnemy();
+	grid->setActive(true);
+	state = kStatePlayerTurn;
+}
+
 void Game::actionQueued() {
 	numCurrentActions++;
 }
@@ -760,6 +780,10 @@ void Game::startGame(SaveGame *save) {
 		wizard->ui_health = wizard->max_health;
 		wizard->sprite->setOpacity(255);
 		wizard->inventory.clear();
+		for (int i = 0; i < 6; i++) {
+			wizard->inventory.push_back(nullptr);
+		}
+		
 		// copy spells across
 		spellpool = SpellManager::get()->spells;
 		
