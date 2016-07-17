@@ -9,6 +9,7 @@
 #include "SpellPicker.hpp"
 #include "GameController.hpp"
 #include "Constants.h"
+#include "Popup.hpp"
 #include "GameScene.hpp"
 
 class SpellBlob : public Layer {
@@ -31,7 +32,7 @@ bool SpellBlob::init(Spell *spell) {
 	
 	auto label = Label::createWithTTF( spell->getName(), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 	label->setColor(Color3B::WHITE);
-	label->setPosition(Vec2(0, -bg->getContentSize().height/2-5));
+	label->setPosition(Vec2(0, -getContentSize().height/2-5));
 	this->addChild(label, 1);
 	
 	// TODO - need to make sure we don't add this in two places at once?
@@ -58,7 +59,7 @@ bool SpellBlob::init(Spell *spell) {
 		// move mini-node to new location
 		return false; // if you are consuming it
 	};
-	onClick->onTouchEnded = [this, bg, mininode, spell](Touch* touch, Event* event) -> bool {
+	onClick->onTouchEnded = [this, mininode, spell](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		bounds.origin -= bounds.size/2;
 		bounds.origin += this->getParent()->getPosition();
@@ -70,7 +71,7 @@ bool SpellBlob::init(Spell *spell) {
 		} else {
 			// if it's over a inventory spot, put the gem there
 			layout_t layout = Game::get()->getLayout();
-			const auto size = bg->getContentSize();
+			const auto size = getContentSize();
 			const float starty = layout.column_height - 110;
 			for (int i = 0; i < 3; i++) {
 				auto bounds = Rect(
@@ -122,10 +123,15 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 		return false;
 	}
 	
-	auto bg = LoadSprite("ui/popup.png");
+	/*auto bg = LoadSprite("ui/popup.png");
 	bg->setAnchorPoint(Vec2(0.5, 0.5));
 	bg->setPosition(Vec2(0, 0));
-	this->addChild(bg);
+	this->addChild(bg);*/
+	auto size = Size(200, 200);
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
 	
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( "choose a spell", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
@@ -134,11 +140,11 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	addChild(label, 1);
 	
 	auto sb1 = SpellBlob::create(s1);
-	sb1->setPosition(5-bg->getContentSize().width/4, 0);
+	sb1->setPosition(5-getContentSize().width/4, 0);
 	addChild(sb1);
 	
 	auto sb2 = SpellBlob::create(s2);
-	sb2->setPosition(-5+bg->getContentSize().width/4, 0);
+	sb2->setPosition(-5+getContentSize().width/4, 0);
 	addChild(sb2);
 	
 	/*auto skip = Label::createWithTTF( "skip", Fonts::TEXT_FONT, Fonts::SMALL_SIZE);

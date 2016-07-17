@@ -27,15 +27,15 @@ bool MainMenu::init() {
 	this->addChild(sprite);
 	
 	// Title
-	auto label = Label::createWithTTF( _("spellsmith"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setPosition(Vec2(visibleSize.width/2,
-							visibleSize.height - label->getContentSize().height));
-	this->addChild(label, 1);
+	auto title = LoadSprite("main/logo.png");
+	title->setAnchorPoint(Vec2(0.5, 0.5));
+	title->setPosition(visibleSize.width/2, visibleSize.height * 0.75);
+	this->addChild(title);
 	
 	// Play button
-	auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText _("Play");
+	button->setTitleText _("New Game");
 	
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {

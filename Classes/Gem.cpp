@@ -18,14 +18,14 @@ void Gem::init(GemType type) {
 		case EARTH: element = "gems/earth.png"; break;
 		case FIRE: element = "gems/fire.png"; break;
 		case WATER: element = "gems/water.png"; break;
-		case CRYSTAL: element = "gems/crystal_01.png"; break;
+		case CRYSTAL: element = "gems/gold.png"; break;
 		case NONE: /*hopefully won't happen!*/ break;
 	}
 	this->type = type;
 	
 	
 	
-	if (type == CRYSTAL) {
+	/*if (type == CRYSTAL) {
 		sprite = Sprite::create();
 		sprite->setContentSize(getSize());
 		// Animate it!
@@ -42,14 +42,15 @@ void Gem::init(GemType type) {
 		auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
 		auto animate = RepeatForever::create(Sequence::create(Animate::create(animation), DelayTime::create(01.2f), nullptr));
 		sprite->runAction(animate);
-	} else {
+	} else */
+	{
 		sprite = LoadSprite(element);
 		printf("%g, %g\n", sprite->getContentSize().width, sprite->getContentSize().height);
 	}
 }
 
 void Gem::init() {
-    init(static_cast<GemType>(1 + rand() % 5));
+    init(static_cast<GemType>(1 + rand() % 4));
 }
 
 Size Gem::getSize() {

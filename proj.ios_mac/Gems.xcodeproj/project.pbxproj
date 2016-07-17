@@ -47,6 +47,8 @@
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
 		108747901C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
+		1095273D1D3BC843002EF8CC /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095273B1D3BC843002EF8CC /* Popup.cpp */; };
+		1095273E1D3BC843002EF8CC /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095273B1D3BC843002EF8CC /* Popup.cpp */; };
 		10B465191BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651A1BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
 		10B4651B1BFA935E00DD5E9E /* AnimationState.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DE1BFA935E00DD5E9E /* AnimationState.c */; };
@@ -255,6 +257,8 @@
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		1087478E1C07A7920069DCAF /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
+		1095273B1D3BC843002EF8CC /* Popup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Popup.cpp; sourceTree = "<group>"; };
+		1095273C1D3BC843002EF8CC /* Popup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Popup.hpp; sourceTree = "<group>"; };
 		10A21C9F1C050548003CD8E2 /* DevResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DevResources; path = ../DevResources; sourceTree = "<group>"; };
 		10B464DC1BFA935E00DD5E9E /* Animation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Animation.c; sourceTree = "<group>"; };
 		10B464DD1BFA935E00DD5E9E /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
@@ -494,6 +498,8 @@
 				1070E0AC1BF5188E007C06F9 /* GameController.hpp */,
 				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
 				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
+				1095273B1D3BC843002EF8CC /* Popup.cpp */,
+				1095273C1D3BC843002EF8CC /* Popup.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -969,6 +975,7 @@
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				10B465331BFA935E00DD5E9E /* IkConstraint.c in Sources */,
 				10B465531BFA935E00DD5E9E /* spine-cocos2dx.cpp in Sources */,
+				1095273D1D3BC843002EF8CC /* Popup.cpp in Sources */,
 				10B465311BFA935E00DD5E9E /* extension.c in Sources */,
 				103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				10B465211BFA935E00DD5E9E /* AtlasAttachmentLoader.c in Sources */,
@@ -1012,6 +1019,7 @@
 				10B4651A1BFA935E00DD5E9E /* Animation.c in Sources */,
 				105E0D141BF14E3F0081D8F5 /* Gem.cpp in Sources */,
 				10B4654E1BFA935E00DD5E9E /* SkinnedMeshAttachment.c in Sources */,
+				1095273E1D3BC843002EF8CC /* Popup.cpp in Sources */,
 				10B4652E1BFA935E00DD5E9E /* Event.c in Sources */,
 				10B465221BFA935E00DD5E9E /* AtlasAttachmentLoader.c in Sources */,
 				10B465441BFA935E00DD5E9E /* SkeletonBounds.c in Sources */,

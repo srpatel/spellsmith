@@ -58,7 +58,7 @@ bool LevelWonDialog::init() {
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
@@ -103,7 +103,7 @@ bool LevelLostDialog::init() {
 	this->addChild(label, 1);
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETRY_LEVEL");
 		
@@ -121,7 +121,7 @@ bool LevelLostDialog::init() {
 	}
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText _("ui.RETURN_TO_MAP");
 		
@@ -187,7 +187,7 @@ bool SpellPickDialog::init(Spell *spell1, Spell *spell2, std::function<void(Spel
 	// draw two spells and two learn buttons
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText (spell1->getName());
 		
@@ -203,7 +203,7 @@ bool SpellPickDialog::init(Spell *spell1, Spell *spell2, std::function<void(Spel
 	}
 	
 	{
-		auto button = ui::Button::create("ui/button.png", "ui/buttondown.png", "ui/buttondisabled.png", TEXTURE_TYPE);
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 		button->setTitleFontName(Fonts::TEXT_FONT);
 		button->setTitleText (spell2->getName());
 		
