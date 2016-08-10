@@ -7,6 +7,8 @@
 #include "GameController.hpp"
 #include "DoSpell.hpp"
 
+#include "BasicFire.hpp"
+
 #include <sstream>
 
 #define GRID_WIDTH 4
@@ -483,17 +485,12 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
-	auto sprite = LoadSprite("spells/whiteball.png");
-	sprite->setColor(type);
-	float scale = 0.5 + MIN(damage, 20) / 4.f;
-	sprite->setScale(scale);
-	sprite->setPosition(source->sprite->getPosition().x, getContentSize().height - 100);
-	sprite->setVisible(false);
-	addChild(sprite);
+	auto from = Vec2(source->sprite->getPosition().x + 90, getContentSize().height - 100);
+	auto to = Vec2(target->sprite->getPosition().x - 60, getContentSize().height - 100);
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
-	Sequence *seq;
+	CallFunc *onHit;
 	if (shield) {
 		bool lastcharge = false;
 		if (shield->charges > 0) {
@@ -506,10 +503,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		}
 		// Don't take away any health, and just animate to the shield instead!
 		//  ... and if it's the shield's last charge, fade it out too.
-		auto moveTo = MoveTo::create(1, Vec2(shield->sprite->getPosition().x, getContentSize().height - 100));
+		to = Vec2(shield->sprite->getPosition().x, getContentSize().height - 100);
 		Sprite *shieldsprite = shield->sprite;
-		auto updateHealth = CallFunc::create([this, sprite, lastcharge, shieldsprite](){
-			removeChild(sprite);
+		onHit = CallFunc::create([this, lastcharge, shieldsprite](){
 			if (lastcharge) {
 				// fade the shield out, then remove it.
 				auto fadeout = FadeOut::create(0.2);
@@ -526,12 +522,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		if (lastcharge) {
 			target->removeBuff(shield);
 		}
-		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	} else {
 		target->health -= damage;
-		auto moveTo = MoveTo::create(1, Vec2(target->sprite->getPosition().x, getContentSize().height - 100));
-		auto updateHealth = CallFunc::create([this, sprite, damage, target](){
-			removeChild(sprite);
+		onHit = CallFunc::create([this, damage, target](){
 			target->ui_health -= damage;
 			LOG("Enemy now has no health! %d v %d\n", target->ui_health, target->health);
 			if (target->ui_health <= 0 && target != wizard) {
@@ -540,10 +533,13 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			updateHealthBars();
 			actionDone();
 		});
-		seq = Sequence::create(Show::create(), moveTo, updateHealth, nullptr);
 	}
 	actionQueued();
-	sprite->runAction(seq);
+	
+	auto projectile = BasicFire::create(from, to, onHit);
+	//float scale = 0.5 + MIN(damage, 20) / 4.f;
+	//projectile->setScale(scale);
+	addChild(projectile);
 }
 
 void Game::onWizardTurnOver() {

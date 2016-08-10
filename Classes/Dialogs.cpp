@@ -168,59 +168,6 @@ bool SpellInfoDialog::init(Spell *spell) {
 	return true;
 }
 
-bool SpellPickDialog::init(Spell *spell1, Spell *spell2, std::function<void(Spell*)> choose) {
-	float xmax = 100;
-	float ymax = 100;
-	if ( !Dialog::init(false, xmax*2, ymax*2) ) {
-		return false;
-	}
-	
-	auto background = DrawNode::create();
-	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
-	addChild(background);
-	
-	auto label = Label::createWithTTF( "pick a spell to learn", Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, 80));
-	this->addChild(label, 1);
-	
-	// draw two spells and two learn buttons
-	
-	{
-		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button->setTitleFontName(Fonts::TEXT_FONT);
-		button->setTitleText (spell1->getName());
-		
-		button->setPosition(Vec2(0, -40));
-		button->addTouchEventListener([this, choose, spell1](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED) {
-				auto gc = GameController::get();
-				gc->popDialog();
-				choose(spell1);
-			}
-		});
-		this->addChild(button);
-	}
-	
-	{
-		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button->setTitleFontName(Fonts::TEXT_FONT);
-		button->setTitleText (spell2->getName());
-		
-		button->setPosition(Vec2(0, -80));
-		button->addTouchEventListener([this, choose, spell2](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED) {
-				auto gc = GameController::get();
-				gc->popDialog();
-				choose(spell2);
-			}
-		});
-		this->addChild(button);
-	}
-	
-	return true;
-}
-
 bool Dialog::init(bool closeable, float centralWidth, float centralHeight) {
 	if ( !Layer::init() ) {
 		return false;

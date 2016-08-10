@@ -1,4 +1,6 @@
 Compile for android:
+Increment version number:
+    proj.android/AndroidManifest.xml
 Regenerate: proj.android/jni/Android.mk
     (should I use a unity build?)
 cocos compile -p android
@@ -15,3 +17,6 @@ Please input the password of key store:
 changeit
 Please input the password of alias:
 changeit
+
+Install to device:
+adb install -r /Users/sunil/projects/Gems/Gems/bin/release/android/Gems-release-signed.apk

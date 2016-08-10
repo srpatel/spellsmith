@@ -19,6 +19,8 @@
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
 		103FB49F1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
+		104E05301D55E0390049EBEB /* BasicFire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104E052E1D55E0390049EBEB /* BasicFire.cpp */; };
+		104E05311D55E0390049EBEB /* BasicFire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104E052E1D55E0390049EBEB /* BasicFire.cpp */; };
 		105C355F1D326E0100368FB5 /* SpellPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C355D1D326E0100368FB5 /* SpellPicker.cpp */; };
 		105C35601D326E0100368FB5 /* SpellPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C355D1D326E0100368FB5 /* SpellPicker.cpp */; };
 		105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0CF71BF14E3F0081D8F5 /* Strings.cpp */; };
@@ -229,6 +231,8 @@
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
+		104E052E1D55E0390049EBEB /* BasicFire.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicFire.cpp; sourceTree = "<group>"; };
+		104E052F1D55E0390049EBEB /* BasicFire.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BasicFire.hpp; sourceTree = "<group>"; };
 		105C355D1D326E0100368FB5 /* SpellPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellPicker.cpp; sourceTree = "<group>"; };
 		105C355E1D326E0100368FB5 /* SpellPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpellPicker.hpp; sourceTree = "<group>"; };
 		105E0CF61BF14E3F0081D8F5 /* Strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Strings.hpp; sourceTree = "<group>"; };
@@ -483,8 +487,6 @@
 				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
 				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
 				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
-				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
-				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -492,6 +494,8 @@
 		1020FEEA1C06757400019EB9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
+				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 				102441761BF3DD3700AEC8B4 /* Dialogs.cpp */,
 				102441771BF3DD3700AEC8B4 /* Dialogs.hpp */,
 				1070E0AB1BF5188E007C06F9 /* GameController.cpp */,
@@ -502,6 +506,15 @@
 				1095273C1D3BC843002EF8CC /* Popup.hpp */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		104E052D1D55E0230049EBEB /* Spells */ = {
+			isa = PBXGroup;
+			children = (
+				104E052E1D55E0390049EBEB /* BasicFire.cpp */,
+				104E052F1D55E0390049EBEB /* BasicFire.hpp */,
+			);
+			name = Spells;
 			sourceTree = "<group>";
 		};
 		10B464DB1BFA935E00DD5E9E /* spine */ = {
@@ -670,6 +683,7 @@
 				105E0D041BF14E3F0081D8F5 /* Constants.h */,
 				105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
+				104E052D1D55E0230049EBEB /* Spells */,
 				1020FEE81C06754200019EB9 /* Data */,
 				1020FEE91C06755700019EB9 /* Game */,
 				1020FEEA1C06757400019EB9 /* UI */,
@@ -944,6 +958,7 @@
 				105E0D0D1BF14E3F0081D8F5 /* Spell.cpp in Sources */,
 				10B4654B1BFA935E00DD5E9E /* Skin.c in Sources */,
 				10B4654F1BFA935E00DD5E9E /* Slot.c in Sources */,
+				104E05301D55E0390049EBEB /* BasicFire.cpp in Sources */,
 				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				100AEB971CC3E61400182962 /* GameHUD.cpp in Sources */,
 				10B4653B1BFA935E00DD5E9E /* PolygonBatch.cpp in Sources */,
@@ -1032,6 +1047,7 @@
 				100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */,
 				10B465381BFA935E00DD5E9E /* Json.c in Sources */,
 				10B465521BFA935E00DD5E9E /* SlotData.c in Sources */,
+				104E05311D55E0390049EBEB /* BasicFire.cpp in Sources */,
 				10B4652C1BFA935E00DD5E9E /* BoundingBoxAttachment.c in Sources */,
 				10B465301BFA935E00DD5E9E /* EventData.c in Sources */,
 				1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */,
