@@ -11,7 +11,9 @@
 
 class Shaders {
 public:
+	static GLProgram *none();
 	static GLProgram *smokey();
+	static GLProgram *greyscale();
 };
 
 #endif /* Shaders_hpp */

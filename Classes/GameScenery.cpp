@@ -7,15 +7,28 @@
 //
 
 #include "GameScenery.hpp"
+#include "Shaders.hpp"
 
-bool GameScenery::init(Size size, float scale) {
+bool GameScenery::init(Size size) {
 	if ( !Layer::init() )
 	{
 		return false;
 	}
 	
-	char_scale = scale;
 	setContentSize(size);
+	
+	scenery = LoadSprite("ui/scenery.png");
+	scenery->setAnchorPoint(Vec2(0.5, 0.5));
+	float targetWidth = size.width;
+	float actualWidth = scenery->getBoundingBox().size.width;
+	float ratio = targetWidth/actualWidth;
+	if (ratio > 1) {
+		scenery->setScale(targetWidth/actualWidth);
+	}
+	scenery->setPosition(Vec2(size.width/2, (size.height)/2));
+	this->addChild(scenery);
+	
+	char_scale = size.height / scenery->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
 	
 	redring = LoadSprite("ui/redring.png");
 	redring->setAnchorPoint(Vec2(0.5, 0.2));
@@ -37,13 +50,34 @@ bool GameScenery::init(Size size, float scale) {
 		enemy_positions1[i].y = 8 + (i % 2) * ydiff * 0.1;
 	}
 	
+	wizardsprite = LoadSprite("characters/wizard.png");
+	wizardsprite->setAnchorPoint(Vec2(0, 0));
+	wizardsprite->setPosition(15, 0);
+	wizardsprite->setScale(char_scale);
+	
+	this->addChild(wizardsprite);
+	
 	return true;
 }
 
+void GameScenery::greyscaleMode(bool grey) {
+	redring->setVisible(! grey);
+	GLProgram *shader = grey ? Shaders::greyscale() : Shaders::none();
+	scenery->setGLProgram(shader);
+	wizardsprite->setGLProgram(shader);
+	if (enemies != nullptr)
+		for (Enemy *e : *enemies) {
+			e->sprite->setGLProgram(shader);
+		}
+}
+
 void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
+	if (enemies != nullptr)
+		for (Enemy *e : *enemies) {
+			e->sprite->setGLProgram(Shaders::none());
+			e->sprite->removeFromParent();
+		}
 	enemies = e;
-	removeAllChildren();
-	addChild(redring);
 	Vec2 *enemy_positions;
 	if (enemies->size() == 3)
 		enemy_positions = enemy_positions3;

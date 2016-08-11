@@ -32,7 +32,7 @@ bool SpellBlob::init(Spell *spell) {
 	
 	auto label = Label::createWithTTF( spell->getName(), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 	label->setColor(Color3B::WHITE);
-	label->setPosition(Vec2(0, -getContentSize().height/2-5));
+	label->setPosition(Vec2(0, -getContentSize().height/2-8));
 	this->addChild(label, 1);
 	
 	// TODO - need to make sure we don't add this in two places at once?
@@ -123,11 +123,7 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 		return false;
 	}
 	
-	/*auto bg = LoadSprite("ui/popup.png");
-	bg->setAnchorPoint(Vec2(0.5, 0.5));
-	bg->setPosition(Vec2(0, 0));
-	this->addChild(bg);*/
-	auto size = Size(200, 200);
+	auto size = Size(200, 150);
 	auto popup = Popup::create(size.width, size.height);
 	popup->setPosition(size/-2);
 	this->addChild(popup);
@@ -140,17 +136,12 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	addChild(label, 1);
 	
 	auto sb1 = SpellBlob::create(s1);
-	sb1->setPosition(5-getContentSize().width/4, 0);
+	sb1->setPosition(5-getContentSize().width/4, -5);
 	addChild(sb1);
 	
 	auto sb2 = SpellBlob::create(s2);
-	sb2->setPosition(-5+getContentSize().width/4, 0);
+	sb2->setPosition(-5+getContentSize().width/4, -5);
 	addChild(sb2);
-	
-	/*auto skip = Label::createWithTTF( "skip", Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
-	skip->setColor(Color3B::WHITE);
-	skip->setPosition(Vec2(0, -bg->getContentSize().height/2+20));
-	addChild(skip, 1);*/
 	
 	return true;
 }

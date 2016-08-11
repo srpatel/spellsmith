@@ -6,6 +6,7 @@
 //
 //
 
+#include "Popup.hpp"
 #include "Dialogs.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
@@ -140,30 +141,36 @@ bool LevelLostDialog::init() {
 }
 
 bool SpellInfoDialog::init(Spell *spell) {
-	float xmax = 100;
-	float ymax = 100;
-	if ( !Dialog::init(true, xmax*2, ymax*2) ) {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto size = Size(visibleSize.width - 50, 300);
+	
+	if ( !Dialog::init(true, size.width, size.height) ) {
 		return false;
 	}
 	
-	auto background = DrawNode::create();
-	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
-	addChild(background);
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
 	
 	auto label = Label::createWithTTF( spell->getName(), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, 80));
+	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
 	this->addChild(label, 1);
 	
 	auto d = spell->getDescription();
 	ui::Text* text = ui::Text::create( spell->getDescription(), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 	text->setColor(Color3B::BLACK);
-	text->setPosition(Vec2(0, -80));
+	text->setPosition(Vec2(0, 15));
+	text->ignoreContentAdaptWithSize(false);
+	text->setContentSize(Size(size.width - 20, size.height));
+	text->setTextHorizontalAlignment(TextHAlignment::CENTER);
+	text->setTextVerticalAlignment(TextVAlignment::BOTTOM);
 	this->addChild(text, 1);
 	
 	// Draw gems in the middle of the dialog
-	
-	// Put description at the bottom.
+	auto gems = spell->makeNode(false);
+	addChild(gems);
 	
 	return true;
 }

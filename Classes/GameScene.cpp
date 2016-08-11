@@ -46,7 +46,6 @@ bool Game::init() {
 	wizard->health = 40;
 	wizard->ui_health = 40;
 	
-	auto scenery_sprite = LoadSprite("ui/scenery.png");
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
 	
 	//layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
@@ -64,20 +63,9 @@ bool Game::init() {
 */
 	// Scenery
 	{
-		scenery_sprite->setAnchorPoint(Vec2(0.5, 0.5));
-		// Set scale so that scenery takes up the whole width
-		float targetWidth = getBoundingBox().size.width;
-		float actualWidth = scenery_sprite->getBoundingBox().size.width;
-		float ratio = targetWidth/actualWidth;
-		if (ratio > 1) {
-			scenery_sprite->setScale(targetWidth/actualWidth);
-		}
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
-		scenery_sprite->setPosition(Vec2(getBoundingBox().size.width/2, (getBoundingBox().size.height + layout.column_height)/2));
-		this->addChild(scenery_sprite);
 		
-		layout.char_scale = layout.scenery_height / scenery_sprite->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
-		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height), layout.char_scale);
+		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
 		scenery->setAnchorPoint(Vec2(0, 0));
 		scenery->setPosition(0, layout.column_height);
 		addChild(scenery);
@@ -242,19 +230,12 @@ bool Game::init() {
 | (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
-	float chars_y_start = layout.column_height;
 	//float chars_y_end = visibleSize.height;
 	// TODO : Check there is room...
 	// Wizard
-	auto wizardsprite = LoadSprite("characters/wizard.png");
-	wizardsprite->setAnchorPoint(Vec2(0, 0));
-	wizardsprite->setPosition(15, chars_y_start);
-	wizardsprite->setScale(layout.char_scale);
-	wizard->sprite = wizardsprite;
+	wizard->sprite = scenery->wizardsprite;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
-	this->addChild(wizardsprite);
-
 /*
  _    _ _    _ _____  
 | |  | | |  | |  __ \ 
@@ -563,7 +544,7 @@ void Game::attemptSetState(GameState nextstate) {
 		}
 	} else {
 		grid->setActive(false);
-		
+		scenery->greyscaleMode(true);
 		// defer all of this until all actions are done!
 		PendingAction action = [this] {
 			// state = gameend....
@@ -631,6 +612,7 @@ void Game::attemptSetState(GameState nextstate) {
 }
 
 void Game::spellPicked() {
+	scenery->greyscaleMode(false);
 	gotoNextEnemy();
 	grid->setActive(true);
 	state = kStatePlayerTurn;

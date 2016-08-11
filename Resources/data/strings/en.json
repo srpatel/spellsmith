@@ -1,37 +1,61 @@
 {
   "spell": {
     "_comment": "Names of spells which can be cast",
-    "fireball": {
-      "name": "Fireball",
-      "description": "Deal 15 damage."
-    },
-    "waterring": {
-      "name": "waterring",
-      "description": "trap your enemy in an aqua prison"
-    },
-    "meteor": {
-      "name": "meteor",
-      "description": "what's the worse a huge lump of rock could do?"
-    },
-    "roots": {
-      "name": "roots",
-      "description": "trap your foe by growing roots at their ankles"
-    },
-    "tornado": {
-      "name": "tornado",
-      "description": "throw everything into chaos with a tornado"
-    },
-    "groundspike": {
-      "name": "groundspike",
-      "description": "rock in the groin. ouch."
-    },
     "mud_shield": {
       "name": "Mud Shield",
-      "description": "Block two attacks."
+      "description": "Block 2 attacks."
     },
-    "refresh": {
-      "name": "Refresh",
-      "description": "Heal for 10."
+    "fireball": {
+      "name": "Fireball",
+      "description": "Deal 10 damage."
+    },
+    "firewisp": {
+      "name": "Firewisp",
+      "description": "Deal 6 damage."
+    },
+    "forest_breeze": {
+      "name": "Forest Breeze",
+      "description": "Gain 5 health."
+    },
+    "chill": {
+      "name": "Chill",
+      "description": "Slow enemy by 2 turns."
+    },
+    "lightening_bolt": {
+      "name": "Lightening Bolt",
+      "description": "Deal 1 to 12 damage."
+    },
+    "healstrike": {
+      "name": "Healstrike",
+      "description": "Heal for 8. Deal 8 damage."
+    },
+    "volcanic": {
+      "name": "Volcanic Eruption",
+      "description": "Deal 10 damage to everyone."
+    },
+    "crystalise": {
+      "name": "Crystalise",
+      "description": "Heal for 3. Create 3 crystal gems."
+    },
+    "smelt": {
+      "name": "Smelt",
+      "description": "Deal 6 damage. Create 1 crystal gem."
+    },
+    "zap": {
+      "name": "Zap",
+      "description": "Deal 10 damage to a random enemy."
+    },
+    "ice_bolt": {
+      "name": "Ice Bolt",
+      "description": "Deal 3 damage. 50% chance to freeze for 2 turns."
+    },
+    "stun_strike": {
+      "name": "Stun strike",
+      "description": "Stun an enemy."
+    },
+    "earthquake": {
+      "name": "Earthquake",
+      "description": "Deal 5 damage to each enemy. 50% chance for each to get stunned."
     }
   },
   "ui": {

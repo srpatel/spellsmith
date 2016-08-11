@@ -121,8 +121,10 @@ std::string Spell::getName() {
 	return translated;
 }
 
-void Spell::setup() {
+Layer *Spell::makeNode(bool mini) {
 	auto layer = Layer::create();
+	layer->setContentSize(Size(40, 40));
+	
 	int width = 0, height = 0;
 	// Find height and width of shape (so we can draw the spell centred)
 	// TODO : Could make this neater... not that it matters!
@@ -142,12 +144,24 @@ void Spell::setup() {
 		auto type = shape at(i, j);
 		if (type != NONE) {
 			const char *element;
-			switch (type) {
-				case AIR: element = "gems/mini_air.png"; break;
-				case EARTH: element = "gems/mini_earth.png"; break;
-				case FIRE: element = "gems/mini_fire.png"; break;
-				case WATER: element = "gems/mini_water.png"; break;
-				default: /*hopefully won't happen!*/ break;
+			if (mini) {
+				switch (type) {
+					case AIR: element = "gems/mini_air.png"; break;
+					case EARTH: element = "gems/mini_earth.png"; break;
+					case FIRE: element = "gems/mini_fire.png"; break;
+					case WATER: element = "gems/mini_water.png"; break;
+					case CRYSTAL: element = "gems/mini_gold.png"; break;
+					default: /*hopefully won't happen!*/ break;
+				}
+			} else {
+				switch (type) {
+					case AIR: element = "gems/air.png"; break;
+					case EARTH: element = "gems/earth.png"; break;
+					case FIRE: element = "gems/fire.png"; break;
+					case WATER: element = "gems/water.png"; break;
+					case CRYSTAL: element = "gems/gold.png"; break;
+					default: /*hopefully won't happen!*/ break;
+				}
 			}
 			auto sprite = LoadSprite(element);
 			auto size = sprite->getContentSize();
@@ -157,9 +171,14 @@ void Spell::setup() {
 			layer->addChild(sprite);
 		}
 	}
-	layer->setContentSize(Size(40, 40));
-	layer->retain();
-	mininode = layer;
+	
+	return layer;
+}
+
+void Spell::setup() {
+	mininode = makeNode(true);
+	mininode->setContentSize(Size(40, 40));
+	mininode->retain();
 	mininode->setAnchorPoint(Vec2::ZERO);
 }
 

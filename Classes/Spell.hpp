@@ -30,6 +30,7 @@ public:
 	inline std::string getRawName() { return name; }
 	std::string getDescription();
 	int tier;
+	Layer *makeNode(bool mini);
 	//AmountGenerator amountGenerator;
 private:
 	std::string name;
