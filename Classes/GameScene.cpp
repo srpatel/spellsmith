@@ -42,9 +42,9 @@ bool Game::init() {
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
 	wizard = new Wizard;
-	wizard->max_health = 40;
-	wizard->health = 40;
-	wizard->ui_health = 40;
+	wizard->max_health = 30;//1;//
+	wizard->health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
 	
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
 	
@@ -577,7 +577,7 @@ void Game::attemptSetState(GameState nextstate) {
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
-						GameController::get()->showLevelEndDialog(false);
+						//GameController::get()->showLevelEndDialog(false);
 					});
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);

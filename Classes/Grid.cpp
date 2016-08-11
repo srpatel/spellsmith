@@ -19,6 +19,7 @@
 #define COLUMN_STAGGER_AMOUNT   0.2f
 #define ROW_STAGGER_AMOUNT      0.1f
 #define SINGLE_BACKWARDS        0
+#define DRAW_CHAIN_PARALLEL_TO_GEM_EDGE 0
 
 #define PI 3.1415926535
 
@@ -152,6 +153,7 @@ void Grid::drawChain() {
 				auto from = Vec2(fi * Gem::getSize().width, fj * Gem::getSize().height);
 				auto to = Vec2(ti * Gem::getSize().width, tj * Gem::getSize().height);
 				// if the line is going diagonally, we need to make an adjustment
+#if DRAW_CHAIN_PARALLEL_TO_GEM_EDGE
 				if (sentinel->i != sentinel->next->i && sentinel->j != sentinel->next->j) {
 					auto offset = Vec2(10, 20) * get(sentinel->i, sentinel->j)->sprite->getScale();
 					if (sentinel->i > sentinel->next->i) {
@@ -170,6 +172,7 @@ void Grid::drawChain() {
 						to.y += offset.y;
 					}
 				}
+#endif
 				line->drawSegment(from, to,
 						2.0f * CC_CONTENT_SCALE_FACTOR(),
 						Color4F(Colours::ORANGE));

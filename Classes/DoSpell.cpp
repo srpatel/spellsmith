@@ -42,7 +42,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 			auto shield = Buff::createMudshield();
 			
 			// put it in a good place and add it
-			shield->sprite->setPosition(game->wizard->sprite->getPosition() + Vec2(75, 0));
+			shield->sprite->setPosition(game->wizard->sprite->getPosition() + Vec2(75, 0) + game->scenery->getPosition());
 			shield->sprite->setOpacity(0);
 			game->addChild(shield->sprite);
 			

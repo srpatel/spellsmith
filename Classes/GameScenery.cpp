@@ -98,6 +98,19 @@ void GameScenery::showFlags(int flagType) {
 			
 			addChild(flags[0]);
 			addChild(flags[1]);
+		} else if (flagType == FLAG_TYPE_LOSE) {
+			flags[0] = LoadSprite("ui/flag_death_left.png");
+			flags[1] = LoadSprite("ui/flag_death_right.png");
+			flags[0]->setAnchorPoint(Vec2(0, 0.5));
+			flags[1]->setAnchorPoint(Vec2(0, 0.5));
+			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
+			flags[1]->setPosition(getContentSize().width, getContentSize().height/2.0);
+			
+			flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
+			flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
+			
+			addChild(flags[0]);
+			addChild(flags[1]);
 		}
 	}
 }
