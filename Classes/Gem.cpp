@@ -45,7 +45,6 @@ void Gem::init(GemType type) {
 	} else */
 	{
 		sprite = LoadSprite(element);
-		printf("%g, %g\n", sprite->getContentSize().width, sprite->getContentSize().height);
 	}
 }
 

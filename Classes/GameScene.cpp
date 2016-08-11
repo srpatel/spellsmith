@@ -544,7 +544,6 @@ void Game::attemptSetState(GameState nextstate) {
 		}
 	} else {
 		grid->setActive(false);
-		scenery->greyscaleMode(true);
 		// defer all of this until all actions are done!
 		PendingAction action = [this] {
 			// state = gameend....
@@ -555,15 +554,11 @@ void Game::attemptSetState(GameState nextstate) {
 			if (wizard->health <= 0) {
 				success = false;
 			}
+			
 			std::function<void()> func;
 			if (mode == kModeInfinite) {
 				if (success) {
-					// TODO
-					// New level without level end dialog!
-					// Should we clear buffs?
-					// Should we animate going to the next level?
-					// Should we wait for all current projectiles to finish?
-					
+					scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
 					// pick a new spell if there are enough left
 					if (spellpool.size() >= 2) {
 						grid->setActive(false);
@@ -572,27 +567,12 @@ void Game::attemptSetState(GameState nextstate) {
 						// put it in the middle of the grid
 						spellPicker->setPosition(grid->getPosition());
 						addChild(spellPicker);
-						// setup spell-picker
-						// fade in spell-picker
-						// tap to get spell-info
-						// drag to learn spell
-						
-						/*GameController::get()->showSpellPickDialog(
-							spellpool[0],
-							spellpool[1],
-							[this](Spell *chosen) {
-								Fwizard->inventory.push_back(chosen);
-								updateInventory();
-							}
-						);*/
 						// also remove another 1 or 2 randomly?
 						spellpool.erase(spellpool.begin(), spellpool.begin()+2);
 					}
-					
-					/*gotoNextEnemy();
-					grid->setActive(true);
-					state = kStatePlayerTurn;*/
+					state = kStatePlayerTurn;
 				} else {
+					scenery->showFlags(GameScenery::FLAG_TYPE_LOSE);
 					// You are dead!
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
@@ -612,7 +592,6 @@ void Game::attemptSetState(GameState nextstate) {
 }
 
 void Game::spellPicked() {
-	scenery->greyscaleMode(false);
 	gotoNextEnemy();
 	grid->setActive(true);
 	state = kStatePlayerTurn;
@@ -733,6 +712,7 @@ void Game::showRound(Round *round) {
 		enemies.push_back( enemy );
 	}
 	scenery->placeMonsters(&enemies);
+	scenery->showFlags(GameScenery::FLAG_TYPE_NONE);
 	currentEnemy = 0;
 	hud->setupMonsterList(&enemies);
 	

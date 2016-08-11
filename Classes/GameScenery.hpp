@@ -12,14 +12,18 @@
 
 class GameScenery : public Layer {
 public:
+	static const int FLAG_TYPE_NONE = 0;
+	static const int FLAG_TYPE_WIN  = 1;
+	static const int FLAG_TYPE_LOSE = 2;
 	virtual bool init(Size size);
 	virtual ~GameScenery();
 	void placeMonsters(std::vector<Enemy *> *);
 	void setSelected(int);
-	void greyscaleMode(bool);
 	CREATE_FUNC_1(GameScenery, Size);
 	Sprite *wizardsprite;
+	void showFlags(int flagType);
 private:
+	void greyscaleMode(bool);
 	std::vector<Enemy *> *enemies;
 	Sprite *redring;
 	Sprite *scenery;
@@ -27,6 +31,7 @@ private:
 	Vec2 enemy_positions2[3];
 	Vec2 enemy_positions1[3];
 	float char_scale;
+	Sprite *flags[2];
 };
 
 #endif /* GameScenery_hpp */

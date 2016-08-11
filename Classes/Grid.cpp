@@ -116,7 +116,6 @@ bool Grid::init(float maxWidth, float maxHeight)
 	float ratioY = maxHeight/(Gem::getSize().height * height);
 	float ratio = MIN(ratioY, ratioX);
 	Gem::scale = MIN(ratio, 1.6f);
-	printf("%g\n", Gem::scale);
 	
     // Setup the gems, and them to us
     for (int i = 0; i < width; i++) {

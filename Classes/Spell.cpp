@@ -247,16 +247,7 @@ void Spell::flip(GemType *grid) {
 		}
 	}
 }
-/*
- When debugging, print chart with this:
- printf("\n");
-	for (int j = 0; j < Spell::max_height; j++) {
- for (int i = 0; i < Spell::max_width; i++) {
- printf("%d", compare_temp at(i,j));
- }
- printf("\n");
-	}
- */
+
 bool Spell::operator==(Chain *chain) {
 	Zero(compare_temp);
 	copy(chain, compare_temp);
