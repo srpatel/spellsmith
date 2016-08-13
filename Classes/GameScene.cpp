@@ -6,6 +6,7 @@
 #include "SpellPicker.hpp"
 #include "GameController.hpp"
 #include "DoSpell.hpp"
+#include "GameOverPopup.hpp"
 
 #include "BasicFire.hpp"
 
@@ -78,14 +79,14 @@ bool Game::init() {
 			Vec2 p = touch->getLocation();
 			Rect rect = scenery->getBoundingBox();
 			if(rect.containsPoint(p)) {
-				float halfredring = 30 * layout.char_scale;
+				float halfredring = 30 * scenery->char_scale;
 				float startx = enemies[0]->sprite->getPositionX() - halfredring;
 				float endx = enemies[enemies.size() - 1]->sprite->getPositionX() + halfredring;
 				// within half red-ring size of either side
 				if (p.x > startx
 					&&
 					p.x < endx) {
-					int multiples = (int) (0.3 * layout.char_scale + (p.x - startx) / (halfredring * 2));
+					int multiples = (int) (0.3 * scenery->char_scale + (p.x - startx) / (halfredring * 2));
 					if (multiples > enemies.size()) multiples = enemies.size() - 1;
 					setSelected(multiples);
 					return true;
@@ -517,9 +518,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	}
 	actionQueued();
 	
-	auto projectile = BasicFire::create(from, to, onHit);
-	//float scale = 0.5 + MIN(damage, 20) / 4.f;
-	//projectile->setScale(scale);
+	float scale = 0.5 + MIN(damage, 20) / 4.f;
+	auto projectile = BasicFire::create(from, to, scale, onHit);
 	addChild(projectile);
 }
 
@@ -578,6 +578,10 @@ void Game::attemptSetState(GameState nextstate) {
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
 						//GameController::get()->showLevelEndDialog(false);
+						auto levelEnd = GameOverPopup::create();
+						// put it in the middle of the grid
+						levelEnd->setPosition(grid->getPosition());
+						addChild(levelEnd);
 					});
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
@@ -703,6 +707,8 @@ void Game::gotoNextEnemy() {
 void Game::showRound(Round *round) {
 	// TODO : Remove all old sprites:
 	for (Enemy *e : enemies) {
+		e->sprite->setGLProgram(Shaders::none());
+		e->sprite->removeFromParent();
 		delete e;
 	}
 	enemies.clear();

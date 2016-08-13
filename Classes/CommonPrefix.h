@@ -87,6 +87,23 @@ return NULL; \
 } \
 }
 
+#define CREATE_FUNC_4(__TYPE__, arg1, arg2, arg3, arg4) \
+static __TYPE__* create(arg1 __var1, arg2 __var2, arg3 __var3, arg4 __var4) \
+{ \
+__TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+if (pRet && pRet->init(__var1, __var2, __var3, __var4)) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
+
 #ifdef __cplusplus
 Sprite *LoadSprite(std::string);
 SpriteFrame *LoadSpriteFrame(std::string, cocos2d::Rect);

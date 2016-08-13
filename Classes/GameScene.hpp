@@ -30,7 +30,6 @@ struct layout_t {
 	float bar_top_height;
 	float bar_bottom_height;
 	float scenery_height;
-	float char_scale;
 };
 
 class Game : public Layer {

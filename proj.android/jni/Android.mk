@@ -21,6 +21,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/DoSpell.cpp \
 ../../Classes/GameController.cpp \
 ../../Classes/GameHUD.cpp \
+../../Classes/GameOverPopup.cpp \
 ../../Classes/GameScene.cpp \
 ../../Classes/GameScenery.cpp \
 ../../Classes/Gem.cpp \

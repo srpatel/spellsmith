@@ -8,7 +8,10 @@
 
 #include "BasicFire.hpp"
 
-bool BasicFire::init(Vec2 from, Vec2 to, CallFunc *onHit)
+// Px per second
+#define PROJECTILE_SPEED 300
+
+bool BasicFire::init(Vec2 from, Vec2 to, float scale, CallFunc *onHit)
 {
 	if ( !Layer::init() )
 	{
@@ -17,6 +20,7 @@ bool BasicFire::init(Vec2 from, Vec2 to, CallFunc *onHit)
 	
 	auto sprite = Sprite::create();
 	sprite->setPosition(from);
+	sprite->setScale(scale);
 	// sprite->setContentSize();
 	// Animate it!
 	auto size = 19;
@@ -51,13 +55,14 @@ bool BasicFire::init(Vec2 from, Vec2 to, CallFunc *onHit)
 	auto moveAnimation = Animation::createWithSpriteFrames(moveAnimFrames, 0.1f);
 	moveAnimation->setLoops(-1);
 	onHit->retain();
+	float time = from.distance(to) / PROJECTILE_SPEED;
 	sprite->runAction(Sequence::create(
 		Animate::create(createAnimation),
 		Spawn::create(
-			CallFunc::create([this, to, sprite, hitAnimFrames, onHit]() {
+			CallFunc::create([this, to, sprite, hitAnimFrames, onHit, time]() {
 				// Move to target
 				sprite->runAction(Sequence::create(
-					MoveTo::create(0.5f, to),
+					MoveTo::create(time, to),
 					onHit,
 					CallFunc::create([this, sprite, hitAnimFrames, onHit]() {
 						// deal damage or whatever

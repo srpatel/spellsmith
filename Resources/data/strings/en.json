@@ -27,7 +27,7 @@
     },
     "healstrike": {
       "name": "Healstrike",
-      "description": "Heal for 8. Deal 8 damage."
+      "description": "Heal for 5. Deal 5 damage."
     },
     "volcanic": {
       "name": "Volcanic Eruption",

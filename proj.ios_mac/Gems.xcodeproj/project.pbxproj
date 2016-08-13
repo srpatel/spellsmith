@@ -49,6 +49,8 @@
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
 		108747901C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
+		108AC5B91D5F1C670006E5EA /* GameOverPopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */; };
+		108AC5BA1D5F1C670006E5EA /* GameOverPopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */; };
 		1095273D1D3BC843002EF8CC /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095273B1D3BC843002EF8CC /* Popup.cpp */; };
 		1095273E1D3BC843002EF8CC /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095273B1D3BC843002EF8CC /* Popup.cpp */; };
 		10B465191BFA935E00DD5E9E /* Animation.c in Sources */ = {isa = PBXBuildFile; fileRef = 10B464DC1BFA935E00DD5E9E /* Animation.c */; };
@@ -261,6 +263,8 @@
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		1087478E1C07A7920069DCAF /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
+		108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverPopup.cpp; sourceTree = "<group>"; };
+		108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameOverPopup.hpp; sourceTree = "<group>"; };
 		1095273B1D3BC843002EF8CC /* Popup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Popup.cpp; sourceTree = "<group>"; };
 		1095273C1D3BC843002EF8CC /* Popup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Popup.hpp; sourceTree = "<group>"; };
 		10A21C9F1C050548003CD8E2 /* DevResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DevResources; path = ../DevResources; sourceTree = "<group>"; };
@@ -504,6 +508,8 @@
 				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
 				1095273B1D3BC843002EF8CC /* Popup.cpp */,
 				1095273C1D3BC843002EF8CC /* Popup.hpp */,
+				108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */,
+				108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -966,6 +972,7 @@
 				10B465291BFA935E00DD5E9E /* BoneData.c in Sources */,
 				10B465191BFA935E00DD5E9E /* Animation.c in Sources */,
 				10B465231BFA935E00DD5E9E /* Attachment.c in Sources */,
+				108AC5B91D5F1C670006E5EA /* GameOverPopup.cpp in Sources */,
 				10B4652B1BFA935E00DD5E9E /* BoundingBoxAttachment.c in Sources */,
 				10B4653D1BFA935E00DD5E9E /* RegionAttachment.c in Sources */,
 				105E0D131BF14E3F0081D8F5 /* Gem.cpp in Sources */,
@@ -1056,6 +1063,7 @@
 				10C409511CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */,
 				10B4651C1BFA935E00DD5E9E /* AnimationState.c in Sources */,
 				105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
+				108AC5BA1D5F1C670006E5EA /* GameOverPopup.cpp in Sources */,
 				1020FEEE1C06759400019EB9 /* SaveData.cpp in Sources */,
 				10B4652A1BFA935E00DD5E9E /* BoneData.c in Sources */,
 				10B465281BFA935E00DD5E9E /* Bone.c in Sources */,
@@ -1102,6 +1110,7 @@
 					"COCOS2D_DEBUG=1",
 					"USE_SPRITE_SHEET=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"DESKTOP=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1142,6 +1151,7 @@
 					CC_TARGET_OS_IPHONE,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					"USE_SPRITE_SHEET=1",
+					"DESKTOP=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1183,6 +1193,7 @@
 					"COCOS2D_DEBUG=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					"USE_SPRITE_SHEET=0",
+					"DESKTOP=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1216,6 +1227,7 @@
 					CC_TARGET_OS_MAC,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					"USE_SPRITE_SHEET=0",
+					"DESKTOP=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (

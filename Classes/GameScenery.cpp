@@ -96,8 +96,8 @@ void GameScenery::showFlags(int flagType) {
 			flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
 			flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
 			
-			addChild(flags[0]);
-			addChild(flags[1]);
+			addChild(flags[0], 200);
+			addChild(flags[1], 200);
 		} else if (flagType == FLAG_TYPE_LOSE) {
 			flags[0] = LoadSprite("ui/flag_death_left.png");
 			flags[1] = LoadSprite("ui/flag_death_right.png");
@@ -109,8 +109,8 @@ void GameScenery::showFlags(int flagType) {
 			flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
 			flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
 			
-			addChild(flags[0]);
-			addChild(flags[1]);
+			addChild(flags[0], 200);
+			addChild(flags[1], 200);
 		}
 	}
 }
@@ -130,11 +130,6 @@ void GameScenery::greyscaleMode(bool grey) {
 }
 
 void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
-	if (enemies != nullptr)
-		for (Enemy *e : *enemies) {
-			e->sprite->setGLProgram(Shaders::none());
-			e->sprite->removeFromParent();
-		}
 	enemies = e;
 	Vec2 *enemy_positions;
 	if (enemies->size() == 3)

@@ -6,7 +6,7 @@ uniform int u_direction;
 
 void main()
 {
-	float delta = CC_Time.z - u_start_time * 2.0;
+	float delta = (CC_Time.y - u_start_time) / 2.0;
 	float ratio = delta;
 	if (ratio > 1.0) {
 		ratio = 1.0;

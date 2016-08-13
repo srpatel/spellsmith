@@ -11,8 +11,8 @@
 
 class BasicFire : public Layer {
 public:
-	bool init(Vec2 from, Vec2 to, CallFunc* onHit);
-	CREATE_FUNC_3(BasicFire, Vec2, Vec2, CallFunc*);
+	bool init(Vec2 from, Vec2 to, float scale, CallFunc* onHit);
+	CREATE_FUNC_4(BasicFire, Vec2, Vec2, float, CallFunc*);
 };
 
 #endif /* BasicFire_hpp */

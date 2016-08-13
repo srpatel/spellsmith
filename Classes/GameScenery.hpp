@@ -22,6 +22,7 @@ public:
 	CREATE_FUNC_1(GameScenery, Size);
 	Sprite *wizardsprite;
 	void showFlags(int flagType);
+	float char_scale;
 private:
 	void greyscaleMode(bool);
 	std::vector<Enemy *> *enemies;
@@ -30,7 +31,6 @@ private:
 	Vec2 enemy_positions3[3];
 	Vec2 enemy_positions2[3];
 	Vec2 enemy_positions1[3];
-	float char_scale;
 	Sprite *flags[2];
 };
 
