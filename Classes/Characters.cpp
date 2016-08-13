@@ -8,6 +8,13 @@
 
 #include "Characters.hpp"
 
+
+#if DESKTOP
+#define EASY_MODE 1
+#else
+#define EASY_MODE 0
+#endif
+
 bool BuffComparator (Buff *left, Buff *right) {
 	return left->priority <= right->priority;
 }
@@ -122,9 +129,13 @@ Enemy::Enemy(Monster *m, int index) {
 	this->index = index;
 	monster = m;
 	attack_clock = monster->attack_frequency;
+#if EASY_MODE
+	max_health = 5;
+#else
 	max_health = monster->hp;
-	health = monster->hp;
-	ui_health = monster->hp;
+#endif
+	health = max_health;
+	ui_health = max_health;
 	sprite = LoadSprite(monster->sprite_path);
 	sprite->retain();
 	buffHolder = Layer::create();

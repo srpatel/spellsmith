@@ -23,7 +23,15 @@
 
 #define PI 3.1415926535
 
+#define CENTRE_CIRCLE           1
+#define OCTAGON                 2
+#define MAX_OVAL                3
+#define DIAMOND                 4
+#define GEM_TOUCH_TYPE          DIAMOND
 #define GEM_CENTRAL_SENSITIVITY 0.4f
+
+#define DRAW_TOUCH_AREA         0
+
 //#define GEM_CENTRAL_SENSITIVITY 2
 //#define ORTHOGONAL_ONLY         0
 
@@ -118,11 +126,46 @@ bool Grid::init(float maxWidth, float maxHeight)
 	float ratio = MIN(ratioY, ratioX);
 	Gem::scale = MIN(ratio, 1.6f);
 	
+#if DRAW_TOUCH_AREA
+	auto line2 = cocos2d::DrawNode::create();
+	line2->setPosition(cocos2d::Vec2::ZERO);
+	this->addChild(line2);
+#endif
+
     // Setup the gems, and them to us
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             Gem *gem = new Gem;
             set(i, j, gem, true);
+			
+#if DRAW_TOUCH_AREA && GEM_TOUCH_TYPE == DIAMOND
+			auto h = Gem::getSize().height;
+			auto w = Gem::getSize().width;
+			auto p = gem->sprite->getPosition();
+			auto from = Vec2(0, -h/2);
+			auto to = Vec2(w/2, 0);
+			line2->drawSegment(from + p, to + p,
+						1.0f * CC_CONTENT_SCALE_FACTOR(),
+						Color4F(Colours::ORANGE));
+			
+			from = Vec2(w/2, 0);
+			to = Vec2(0, h/2);
+			line2->drawSegment(from + p, to + p,
+						1.0f * CC_CONTENT_SCALE_FACTOR(),
+						Color4F(Colours::ORANGE));
+			
+			from = Vec2(0, h/2);
+			to = Vec2(-w/2, 0);
+			line2->drawSegment(from + p, to + p,
+						1.0f * CC_CONTENT_SCALE_FACTOR(),
+						Color4F(Colours::ORANGE));
+			
+			from = Vec2(-w/2, 0);
+			to = Vec2(0, -h/2);
+			line2->drawSegment(from + p, to + p,
+						1.0f * CC_CONTENT_SCALE_FACTOR(),
+						Color4F(Colours::ORANGE));
+#endif
         }
     }
     
@@ -357,10 +400,11 @@ void Grid::onTouchMovePart(Vec2 loc) {
 		//			bool central = (centre - loc).length() < Gem::getWidth() * GEM_CENTRAL_SENSITIVITY;
 		
 		bool ongem = true;
+		
+#if GEM_TOUCH_TYPE == CENTRE_CIRCLE
 		// METHOD 1 = central hitbox
 		ongem = (centre - loc).length() < GEM_CENTRAL_SENSITIVITY * Gem::getSize().width;
-		
-		/*
+#elif GEM_TOUCH_TYPE == OCTAGON
 		// METHOD 2 = octagon hitbox
 		for (int I=-1; I<=1; I+=2) {
 			for (int J=-1; J<=1; J+=2) {
@@ -374,7 +418,47 @@ void Grid::onTouchMovePart(Vec2 loc) {
 			}
 		}
 		done:;
-		 */
+#elif GEM_TOUCH_TYPE == MAX_OVAL
+		// METHOD 3 = ellipse of maximum size
+		// Assume centred on (0,0)
+		auto p = loc - centre;
+		auto a = Gem::getSize().width;
+		auto b = Gem::getSize().height;
+		
+		auto k = (p.x / a) * (p.x / a) + (p.y / b) * (p.y / b);
+		// Equation of ellipse is:
+		//   (x/Gem::getSize().width)^2 + (y/Gem::getSize().height)^2 = 1
+		ongem = k <= 1;
+#elif GEM_TOUCH_TYPE == DIAMOND
+		// METHOD 4 = diamond
+		
+		// Assume centred on (0,0)
+		auto p = loc - centre;
+		auto a = Gem::getSize().width/2.0;
+		auto b = Gem::getSize().height/2.0;
+		auto below = 0;
+		
+		// Check that the point is below/above each of the four edges
+		// Top-right:
+		auto m1 = -b/a;
+		if (p.y <= m1 * p.x + b)
+			below++;
+		
+		// Bottom-right
+		auto m2 = b/a;
+		if (p.y >= m2 * p.x - b)
+			below++;
+		
+		// Bottom-left
+		if (p.y >= m1 * p.x - b)
+			below++;
+		
+		// Top-left
+		if (p.y <= m2 * p.x + b)
+			below++;
+		
+		ongem = below == 4;
+#endif
 		
 		if (ongem) {
 			// Check this isn't already in the chain!
