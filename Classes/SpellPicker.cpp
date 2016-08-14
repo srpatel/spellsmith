@@ -37,6 +37,7 @@ bool SpellBlob::init(Spell *spell) {
 	
 	// TODO - need to make sure we don't add this in two places at once?
 	auto mininode = spell->mininode;
+	mininode->setPosition(Vec2::ZERO);
 	addChild(mininode);
 	
 	auto onClick = EventListenerTouchOneByOne::create();

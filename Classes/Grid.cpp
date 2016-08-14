@@ -216,6 +216,13 @@ void Grid::drawChain() {
 					}
 				}
 #endif
+				/*float m = (to.y - from.y) / (to.x - from.x);
+				float perp = -1.0/m;
+				auto p1 = from + Vec2(1, perp);
+				auto p2 = from + Vec2(-1, -perp);
+				auto p3 = to + Vec2(-1, -perp);
+				auto p4 = to + Vec2(1, perp);
+				line->drawRect(p1, p2, p3, p4, Color4F(Colours::ORANGE));*/
 				line->drawSegment(from, to,
 						2.0f * CC_CONTENT_SCALE_FACTOR(),
 						Color4F(Colours::ORANGE));
