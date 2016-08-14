@@ -406,6 +406,18 @@ bool Game::onCastSpell(Chain *chain) {
 			break;
 		}
 	}
+	if (spell) {
+			const auto size = Size(61, 88) / Director::getInstance()->getContentScaleFactor();
+		
+			auto glow = LayerColor::create(Color4B::WHITE, size.width, size.height);
+			glow->setPosition(spell->mininode->getPosition() - size/2);
+			glow->runAction(Sequence::create(
+				EaseOut::create(FadeOut::create(0.5f), 0.5f),
+				RemoveSelf::create(),
+				nullptr)
+			);
+			addChild(glow);
+	}
 	// Don't allow single gems.
 	// TODO : it might be possible to get locked out! Super unlikely to ever happen though...
 	if (!success && chain->next != nullptr) {
@@ -508,7 +520,6 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		target->health -= damage;
 		onHit = CallFunc::create([this, damage, target](){
 			target->ui_health -= damage;
-			LOG("Enemy now has no health! %d v %d\n", target->ui_health, target->health);
 			if (target->ui_health <= 0 && target != wizard) {
 				target->sprite->removeFromParent();
 			}
@@ -630,11 +641,9 @@ bool Game::checkGameOver() {
 	} else {
 		// If every enemy dead?
 		gameOver = true;
-		LOG("Checking if enemies are dead\n");
 		for (Enemy *e : enemies) {
 			if (e->health > 0) {
 				gameOver = false;
-				LOG("An enemy has %d health.\n", e->health);
 				break;
 			}
 		}
