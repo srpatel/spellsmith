@@ -58,7 +58,15 @@ bool GameScenery::init(Size size) {
 	wizardsprite->setPosition(15, 0);
 	wizardsprite->setScale(char_scale);
 	
-	this->addChild(wizardsprite);
+	addChild(wizardsprite);
+	
+	message = Layer::create();
+	message->setPosition(size/2);
+	addChild(message, 300);
+	banner = LoadSprite("ui/bannerlevelup.png");
+	banner->setAnchorPoint(Vec2(0.5, 0.4));
+	banner->setOpacity(0);
+	message->addChild(banner);
 	
 	return true;
 }
@@ -81,6 +89,8 @@ void GameScenery::showFlags(int flagType) {
 				nullptr));
 			flags[0] = nullptr;
 			flags[1] = nullptr;
+			
+			banner->runAction(EaseIn::create(FadeOut::create(0.3), 0.5));
 		}
 	} else {
 		// Animate flags in
@@ -93,11 +103,8 @@ void GameScenery::showFlags(int flagType) {
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
 			flags[1]->setPosition(getContentSize().width+flags[1]->getContentSize().width, getContentSize().height/2.0);
 			
-			flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
-			flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
-			
-			addChild(flags[0], 200);
-			addChild(flags[1], 200);
+			// Fade banner in
+			banner->runAction(EaseIn::create(FadeIn::create(0.3), 0.5));
 		} else if (flagType == FLAG_TYPE_LOSE) {
 			flags[0] = LoadSprite("ui/flag_death_left.png");
 			flags[1] = LoadSprite("ui/flag_death_right.png");
@@ -105,13 +112,13 @@ void GameScenery::showFlags(int flagType) {
 			flags[1]->setAnchorPoint(Vec2(0, 0.5));
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
 			flags[1]->setPosition(getContentSize().width, getContentSize().height/2.0);
-			
-			flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
-			flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
-			
-			addChild(flags[0], 200);
-			addChild(flags[1], 200);
 		}
+		
+		flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
+		flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));
+		
+		addChild(flags[0], 200);
+		addChild(flags[1], 200);
 	}
 }
 
