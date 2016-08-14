@@ -12,6 +12,7 @@
 class Shaders {
 public:
 	static GLProgram *none();
+	static GLProgram *smooth();
 	static GLProgram *smokey();
 	static GLProgram *greyscale();
 };
