@@ -21,8 +21,8 @@
       "name": "Chill",
       "description": "Slow enemy by 2 turns."
     },
-    "lightening_bolt": {
-      "name": "Lightening Bolt",
+    "lightning_bolt": {
+      "name": "Lightning Bolt",
       "description": "Deal 1 to 12 damage."
     },
     "healstrike": {

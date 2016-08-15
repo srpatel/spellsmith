@@ -59,7 +59,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 		// gain 5
 		HEAL(5);
 		game->updateHealthBars();
-	} else IF_SPELL(lightening_bolt) {
+	} else IF_SPELL(lightning_bolt) {
 		// deal 1-12
 		int amount = AmountGenerator::between(1, 12);
 		game->makeProjectile(
