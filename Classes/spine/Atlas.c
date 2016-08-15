@@ -145,7 +145,7 @@ static int indexOf (const char** array, int count, Str* str) {
 	int i;
 	for (i = count - 1; i >= 0; i--)
 		if (strncmp(array[i], str->begin, length) == 0) return i;
-	return -1;
+	return 0;
 }
 
 static int equals (Str* str, const char* other) {
@@ -161,8 +161,8 @@ static spAtlas* abortAtlas (spAtlas* self) {
 	return 0;
 }
 
-static const char* formatNames[] = {"Alpha", "Intensity", "LuminanceAlpha", "RGB565", "RGBA4444", "RGB888", "RGBA8888"};
-static const char* textureFilterNames[] = {"Nearest", "Linear", "MipMap", "MipMapNearestNearest", "MipMapLinearNearest",
+static const char* formatNames[] = {"", "Alpha", "Intensity", "LuminanceAlpha", "RGB565", "RGBA4444", "RGB888", "RGBA8888"};
+static const char* textureFilterNames[] = {"", "Nearest", "Linear", "MipMap", "MipMapNearestNearest", "MipMapLinearNearest",
 		"MipMapNearestLinear", "MipMapLinearLinear"};
 
 spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* rendererObject) {
@@ -215,9 +215,19 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 			page->magFilter = (spAtlasFilter)indexOf(textureFilterNames, 7, tuple + 1);
 
 			if (!readValue(&begin, end, &str)) return abortAtlas(self);
+
+			page->uWrap = SP_ATLAS_CLAMPTOEDGE;
+			page->vWrap = SP_ATLAS_CLAMPTOEDGE;
 			if (!equals(&str, "none")) {
-				page->uWrap = *str.begin == 'x' ? SP_ATLAS_REPEAT : (*str.begin == 'y' ? SP_ATLAS_CLAMPTOEDGE : SP_ATLAS_REPEAT);
-				page->vWrap = *str.begin == 'x' ? SP_ATLAS_CLAMPTOEDGE : (*str.begin == 'y' ? SP_ATLAS_REPEAT : SP_ATLAS_REPEAT);
+				if (str.end - str.begin == 1) {
+					if (*str.begin == 'x')
+						page->uWrap = SP_ATLAS_REPEAT;
+					else if (*str.begin == 'y')
+						page->vWrap = SP_ATLAS_REPEAT;
+				} else if (equals(&str, "xy")) {
+					page->uWrap = SP_ATLAS_REPEAT;
+					page->vWrap = SP_ATLAS_REPEAT;
+				}
 			}
 
 			_spAtlasPage_createTexture(page, path);
