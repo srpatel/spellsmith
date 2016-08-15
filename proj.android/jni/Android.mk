@@ -43,9 +43,11 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/spine/AtlasAttachmentLoader.c \
 ../../Classes/spine/Attachment.c \
 ../../Classes/spine/AttachmentLoader.c \
+../../Classes/spine/AttachmentVertices.cpp \
 ../../Classes/spine/Bone.c \
 ../../Classes/spine/BoneData.c \
 ../../Classes/spine/BoundingBoxAttachment.c \
+../../Classes/spine/Cocos2dAttachmentLoader.cpp \
 ../../Classes/spine/Event.c \
 ../../Classes/spine/EventData.c \
 ../../Classes/spine/extension.c \
@@ -53,19 +55,24 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/spine/IkConstraintData.c \
 ../../Classes/spine/Json.c \
 ../../Classes/spine/MeshAttachment.c \
-../../Classes/spine/PolygonBatch.cpp \
+../../Classes/spine/PathAttachment.c \
+../../Classes/spine/PathConstraint.c \
+../../Classes/spine/PathConstraintData.c \
 ../../Classes/spine/RegionAttachment.c \
 ../../Classes/spine/Skeleton.c \
 ../../Classes/spine/SkeletonAnimation.cpp \
+../../Classes/spine/SkeletonBatch.cpp \
 ../../Classes/spine/SkeletonBounds.c \
 ../../Classes/spine/SkeletonData.c \
 ../../Classes/spine/SkeletonJson.c \
 ../../Classes/spine/SkeletonRenderer.cpp \
 ../../Classes/spine/Skin.c \
-../../Classes/spine/SkinnedMeshAttachment.c \
 ../../Classes/spine/Slot.c \
 ../../Classes/spine/SlotData.c \
 ../../Classes/spine/spine-cocos2dx.cpp \
+../../Classes/spine/TransformConstraint.c \
+../../Classes/spine/TransformConstraintData.c \
+../../Classes/spine/VertexAttachment.c \
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
