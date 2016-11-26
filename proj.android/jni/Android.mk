@@ -15,7 +15,6 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/AppDelegate.cpp \
-../../Classes/BasicFire.cpp \
 ../../Classes/Characters.cpp \
 ../../Classes/Dialogs.cpp \
 ../../Classes/DoSpell.cpp \
@@ -26,10 +25,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/GameScenery.cpp \
 ../../Classes/Gem.cpp \
 ../../Classes/Grid.cpp \
+../../Classes/ImageManager.cpp \
 ../../Classes/Level.cpp \
 ../../Classes/MainMenu.cpp \
 ../../Classes/Monster.cpp \
 ../../Classes/Popup.cpp \
+../../Classes/Projectiles.cpp \
 ../../Classes/SaveData.cpp \
 ../../Classes/Shaders.cpp \
 ../../Classes/Spell.cpp \

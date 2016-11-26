@@ -55,25 +55,27 @@ bool Popup::init(float width, float height) {
 	auto left_edge = LoadSprite("popup/left_edge.png");
 	left_edge->setAnchorPoint(Vec2(0, 0));
 	left_edge->setPosition(Vec2(0, offset));
-	left_edge->setScaleY(Director::getInstance()->getContentScaleFactor()*(height - 2*offset));
+	auto target_height = height - 2*offset;
+	left_edge->setScaleY(target_height / left_edge->getContentSize().height);
 	addChild(left_edge);
 	
 	auto right_edge = LoadSprite("popup/right_edge.png");
 	right_edge->setAnchorPoint(Vec2(1, 0));
 	right_edge->setPosition(Vec2(width, offset));
-	right_edge->setScaleY(Director::getInstance()->getContentScaleFactor()*(height - 2*offset));
+	right_edge->setScaleY(target_height / left_edge->getContentSize().height);
 	addChild(right_edge);
 	
 	auto top_edge = LoadSprite("popup/top_edge.png");
 	top_edge->setAnchorPoint(Vec2(0, 1));
 	top_edge->setPosition(Vec2(offset, height));
-	top_edge->setScaleX(Director::getInstance()->getContentScaleFactor()*(width - 2*offset));
+	auto target_width = width - 2*offset;
+	top_edge->setScaleX(target_width / top_edge->getContentSize().width);
 	addChild(top_edge);
 	
 	auto bottom_edge = LoadSprite("popup/bottom_edge.png");
 	bottom_edge->setAnchorPoint(Vec2(0, 0));
 	bottom_edge->setPosition(Vec2(offset, 0));
-	bottom_edge->setScaleX(Director::getInstance()->getContentScaleFactor()*(width - 2*offset));
+	bottom_edge->setScaleX(target_width / top_edge->getContentSize().width);
 	addChild(bottom_edge);
 	
 	return true;

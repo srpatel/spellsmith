@@ -135,5 +135,6 @@ void HealthBar::setHealths(int current, int max) {
 		text->setString(ToString(current) + "/" + ToString(max));
 	}
 	float perc = MAX(0, (float) current / max);
-	hp->setScaleX(perc * 102);
+	auto target_width = perc * (getContentSize().width - 4);
+	hp->setScaleX(target_width / hp->getContentSize().width);
 }

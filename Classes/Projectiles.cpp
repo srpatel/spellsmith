@@ -6,12 +6,17 @@
 //
 //
 
-#include "BasicFire.hpp"
+#include "Projectiles.hpp"
 
 // Px per second
 #define PROJECTILE_SPEED 300
 
-bool BasicFire::init(Vec2 from, Vec2 to, float scale, CallFunc *onHit)
+bool BasicProjectile::init(
+		Vec2 from,
+		Vec2 to,
+		float scale,
+		CallFunc* onHit
+)
 {
 	if ( !Layer::init() )
 	{
@@ -23,31 +28,28 @@ bool BasicFire::init(Vec2 from, Vec2 to, float scale, CallFunc *onHit)
 	sprite->setScale(scale);
 	// sprite->setContentSize();
 	// Animate it!
-	auto size = 19;
-	Vector<SpriteFrame*> createAnimFrames(size);
+	Vector<SpriteFrame*> createAnimFrames(numShoot);
 	char str[100] = {0};
-	for(int i = 1; i <= size; i++)
+	for(int i = 1; i <= numShoot; i++)
 	{
-		sprintf(str, "spells/fireball/shoot/shoot%02d.png", i);
-		auto frame = LoadSpriteFrame( std::string(str), Rect(0, 0, 80 / CC_CONTENT_SCALE_FACTOR(), 100 / CC_CONTENT_SCALE_FACTOR()) );
+		sprintf(str, "spells/%s/shoot/shoot%02d.png", path, i);
+		auto frame = LoadSpriteFrame( std::string(str) );
 		createAnimFrames.pushBack(frame);
 	}
 	
-	size = 4;
-	Vector<SpriteFrame*> moveAnimFrames(size);
-	for(int i = 1; i <= size; i++)
+	Vector<SpriteFrame*> moveAnimFrames(numTravel);
+	for(int i = 1; i <= numTravel; i++)
 	{
-		sprintf(str, "spells/fireball/travel/travel%02d.png", i);
-		auto frame = LoadSpriteFrame( std::string(str), Rect(0, 0, 80 / CC_CONTENT_SCALE_FACTOR(), 100 / CC_CONTENT_SCALE_FACTOR()) );
+		sprintf(str, "spells/%s/travel/travel%02d.png", path, i);
+		auto frame = LoadSpriteFrame( std::string(str) );
 		moveAnimFrames.pushBack(frame);
 	}
 	
-	size = 10;
-	Vector<SpriteFrame*> hitAnimFrames(size);
-	for(int i = 1; i <= size; i++)
+	Vector<SpriteFrame*> hitAnimFrames(numHit);
+	for(int i = 1; i <= numHit; i++)
 	{
-		sprintf(str, "spells/fireball/hit/hit%02d.png", i);
-		auto frame = LoadSpriteFrame( std::string(str), Rect(0, 0, 80 / CC_CONTENT_SCALE_FACTOR(), 100 / CC_CONTENT_SCALE_FACTOR()) );
+		sprintf(str, "spells/%s/hit/hit%02d.png", path, i);
+		auto frame = LoadSpriteFrame( std::string(str) );
 		hitAnimFrames.pushBack(frame);
 	}
 
@@ -87,15 +89,6 @@ bool BasicFire::init(Vec2 from, Vec2 to, float scale, CallFunc *onHit)
 		nullptr
 	));
 	addChild(sprite);
-	
-	// Make three sprites:
-	// - create
-	// - move
-	// - hit
-	// On create, need to know:
-	// - start pos
-	// - end pos
-	// - run action on finish?
 	
 	
 	return true;

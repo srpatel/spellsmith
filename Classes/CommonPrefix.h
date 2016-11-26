@@ -106,7 +106,8 @@ return NULL; \
 
 #ifdef __cplusplus
 Sprite *LoadSprite(std::string);
-SpriteFrame *LoadSpriteFrame(std::string, cocos2d::Rect);
+Sprite *LoadLargeSprite(std::string);
+SpriteFrame *LoadSpriteFrame(std::string);
 // Need this for android:
 template <typename T>
 std::string ToString(T value)

@@ -7,6 +7,7 @@
 //
 
 #include "MainMenu.hpp"
+#include "ImageManager.hpp"
 #include "GameController.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
@@ -21,7 +22,7 @@ bool MainMenu::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(visibleSize);
 	
-	auto sprite = LoadSprite("ui/smokey.png");
+	auto sprite = LoadLargeSprite("smokey.png");
 	sprite->setAnchorPoint(Vec2(0.5, 0.5));
 	sprite->setPosition(visibleSize/2);
 	this->addChild(sprite);
@@ -45,6 +46,25 @@ bool MainMenu::init() {
 		}
 	});
 	this->addChild(button);
+
+	/*auto boy = spine::SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas", 0.6f);
+	boy->setScale(0.4);
+	boy->setPosition(visibleSize.width/2, 0);
+	// Set transitions from walk -> jump, jump -> run and run -> walk
+	boy->setMix("walk", "jump", 0.2f);
+	boy->setMix("jump", "run", 0.2f);
 	
+	boy->setMix("run", "walk", 0.2f);
+	boy->setAnimation(0, "walk", true);
+	boy->addAnimation(0, "jump", false, 3);
+	boy->addAnimation(0, "run", true);
+	
+	for (int i = 0; i < 100; i++) {
+		boy->addAnimation(0, "walk", true, 3);
+		boy->addAnimation(0, "jump", false, 3);
+		boy->addAnimation(0, "run", true);
+	}
+	
+	addChild(boy);*/
 	return true;
 }

@@ -26,8 +26,6 @@ if (game->wizard->health > game->wizard->max_health) {\
 }}
 
 void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
-	//firewisp
-	//
 	IF_SPELL(fireball) {
 		// deal 10 damage
 		game->makeProjectile(

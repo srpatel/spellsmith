@@ -1,26 +1,42 @@
 [
   {
     "name": "goblin_halberd",
-    "sprite": "goblin_01",
+    "skeleton": {
+      "name": "enemy_humanoid",
+      "attachments": [
+        {
+          "weapon": "character/goblin/halberd"
+        }
+      ]
+    },
     "health": 30,
     "attack_frequency": 4,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
+        "animation": "attack_lunge",
         "amount": 8
       }
     ]
   },
   {
-    "name": "goblin_sword",
-    "sprite": "goblin_02",
+    "name": "goblin_axe",
+    "skeleton": {
+      "name": "enemy_humanoid",
+      "attachments": [
+        {
+          "weapon": "character/goblin/axe"
+        }
+      ]
+    },
     "health": 30,
     "attack_frequency": 3,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
+        "animation": "attack_swing",
         "amount": 5
       }
     ]

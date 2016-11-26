@@ -131,7 +131,7 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	setContentSize(size);
 	
 	// "Pick a spell" title
-	auto label = Label::createWithTTF( "choose a spell", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	auto label = Label::createWithTTF( "Choose a Spell", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
 	label->setColor(Color3B::WHITE);
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);

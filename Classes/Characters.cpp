@@ -136,7 +136,7 @@ Enemy::Enemy(Monster *m, int index) {
 #endif
 	health = max_health;
 	ui_health = max_health;
-	sprite = LoadSprite(monster->sprite_path);
+	sprite = monster->makeSkeleton();
 	sprite->retain();
 	buffHolder = Layer::create();
 	sprite->addChild(buffHolder);

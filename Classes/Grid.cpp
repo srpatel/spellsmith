@@ -8,6 +8,7 @@
 
 #include "Grid.hpp"
 #include "GameScene.hpp"
+#include "Shaders.hpp"
 #include "Constants.h"
 
 #include "ui/CocosGUI.h"
@@ -545,8 +546,8 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     
     float left = pos.x - size.x/2, bottom = pos.y - size.y/2;
 	
-	if (loc.y < pos.y + size.y/2)
-	line->drawSolidCircle(loc - pos, 10, 7, 20, Color4F::RED);
+	/*if (loc.y < pos.y + size.y/2)
+	 line->drawSolidCircle(loc - pos, 10, 7, 20, Color4F::RED);*/
     
     // Is it in the grid?
     if (   loc.x > left

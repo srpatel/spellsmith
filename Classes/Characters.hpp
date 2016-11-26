@@ -41,7 +41,7 @@ public:
 	int max_health;
 	int health;
 	int ui_health;
-	Sprite *sprite;
+	Node *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
 	void addBuff(Buff *);

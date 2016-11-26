@@ -7,6 +7,7 @@
 //
 
 #include "Monster.hpp"
+#include "ImageManager.hpp"
 
 #include "json/document.h"
 
@@ -41,7 +42,7 @@ void MonsterManager::init() {
 		const rapidjson::Value& json_monster = doc[i];
 		
 		const rapidjson::Value& json_name = json_monster["name"];
-		const rapidjson::Value& json_sprite = json_monster["sprite"];
+		const rapidjson::Value& json_skeleton = json_monster["skeleton"];
 		const rapidjson::Value& json_health = json_monster["health"];
 		const rapidjson::Value& json_attack_frequency = json_monster["attack_frequency"];
 		const rapidjson::Value& json_attacks = json_monster["attacks"];
@@ -52,7 +53,16 @@ void MonsterManager::init() {
 		auto m = new Monster;
 		m->name = name;
 		m->hp = health;
-		m->sprite_path = (std::string("characters/") + json_sprite.GetString() + ".png");
+		m->skeleton.path = json_skeleton["name"].GetString();
+		for (int j = json_skeleton["attachments"].Size() - 1; j >= 0; j--) {
+			const rapidjson::Value& a = json_skeleton["attachments"][j];
+			auto it = a.MemberBegin();
+			while (it != a.MemberEnd()) {
+				m->skeleton.attachments[it->name.GetString()] = it->value.GetString();
+				it++;
+			}
+		}
+		
 		m->attack_frequency = json_attack_frequency.GetInt();
 		int total_attack_ratio = 0;
 		for (int j = json_attacks.Size() - 1; j >= 0; j--) {
@@ -60,6 +70,7 @@ void MonsterManager::init() {
 			const rapidjson::Value& json_ratio = json_attack["ratio"];
 			const rapidjson::Value& json_type = json_attack["type"];
 			const rapidjson::Value& json_amount = json_attack["amount"];
+			const rapidjson::Value& json_animation = json_attack["animation"];
 			
 			auto type = getAttackType(json_type.GetString());
 			int ratio = json_ratio.GetInt();
@@ -69,6 +80,7 @@ void MonsterManager::init() {
 			auto attack = new Attack(
 				ratio,
 				type,
+				json_animation.GetString(),
 				json_amount.GetInt()
 			);
 			m->attacks.push_back(attack);
@@ -76,6 +88,18 @@ void MonsterManager::init() {
 		m->total_attack_ratio = total_attack_ratio;
 		monsters[name] = m;
 	}
+}
+
+spine::SkeletonAnimation *Monster::makeSkeleton() {
+	auto path = (std::string("spine/") + skeleton.path + ".json");
+	auto boy = spine::SkeletonAnimation::createWithFile(path.c_str(), ImageManager::get()->getAtlas(), 0.25f);
+	
+	// Set attachments:
+	for (auto it : skeleton.attachments) {
+		boy->setAttachment(it.first, it.second);
+	}
+
+	return boy;
 }
 
 Attack *Monster::getAttack() {
@@ -92,8 +116,9 @@ Attack *Monster::getAttack() {
 	return attacks[0];
 }
 
-Attack::Attack(int _ratio, AttackType _type, int _amount) :
+Attack::Attack(int _ratio, AttackType _type, std::string _animation, int _amount) :
 	ratio(_ratio),
 	type(_type),
-	amount(_amount)
+	amount(_amount),
+	animation(_animation)
 {}

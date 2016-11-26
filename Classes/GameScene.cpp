@@ -8,7 +8,7 @@
 #include "DoSpell.hpp"
 #include "GameOverPopup.hpp"
 
-#include "BasicFire.hpp"
+#include "Projectiles.hpp"
 
 #include <sstream>
 
@@ -217,7 +217,7 @@ bool Game::init() {
 	
 	// Smokey
 	{
-		auto sprite = LoadSprite("ui/smokey.png");
+		auto sprite = LoadLargeSprite("smokey.png");
 		sprite->setAnchorPoint(Vec2(0.5, 1));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
 		this->addChild(sprite);
@@ -530,7 +530,16 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	actionQueued();
 	
 	float scale = 0.5 + MIN(damage, 20) / 4.f;
-	auto projectile = BasicFire::create(from, to, scale, onHit);
+	Layer *projectile;
+	if (type == Color3B::WHITE) {
+		projectile = BasicWind::create(from, to, scale, onHit);
+	} else if (type == Color3B::GREEN) {
+		projectile = BasicEarth::create(from, to, scale, onHit);
+	} else if (type == Color3B::BLUE) {
+		projectile = BasicWater::create(from, to, scale, onHit);
+	} else {
+		projectile = BasicFire::create(from, to, scale, onHit);
+	}
 	addChild(projectile);
 }
 

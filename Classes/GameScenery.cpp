@@ -8,6 +8,7 @@
 
 #include "GameScenery.hpp"
 #include "Shaders.hpp"
+#include "Constants.h"
 
 bool GameScenery::init(Size size) {
 	if ( !Layer::init() )
@@ -60,13 +61,24 @@ bool GameScenery::init(Size size) {
 	
 	addChild(wizardsprite);
 	
-	message = Layer::create();
+	Layer *message = Layer::create();
 	message->setPosition(size/2);
 	addChild(message, 300);
 	banner = LoadSprite("ui/bannerlevelup.png");
-	banner->setAnchorPoint(Vec2(0.5, 0.4));
+	// Move banner up a bit - see mockup
+	banner->setAnchorPoint(Vec2(0.5, 0.42));
 	banner->setOpacity(0);
 	message->addChild(banner);
+	bigText = Label::createWithTTF( "", Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	littleText = Label::createWithTTF( "", Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	bigText->setPosition(0, 0);
+	littleText->setPosition(0, 4-Fonts::TITLE_SIZE);
+	bigText->enableOutline(Color4B::BLACK, 1);
+	littleText->enableOutline(Color4B::BLACK, 1);
+	message->addChild(bigText);
+	message->addChild(littleText);
+	bigText->setOpacity(0);
+	littleText->setOpacity(0);
 	
 	return true;
 }
@@ -90,9 +102,14 @@ void GameScenery::showFlags(int flagType) {
 			flags[0] = nullptr;
 			flags[1] = nullptr;
 			
-			banner->runAction(EaseIn::create(FadeOut::create(0.3), 0.5));
+			auto fadeOut = EaseIn::create(FadeOut::create(0.3), 0.5);
+			banner->runAction(fadeOut);
+			bigText->runAction(fadeOut->clone());
+			littleText->runAction(fadeOut->clone());
 		}
 	} else {
+		auto fadeIn = EaseIn::create(FadeIn::create(0.3), 0.5);
+		
 		// Animate flags in
 		if (flagType == FLAG_TYPE_WIN) {
 			flags[0] = LoadSprite("ui/flag_levelup.png");
@@ -104,7 +121,21 @@ void GameScenery::showFlags(int flagType) {
 			flags[1]->setPosition(getContentSize().width+flags[1]->getContentSize().width, getContentSize().height/2.0);
 			
 			// Fade banner in
-			banner->runAction(EaseIn::create(FadeIn::create(0.3), 0.5));
+			banner->runAction(fadeIn);
+			
+			
+			bigText->setString("Level Up!");
+			const char* sentence;
+			int r = rand() % 5;
+			switch (r) {
+				case 0:	sentence = "Your knowledge expands..."; break;
+				case 1:	sentence = "Another spell comes to mind"; break;
+				case 2:	sentence = "Your power grows yet more"; break;
+				case 3:	sentence = "Soon you shall be unstoppable!"; break;
+				default:
+				case 4:	sentence = "Just another day of goblin slaughter..."; break;
+			}
+			littleText->setString( sentence );
 		} else if (flagType == FLAG_TYPE_LOSE) {
 			flags[0] = LoadSprite("ui/flag_death_left.png");
 			flags[1] = LoadSprite("ui/flag_death_right.png");
@@ -112,7 +143,23 @@ void GameScenery::showFlags(int flagType) {
 			flags[1]->setAnchorPoint(Vec2(0, 0.5));
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
 			flags[1]->setPosition(getContentSize().width, getContentSize().height/2.0);
+			
+			bigText->setString("Game Over!");
+			const char* sentence;
+			int r = rand() % 5;
+			switch (r) {
+				case 0:	sentence = "The goblins finally got their revenge!"; break;
+				case 1:	sentence = "How...how is this possible!?"; break;
+				case 2:	sentence = "Dead...for now..."; break;
+				case 3:	sentence = "You will return, with a vengeance!"; break;
+				default:
+				case 4:	sentence = "Why does lightening bolt always roll 1?"; break;
+			}
+			littleText->setString( sentence );
 		}
+		
+		bigText->runAction(fadeIn->clone());
+		littleText->runAction(fadeIn->clone());
 		
 		flags[0]->runAction(EaseIn::create(MoveBy::create(0.3f, Vec2(flags[0]->getContentSize().width, 0)), 0.5));
 		flags[1]->runAction(EaseIn::create(MoveBy::create(0.3f, -Vec2(flags[1]->getContentSize().width, 0)), 0.5));

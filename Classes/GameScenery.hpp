@@ -32,7 +32,8 @@ private:
 	Vec2 enemy_positions2[3];
 	Vec2 enemy_positions1[3];
 	Sprite *flags[2];
-	Layer *message;
+	Label *littleText;
+	Label *bigText;
 	Sprite *banner;
 };
 

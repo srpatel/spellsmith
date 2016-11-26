@@ -22,21 +22,21 @@ LevelManager *LevelManager::get() {
 Round *LevelManager::generateRound(int stage) {
 	auto r = new Round;
 	if (stage == 0) {
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
+		r->monsters.push_back(MonsterManager::get()->get("goblin_axe"));
 	} else if (stage == 1) {
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 	} else if (stage == 2) {
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
+		r->monsters.push_back(MonsterManager::get()->get("goblin_axe"));
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 	} else if (stage == 3) {
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 	} else if (stage == 4) {
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
+		r->monsters.push_back(MonsterManager::get()->get("goblin_axe"));
+		r->monsters.push_back(MonsterManager::get()->get("goblin_axe"));
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 	} else if (stage == 5) {
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
+		r->monsters.push_back(MonsterManager::get()->get("goblin_axe"));
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 	} else {
