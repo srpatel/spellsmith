@@ -25,11 +25,13 @@ enum GameState {
 };
 
 struct layout_t {
+	float ui_scale;
 	float column_height;
 	float column_width;
 	float bar_top_height;
 	float bar_bottom_height;
 	float scenery_height;
+	Vec2 melee_spot; //where enemies stand to hit the wizard
 };
 
 class Game : public Layer {
@@ -88,9 +90,14 @@ private:
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
 	
 	int numCurrentActions;
+	
+	// An action has finished (must have called actionQueued previously)
 	void actionDone();
+	// Start an action ... must call actionDone when finished
 	void actionQueued();
+	// Run an action when all current actions are done.
 	void runPendingAction(PendingAction);
+	
 	std::vector<PendingAction> pendingActions;
 };
 

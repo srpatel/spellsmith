@@ -130,12 +130,13 @@ Enemy::Enemy(Monster *m, int index) {
 	monster = m;
 	attack_clock = monster->attack_frequency;
 #if EASY_MODE
-	max_health = 5;
+	max_health = 10;
 #else
 	max_health = monster->hp;
 #endif
 	health = max_health;
 	ui_health = max_health;
+	is_skeleton = true;
 	sprite = monster->makeSkeleton();
 	sprite->retain();
 	buffHolder = Layer::create();

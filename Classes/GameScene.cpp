@@ -49,9 +49,20 @@ bool Game::init() {
 	
 	auto right_col_sprite = LoadSprite("ui/column_right.png");
 	
-	//layout.column_height = MAX(min_column_height, getBoundingBox().size.height - max_scenery_height);
+	
 	layout.column_height = right_col_sprite->getBoundingBox().size.height;
 	layout.column_width = right_col_sprite->getBoundingBox().size.width;
+	
+	// if the scenery is too small...
+	float min_scenery_height = 105;
+	float ui_scale = 1;
+	float current_scenery_height = getBoundingBox().size.height - layout.column_height;
+	if (current_scenery_height < min_scenery_height) {
+		layout.column_height = getBoundingBox().size.height - min_scenery_height;
+		ui_scale = layout.column_height / right_col_sprite->getBoundingBox().size.height;
+		layout.column_width *= ui_scale;
+	}
+	layout.ui_scale = ui_scale;
 /*
  _                _                                   _     
 | |              | |                                 | |    
@@ -67,6 +78,7 @@ bool Game::init() {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		
 		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
+		printf("Scenery size: %g\n", getBoundingBox().size.height - layout.column_height);
 		scenery->setAnchorPoint(Vec2(0, 0));
 		scenery->setPosition(0, layout.column_height);
 		addChild(scenery);
@@ -108,9 +120,10 @@ bool Game::init() {
 	// Bar top
 	{
 		auto sprite = LoadSprite("ui/bar_top.png");
-		layout.bar_top_height = sprite->getBoundingBox().size.height;
+		layout.bar_top_height = sprite->getBoundingBox().size.height * ui_scale;
 		sprite->setAnchorPoint(Vec2(0.5, 1));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
+		sprite->setScale(ui_scale);
 		this->addChild(sprite);
 		
 		auto listener = EventListenerTouchOneByOne::create();
@@ -135,9 +148,10 @@ bool Game::init() {
 	// bar bottom
 	{
 		auto sprite = LoadSprite("ui/bar_bottom.png");
-		layout.bar_bottom_height = sprite->getBoundingBox().size.height;
+		layout.bar_bottom_height = sprite->getBoundingBox().size.height * ui_scale;
 		sprite->setAnchorPoint(Vec2(0.5, 0));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
+		sprite->setScale(ui_scale);
 		this->addChild(sprite);
 	}
 	
@@ -146,30 +160,34 @@ bool Game::init() {
 		//auto sprite = LoadSprite("ui/column_right.png");
 		right_col_sprite->setAnchorPoint(Vec2(1, 1));
 		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
+		right_col_sprite->setScale(ui_scale);
 		this->addChild(right_col_sprite);
 		
 		auto level_counter = LoadSprite("ui/level_counter.png");
 		level_counter->setAnchorPoint(Vec2(0.5, 0.5));
-		level_counter->setPosition(getBoundingBox().size.width - 20, 354);
+		level_counter->setPosition(getBoundingBox().size.width - 20 * ui_scale, 354 * ui_scale);
+		level_counter->setScale(ui_scale);
 		addChild(level_counter);
 		
 		currentRound = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
 		currentRound->setPosition(
-			getBoundingBox().size.width - right_col_sprite->getContentSize().width/2 + 3,
-			354);
+			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
+			354 * ui_scale);
 		addChild(currentRound);
 	}
 	{
 		auto grad = LoadSprite("ui/orb_bg.png");
 		grad->setAnchorPoint(Vec2(0.5, 0.5));
-		grad->setPosition(20, 354);
+		grad->setPosition(20 * ui_scale, 354 * ui_scale);
+		grad->setScale(ui_scale);
 		addChild(grad);
 		
 		auto hp = LoadSprite("ui/orb_red.png");
 		hp->setAnchorPoint(Vec2(0.5, 0));
-		hp->setPosition(20, 342);
+		hp->setScale(ui_scale);
+		hp->setPosition(20 * ui_scale, 342 * ui_scale);
 		//hp->setGLProgram(Shaders::smokey());
 		addChild(hp);
 		wizard_hp_bar = hp;
@@ -177,6 +195,7 @@ bool Game::init() {
 		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
 		sprite->setPosition(Vec2(0, layout.column_height));
+		sprite->setScale(ui_scale);
 		this->addChild(sprite);
 	}
 
@@ -237,6 +256,8 @@ bool Game::init() {
 	wizard->sprite = scenery->wizardsprite;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
+	layout.melee_spot.x = wizard->sprite->getPositionX() + wizard->sprite->getBoundingBox().size.width * wizard->sprite->getScale();
+	layout.melee_spot.y = wizard->sprite->getPositionY() + 8;
 /*
  _    _ _    _ _____  
 | |  | | |  | |  __ \ 
@@ -250,8 +271,8 @@ bool Game::init() {
 	// More background (must be done after grid because of sizing) 60 high.
 	hud = GameHUD::create();
 	hud->setContentSize(
-		Size(getBoundingBox().size.width - layout.column_width * 2, 20 * 2));
-	hud->setPosition(Vec2(layout.column_width, layout.column_height - layout.bar_top_height + 15));
+		Size(getBoundingBox().size.width - layout.column_width * 2, layout.ui_scale * 20 * 2));
+	hud->setPosition(Vec2(layout.column_width, layout.column_height - layout.bar_top_height + layout.ui_scale * 15));
 	this->addChild(hud);
 	
 /*              _ _                  _ _
@@ -311,7 +332,7 @@ void Game::updateInventory() {
 	auto gridSize = grid->getSize();
 	auto visibleSize = getContentSize();
 	
-	const float starty = layout.column_height - 110;
+	const float starty = layout.column_height - 110 * layout.ui_scale;
 	
 	inventoryHolder->removeAllChildren();
 	
@@ -320,7 +341,7 @@ void Game::updateInventory() {
 	for (int i = 0; i < 3; i++) {
 		if (inventory.size() > i && inventory[i] != nullptr) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(18, starty - i * 55);
+			sprite->setPosition(18 * layout.ui_scale, starty - i * 55 * layout.ui_scale);
 			auto onSpellClick = EventListenerTouchOneByOne::create();
 			onSpellClick->setSwallowTouches(true);
 			// trigger when you push down
@@ -359,7 +380,7 @@ void Game::updateInventory() {
 				return false; // if you are consuming it
 			};
 			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(getBoundingBox().size.width - 18, starty - i * 55);
+			sprite->setPosition(getBoundingBox().size.width - 18 * layout.ui_scale, starty - i * 55 * layout.ui_scale);
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			inventoryHolder->addChild(sprite);
 		}
@@ -519,9 +540,20 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	} else {
 		target->health -= damage;
 		onHit = CallFunc::create([this, damage, target](){
+			spine::SkeletonAnimation *skeleton = nullptr;
+			if (target->is_skeleton) {
+				skeleton = (spine::SkeletonAnimation *) target->sprite;
+			}
 			target->ui_health -= damage;
 			if (target->ui_health <= 0 && target != wizard) {
-				target->sprite->removeFromParent();
+				if (skeleton) {
+					skeleton->addAnimation(0, "die", false);
+				} else {
+					target->sprite->removeFromParent();
+				}
+			} else if (skeleton) {
+				// Run the "hit" animation!
+				skeleton->addAnimation(0, "hit", false);
 			}
 			updateHealthBars();
 			actionDone();
@@ -626,11 +658,12 @@ void Game::actionQueued() {
 }
 void Game::actionDone() {
 	numCurrentActions--;
-	if (numCurrentActions == 0) {
-		for (PendingAction a : pendingActions) {
-			a();
-		}
-		pendingActions.clear();
+	// only pop one and do that!
+	
+	while (numCurrentActions == 0 && pendingActions.size() > 0) {
+		PendingAction a = pendingActions[0];
+		a();
+		pendingActions.erase(pendingActions.begin());
 	}
 }
 void Game::runPendingAction(PendingAction a) {
@@ -691,10 +724,57 @@ void Game::enemyDoTurn() {
 					}), nullptr));
 				} else {
 					// attack
-					runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
-						int damage = e->monster->getAttack()->amount;
-						makeProjectile(e, wizard, damage, Color3B::RED);
-					}), nullptr));
+					auto a = e->monster->getAttack();
+					
+					PendingAction action;
+					if (a->type == kAttackTypeMelee) {
+						// for melee attack:
+						// - move up to the wizard
+						// - run the specified animation
+						// - move back
+						action = [this, e, a]() {
+							actionQueued();
+							
+							int damage = a->amount;
+							auto oldPos = e->sprite->getPosition();
+							float moveTime = 0.2f;
+							
+							float attackTime = 0;
+							if (e->is_skeleton) {
+								spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) e->sprite;
+									
+								spTrackEntry* entry = skeleton->addAnimation(0, a->animation, false, 0);
+								attackTime = entry->endTime - entry->time;
+							}
+							
+							auto moveTo = EaseOut::create(MoveTo::create(moveTime, layout.melee_spot), 0.5f);
+							auto moveBack = EaseOut::create(MoveTo::create(moveTime, oldPos), 0.5f);
+							auto pendingActionDone = CallFunc::create([this](){
+								actionDone();
+							});
+							
+							// TODO : Shields 'n' stuff
+							wizard->health -= damage;
+							auto dealDamage = CallFunc::create([this, damage](){
+								wizard->ui_health -= damage;
+								updateHealthBars();
+							});
+							
+							auto enemySeq = Sequence::create(moveTo, DelayTime::create(attackTime), moveBack, pendingActionDone, nullptr);
+							auto mainSeq = Sequence::create(DelayTime::create(moveTime + attackTime/2.0f), dealDamage, nullptr); // deal damage half way through animation
+							
+							e->sprite->runAction(enemySeq);
+							runAction(mainSeq);
+						};
+					} else {
+						// non-melee attacks are just basic projectile for now
+						action = [this, e, a]() {
+							int damage = a->amount;
+							makeProjectile(e, wizard, damage, Color3B::RED);
+							// projectiles already add to action queue
+						};
+					}
+					runPendingAction(action);
 				}
 				
 				e->attack_clock = e->monster->attack_frequency;
@@ -702,16 +782,15 @@ void Game::enemyDoTurn() {
 		}
 	}
 	hud->updateAttackClocks();
-	// TODO : Don't just wait 2 seconds - needs to be once things are done.
-	// Use action system.
 	if (!enemyTurn) {
 		// it's now the player's turn
 		attemptSetState(kStatePlayerTurn);
 	} else {
 		// Cannot use the grid until all enemies are done!
-		runAction(Sequence::create(DelayTime::create(2), CallFunc::create([this]() {
+		PendingAction action = [this]() {
 			attemptSetState(kStatePlayerTurn);
-		}), nullptr));
+		};
+		runPendingAction(action);
 	}
 }
 void Game::gotoNextEnemy() {
@@ -731,6 +810,7 @@ void Game::showRound(Round *round) {
 	}
 	enemies.clear();
 	for (Monster *m : round->monsters) {
+		printf("Showing monster %s\n", m->name.c_str());
 		// create an enemy from the monster
 		Enemy *enemy = new Enemy(m, enemies.size());
 		enemies.push_back( enemy );

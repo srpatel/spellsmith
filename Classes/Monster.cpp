@@ -94,8 +94,9 @@ spine::SkeletonAnimation *Monster::makeSkeleton() {
 	auto path = (std::string("spine/") + skeleton.path + ".json");
 	auto boy = spine::SkeletonAnimation::createWithFile(path.c_str(), ImageManager::get()->getAtlas(), 0.25f);
 	
-	// Set attachments:
+	// Set attachments
 	for (auto it : skeleton.attachments) {
+		printf("%s -> %s\n", it.first.c_str(), it.second.c_str());
 		boy->setAttachment(it.first, it.second);
 	}
 

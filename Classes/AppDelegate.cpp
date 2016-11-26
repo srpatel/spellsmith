@@ -16,6 +16,7 @@
 #define SIZE_IPAD_RET  Size(1536, 2048)
 #define SIZE_IPAD      Size(768, 1024)
 static Size screenSize = SIZE_IPHONE_5/2;
+//static Size screenSize = SIZE_IPAD_RET/4;
 
 static Size designResolutionSize = Size(320, 568);
 
@@ -75,6 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
     Size frameSize = glview->getFrameSize();
+	printf("Frame size: %g x %g\n", frameSize.width, frameSize.height);
 #if USE_SPRITE_SHEET
 	// load the Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();

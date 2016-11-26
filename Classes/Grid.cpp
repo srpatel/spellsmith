@@ -122,11 +122,13 @@ bool Grid::init(float maxWidth, float maxHeight)
 	this->addChild(line);
 	
 	Gem::scale = 1;
+	/*auto tempSprite = LoadSprite("gems/air.png");
+	auto size = tempSprite->getBoundingBox().size / Director::getInstance()->getContentScaleFactor();*/
 	float ratioX = maxWidth/(Gem::getSize().width * width);
 	float ratioY = maxHeight/(Gem::getSize().height * height);
 	float ratio = MIN(ratioY, ratioX);
-	Gem::scale = MIN(ratio, 1.6f);
 	
+	Gem::scale = MIN(ratio, 1.6f);
 #if DRAW_TOUCH_AREA
 	auto line2 = cocos2d::DrawNode::create();
 	line2->setPosition(cocos2d::Vec2::ZERO);

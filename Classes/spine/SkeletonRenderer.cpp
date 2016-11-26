@@ -84,7 +84,7 @@ SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkele
 }
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
-	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	: _ownsAtlas(false), _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
 	initWithFile(skeletonDataFile, atlas, scale);
 }
 
@@ -96,7 +96,7 @@ SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const s
 SkeletonRenderer::~SkeletonRenderer () {
 	if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
 	spSkeleton_dispose(_skeleton);
-	if (_atlas) spAtlas_dispose(_atlas);
+	if (_atlas && _ownsAtlas) spAtlas_dispose(_atlas);
 	if (_attachmentLoader) spAttachmentLoader_dispose(_attachmentLoader);
 	delete _worldVertices;
 }

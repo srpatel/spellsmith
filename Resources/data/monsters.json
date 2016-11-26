@@ -5,7 +5,7 @@
       "name": "enemy_humanoid",
       "attachments": [
         {
-          "weapon": "character/goblin/halberd"
+          "weapon": "characters/goblin/halberd"
         }
       ]
     },
@@ -26,7 +26,7 @@
       "name": "enemy_humanoid",
       "attachments": [
         {
-          "weapon": "character/goblin/axe"
+          "weapon": "characters/goblin/axe"
         }
       ]
     },
@@ -36,7 +36,7 @@
       {
         "ratio": 1,
         "type": "melee",
-        "animation": "attack_swing",
+        "animation": "attack_slash",
         "amount": 5
       }
     ]

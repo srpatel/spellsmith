@@ -41,6 +41,7 @@ public:
 	int max_health;
 	int health;
 	int ui_health;
+	bool is_skeleton = false;
 	Node *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);

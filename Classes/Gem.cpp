@@ -45,6 +45,12 @@ void Gem::init(GemType type) {
 	} else */
 	{
 		sprite = LoadSprite(element);
+		auto actualWidth = sprite->getBoundingBox().size.width;
+		auto targetWidth = getSize().width * 0.9f;
+		auto scale = targetWidth / actualWidth;
+		if (scale < 1) {
+			sprite->setScale(targetWidth / actualWidth);
+		}
 	}
 }
 

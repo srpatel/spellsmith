@@ -119,6 +119,7 @@ protected:
 	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;
 
 	bool _ownsSkeletonData;
+	bool _ownsAtlas = true;
 	spAtlas* _atlas;
 	spAttachmentLoader* _attachmentLoader;
 	cocos2d::CustomCommand _debugCommand;
