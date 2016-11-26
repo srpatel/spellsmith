@@ -32,7 +32,9 @@ bool GameScenery::init(Size size) {
 	scenery->setPosition(Vec2(size.width/2, (size.height)/2));
 	addChild(scenery, -2);
 	
-	char_scale = size.height / scenery->getBoundingBox().size.height > 0.5 ? 1 : 0.5;
+	char_scale = size.height / scenery->getBoundingBox().size.height > 1 ?
+						1 :
+						size.height / scenery->getBoundingBox().size.height;
 	
 	redring = LoadSprite("ui/redring.png");
 	redring->setAnchorPoint(Vec2(0.5, 0.2));
