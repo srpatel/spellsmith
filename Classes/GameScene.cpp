@@ -256,8 +256,9 @@ bool Game::init() {
 	wizard->is_skeleton = true;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
-	layout.melee_spot.x = wizard->sprite->getPositionX() + wizard->sprite->getBoundingBox().size.width * wizard->sprite->getScale();
-	layout.melee_spot.y = wizard->sprite->getPositionY() + 8;
+	// TODO : Replace "100" with actual wizard width
+	layout.melee_spot.x = wizard->sprite->getPositionX() + 100 * scenery->char_scale;
+	layout.melee_spot.y = wizard->sprite->getPositionY() + 8 * scenery->char_scale;
 /*
  _    _ _    _ _____  
 | |  | | |  | |  __ \ 
@@ -506,10 +507,9 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
-printf("%g %g\n", source->projectile_height, scenery->char_scale);
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
-	auto from = Vec2(source->sprite->getPosition().x + 90, start_y);
-	auto to = Vec2(target->sprite->getPosition().x - 60, start_y);
+	auto from = Vec2(source->sprite->getPosition().x + 90 * scenery->char_scale, start_y);
+	auto to = Vec2(target->sprite->getPosition().x - 60 * scenery->char_scale, start_y);
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
@@ -753,7 +753,8 @@ void Game::enemyDoTurn() {
 							
 							int damage = a->amount;
 							auto oldPos = e->sprite->getPosition();
-							float moveTime = 0.2f;
+							auto moveDistance = oldPos.x - layout.melee_spot.x;
+							float moveTime = 0.5 * moveDistance / 120.0;
 							
 							float attackTime = 0;
 							if (e->is_skeleton) {
