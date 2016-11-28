@@ -1,11 +1,5 @@
 {
-"skeleton": {
-	"hash": "oH7LqjgJc2godRVtGhKR+hMktOQ",
-	"spine": "3.5.31",
-	"width": 427.73,
-	"height": 413.09,
-	"images": "/Users/sunil/projects/Gems/Gems/DevResources/images-prepack/"
-},
+"skeleton": { "hash": "6CaKpjzEcIH2ECoH3u0Cdqn7tfs", "spine": "3.5.32", "width": 455.02, "height": 413.09, "images": "" },
 "bones": [
 	{ "name": "root", "y": 130.13 },
 	{ "name": "bone", "parent": "root", "length": 98, "rotation": 90, "x": -1, "y": 1 },
@@ -22,7 +16,8 @@
 	{ "name": "bone12", "parent": "bone5", "length": 31.48, "rotation": 6.01, "x": 47.62, "y": 0.15 },
 	{ "name": "bone13", "parent": "bone12", "length": 29.71, "rotation": -76.32, "x": 45.68, "y": 1.29 },
 	{ "name": "bone14", "parent": "bone6", "length": 46.6, "rotation": 12.61, "x": 46.72, "y": -2.14 },
-	{ "name": "bone15", "parent": "bone14", "length": 23.9, "rotation": -73.53, "x": 43.84, "y": 2.09 }
+	{ "name": "bone15", "parent": "bone14", "length": 23.9, "rotation": -73.53, "x": 43.84, "y": 2.09 },
+	{ "name": "bone16", "parent": "bone9", "length": 34.79, "rotation": 29.6, "x": 122.53, "y": 5.07 }
 ],
 "slots": [
 	{ "name": "leg_end2", "bone": "bone15", "attachment": "characters/goblin/leg_end" },
@@ -31,38 +26,20 @@
 	{ "name": "leg_end", "bone": "bone13", "attachment": "characters/goblin/leg_end" },
 	{ "name": "images/goblin1/leg_top", "bone": "bone5", "attachment": "characters/goblin/leg_top" },
 	{ "name": "leg_mid", "bone": "bone12", "attachment": "characters/goblin/leg_mid" },
-	{ "name": "images/goblin1/arm_back", "bone": "bone4", "attachment": "characters/goblin/arm_back" },
+	{ "name": "images/goblin1/arm_back", "bone": "bone4", "attachment": "arm_back" },
 	{ "name": "torso", "bone": "bone9", "attachment": "characters/goblin/torso" },
+	{ "name": "neck", "bone": "bone16", "attachment": "neck" },
 	{ "name": "images/goblin1/torso", "bone": "bone" },
-	{ "name": "weapon", "bone": "bone7", "attachment": "characters/goblin/axe" },
-	{ "name": "images/goblin1/head", "bone": "bone2", "attachment": "characters/goblin/head" },
-	{ "name": "images/goblin1/arm_front", "bone": "bone3" },
-	{ "name": "bone2", "bone": "bone2" },
-	{ "name": "bone7", "bone": "bone7" },
-	{ "name": "bone3", "bone": "bone3", "attachment": "characters/goblin/arm_front_top" },
-	{ "name": "arm_front_mid", "bone": "bone10", "attachment": "characters/goblin/arm_front_mid" },
-	{ "name": "arm_front_end", "bone": "bone11", "attachment": "characters/goblin/arm_front_end" }
+	{ "name": "weapon", "bone": "bone7", "attachment": "characters/goblin/halberd" },
+	{ "name": "images/goblin1/head", "bone": "bone2", "attachment": "head" },
+	{ "name": "bone3", "bone": "bone3", "attachment": "arm_front_top" },
+	{ "name": "arm_front_mid", "bone": "bone10", "attachment": "arm_front_mid" },
+	{ "name": "arm_front_end", "bone": "bone11", "attachment": "arm_front_end" }
 ],
 "skins": {
 	"default": {
-		"arm_front_end": {
-			"characters/goblin/arm_front_end": { "x": 14.68, "y": 2.47, "rotation": 167.24, "width": 113, "height": 114 }
-		},
-		"arm_front_mid": {
-			"characters/goblin/arm_front_mid": { "x": 30.18, "y": -10.07, "rotation": 156.87, "width": 113, "height": 114 }
-		},
-		"bone3": {
-			"characters/goblin/arm_front_top": { "x": 33.74, "y": -14.55, "rotation": 61.1, "width": 113, "height": 114 }
-		},
-		"images/goblin1/arm_back": {
-			"characters/goblin/arm_back": { "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
-		},
-		"images/goblin1/head": {
-			"characters/goblin/head": { "x": 68.94, "y": -9.84, "rotation": -133.35, "width": 144, "height": 147 },
-			"characters/goblin/head_alt": { "x": 68.94, "y": -9.84, "rotation": -133.35, "width": 144, "height": 147 }
-		},
 		"images/goblin1/leg_top": {
-			"characters/goblin/leg_top": { "x": 13.42, "y": 3.89, "rotation": -76.48, "width": 113, "height": 114 }
+			"characters/goblin/leg_top": { "x": 22.02, "y": 1, "rotation": 96.42, "width": 113, "height": 114 }
 		},
 		"leg_end": {
 			"characters/goblin/leg_end": { "x": 3.72, "y": 0.44, "rotation": 160.06, "width": 113, "height": 114 }
@@ -86,10 +63,101 @@
 			"characters/goblin/axe": { "x": 88.78, "y": 4.07, "scaleX": 0.848, "scaleY": 0.848, "rotation": 166.46, "width": 531, "height": 121 },
 			"characters/goblin/halberd": { "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": 178.8, "width": 531, "height": 121 }
 		}
+	},
+	"goblin1": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/1/arm_front_end", "x": 14.68, "y": 2.47, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/1/arm_front_mid", "x": 30.18, "y": -10.07, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/1/arm_front_top", "x": 33.74, "y": -14.55, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/1/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/1/head", "x": 68.94, "y": -9.84, "rotation": -133.35, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/1/head_alt", "x": 68.94, "y": -9.84, "rotation": -133.35, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/1/neck", "x": 22.29, "y": 10.17, "rotation": -130.41, "width": 72, "height": 59 }
+		}
+	},
+	"goblin2": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/2/arm_front_end", "x": 14.7, "y": 2.52, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/2/arm_front_mid", "x": 30.19, "y": -10.05, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/2/arm_front_top", "x": 33.71, "y": -14.53, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/2/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/2/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/2/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/2/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
+		}
+	},
+	"goblin3": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/3/arm_front_end", "x": 14.7, "y": 2.52, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/3/arm_front_mid", "x": 30.19, "y": -10.05, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/3/arm_front_top", "x": 33.71, "y": -14.53, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/3/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/3/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/3/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/3/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
+		}
+	},
+	"goblin4": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/4/arm_front_end", "x": 14.7, "y": 2.52, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/4/arm_front_mid", "x": 30.19, "y": -10.05, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/4/arm_front_top", "x": 33.71, "y": -14.53, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/4/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/4/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/4/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/4/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
+		}
 	}
 },
 "animations": {
 	"attack_slash": {
+		"slots": {
+			"images/goblin1/head": {
+				"attachment": [
+					{ "time": 0, "name": "head" }
+				]
+			}
+		},
 		"bones": {
 			"bone3": {
 				"rotate": [
@@ -117,7 +185,8 @@
 				"rotate": [
 					{ "time": 0, "angle": 0 },
 					{ "time": 0.6667, "angle": -63.7 },
-					{ "time": 0.9, "angle": -354.94 }
+					{ "time": 0.9, "angle": -354.94 },
+					{ "time": 1.1667, "angle": 5.06 }
 				],
 				"translate": [
 					{ "time": 0, "x": 0, "y": 1.45 },
@@ -152,10 +221,10 @@
 		"slots": {
 			"images/goblin1/head": {
 				"attachment": [
-					{ "time": 0, "name": "characters/goblin/head" },
-					{ "time": 0.2, "name": "characters/goblin/head_alt" },
-					{ "time": 0.4667, "name": "characters/goblin/head_alt" },
-					{ "time": 0.6, "name": "characters/goblin/head" }
+					{ "time": 0, "name": "head" },
+					{ "time": 0.2, "name": "head_eyes_closed" },
+					{ "time": 0.4667, "name": "head_eyes_closed" },
+					{ "time": 0.6, "name": "head" }
 				]
 			}
 		},
@@ -207,6 +276,13 @@
 		}
 	},
 	"attack_lunge": {
+		"slots": {
+			"images/goblin1/head": {
+				"attachment": [
+					{ "time": 0, "name": "head" }
+				]
+			}
+		},
 		"bones": {
 			"bone3": {
 				"rotate": [
@@ -313,8 +389,8 @@
 		"slots": {
 			"images/goblin1/head": {
 				"attachment": [
-					{ "time": 0, "name": "characters/goblin/head" },
-					{ "time": 0.6667, "name": "characters/goblin/head_alt" }
+					{ "time": 0, "name": "head" },
+					{ "time": 0.6667, "name": "head_eyes_closed" }
 				]
 			}
 		},

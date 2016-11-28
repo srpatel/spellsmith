@@ -254,6 +254,7 @@ bool Game::init() {
 	// TODO : Check there is room...
 	// Wizard
 	wizard->sprite = scenery->wizardsprite;
+	wizard->is_skeleton = true;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
 	layout.melee_spot.x = wizard->sprite->getPositionX() + wizard->sprite->getBoundingBox().size.width * wizard->sprite->getScale();
@@ -479,6 +480,7 @@ bool Game::onCastSpell(Chain *chain) {
 		if (spell) {
 			// cast a spell!
 			DoSpell::run(this, spell, chain);
+			scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
 		} else {
 			// cast a chain!
 			
@@ -492,6 +494,7 @@ bool Game::onCastSpell(Chain *chain) {
 				case EARTH: colour = Color3B::GREEN; break;
 				default:break;
 			}
+			scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
 			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
 		}
 		
@@ -561,7 +564,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	}
 	actionQueued();
 	
-	float scale = 0.5 + MIN(damage, 20) / 4.f;
+	float scale = 1;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
 	if (type == Color3B::WHITE) {
 		projectile = BasicWind::create(from, to, scale, onHit);
@@ -757,6 +760,7 @@ void Game::enemyDoTurn() {
 							wizard->health -= damage;
 							auto dealDamage = CallFunc::create([this, damage](){
 								wizard->ui_health -= damage;
+								((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
 								updateHealthBars();
 							});
 							

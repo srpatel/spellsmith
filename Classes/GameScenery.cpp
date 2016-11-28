@@ -9,6 +9,7 @@
 #include "GameScenery.hpp"
 #include "Shaders.hpp"
 #include "Constants.h"
+#include "ImageManager.hpp"
 
 bool GameScenery::init(Size size) {
 	if ( !Layer::init() )
@@ -56,9 +57,8 @@ bool GameScenery::init(Size size) {
 		enemy_positions1[i].y = 8 + (i % 2) * ydiff * 0.1;
 	}
 	
-	wizardsprite = LoadSprite("characters/wizard.png");
-	wizardsprite->setAnchorPoint(Vec2(0, 0));
-	wizardsprite->setPosition(15, 0);
+	wizardsprite = spine::SkeletonAnimation::createWithFile("spine/wizard.json", ImageManager::get()->getAtlas(), 0.4f);
+	wizardsprite->setPosition(50 * char_scale, 10 * char_scale);
 	wizardsprite->setScale(char_scale);
 	
 	addChild(wizardsprite);

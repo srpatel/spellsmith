@@ -62,6 +62,12 @@ void MonsterManager::init() {
 				it++;
 			}
 		}
+		if (json_skeleton.HasMember("skins")) {
+			for (int j = json_skeleton["skins"].Size() - 1; j >= 0; j--) {
+				const rapidjson::Value& a = json_skeleton["skins"][j];
+				m->skeleton.skins.push_back(a.GetString());
+			}
+		}
 		
 		m->attack_frequency = json_attack_frequency.GetInt();
 		int total_attack_ratio = 0;
@@ -96,8 +102,13 @@ spine::SkeletonAnimation *Monster::makeSkeleton() {
 	
 	// Set attachments
 	for (auto it : skeleton.attachments) {
-		printf("%s -> %s\n", it.first.c_str(), it.second.c_str());
 		boy->setAttachment(it.first, it.second);
+	}
+	
+	// Set skin
+	if (skeleton.skins.size() > 0) {
+		int i = rand() % skeleton.skins.size();
+		boy->setSkin(skeleton.skins[i]);
 	}
 
 	return boy;

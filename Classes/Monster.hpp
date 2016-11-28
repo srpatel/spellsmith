@@ -19,6 +19,7 @@ class SkeletonDef {
 public:
 	std::string path;
 	std::map<std::string, std::string> attachments;
+	std::vector<std::string> skins;
 };
 
 class Attack {

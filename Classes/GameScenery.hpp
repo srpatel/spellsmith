@@ -9,6 +9,7 @@
 #ifndef GameScenery_hpp
 
 #include "Characters.hpp"
+#include "spine.h"
 
 class GameScenery : public Layer {
 public:
@@ -20,7 +21,7 @@ public:
 	void placeMonsters(std::vector<Enemy *> *);
 	void setSelected(int);
 	CREATE_FUNC_1(GameScenery, Size);
-	Sprite *wizardsprite;
+	spine::SkeletonAnimation *wizardsprite;
 	void showFlags(int flagType);
 	float char_scale;
 private:

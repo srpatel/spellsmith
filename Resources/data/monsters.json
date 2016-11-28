@@ -3,6 +3,12 @@
     "name": "goblin_halberd",
     "skeleton": {
       "name": "enemy_humanoid",
+      "skins": [
+        "goblin1",
+        "goblin2",
+        "goblin3",
+        "goblin4"
+      ],
       "attachments": [
         {
           "weapon": "characters/goblin/halberd"
@@ -24,6 +30,12 @@
     "name": "goblin_axe",
     "skeleton": {
       "name": "enemy_humanoid",
+      "skins": [
+        "goblin1",
+        "goblin2",
+        "goblin3",
+        "goblin4"
+      ],
       "attachments": [
         {
           "weapon": "characters/goblin/axe"
