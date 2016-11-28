@@ -78,7 +78,6 @@ bool Game::init() {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		
 		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
-		printf("Scenery size: %g\n", getBoundingBox().size.height - layout.column_height);
 		scenery->setAnchorPoint(Vec2(0, 0));
 		scenery->setPosition(0, layout.column_height);
 		addChild(scenery);
@@ -250,10 +249,10 @@ bool Game::init() {
 | (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
  \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
 */
-	//float chars_y_end = visibleSize.height;
-	// TODO : Check there is room...
 	// Wizard
 	wizard->sprite = scenery->wizardsprite;
+	// TODO : calculate height from skeleton bounding box?
+	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0);
 	wizard->is_skeleton = true;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
@@ -494,7 +493,11 @@ bool Game::onCastSpell(Chain *chain) {
 				case EARTH: colour = Color3B::GREEN; break;
 				default:break;
 			}
-			scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
+			if (chain->type == EARTH) {
+				scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
+			} else {
+				scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
+			}
 			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
 		}
 		
@@ -503,8 +506,10 @@ bool Game::onCastSpell(Chain *chain) {
 	return success;
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
-	auto from = Vec2(source->sprite->getPosition().x + 90, getContentSize().height - 100);
-	auto to = Vec2(target->sprite->getPosition().x - 60, getContentSize().height - 100);
+printf("%g %g\n", source->projectile_height, scenery->char_scale);
+	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
+	auto from = Vec2(source->sprite->getPosition().x + 90, start_y);
+	auto to = Vec2(target->sprite->getPosition().x - 60, start_y);
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
@@ -564,7 +569,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	}
 	actionQueued();
 	
-	float scale = 1;//0.5 + MIN(damage, 20) / 4.f;
+	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
 	if (type == Color3B::WHITE) {
 		projectile = BasicWind::create(from, to, scale, onHit);
@@ -575,7 +580,15 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	} else {
 		projectile = BasicFire::create(from, to, scale, onHit);
 	}
-	addChild(projectile);
+	// Wait for 0.56 seconds as that is when the staff is in the right place
+	// TODO : Events
+	projectile->retain();
+	auto delay = DelayTime::create(14.0/30.0);
+	auto run = CallFunc::create([this, projectile](){
+		scenery->addChild(projectile);
+		projectile->release();
+	});
+	runAction(Sequence::create(delay, run, nullptr));
 }
 
 void Game::onWizardTurnOver() {

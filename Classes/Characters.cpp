@@ -138,6 +138,7 @@ Enemy::Enemy(Monster *m, int index) {
 	ui_health = max_health;
 	is_skeleton = true;
 	sprite = monster->makeSkeleton();
+	projectile_height = sprite->getContentSize().height / 2.0;
 	sprite->retain();
 	buffHolder = Layer::create();
 	sprite->addChild(buffHolder);

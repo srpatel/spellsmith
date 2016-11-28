@@ -42,6 +42,7 @@ public:
 	int health;
 	int ui_health;
 	bool is_skeleton = false;
+	float projectile_height;
 	Node *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
