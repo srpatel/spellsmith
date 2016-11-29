@@ -69,12 +69,13 @@ bool GameScenery::init(Size size) {
 	banner = LoadSprite("ui/bannerlevelup.png");
 	// Move banner up a bit - see mockup
 	banner->setAnchorPoint(Vec2(0.5, 0.42));
+	banner->setScale(char_scale);
 	banner->setOpacity(0);
 	message->addChild(banner);
-	bigText = Label::createWithTTF( "", Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	littleText = Label::createWithTTF( "", Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	bigText = Label::createWithTTF( "", Fonts::TITLE_FONT, Fonts::TITLE_SIZE * char_scale);
+	littleText = Label::createWithTTF( "", Fonts::TEXT_FONT, Fonts::TEXT_SIZE * char_scale);
 	bigText->setPosition(0, 0);
-	littleText->setPosition(0, 4-Fonts::TITLE_SIZE);
+	littleText->setPosition(0, 4-Fonts::TITLE_SIZE * char_scale);
 	bigText->enableOutline(Color4B::BLACK, 1);
 	littleText->enableOutline(Color4B::BLACK, 1);
 	message->addChild(bigText);
@@ -116,7 +117,8 @@ void GameScenery::showFlags(int flagType) {
 		if (flagType == FLAG_TYPE_WIN) {
 			flags[0] = LoadSprite("ui/flag_levelup.png");
 			flags[1] = LoadSprite("ui/flag_levelup.png");
-			flags[1]->setScaleX(-1);
+			flags[0]->setScale(char_scale);
+			flags[1]->setScale(-char_scale, char_scale);
 			flags[0]->setAnchorPoint(Vec2(0, 0.5));
 			flags[1]->setAnchorPoint(Vec2(0, 0.5));
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
@@ -141,6 +143,8 @@ void GameScenery::showFlags(int flagType) {
 		} else if (flagType == FLAG_TYPE_LOSE) {
 			flags[0] = LoadSprite("ui/flag_death_left.png");
 			flags[1] = LoadSprite("ui/flag_death_right.png");
+			flags[0]->setScale(char_scale);
+			flags[1]->setScale(char_scale);
 			flags[0]->setAnchorPoint(Vec2(0, 0.5));
 			flags[1]->setAnchorPoint(Vec2(0, 0.5));
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
