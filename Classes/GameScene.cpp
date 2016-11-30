@@ -267,8 +267,6 @@ bool Game::init() {
 | |  | | |__| | |__| |
 |_|  |_|\____/|_____/
 */
-	// Hearts and options menu etc.
-	
 	// More background (must be done after grid because of sizing) 60 high.
 	hud = GameHUD::create();
 	hud->setContentSize(
@@ -299,7 +297,8 @@ bool Game::init() {
  */
 	Sprite *optionsButton = LoadSprite("ui/options.png");
 	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
-	optionsButton->setPosition(layout.column_width/2 - 4, 34);
+	optionsButton->setScale(ui_scale);
+	optionsButton->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
 	addChild(optionsButton);
 	
 	auto onOptionsClick = EventListenerTouchOneByOne::create();
@@ -645,7 +644,6 @@ void Game::attemptSetState(GameState nextstate) {
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
-						//GameController::get()->showLevelEndDialog(false);
 						auto levelEnd = GameOverPopup::create();
 						// put it in the middle of the grid
 						levelEnd->setPosition(grid->getPosition());

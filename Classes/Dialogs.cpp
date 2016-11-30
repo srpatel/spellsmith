@@ -16,126 +16,20 @@
 #include "ui/CocosGUI.h"
 
 bool OptionsDialog::init() {
-	float xmax = 150;
-	float ymax = 150;
-	if ( !Dialog::init(true, xmax*2, ymax*2) ) {
+	auto size = Size(300, 300);
+	if ( !Dialog::init(true, size.width, size.height) ) {
 		return false;
 	}
 	
-	auto background = cocos2d::DrawNode::create();
-	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
-	addChild(background);
-	
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
+
 	auto label = Label::createWithTTF( "Options", Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	this->addChild(label, 1);
-	
-	return true;
-}
-
-bool LevelWonDialog::init() {
-	float xmax = 150;
-	float ymax = 150;
-	if ( !Dialog::init(false, xmax*2, ymax*2) ) {
-		return false;
-	}
-	
-	auto background = cocos2d::DrawNode::create();
-	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
-	addChild(background);
-	
-	// stars!
-		// if you won, they animate in 1/2/3 of them
-		// if you'd already won it, the previous is shown somewhere?
-	// "congratulations!" or "Unlucky!"
-	// some stats?
-	// if lost: "retry": button
-	// "map" button
-	
-	auto label = Label::createWithTTF( _("ui.LEVEL_WON"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, 80));
-	this->addChild(label, 1);
-	
-	{
-		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button->setTitleFontName(Fonts::TEXT_FONT);
-		button->setTitleText _("ui.RETURN_TO_MAP");
-		
-		button->setPosition(Vec2(0, -80));
-		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED) {
-				auto gc = GameController::get();
-				gc->popDialog();
-				gc->setState(kStateMainMenu);
-			}
-		});
-		this->addChild(button);
-	}
-	
-	return true;
-}
-
-bool LevelLostDialog::init() {
-	float xmax = 150;
-	float ymax = 150;
-	
-	if ( !Dialog::init(false, xmax*2, ymax*2) ) {
-		return false;
-	}
-	
-	auto background = cocos2d::DrawNode::create();
-	
-	background->drawSolidRect(Vec2(-xmax, -ymax), Vec2(xmax, ymax), Color4F::WHITE);
-	addChild(background);
-	
-	// stars!
-	// if you won, they animate in 1/2/3 of them
-	// if you'd already won it, the previous is shown somewhere?
-	// "congratulations!" or "Unlucky!"
-	// some stats?
-	// if lost: "retry": button
-	// "map" button
-	
-	auto label = Label::createWithTTF( _("ui.LEVEL_LOST"), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, 80));
-	this->addChild(label, 1);
-	
-	{
-		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button->setTitleFontName(Fonts::TEXT_FONT);
-		button->setTitleText _("ui.RETRY_LEVEL");
-		
-		button->setPosition(Vec2(0, -40));
-		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED) {
-				auto gc = GameController::get();
-				gc->popDialog();
-				
-				// Reset game state
-				Game::get()->startGame(nullptr);
-			}
-		});
-		this->addChild(button);
-	}
-	
-	{
-		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button->setTitleFontName(Fonts::TEXT_FONT);
-		button->setTitleText _("ui.RETURN_TO_MAP");
-		
-		button->setPosition(Vec2(0, -80));
-		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED) {
-				auto gc = GameController::get();
-				gc->popDialog();
-				gc->setState(kStateMainMenu);
-			}
-		});
-		this->addChild(button);
-	}
 	
 	return true;
 }

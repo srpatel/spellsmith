@@ -70,18 +70,6 @@ void GameController::popDialog() {
 		// shouldn't get here!
 	}
 }
-void GameController::showLevelEndDialog(bool victory) {
-	// Create the dialog and add it to the root
-	Dialog *dialog;
-	if (victory) {
-		dialog = LevelWonDialog::create();
-	} else {
-		dialog = LevelLostDialog::create();
-	}
-	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog);
-	dialog_stack.push_back(dialog);
-}
 void GameController::showSpellInfoDialog(Spell *spell) {
 	Dialog *dialog = SpellInfoDialog::create(spell);
 	dialog->setPosition(root->getContentSize()/2);

@@ -30,8 +30,6 @@ private:
 	float centralWidth, centralHeight;
 };
 
-SIMPLE_DIALOG(LevelWonDialog);
-SIMPLE_DIALOG(LevelLostDialog);
 SIMPLE_DIALOG(OptionsDialog);
 
 class SpellInfoDialog : public Dialog {
