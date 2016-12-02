@@ -61,7 +61,8 @@
 		},
 		"weapon": {
 			"characters/goblin/axe": { "x": 88.78, "y": 4.07, "scaleX": 0.848, "scaleY": 0.848, "rotation": 166.46, "width": 531, "height": 121 },
-			"characters/goblin/halberd": { "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": 178.8, "width": 531, "height": 121 }
+			"characters/goblin/halberd": { "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": 178.8, "width": 531, "height": 121 },
+			"characters/goblin/sword": { "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": 150.0, "width": 531, "height": 121 }
 		}
 	},
 	"goblin1": {

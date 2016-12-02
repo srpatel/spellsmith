@@ -52,5 +52,38 @@
         "amount": 5
       }
     ]
+  },
+  {
+    "name": "goblin_sword",
+    "skeleton": {
+      "name": "enemy_humanoid",
+      "skins": [
+        "goblin1",
+        "goblin2",
+        "goblin3",
+        "goblin4"
+      ],
+      "attachments": [
+        {
+          "weapon": "characters/goblin/sword"
+        }
+      ]
+    },
+    "health": 15,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack_lunge",
+        "amount": 5
+      },
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack_slash",
+        "amount": 3
+      }
+    ]
   }
 ]

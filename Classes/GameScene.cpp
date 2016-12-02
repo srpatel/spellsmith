@@ -428,7 +428,7 @@ bool Game::onCastSpell(Chain *chain) {
 		}
 	}
 	if (spell) {
-			const auto size = Size(61 * layout.ui_scale, 88 * layout.ui_scale) / Director::getInstance()->getContentScaleFactor();
+			const auto size = Size(30 * layout.ui_scale, 44 * layout.ui_scale);
 		
 			auto glow = LayerColor::create(Color4B::WHITE, size.width, size.height);
 			glow->setPosition(spell->mininode->getPosition() - size/2);
