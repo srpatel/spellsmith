@@ -18,7 +18,6 @@ bool Popup::init(float width, float height) {
 	
 	setContentSize(Size(width, height));
 	
-	//auto sf = Director::getInstance()->getContentScaleFactor();
 	auto sprite = ui::Scale9Sprite::createWithSpriteFrame(
 		LoadSpriteFrame("popup/popup9.png"),
 		Rect(12, 12, 7, 9)

@@ -15,8 +15,8 @@
 #define SIZE_IPHONE_6P Size(1080, 1920)
 #define SIZE_IPAD_RET  Size(1536, 2048)
 #define SIZE_IPAD      Size(768, 1024)
-//static Size screenSize = SIZE_IPHONE_5/2;
-static Size screenSize = SIZE_IPAD_RET/4;
+static Size screenSize = SIZE_IPHONE_5;
+//static Size screenSize = SIZE_IPAD_RET/4;
 
 static Size designResolutionSize = Size(320, 568);
 
@@ -103,6 +103,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setContentScaleFactor(1);
 		atlas = spAtlas_createFromFile("atli/spritesheet-base.atlas", 0);
 	}
+	
+	printf("Content scale factor: %g\n", director->getContentScaleFactor());
 	
 	
 	spAtlasRegion* region = atlas->regions;
