@@ -591,6 +591,10 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 
 void Game::onWizardTurnOver() {
+	// Tick all the wizard buffs
+	// TODO - All enemy buffs too
+	wizard->tickBuffs();
+
 	// If the selected enemy has 0 hp, then you can't select it!
 	setSelected(currentEnemy); // We just select the current one - the logic is in here.
 	// enemy gets a shot at you!

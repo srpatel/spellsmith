@@ -15,7 +15,9 @@
 enum BuffType {
 	BARRIER,
 	FREEZE,
-	STUN
+	STUN,
+	FURY,
+	KINGS_COURT
 };
 
 struct Buff {
@@ -31,6 +33,8 @@ struct Buff {
 	static Buff *createMudshield();
 	static Buff *createFreeze(int amount);
 	static Buff *createStun();
+	static Buff *createFury();
+	static Buff *createKingsCourt();
 	~Buff();
 };
 
@@ -49,6 +53,7 @@ public:
 	void addBuff(Buff *);
 	void removeBuff(Buff *);
 	void updateBuffs();
+	void tickBuffs();
 	inline bool dead() { return health <= 0; }
 	Layer *buffHolder;
 };

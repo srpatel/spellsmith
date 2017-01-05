@@ -88,6 +88,7 @@ void SpellManager::init() {
 					case 'W': g = WATER; break;
 					case 'E': g = EARTH; break;
 					case 'A': g = AIR; break;
+					case 'X': g = CRYSTAL; break;
 				}
 				if (g != NONE) {
 					s->shape at(k, MAX_HEIGHT - j - 1) = g;

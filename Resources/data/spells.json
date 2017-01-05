@@ -88,14 +88,25 @@
     ]
   },
   {
-    "name": "crystalise",
+    "name": "fury",
     "tier": 2,
     "shape": [
       "     ",
       "     ",
+      "     ",
+      "  R  ",
+      "GR   "
+    ]
+  },
+  {
+    "name": "crystalise",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "E    ",
       " A   ",
-      "F E  ",
-      " W   "
+      " F   ",
+      "  W  "
     ]
   },
   {
@@ -151,6 +162,17 @@
       " E   ",
       "EE   ",
       "  E  "
+    ]
+  },
+  {
+    "name": "focus",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      " X   ",
+      "B B  ",
+      " B   "
     ]
   }
 ]

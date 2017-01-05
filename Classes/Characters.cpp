@@ -45,10 +45,8 @@ Buff *Buff::createFreeze(int amount){
 	
 	buff->icon = "buffs/frozen.png";
 	
-	buff->sprite = LoadSprite("spells/mudshield.png");
-	buff->sprite->retain();
+	buff->sprite = nullptr;
 	
-	buff->sprite->setAnchorPoint(Vec2(0.5, 0));
 	buff->turns = -1; // -1 = forever, n = lasts n more turns
 	buff->charges = amount; // -1 = infinite, n = n charges remaining
 	
@@ -64,12 +62,44 @@ Buff *Buff::createStun(){
 	
 	buff->icon = "buffs/stun.png";
 	
-	buff->sprite = LoadSprite("spells/mudshield.png");
-	buff->sprite->retain();
+	buff->sprite = nullptr;
 	
-	buff->sprite->setAnchorPoint(Vec2(0.5, 0));
 	buff->turns = -1; // -1 = forever, n = lasts n more turns
 	buff->charges = 1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
+Buff *Buff::createKingsCourt(){
+	auto buff = new Buff;
+	buff->type = BuffType::KINGS_COURT;
+	buff->positive = true;
+	
+	buff->icon = "buffs/kingscourt.png";
+	
+	buff->sprite = nullptr;
+	
+	buff->turns = 1; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
+Buff *Buff::createFury(){
+	auto buff = new Buff;
+	buff->type = BuffType::FURY;
+	buff->positive = true;
+	
+	buff->icon = "buffs/fury.png";
+	
+	buff->sprite = nullptr;
+	
+	buff->turns = 1; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
 	
 	buff->priority = 1;
 	
@@ -123,6 +153,18 @@ void Character::updateBuffs() {
 		// also draw num charges
 		s->setPosition(x += 25, y);
 	}
+}
+
+void Character::tickBuffs() {
+	for (Buff *b : buffs) {
+		if (b->turns > 0) {
+			b->turns--;
+		}
+	}
+	buffs.erase(std::remove_if(buffs.begin(), buffs.end(),
+	                           [](Buff *b){ return b->turns == 0; }),
+	            buffs.end());
+	updateBuffs();
 }
 
 Enemy::Enemy(Monster *m, int index) {

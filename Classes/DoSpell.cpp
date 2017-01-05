@@ -9,7 +9,7 @@
 #include "DoSpell.hpp"
 #include "Characters.hpp"
 
-#define IF_SPELL(s) if (strcmp(spell->getRawName().c_str(), #s) == 0)
+#define IF_SPELL(s) else if (strcmp(spell->getRawName().c_str(), #s) == 0)
 
 class AmountGenerator {
 public:
@@ -18,20 +18,60 @@ public:
 	}
 };
 
-#define HEAL(_n_) {auto amt = _n_; game->wizard->ui_health += amt;\
-game->wizard->health += amt;\
-if (game->wizard->health > game->wizard->max_health) {\
-	game->wizard->ui_health = game->wizard->max_health;\
-	game->wizard->health = game->wizard->max_health;\
-}}
+#define D(_n_) (_n_ * damageModifier)
+#define D(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
+
+#define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
+#define HEAL(_n_) {\
+	auto amt = _n_; \
+	game->wizard->ui_health += amt;\
+	game->wizard->health += amt;\
+	if (game->wizard->health > game->wizard->max_health) {\
+		game->wizard->ui_health = game->wizard->max_health;\
+		game->wizard->health = game->wizard->max_health;\
+	}\
+	game->updateHealthBars();\
+	}
+#define PROJ(_n_, _t_) game->makeProjectile(\
+	game->wizard, \
+	game->enemies[game->currentEnemy], \
+	_n_,\
+	_t_);
+#define PROJ_RAND(_n_, _t_) { int i = game->getNextAliveEnemy(rand() % game->enemies.size());\
+	game->makeProjectile(\
+	game->wizard, \
+	game->enemies[i], \
+	_n_,\
+	_t_); }
 
 void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
+	// Modifiers
+	// Rage
+	int damageModifier = 1;
+	if (game->wizard->getBuffByType(BuffType::FURY)) {
+		damageModifier = 2;
+	}
+	// King's Court
+	if (game->wizard->getBuffByType(BuffType::KINGS_COURT)) {
+		// Repeat the spell twice more!
+		run(game, spell, chain);
+		run(game, spell, chain);
+	}
+
+	if (1 == 0);
+	IF_SPELL(focus) {
+		// cast the next spell three times
+		game->wizard->addBuff( Buff::createKingsCourt() );
+	}
+	IF_SPELL(fury) {
+		// deal double damage next turn
+		game->wizard->addBuff( Buff::createFury() );
+	}
 	IF_SPELL(fireball) {
 		// deal 10 damage
-		game->makeProjectile(
-			game->wizard,
-			game->enemies[game->currentEnemy], 10, Color3B::RED);
-	} else IF_SPELL(mud_shield) {
+		PROJ( D(10), Color3B::RED );
+	}
+	IF_SPELL(mud_shield) {
 		// block next 2 attacks
 		Buff *shield = game->wizard->getBuffByType(BuffType::BARRIER);
 	 
@@ -53,76 +93,71 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 		} else {
 			shield->charges = 2;
 		}
-	} else IF_SPELL(forest_breeze) {
+	}
+	IF_SPELL(forest_breeze) {
 		// gain 5
 		HEAL(5);
-		game->updateHealthBars();
-	} else IF_SPELL(lightning_bolt) {
+	} 
+	IF_SPELL(lightning_bolt) {
 		// deal 1-12
-		int amount = AmountGenerator::between(1, 12);
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[game->currentEnemy], amount, Color3B::YELLOW);
-	} else IF_SPELL(chill) {
+		PROJ( D(1, 12), Color3B::YELLOW );
+	}
+	IF_SPELL(chill) {
 		// slow enemy by 2 turns
 		game->enemies[game->currentEnemy]->attack_clock += 2;
 		game->hud->updateAttackClocks();
-	} else IF_SPELL(firewisp) {
+	}
+	IF_SPELL(firewisp) {
 		// deal 6 damage
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[game->currentEnemy], 6, Color3B::RED);
-	} else IF_SPELL(healstrike) {
+		PROJ( D(6), Color3B::RED );
+	}
+	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
 		HEAL(5);
-		game->updateHealthBars();
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[game->currentEnemy], 5, Color3B::RED);
-	} else IF_SPELL(volcanic) {
+		PROJ( D(5), Color3B::RED );
+	}
+	IF_SPELL(volcanic) {
 		// deal 10 damage to everyone
-		game->wizard->ui_health -= 10;
-		game->wizard->health -= 10;
+		game->wizard->ui_health -= D(10);
+		game->wizard->health -= D(10);
 		for (Enemy *e : game->enemies) {
-			e->ui_health -= 10;
-			e->health -= 10;
+			e->ui_health -= D(10);
+			e->health -= D(10);
 		}
 		game->updateHealthBars();
-	} else IF_SPELL(crystalise) {
+	}
+	IF_SPELL(crystalise) {
 		// heal 3, create 3 crystal gems
 		HEAL(3);
-		game->grid->createRandomCrystalGems(3, chain);
-		game->updateHealthBars();
-	} else IF_SPELL(zap) {
+		CRYSTAL(3);
+	}
+	IF_SPELL(zap) {
 		// deal 10 to a random enemy
-		int i = game->getNextAliveEnemy(rand() % game->enemies.size());
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[i], 10, Color3B::YELLOW);
-	} else IF_SPELL(smelt) {
+		PROJ_RAND( D(10), Color3B::YELLOW );
+	}
+	IF_SPELL(smelt) {
 		// deal 6 damage, create 1 crystal gem
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[game->currentEnemy], 6, Color3B::RED);
-		game->grid->createRandomCrystalGems(1, chain);
-	} else IF_SPELL(ice_bolt) {
+		PROJ( D(6), Color3B::RED );
+		CRYSTAL(1);
+	}
+	IF_SPELL(ice_bolt) {
 		// deal 3 damage, 50% chance to freeze 2
-		game->makeProjectile(
-							 game->wizard,
-							 game->enemies[game->currentEnemy], 3, Color3B::BLUE);
+		PROJ( D(3), Color3B::BLUE );
 		if (rand() % 2) {
 			game->enemies[game->currentEnemy]->addBuff(
 												   Buff::createFreeze(2)
 												   );
 		}
-	} else IF_SPELL(stun_strike) {
+	}
+	IF_SPELL(stun_strike) {
 		// stun
 		game->enemies[game->currentEnemy]->addBuff(Buff::createStun());
-	} else IF_SPELL(earthquake) {
+	}
+	IF_SPELL(earthquake) {
 		// 5 damage to each enemy. 50% chance to stun.
 		for (Enemy *e : game->enemies) {
-			e->ui_health -= 5;
-			e->health -= 5;
+			e->ui_health -= D(5);
+			e->health -= D(5);
 			if (rand() % 2) {
 				e->addBuff(Buff::createStun());
 			}
