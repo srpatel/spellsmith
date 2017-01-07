@@ -89,7 +89,11 @@
   {
     "name": "dog",
     "skeleton": {
-      "name": "dog"
+      "name": "dog",
+      "skins": [
+        "grey",
+        "brown"
+      ]
     },
     "health": 15,
     "attack_frequency": 1,
@@ -97,7 +101,7 @@
       {
         "ratio": 1,
         "type": "melee",
-        "animation": "Attack_1",
+        "animation": "attack",
         "amount": 5
       }
     ]
