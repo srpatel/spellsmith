@@ -85,5 +85,21 @@
         "amount": 3
       }
     ]
+  },
+  {
+    "name": "dog",
+    "skeleton": {
+      "name": "dog"
+    },
+    "health": 15,
+    "attack_frequency": 1,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "Attack_1",
+        "amount": 5
+      }
+    ]
   }
 ]

@@ -13,11 +13,12 @@
 #include "Monster.hpp"
 
 enum BuffType {
-	BARRIER,
+	BARRIER = 1,     // UNUSED!
 	FREEZE,
 	STUN,
 	FURY,
-	KINGS_COURT
+	KINGS_COURT, // UNUSED!
+	PHASING
 };
 
 struct Buff {
@@ -35,6 +36,7 @@ struct Buff {
 	static Buff *createStun();
 	static Buff *createFury();
 	static Buff *createKingsCourt();
+	static Buff *createPhasing();
 	~Buff();
 };
 
@@ -52,6 +54,7 @@ public:
 	Buff *getBuffByType(BuffType);
 	void addBuff(Buff *);
 	void removeBuff(Buff *);
+	void clearBuffs();
 	void updateBuffs();
 	void tickBuffs();
 	inline bool dead() { return health <= 0; }

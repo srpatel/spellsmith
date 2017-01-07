@@ -19,7 +19,7 @@ public:
 };
 
 #define D(_n_) (_n_ * damageModifier)
-#define D(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
+#define D_BETWEEN(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
 
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
 #define HEAL(_n_) {\
@@ -44,7 +44,7 @@ public:
 	_n_,\
 	_t_); }
 
-void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
+void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	// Modifiers
 	// Rage
 	int damageModifier = 1;
@@ -52,16 +52,20 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 		damageModifier = 2;
 	}
 	// King's Court
-	if (game->wizard->getBuffByType(BuffType::KINGS_COURT)) {
+	if (allowRepeats && game->wizard->getBuffByType(BuffType::KINGS_COURT)) {
 		// Repeat the spell twice more!
-		run(game, spell, chain);
-		run(game, spell, chain);
+		run(game, spell, chain, false);
+		run(game, spell, chain, false);
 	}
 
 	if (1 == 0);
 	IF_SPELL(focus) {
 		// cast the next spell three times
 		game->wizard->addBuff( Buff::createKingsCourt() );
+	}
+	IF_SPELL(phase) {
+		// cast the next spell three times
+		game->wizard->addBuff( Buff::createPhasing() );
 	}
 	IF_SPELL(fury) {
 		// deal double damage next turn
@@ -100,7 +104,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain) {
 	} 
 	IF_SPELL(lightning_bolt) {
 		// deal 1-12
-		PROJ( D(1, 12), Color3B::YELLOW );
+		PROJ( D_BETWEEN(1, 12), Color3B::YELLOW );
 	}
 	IF_SPELL(chill) {
 		// slow enemy by 2 turns

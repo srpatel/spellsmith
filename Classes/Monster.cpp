@@ -54,12 +54,14 @@ void MonsterManager::init() {
 		m->name = name;
 		m->hp = health;
 		m->skeleton.path = json_skeleton["name"].GetString();
-		for (int j = json_skeleton["attachments"].Size() - 1; j >= 0; j--) {
-			const rapidjson::Value& a = json_skeleton["attachments"][j];
-			auto it = a.MemberBegin();
-			while (it != a.MemberEnd()) {
-				m->skeleton.attachments[it->name.GetString()] = it->value.GetString();
-				it++;
+		if (json_skeleton.HasMember("attachments")) {
+			for (int j = json_skeleton["attachments"].Size() - 1; j >= 0; j--) {
+				const rapidjson::Value& a = json_skeleton["attachments"][j];
+				auto it = a.MemberBegin();
+				while (it != a.MemberEnd()) {
+					m->skeleton.attachments[it->name.GetString()] = it->value.GetString();
+					it++;
+				}
 			}
 		}
 		if (json_skeleton.HasMember("skins")) {

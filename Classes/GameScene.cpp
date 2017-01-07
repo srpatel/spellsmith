@@ -498,7 +498,12 @@ bool Game::onCastSpell(Chain *chain) {
 			} else {
 				scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
 			}
-			makeProjectile(wizard, enemies[currentEnemy], damage, colour);
+			
+			int damageModifier = 1;
+			if (wizard->getBuffByType(BuffType::FURY)) {
+				damageModifier = 2;
+			}
+			makeProjectile(wizard, enemies[currentEnemy], damage * damageModifier, colour);
 		}
 		
 		onWizardTurnOver();
@@ -591,10 +596,6 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 
 void Game::onWizardTurnOver() {
-	// Tick all the wizard buffs
-	// TODO - All enemy buffs too
-	wizard->tickBuffs();
-
 	// If the selected enemy has 0 hp, then you can't select it!
 	setSelected(currentEnemy); // We just select the current one - the logic is in here.
 	// enemy gets a shot at you!
@@ -611,6 +612,11 @@ void Game::attemptSetState(GameState nextstate) {
 			// enemy casts his spell
 			enemyDoTurn();
 		} else {
+			// It's becoming the player's turn, so tick their buffs.
+			// Tick all the wizard buffs
+			// TODO - All enemy buffs too
+			wizard->tickBuffs();
+			
 			grid->setActive(true);
 		}
 	} else {
@@ -741,6 +747,9 @@ void Game::enemyDoTurn() {
 						// Get up!
 					}), nullptr));
 				} else {
+					// Should the wizard ignore damage?
+					bool phase = wizard->getBuffByType(BuffType::PHASING) != nullptr;
+					
 					// attack
 					auto a = e->monster->getAttack();
 					
@@ -750,7 +759,7 @@ void Game::enemyDoTurn() {
 						// - move up to the wizard
 						// - run the specified animation
 						// - move back
-						action = [this, e, a]() {
+						action = [this, e, a, phase]() {
 							actionQueued();
 							
 							int damage = a->amount;
@@ -772,12 +781,13 @@ void Game::enemyDoTurn() {
 								actionDone();
 							});
 							
-							// TODO : Shields 'n' stuff
 							wizard->health -= damage;
-							auto dealDamage = CallFunc::create([this, damage](){
-								wizard->ui_health -= damage;
-								((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
-								updateHealthBars();
+							auto dealDamage = CallFunc::create([this, damage, phase](){
+								if (! phase) {
+									wizard->ui_health -= damage;
+									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
+									updateHealthBars();
+								}
 							});
 							
 							auto enemySeq = Sequence::create(moveTo, DelayTime::create(attackTime), moveBack, pendingActionDone, nullptr);
@@ -814,6 +824,13 @@ void Game::enemyDoTurn() {
 	}
 }
 void Game::gotoNextEnemy() {
+	// Clear buffs, fully heal, and clear the grid
+	wizard->clearBuffs();
+	/*wizard->ui_health = wizard->max_health;
+	wizard->health = wizard->max_health;
+	updateHealthBars();
+	grid->scramble();*/
+	
 	// we are in charge of free'ing round.
 	Round *round = LevelManager::get()->generateRound(stage);
 	currentRound->setString(ToString(stage));

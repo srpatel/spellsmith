@@ -14,7 +14,7 @@
 
 class DoSpell {
 public:
-	static void run(Game *, Spell *, Chain *);
+	static void run(Game *, Spell *, Chain * , bool allowRepeats = true);
 };
 
 #endif /* DoSpell_hpp */

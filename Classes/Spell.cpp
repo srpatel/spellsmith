@@ -64,6 +64,9 @@ void SpellManager::init() {
 		const rapidjson::Value& spell = doc[i];
 		const rapidjson::Value& shape = spell["shape"];
 		const rapidjson::Value& tier = spell["tier"];
+		if (tier.GetInt() == 99) {
+			continue;
+		}
 		auto s = new Spell(spell["name"].GetString());
 		s->tier = tier.GetInt();
 #if DEBUG

@@ -81,7 +81,7 @@ Buff *Buff::createKingsCourt(){
 	
 	buff->sprite = nullptr;
 	
-	buff->turns = 1; // -1 = forever, n = lasts n more turns
+	buff->turns = 2; // -1 = forever, n = lasts n more turns
 	buff->charges = -1; // -1 = infinite, n = n charges remaining
 	
 	buff->priority = 1;
@@ -98,6 +98,23 @@ Buff *Buff::createFury(){
 	
 	buff->sprite = nullptr;
 	
+	buff->turns = 2; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
+Buff *Buff::createPhasing(){
+	auto buff = new Buff;
+	buff->type = BuffType::PHASING;
+	buff->positive = true;
+	
+	buff->icon = "buffs/phase.png";
+	
+	buff->sprite = nullptr;
+	
 	buff->turns = 1; // -1 = forever, n = lasts n more turns
 	buff->charges = -1; // -1 = infinite, n = n charges remaining
 	
@@ -107,7 +124,8 @@ Buff *Buff::createFury(){
 }
 
 Buff::~Buff() {
-	sprite->release();
+	if (sprite)
+		sprite->release();
 }
 
 Buff *Character::getBuffByType(BuffType type) {
@@ -128,11 +146,61 @@ void Character::addBuff(Buff *buff) {
 		removeBuff(existing);
 	}
 	buffs.push_back(buff);
-	
+	if (buff->type == BuffType::PHASING) {
+		auto f = Sequence::create(
+			FadeTo::create(0.2f, 125),
+			DelayTime::create(1.0f),
+			CallFunc::create([this]() {
+				// if we still have phasing, do nothing.
+				// otherwise, fade out.
+				Buff *existing = getBuffByType(BuffType::PHASING);
+				if (! existing) {
+					auto f = FadeTo::create(0.5f, 255);
+					sprite->runAction(f);
+				}
+			}),
+			nullptr);
+		f->setTag(BuffType::PHASING);
+		sprite->stopActionByTag(BuffType::PHASING);
+		sprite->runAction(f);
+	} else if (buff->type == BuffType::FURY) {
+		auto f = Sequence::create(
+			TintTo::create(0.2f, 255, 125, 125),
+			DelayTime::create(1.0f),
+			CallFunc::create([this]() {
+				// if we still have phasing, do nothing.
+				// otherwise, fade out.
+				Buff *existing = getBuffByType(BuffType::FURY);
+				if (! existing) {
+					auto f = TintTo::create(0.5f, 255, 255, 255);
+					sprite->runAction(f);
+				}
+			}),
+			nullptr);
+		f->setTag(BuffType::FURY);
+		sprite->stopActionByTag(BuffType::FURY);
+		sprite->runAction(f);
+	}
 	updateBuffs();
 }
 
 void Character::removeBuff(Buff *existing) {
+	if (existing->type == BuffType::PHASING) {
+		auto a = sprite->getActionByTag(BuffType::PHASING);
+		if (! a) {
+			auto f = FadeTo::create(0.5f, 255);
+			f->setTag(BuffType::PHASING);
+			sprite->runAction(f);
+		}
+	} else if (existing->type == BuffType::FURY) {
+		auto a = sprite->getActionByTag(BuffType::FURY);
+		if (! a) {
+			auto f = TintTo::create(0.5f, 255, 255, 255);
+			f->setTag(BuffType::FURY);
+			sprite->runAction(f);
+		}
+	}
+	
 	auto position = std::find(buffs.begin(), buffs.end(), existing);
 	if (position != buffs.end()) {
 		buffs.erase(position);
@@ -155,16 +223,32 @@ void Character::updateBuffs() {
 	}
 }
 
+void Character::clearBuffs() {
+	std::vector<Buff *> toDelete;
+	for (Buff *b : buffs) {
+		toDelete.push_back(b);
+	}
+	for (Buff *b : toDelete) {
+		removeBuff(b);
+	}
+	toDelete.clear();
+}
+
+
 void Character::tickBuffs() {
+	std::vector<Buff *> toDelete;
 	for (Buff *b : buffs) {
 		if (b->turns > 0) {
 			b->turns--;
+			if (b->turns == 0) {
+				toDelete.push_back(b);
+			}
 		}
 	}
-	buffs.erase(std::remove_if(buffs.begin(), buffs.end(),
-	                           [](Buff *b){ return b->turns == 0; }),
-	            buffs.end());
-	updateBuffs();
+	for (Buff *b : toDelete) {
+		removeBuff(b);
+	}
+	toDelete.clear();
 }
 
 Enemy::Enemy(Monster *m, int index) {

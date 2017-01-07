@@ -74,10 +74,11 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 	setSelected(0);
 }
 void GameHUD::updateHealthBars() {
-	for (int i = 0; i < enemies->size(); i++) {
-		auto c = enemies->at(i);
-		healthbars[i]->setHealths(c->ui_health, c->max_health);
-	}
+	if (enemies)
+		for (int i = 0; i < enemies->size(); i++) {
+			auto c = enemies->at(i);
+			healthbars[i]->setHealths(c->ui_health, c->max_health);
+		}
 }
 void GameHUD::updateAttackClocks() {
 	for (int i = 0; i < enemies->size(); i++) {
