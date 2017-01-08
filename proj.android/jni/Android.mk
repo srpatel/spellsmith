@@ -38,6 +38,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/SpellPicker.cpp \
 ../../Classes/SpriteLoader.cpp \
 ../../Classes/Strings.cpp \
+../../Classes/TextWisp.cpp \
 ../../Classes/spine/Animation.c \
 ../../Classes/spine/AnimationState.c \
 ../../Classes/spine/AnimationStateData.c \

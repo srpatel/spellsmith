@@ -60,6 +60,28 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 
 	if (1 == 0);
+	IF_SPELL(induce_explosion) {
+		// Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies.
+		auto e = game->enemies[game->currentEnemy];
+		PROJ( D(5), Color3B::RED );
+		if (e->health <= 0) {
+			// Deal 10 the others too!
+			for (Enemy *e : game->enemies) {
+				e->ui_health -= D(10);
+				e->health -= D(10);
+			}
+			game->updateHealthBars();
+		}
+	}
+	IF_SPELL(poison_dart) {
+		// Deal 5 damage. Deal an extra 10 damage if they are below 50% health.
+		int n = 5;
+		auto e = game->enemies[game->currentEnemy];
+		if (e->health * 2 < e->max_health) {
+			n += 10;
+		}
+		PROJ( D(n), Color3B::GREEN );
+	}
 	IF_SPELL(fertilise) {
 		// Replace all green gems with crystal
 		game->grid->makeCrystalsOverGemsOfType( GemType::EARTH, chain );

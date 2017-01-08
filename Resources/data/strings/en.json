@@ -80,6 +80,14 @@
     "fertilise": {
       "name": "Fertilise",
       "description": "Replace all green gems with crystal gems."
+    },
+    "poison_dart": {
+      "name": "Precise Dart",
+      "description": "Deal 5 damage. Deal an extra 10 if the enemy is below 50% health."
+    },
+    "induce_explosion": {
+      "name": "Induce Explosion",
+      "description": "Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies."
     }
   },
   "ui": {
