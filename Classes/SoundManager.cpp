@@ -21,8 +21,8 @@ SoundManager *SoundManager::get() {
 }
 
 void SoundManager::init() {
-	//auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
-	//instance->preloadEffect( ... );
+	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
+	instance->preloadEffect( kSoundEffectSelectGem );
 }
 
 void SoundManager::playEffect( const char *path ) {

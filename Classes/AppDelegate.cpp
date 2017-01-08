@@ -5,6 +5,7 @@
 #include "Level.hpp"
 #include "Monster.hpp"
 #include "ImageManager.hpp"
+#include "SoundManager.hpp"
 
 #include "spine.h"
 
@@ -139,7 +140,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	SpellManager::get()->init();
 	MonsterManager::get()->init();
 	Strings::get()->init();
+	SoundManager::get()->init();
 	
+	// Warn about missing translations
+	for (Spell *spell : SpellManager::get()->spells) {
+		spell->getName();
+	}
 	
 	// Random
 	srand (time(NULL));
