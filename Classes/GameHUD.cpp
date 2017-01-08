@@ -48,7 +48,6 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		attackclocksprite_red->setPosition(x, y);
 		attackclocksprite_black->setPosition(x, y);
 		attackclock_reds[i] = attackclocksprite_red;
-		attackclocksprite_red->setVisible(false);
 		addChild(attackclocksprite_black);
 		addChild(attackclocksprite_red);
 		
@@ -69,6 +68,7 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 		
 		i++;
 	}
+	updateAttackClocks();
 	
 	addChild(arrow);
 	setSelected(0);

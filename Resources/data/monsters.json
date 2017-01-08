@@ -96,7 +96,7 @@
       ]
     },
     "health": 15,
-    "attack_frequency": 1,
+    "attack_frequency": 0,
     "attacks": [
       {
         "ratio": 1,
