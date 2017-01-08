@@ -36,7 +36,7 @@ bool MainMenu::init() {
 	// Play button
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText _("New Game");
+	button->setTitleText _("ui.NEW_GAME");
 	
 	button->setPosition(visibleSize/2);
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {

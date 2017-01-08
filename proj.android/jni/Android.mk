@@ -33,6 +33,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/Projectiles.cpp \
 ../../Classes/SaveData.cpp \
 ../../Classes/Shaders.cpp \
+../../Classes/SoundManager.cpp \
 ../../Classes/Spell.cpp \
 ../../Classes/SpellPicker.cpp \
 ../../Classes/SpriteLoader.cpp \

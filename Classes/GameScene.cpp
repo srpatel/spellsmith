@@ -499,11 +499,14 @@ bool Game::onCastSpell(Chain *chain) {
 				scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
 			}
 			
-			int damageModifier = 1;
+			float damageModifier = 1;
 			if (wizard->getBuffByType(BuffType::FURY)) {
 				damageModifier = 2;
 			}
-			makeProjectile(wizard, enemies[currentEnemy], damage * damageModifier, colour);
+			if (wizard->getBuffByType(BuffType::FOCUS)) {
+				damageModifier = 1.5;
+			}
+			makeProjectile(wizard, enemies[currentEnemy], (int) (damage * damageModifier), colour);
 		}
 		
 		onWizardTurnOver();

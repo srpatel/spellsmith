@@ -10,6 +10,7 @@
 #include "GameScene.hpp"
 #include "Shaders.hpp"
 #include "Constants.h"
+#include "SoundManager.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -311,6 +312,24 @@ void Grid::scramble() {
 	refill();
 }
 
+int Grid::destroyGemsOfType(GemType type, Chain *chain) {
+	// pick three _different_ locations
+	// create list of coords, and shuffle it.
+	int number = 0;
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			if (! ChainContainsCoords(chain, i, j)) {
+				if (get(i, j)->type == type) {
+					number++;
+					removeChild(get(i, j)->sprite);
+					set(i, j, nullptr);
+				}
+			}
+		}
+	}
+	return number;
+}
+
 void Grid::createRandomCrystalGems(int amount, Chain *chain) {
 	// pick three _different_ locations
 	// create list of coords, and shuffle it.
@@ -499,6 +518,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 					chain->type = get(column, row)->type;
 					
 					// draw line from previous to current
+					SoundManager::get()->playEffect(kSoundEffectSelectGem);
 					drawChain();
 					drawSelected();
 				}
@@ -519,6 +539,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 						chain = unique;
 						
 						//redraw line...
+						SoundManager::get()->playEffect(kSoundEffectDeselectGem);
 						drawChain();
 						drawSelected();
 #if SINGLE_BACKWARDS
@@ -563,6 +584,7 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
         int column = (int) ((loc.x - left)/swidth);
         int row = (int) ((loc.y - bottom)/sheight);
 		
+		SoundManager::get()->playEffect(kSoundEffectSelectGem);
 		currentTouch = touch;
 		chain = new Chain;
 		chain->next = nullptr;

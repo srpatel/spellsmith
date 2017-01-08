@@ -59,7 +59,21 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 
 	if (1 == 0);
+	IF_SPELL(fire_cleanse) {
+		// Destroy all red gems and deal 2 damage for each
+		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );
+		PROJ( D(n), Color3B::RED );
+	}
+	IF_SPELL(fountain_of_youth) {
+		// Destroy all blue gems and heal 1 for each
+		int n = game->grid->destroyGemsOfType( GemType::WATER, chain );
+		HEAL( n );
+	}
 	IF_SPELL(focus) {
+		// deal extra damage with chains for 4 turns
+		game->wizard->addBuff( Buff::createFocus() );
+	}
+	IF_SPELL(channel) {
 		// cast the next spell three times
 		game->wizard->addBuff( Buff::createKingsCourt() );
 	}

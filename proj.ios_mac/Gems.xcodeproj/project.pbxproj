@@ -121,6 +121,9 @@
 		1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
 		1070E0B11BF54FCE007C06F9 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */; };
 		1070E0B21BF54FCE007C06F9 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */; };
+		107B33BC1E22678D00F2EBDD /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33BA1E22678D00F2EBDD /* SoundManager.cpp */; };
+		107B33BD1E22678D00F2EBDD /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33BA1E22678D00F2EBDD /* SoundManager.cpp */; };
+		107B33BF1E226C4500F2EBDD /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 107B33BE1E226C4500F2EBDD /* sound */; };
 		1087478B1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
@@ -339,6 +342,9 @@
 		1070E0AC1BF5188E007C06F9 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
 		1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MainMenu.hpp; sourceTree = "<group>"; };
+		107B33BA1E22678D00F2EBDD /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
+		107B33BB1E22678D00F2EBDD /* SoundManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundManager.hpp; sourceTree = "<group>"; };
+		107B33BE1E226C4500F2EBDD /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sound; path = ../Resources/sound; sourceTree = "<group>"; };
 		108747891C0797CD0069DCAF /* Level.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Level.cpp; sourceTree = "<group>"; };
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
@@ -486,6 +492,8 @@
 				103FB49A1CD13B0D00AEB60D /* Shaders.hpp */,
 				109742B81DE9BDC5008E1BBD /* ImageManager.cpp */,
 				109742B91DE9BDC5008E1BBD /* ImageManager.hpp */,
+				107B33BA1E22678D00F2EBDD /* SoundManager.cpp */,
+				107B33BB1E22678D00F2EBDD /* SoundManager.hpp */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -650,6 +658,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				107B33BE1E226C4500F2EBDD /* sound */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -914,6 +923,7 @@
 				105E0D231BF14EB10081D8F5 /* data in Resources */,
 				10DC05031BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
+				107B33BF1E226C4500F2EBDD /* sound in Resources */,
 				10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -975,6 +985,7 @@
 				102993501D62429000D1492E /* extension.c in Sources */,
 				102993441D62429000D1492E /* Bone.c in Sources */,
 				104E05301D55E0390049EBEB /* Projectiles.cpp in Sources */,
+				107B33BC1E22678D00F2EBDD /* SoundManager.cpp in Sources */,
 				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				1029934E1D62429000D1492E /* EventData.c in Sources */,
 				102993541D62429000D1492E /* IkConstraintData.c in Sources */,
@@ -1047,6 +1058,7 @@
 				100F9E561CD332E5001118C1 /* DoSpell.cpp in Sources */,
 				102993731D62429000D1492E /* Slot.c in Sources */,
 				103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
+				107B33BD1E22678D00F2EBDD /* SoundManager.cpp in Sources */,
 				1029936D1D62429000D1492E /* SkeletonJson.c in Sources */,
 				1087478C1C0797CD0069DCAF /* Level.cpp in Sources */,
 				102993771D62429000D1492E /* spine-cocos2dx.cpp in Sources */,

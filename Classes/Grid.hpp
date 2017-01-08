@@ -17,6 +17,7 @@ public:
     bool init(float maxWidth, float maxHeight);
 	void scramble();
 	void createRandomCrystalGems(int, Chain *);
+	int destroyGemsOfType(GemType type, Chain *chain);
 	void setActive(bool);
     cocos2d::Vec2 getSize();
     virtual bool onTouchBegan(cocos2d::Touch *, cocos2d::Event *);

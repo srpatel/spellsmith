@@ -72,6 +72,23 @@ Buff *Buff::createStun(){
 	return buff;
 }
 
+Buff *Buff::createFocus(){
+	auto buff = new Buff;
+	buff->type = BuffType::FOCUS;
+	buff->positive = true;
+	
+	buff->icon = "buffs/focus.png";
+	
+	buff->sprite = nullptr;
+	
+	buff->turns = 4; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
 Buff *Buff::createKingsCourt(){
 	auto buff = new Buff;
 	buff->type = BuffType::KINGS_COURT;

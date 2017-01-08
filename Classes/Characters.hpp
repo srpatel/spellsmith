@@ -18,7 +18,8 @@ enum BuffType {
 	STUN,
 	FURY,
 	KINGS_COURT, // UNUSED!
-	PHASING
+	PHASING,
+	FOCUS
 };
 
 struct Buff {
@@ -37,6 +38,7 @@ struct Buff {
 	static Buff *createFury();
 	static Buff *createKingsCourt();
 	static Buff *createPhasing();
+	static Buff *createFocus();
 	~Buff();
 };
 

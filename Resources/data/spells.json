@@ -154,6 +154,17 @@
     ]
   },
   {
+    "name": "focus",
+    "tier": 1,
+    "shape": [
+      "     ",
+      "     ",
+      "W    ",
+      " E   ",
+      "EW   "
+    ]
+  },
+  {
     "name": "stun_strike",
     "tier": 2,
     "shape": [
@@ -173,6 +184,28 @@
       " E   ",
       "EE   ",
       "  E  "
+    ]
+  },
+  {
+    "name": "fire_cleanse",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      "WW    ",
+      "WF   ",
+      " F   "
+    ]
+  },
+  {
+    "name": "fountain_of_youth",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      "EE    ",
+      "EW   ",
+      "  W  "
     ]
   }
 ]

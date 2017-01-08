@@ -46,6 +46,7 @@ void Strings::loadObject(std::string key, const rapidjson::Value& value) {
 std::string Strings::translate(std::string key) {
 	auto t = table.find(key);
 	if (t == table.end()) {
+		printf("Translation missing: %s\n", key.c_str());
 		return key;
 	} else {
 		return t->second;

@@ -56,12 +56,33 @@
     "earthquake": {
       "name": "Earthquake",
       "description": "Deal 5 damage to each enemy. 50% chance for each to get stunned."
+    },
+    "focus": {
+      "name": "Focus",
+      "description": "Deal 50% extra damage with chains for 4 turns."
+    },
+    "fury": {
+      "name": "Fury",
+      "description": "Deal double damage next turn."
+    },
+    "phase": {
+      "name": "Phase",
+      "description": "Become immune to damage next turn."
+    },
+    "fire_cleanse": {
+      "name": "Fire Cleanse",
+      "description": "Destroy all fire gems and deal 2 damage for each."
+    },
+    "fountain_of_youth": {
+      "name": "Fountain of Youth",
+      "description": "Destroy all blue gems and heal 1 for each."
     }
   },
   "ui": {
     "LEVEL_WON": "congratulations",
     "LEVEL_LOST": "you lost",
     "RETRY_LEVEL": "retry",
-    "RETURN_TO_MAP": "back"
+    "RETURN_TO_MAP": "back",
+    "NEW_GAME": "New Game"
   }
 }
