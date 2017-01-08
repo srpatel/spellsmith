@@ -252,7 +252,7 @@ bool Game::init() {
 	// Wizard
 	wizard->sprite = scenery->wizardsprite;
 	// TODO : calculate height from skeleton bounding box?
-	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0);
+	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0) + 6;
 	wizard->is_skeleton = true;
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->addChild(wizard->buffHolder);
@@ -560,6 +560,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 				skeleton = (spine::SkeletonAnimation *) target->sprite;
 			}
 			target->ui_health -= damage;
+			scenery->addTextWisp(target, std::string("-") + ToString(damage), Color3B::RED);
 			if (target->ui_health <= 0 && target != wizard) {
 				if (skeleton) {
 					skeleton->addAnimation(0, "die", false);
@@ -783,10 +784,12 @@ void Game::enemyDoTurn() {
 							auto pendingActionDone = CallFunc::create([this](){
 								actionDone();
 							});
-							
-							wizard->health -= damage;
+							if (! phase) {
+								wizard->health -= damage;
+							}
 							auto dealDamage = CallFunc::create([this, damage, phase](){
 								if (! phase) {
+									scenery->addTextWisp(wizard, std::string("-") + ToString(damage), Color3B::RED);
 									wizard->ui_health -= damage;
 									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
 									updateHealthBars();

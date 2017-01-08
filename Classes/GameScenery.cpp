@@ -10,6 +10,7 @@
 #include "Shaders.hpp"
 #include "Constants.h"
 #include "ImageManager.hpp"
+#include "TextWisp.hpp"
 
 bool GameScenery::init(Size size) {
 	if ( !Layer::init() )
@@ -187,6 +188,13 @@ void GameScenery::greyscaleMode(bool grey) {
 		for (Enemy *e : *enemies) {
 			e->sprite->setGLProgramState(state);
 		}
+}
+
+void GameScenery::addTextWisp(Character *enemy, std::string s, Color3B c) {
+	auto tw = TextWisp::create(s, c);
+	Node *sprite = enemy->sprite;
+	tw->setPosition(sprite->getPosition().x, sprite->getPosition().y + sprite->getBoundingBox().size.height + 5);
+	addChild(tw);
 }
 
 void GameScenery::placeMonsters(std::vector<Enemy *> *e) {

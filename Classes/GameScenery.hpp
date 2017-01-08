@@ -20,6 +20,7 @@ public:
 	virtual ~GameScenery();
 	void placeMonsters(std::vector<Enemy *> *);
 	void setSelected(int);
+	void addTextWisp(Character *enemy, std::string s, Color3B c); // nullptr = wizard
 	CREATE_FUNC_1(GameScenery, Size);
 	spine::SkeletonAnimation *wizardsprite;
 	void showFlags(int flagType);

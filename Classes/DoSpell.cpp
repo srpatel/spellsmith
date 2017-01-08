@@ -31,6 +31,7 @@ public:
 		game->wizard->health = game->wizard->max_health;\
 	}\
 	game->updateHealthBars();\
+	game->scenery->addTextWisp(game->wizard, std::string("+") + ToString(amt), Color3B::GREEN);\
 	}
 #define PROJ(_n_, _t_) game->makeProjectile(\
 	game->wizard, \
