@@ -76,6 +76,10 @@
     "fountain_of_youth": {
       "name": "Fountain of Youth",
       "description": "Destroy all blue gems and heal 1 for each."
+    },
+    "fertilise": {
+      "name": "Fertilise",
+      "description": "Replace all green gems with crystal gems."
     }
   },
   "ui": {

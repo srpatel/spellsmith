@@ -59,6 +59,10 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 
 	if (1 == 0);
+	IF_SPELL(fertilise) {
+		// Replace all green gems with crystal
+		game->grid->makeCrystalsOverGemsOfType( GemType::EARTH, chain );
+	}
 	IF_SPELL(fire_cleanse) {
 		// Destroy all red gems and deal 2 damage for each
 		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );

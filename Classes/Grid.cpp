@@ -313,8 +313,6 @@ void Grid::scramble() {
 }
 
 int Grid::destroyGemsOfType(GemType type, Chain *chain) {
-	// pick three _different_ locations
-	// create list of coords, and shuffle it.
 	int number = 0;
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
@@ -330,8 +328,21 @@ int Grid::destroyGemsOfType(GemType type, Chain *chain) {
 	return number;
 }
 
+void Grid::makeCrystalsOverGemsOfType(GemType type, Chain *chain) {
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			if (! ChainContainsCoords(chain, i, j)) {
+				if (get(i, j)->type == type) {
+					removeChild(get(i, j)->sprite);
+					auto g = new Gem;
+					set(i, j, g, true, CRYSTAL);
+				}
+			}
+		}
+	}
+}
+
 void Grid::createRandomCrystalGems(int amount, Chain *chain) {
-	// pick three _different_ locations
 	// create list of coords, and shuffle it.
 	std::vector<std::pair<int, int> > coords;
 	for (int i = 0; i < width; i++) {
