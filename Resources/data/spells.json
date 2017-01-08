@@ -210,7 +210,7 @@
   },
   {
     "name": "fertilise",
-    "tier": -3,
+    "tier": 3,
     "shape": [
       "     ",
       "     ",
