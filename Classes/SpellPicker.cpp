@@ -17,6 +17,7 @@ public:
 	bool init(Spell *);
 	CREATE_FUNC_1(SpellBlob, Spell *);
 private:
+	float distanceMoved;
 };
 
 bool SpellBlob::init(Spell *spell) {
@@ -43,6 +44,8 @@ bool SpellBlob::init(Spell *spell) {
 	auto onClick = EventListenerTouchOneByOne::create();
 	onClick->setSwallowTouches(true);
 	onClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		distanceMoved = 0;
+		
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		bounds.origin -= bounds.size/2;
 		bounds.origin += this->getParent()->getPosition();
@@ -57,6 +60,7 @@ bool SpellBlob::init(Spell *spell) {
 	onClick->onTouchMoved = [this, mininode](Touch* touch, Event* event) -> bool {
 		auto offset = this->getParent()->getPosition() + getPosition();
 		mininode->setPosition(touch->getLocation() - offset);
+		distanceMoved += touch->getDelta().length();
 		// move mini-node to new location
 		return false; // if you are consuming it
 	};
@@ -68,7 +72,9 @@ bool SpellBlob::init(Spell *spell) {
 		bool doSnap = true;
 		if (bounds.containsPoint(touch->getLocation())){
 			// If haven't moved far, then do this:
-			GameController::get()->showSpellInfoDialog(spell);
+			if (distanceMoved < 2.0f) {
+				GameController::get()->showSpellInfoDialog(spell);
+			}
 		} else {
 			// if it's over a inventory spot, put the gem there
 			layout_t layout = Game::get()->getLayout();
