@@ -88,6 +88,10 @@
     "induce_explosion": {
       "name": "Induce Explosion",
       "description": "Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies."
+    },
+    "channel": {
+      "name": "Mystic Channel",
+      "description": "If you cast a spell next turn, cast it three times."
     }
   },
   "ui": {

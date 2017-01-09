@@ -70,12 +70,12 @@ private:
 	void showRound(Round *);
 	
 	void updateHealthBars();
-	int getNextAliveEnemy(int start);
+	int getNextAliveEnemy(int start, bool *allDead);
 	
 	GameHUD *hud;
 	GameScenery *scenery;
 	std::vector<Enemy *> enemies;
-	void setSelected(int);
+	bool setSelected(int);
 	int currentEnemy;
 	Wizard *wizard;
 	std::vector<Spell *> spellpool;

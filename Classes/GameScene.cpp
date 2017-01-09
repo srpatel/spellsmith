@@ -387,25 +387,34 @@ void Game::updateInventory() {
 	}
 }
 
-int Game::getNextAliveEnemy(int start) {
+int Game::getNextAliveEnemy(int start, bool *allDead) {
 	start = (start + enemies.size()) % enemies.size();
 	int initial = start;
+	if (allDead) {
+		*allDead = false;
+	}
 	while (enemies[start]->dead()) {
 		start = (start + 1) % enemies.size();
 		if (start == initial) {
 			// We've tried them all!
 			// Shouldn't happen.
+			if (allDead) {
+				*allDead = true;
+			}
 			break;
 		}
 	}
 	return start;
 }
 
-void Game::setSelected(int index) {
-	currentEnemy = getNextAliveEnemy(index);
+bool Game::setSelected(int index) {
+	bool allDead;
+	currentEnemy = getNextAliveEnemy(index, &allDead);
 	
 	scenery->setSelected(currentEnemy);
 	hud->setSelected(currentEnemy);
+	
+	return ! allDead;
 }
 
 void Game::updateHealthBars() {
@@ -479,7 +488,6 @@ bool Game::onCastSpell(Chain *chain) {
 		if (spell) {
 			// cast a spell!
 			DoSpell::run(this, spell, chain);
-			scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
 		} else {
 			// cast a chain!
 			
@@ -493,6 +501,7 @@ bool Game::onCastSpell(Chain *chain) {
 				case EARTH: colour = Color3B::GREEN; break;
 				default:break;
 			}
+			// TODO : should pause until 'cast' event (and a cast event should be added).
 			if (chain->type == EARTH) {
 				scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
 			} else {
@@ -508,8 +517,9 @@ bool Game::onCastSpell(Chain *chain) {
 			}
 			makeProjectile(wizard, enemies[currentEnemy], (int) (damage * damageModifier), colour);
 		}
-		
-		onWizardTurnOver();
+		runPendingAction([this] {
+			onWizardTurnOver();
+		});
 	}
 	return success;
 }

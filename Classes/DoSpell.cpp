@@ -33,12 +33,14 @@ public:
 	game->updateHealthBars();\
 	game->scenery->addTextWisp(game->wizard, std::string("+") + ToString(amt), Color3B::GREEN);\
 	}
-#define PROJ(_n_, _t_) game->makeProjectile(\
+#define PROJ(_n_, _t_) projectile = true; \
+	game->makeProjectile(\
 	game->wizard, \
 	game->enemies[game->currentEnemy], \
 	_n_,\
 	_t_);
-#define PROJ_RAND(_n_, _t_) { int i = game->getNextAliveEnemy(rand() % game->enemies.size());\
+#define PROJ_RAND(_n_, _t_) projectile = true; \
+	{ int i = game->getNextAliveEnemy(rand() % game->enemies.size(), nullptr);\
 	game->makeProjectile(\
 	game->wizard, \
 	game->enemies[i], \
@@ -52,25 +54,26 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	if (game->wizard->getBuffByType(BuffType::FURY)) {
 		damageModifier = 2;
 	}
-	// King's Court
-	if (allowRepeats && game->wizard->getBuffByType(BuffType::KINGS_COURT)) {
-		// Repeat the spell twice more!
-		run(game, spell, chain, false);
-		run(game, spell, chain, false);
-	}
-
+	// King's court is at the bottom
+	// because we want to queue pending actions after any pending actions here are added.
+	bool projectile = false;
+	bool channel = false;
+	
 	if (1 == 0);
 	IF_SPELL(induce_explosion) {
 		// Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies.
-		auto e = game->enemies[game->currentEnemy];
+		auto target = game->enemies[game->currentEnemy];
 		PROJ( D(5), Color3B::RED );
-		if (e->health <= 0) {
+		// Should occur when the proj hits!
+		if (target->health <= 0) {
 			// Deal 10 the others too!
 			for (Enemy *e : game->enemies) {
+				if (e == target) continue;
 				e->ui_health -= D(10);
 				e->health -= D(10);
 			}
-			game->updateHealthBars();
+			// update when the proj hits!
+			//game->updateHealthBars();
 		}
 	}
 	IF_SPELL(poison_dart) {
@@ -102,6 +105,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(channel) {
 		// cast the next spell three times
+		channel = true;
 		game->wizard->addBuff( Buff::createKingsCourt() );
 	}
 	IF_SPELL(phase) {
@@ -210,5 +214,32 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->updateHealthBars();
 	} else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
+	}
+	
+	if (! projectile) {
+		game->scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
+	} else {
+		game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // aura spell
+	}
+	
+	// King's Court
+	if (allowRepeats && game->wizard->getBuffByType(BuffType::KINGS_COURT) && ! channel) {
+		// Repeat the spell twice more!
+		PendingAction action1 = [game, spell, chain] {
+			if (game->setSelected(game->currentEnemy)) {
+				game->actionQueued();
+				run(game, spell, chain, false);
+				game->actionDone();
+			}
+		};
+		PendingAction action2 = [game, spell, chain] {
+			if (game->setSelected(game->currentEnemy)) {
+				game->actionQueued();
+				run(game, spell, chain, false);
+				game->actionDone();
+			}
+		};
+		game->runPendingAction(action1);
+		game->runPendingAction(action2);
 	}
 }
