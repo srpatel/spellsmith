@@ -18,6 +18,7 @@ public:
 	void scramble();
 	void createRandomCrystalGems(int, Chain *);
 	void makeCrystalsOverGemsOfType(GemType type, Chain *chain);
+	void convertGemsOfType(GemType from, GemType to, Chain *chain);
 	int destroyGemsOfType(GemType type, Chain *chain);
 	void setActive(bool);
     cocos2d::Vec2 getSize();

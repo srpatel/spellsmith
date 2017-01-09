@@ -104,6 +104,14 @@
     "whispers_in_the_wind": {
       "name": "Whispers in the Wind",
       "description": "Destroy all your air gems, and cast three of your spells randomly."
+    },
+    "drain_life": {
+      "name": "Drain Life",
+      "description": "Deal 5 damage. If this kills the enemy, gain 10 life."
+    },
+    "evaporate": {
+      "name": "Evaporate",
+      "description": "Convert your water gems into air gems."
     }
   },
   "ui": {

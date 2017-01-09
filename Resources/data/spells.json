@@ -275,6 +275,17 @@
     ]
   },
   {
+    "name": "drain_life",
+    "tier": -2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "WE   ",
+      "WE   "
+    ]
+  },
+  {
     "name": "whispers_in_the_wind",
     "tier": 99,
     "shape": [
@@ -283,6 +294,17 @@
       "     ",
       "A    ",
       "AFF  "
+    ]
+  },
+  {
+    "name": "evaporate",
+    "tier": -2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "F    ",
+      "FF   "
     ]
   }
 ]

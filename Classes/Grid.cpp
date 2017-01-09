@@ -342,6 +342,20 @@ void Grid::makeCrystalsOverGemsOfType(GemType type, Chain *chain) {
 	}
 }
 
+void Grid::convertGemsOfType(GemType from, GemType to, Chain *chain) {
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			if (! ChainContainsCoords(chain, i, j)) {
+				if (get(i, j)->type == from) {
+					removeChild(get(i, j)->sprite);
+					auto g = new Gem;
+					set(i, j, g, true, to);
+				}
+			}
+		}
+	}
+}
+
 void Grid::createRandomCrystalGems(int amount, Chain *chain) {
 	// create list of coords, and shuffle it.
 	std::vector<std::pair<int, int> > coords;

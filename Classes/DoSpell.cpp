@@ -84,6 +84,20 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 		game->grid->destroyGemsOfType( GemType::AIR, chain );
 	}
+	IF_SPELL(evaporate) {
+		// Convert your water gems into air gems.
+		game->grid->convertGemsOfType( GemType::WATER, GemType::AIR, chain );
+	}
+	IF_SPELL(drain_life) {
+		// Deal 5 damage. If this kills the enemy, gain 10 life.
+		auto target = game->enemies[game->currentEnemy];
+		PROJ( D(5), Color3B::RED );
+		// Should occur when the proj hits!
+		if (target->health <= 0) {
+			HEAL( 10 );
+		}
+
+	}
 	IF_SPELL(induce_explosion) {
 		// Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies.
 		auto target = game->enemies[game->currentEnemy];
@@ -257,10 +271,11 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}
 	
+	// don't progress until the animation has finished
 	if (! projectile) {
 		game->scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
 	} else {
-		game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // aura spell
+		game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // proj spell
 	}
 	
 	// Flash the inventory icon
