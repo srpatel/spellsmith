@@ -17,7 +17,7 @@
 
 bool OptionsDialog::init() {
 	auto size = Size(300, 300);
-	if ( !Dialog::init(true, size.width, size.height) ) {
+	if ( !Dialog::init(true, true, size.width, size.height) ) {
 		return false;
 	}
 	
@@ -38,7 +38,7 @@ bool SpellInfoDialog::init(Spell *spell) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto size = Size(visibleSize.width - 50, 300);
 	
-	if ( !Dialog::init(true, size.width, size.height) ) {
+	if ( !Dialog::init(true, false, size.width, size.height) ) {
 		return false;
 	}
 	
@@ -69,10 +69,11 @@ bool SpellInfoDialog::init(Spell *spell) {
 	return true;
 }
 
-bool Dialog::init(bool closeable, float centralWidth, float centralHeight) {
+bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float centralHeight) {
 	if ( !Layer::init() ) {
 		return false;
 	}
+	this->captureTouch = captureTouch;
 	this->closeable = closeable;
 	this->centralWidth = centralWidth;
 	this->centralHeight = centralHeight;
@@ -113,7 +114,7 @@ bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 			centralWidth,
 			centralHeight
 		);
-		if (! bounds.containsPoint(touch->getLocation())) {
+		if (! captureTouch || ! bounds.containsPoint(touch->getLocation())) {
 			auto gc = GameController::get();
 			gc->popDialog();
 		}
