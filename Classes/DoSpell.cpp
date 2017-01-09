@@ -275,7 +275,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	if (! projectile) {
 		game->scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
 	} else {
-		game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // proj spell
+		// This happens at makeProjectile for better timing.
+		// game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // proj spell
 	}
 	
 	// Flash the inventory icon
@@ -292,14 +293,9 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	// King's Court
 	if (allowRepeats && hasKingsCourt) {
 		// Repeat the spell twice more!
-		PendingAction action = [game, spell, chain] {
-			if (game->setSelected(game->currentEnemy)) {
-				game->actionQueued();
-				run(game, spell, chain, false);
-				game->actionDone();
-			}
-		};
-		game->runPendingAction(action);
-		game->runPendingAction(action);
+		if (game->setSelected(game->currentEnemy))
+			run(game, spell, chain, false);
+		if (game->setSelected(game->currentEnemy))
+			run(game, spell, chain, false);
 	}
 }

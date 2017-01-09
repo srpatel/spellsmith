@@ -489,12 +489,6 @@ bool Game::onCastSpell(Chain *chain) {
 				case EARTH: colour = Color3B::GREEN; break;
 				default:break;
 			}
-			// TODO : should pause until 'cast' event (and a cast event should be added).
-			if (chain->type == EARTH) {
-				scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
-			} else {
-				scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // projectile spell
-			}
 			
 			float damageModifier = 1;
 			if (wizard->getBuffByType(BuffType::FURY)) {
@@ -505,9 +499,8 @@ bool Game::onCastSpell(Chain *chain) {
 			}
 			makeProjectile(wizard, enemies[currentEnemy], (int) (damage * damageModifier), colour);
 		}
-		runPendingAction([this] {
-			onWizardTurnOver();
-		});
+		
+		onWizardTurnOver();
 	}
 	return success;
 }
@@ -573,7 +566,6 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			actionDone();
 		});
 	}
-	actionQueued();
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
@@ -589,12 +581,21 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	// Wait for 0.56 seconds as that is when the staff is in the right place
 	// TODO : Events
 	projectile->retain();
-	auto delay = DelayTime::create(14.0/30.0);
-	auto run = CallFunc::create([this, projectile](){
-		scenery->addChild(projectile);
-		projectile->release();
+	
+	runPendingAction([this, source, projectile, type]() {
+		if (source == wizard) {
+			scenery->wizardsprite->addAnimation(0,
+				type == Color3B::GREEN ? "spell_aura" : "spell_projectile",
+				false);
+		}
+		auto delay = DelayTime::create(14.0/30.0);
+		auto run = CallFunc::create([this, projectile](){
+			scenery->addChild(projectile);
+			projectile->release();
+		});
+		runAction(Sequence::create(delay, run, nullptr));
+		actionQueued();
 	});
-	runAction(Sequence::create(delay, run, nullptr));
 }
 
 void Game::onWizardTurnOver() {
