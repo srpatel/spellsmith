@@ -212,7 +212,25 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			}
 		}
 		game->updateHealthBars();
-	} else {
+	}
+	IF_SPELL(dragon_breath) {
+		// Deal 7 damage to each enemy.
+		for (Enemy *e : game->enemies) {
+			e->ui_health -= D(7);
+			e->health -= D(7);
+		}
+		game->updateHealthBars();
+	}
+	IF_SPELL(lightning_storm) {
+		// Deal 3-10 damage to each enemy.
+		for (Enemy *e : game->enemies) {
+			int amt = D_BETWEEN(3, 10);
+			e->ui_health -= amt;
+			e->health -= amt;
+		}
+		game->updateHealthBars();
+	}
+	else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}
 	

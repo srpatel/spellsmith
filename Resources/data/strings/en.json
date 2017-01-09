@@ -91,7 +91,15 @@
     },
     "channel": {
       "name": "Mystic Channel",
-      "description": "If you cast a spell next turn, cast it three times."
+      "description": "If you cast a spell next turn, copy it two extra times."
+    },
+    "dragon_breath": {
+      "name": "Dragon Breath",
+      "description": "Deal 7 damage to each enemy."
+    },
+    "lightning_storm": {
+      "name": "Lightning Storm",
+      "description": "Deal 3-10 damage to each enemy."
     }
   },
   "ui": {

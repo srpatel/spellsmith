@@ -155,7 +155,7 @@
   },
   {
     "name": "focus",
-    "tier": 1,
+    "tier": 2,
     "shape": [
       "     ",
       "     ",
@@ -188,7 +188,7 @@
   },
   {
     "name": "fire_cleanse",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
@@ -199,7 +199,7 @@
   },
   {
     "name": "fountain_of_youth",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
@@ -210,7 +210,7 @@
   },
   {
     "name": "fertilise",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
@@ -232,7 +232,7 @@
   },
   {
     "name": "induce_explosion",
-    "tier": 2,
+    "tier": 3,
     "shape": [
       "     ",
       "     ",
@@ -243,13 +243,35 @@
   },
   {
     "name": "channel",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
       "     ",
       "  W  ",
       "FFW  "
+    ]
+  },
+  {
+    "name": "dragon_breath",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "AA   ",
+      " FF  "
+    ]
+  },
+  {
+    "name": "lightning_storm",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "A A  ",
+      "AEA  "
     ]
   }
 ]
