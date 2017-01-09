@@ -436,18 +436,6 @@ bool Game::onCastSpell(Chain *chain) {
 			break;
 		}
 	}
-	if (spell) {
-			const auto size = Size(30 * layout.ui_scale, 44 * layout.ui_scale);
-		
-			auto glow = LayerColor::create(Color4B::WHITE, size.width, size.height);
-			glow->setPosition(spell->mininode->getPosition() - size/2);
-			glow->runAction(Sequence::create(
-				EaseOut::create(FadeOut::create(0.5f), 0.5f),
-				RemoveSelf::create(),
-				nullptr)
-			);
-			addChild(glow);
-	}
 	// Don't allow single gems.
 	// TODO : it might be possible to get locked out! Super unlikely to ever happen though...
 	if (!success && chain->next != nullptr) {

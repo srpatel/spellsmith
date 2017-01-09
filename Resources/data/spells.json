@@ -273,5 +273,16 @@
       "A A  ",
       "AEA  "
     ]
+  },
+  {
+    "name": "whispers_in_the_wind",
+    "tier": 99,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "A    ",
+      "AFF  "
+    ]
   }
 ]
