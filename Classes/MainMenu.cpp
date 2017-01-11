@@ -7,6 +7,7 @@
 //
 
 #include "MainMenu.hpp"
+#include "SoundManager.hpp"
 #include "ImageManager.hpp"
 #include "GameController.hpp"
 #include "Strings.hpp"
@@ -42,6 +43,7 @@ bool MainMenu::init() {
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			// For now, from scratch always!
+			SoundManager::get()->playEffect( kSoundEffect_Click );
 			GameController::get()->startGame(nullptr);
 		}
 	});

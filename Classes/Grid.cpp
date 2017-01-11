@@ -543,7 +543,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 					chain->type = get(column, row)->type;
 					
 					// draw line from previous to current
-					SoundManager::get()->playEffect(kSoundEffectSelectGem);
+					SoundManager::get()->playEffect(kSoundEffect_SelectGem);
 					drawChain();
 					drawSelected();
 				}
@@ -564,7 +564,7 @@ void Grid::onTouchMovePart(Vec2 loc) {
 						chain = unique;
 						
 						//redraw line...
-						SoundManager::get()->playEffect(kSoundEffectDeselectGem);
+						SoundManager::get()->playEffect(kSoundEffect_DeselectGem);
 						drawChain();
 						drawSelected();
 #if SINGLE_BACKWARDS
@@ -609,7 +609,7 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
         int column = (int) ((loc.x - left)/swidth);
         int row = (int) ((loc.y - bottom)/sheight);
 		
-		SoundManager::get()->playEffect(kSoundEffectSelectGem);
+		SoundManager::get()->playEffect(kSoundEffect_SelectGem);
 		currentTouch = touch;
 		chain = new Chain;
 		chain->next = nullptr;

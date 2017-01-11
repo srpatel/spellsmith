@@ -142,6 +142,11 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);
 	
+	auto label2 = Label::createWithTTF( "Tap for info. Drag to a slot to learn.", Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
+	label2->setColor(Color3B::WHITE);
+	label2->setPosition(Vec2(0, -50));
+	addChild(label2, 1);
+	
 	auto sb1 = SpellBlob::create(s1);
 	sb1->setPosition(5-getContentSize().width/4, -5);
 	addChild(sb1);

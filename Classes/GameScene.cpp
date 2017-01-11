@@ -7,6 +7,7 @@
 #include "GameController.hpp"
 #include "DoSpell.hpp"
 #include "GameOverPopup.hpp"
+#include "SoundManager.hpp"
 
 #include "Projectiles.hpp"
 
@@ -472,6 +473,7 @@ bool Game::onCastSpell(Chain *chain) {
 	if (success) {
 		// We can't draw until the enemy has had his turn
 		state = kStatePlayerSpells;
+		SoundManager::get()->playEffect( kSoundEffect_CastSpell );
 		
 		if (spell) {
 			// cast a spell!
@@ -501,6 +503,8 @@ bool Game::onCastSpell(Chain *chain) {
 		}
 		
 		onWizardTurnOver();
+	} else {
+		SoundManager::get()->playEffect( kSoundEffect_Fizzle );
 	}
 	return success;
 }
@@ -647,8 +651,11 @@ void Game::attemptSetState(GameState nextstate) {
 						// put it in the middle of the grid
 						spellPicker->setPosition(grid->getPosition());
 						addChild(spellPicker);
-						// also remove another 1 or 2 randomly?
-						spellpool.erase(spellpool.begin(), spellpool.begin()+2);
+						// also remove another 2 to 5 randomly?
+						spellpool.erase(spellpool.begin(), spellpool.begin() +  2);
+					} else {
+						// No spells left, just go for next level!
+						spellPicked();
 					}
 					state = kStatePlayerTurn;
 				} else {
@@ -896,6 +903,8 @@ void Game::startGame(SaveGame *save) {
 		std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
 			return a->tier < b->tier;
 		});
+		// Delete the first 4 spells
+		spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
 		
 		// Create a round based on the current stage.
 		gotoNextEnemy();

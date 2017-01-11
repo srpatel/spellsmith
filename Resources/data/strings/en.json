@@ -31,7 +31,7 @@
     },
     "volcanic": {
       "name": "Volcanic Eruption",
-      "description": "Deal 10 damage to everyone."
+      "description": "Deal 10 damage to EVERYONE."
     },
     "crystalise": {
       "name": "Crystalise",
@@ -59,7 +59,7 @@
     },
     "focus": {
       "name": "Focus",
-      "description": "Deal 50% extra damage with chains for 4 turns."
+      "description": "Deal 50% extra damage with chains for 6 turns."
     },
     "fury": {
       "name": "Fury",
@@ -83,7 +83,7 @@
     },
     "poison_dart": {
       "name": "Precise Dart",
-      "description": "Deal 5 damage. Deal an extra 10 if the enemy is below 50% health."
+      "description": "Deal 5 damage. If the enemy is below 50% health deal 12 instead."
     },
     "induce_explosion": {
       "name": "Induce Explosion",
@@ -107,11 +107,23 @@
     },
     "drain_life": {
       "name": "Drain Life",
-      "description": "Deal 5 damage. If this kills the enemy, gain 10 life."
+      "description": "Deal 5 damage. If this kills the enemy, gain 8 life."
     },
     "evaporate": {
       "name": "Evaporate",
       "description": "Convert your water gems into air gems."
+    },
+    "cleanse": {
+      "name": "Cleanse",
+      "description": "Heal for 3 and clear the grid."
+    },
+    "forest_fire": {
+      "name": "Forest Fire",
+      "description": "Turn your earth gems into fire gems."
+    },
+    "charge_bolt": {
+      "name": "Charge Bolt",
+      "description": "Deal 3 damage plus 3 more for each other time you cast this spell this round."
     }
   },
   "ui": {

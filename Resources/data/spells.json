@@ -39,13 +39,13 @@
       "     ",
       "     ",
       "     ",
-      "A    ",
-      "EEA  "
+      "E    ",
+      "AAE  "
     ]
   },
   {
     "name": "chill",
-    "tier": 1,
+    "tier": 99,
     "shape": [
       "     ",
       "     ",
@@ -78,7 +78,7 @@
   },
   {
     "name": "volcanic",
-    "tier": 2,
+    "tier": 3,
     "shape": [
       "     ",
       "     ",
@@ -100,7 +100,7 @@
   },
   {
     "name": "phase",
-    "tier": 2,
+    "tier": 3,
     "shape": [
       "     ",
       "     ",
@@ -128,7 +128,7 @@
       "     ",
       "     ",
       " EF  ",
-      "FFF  "
+      "FF   "
     ]
   },
   {
@@ -166,7 +166,7 @@
   },
   {
     "name": "stun_strike",
-    "tier": 2,
+    "tier": 99,
     "shape": [
       "     ",
       "     ",
@@ -192,9 +192,9 @@
     "shape": [
       "     ",
       "     ",
-      "WW    ",
-      "WF   ",
-      " F   "
+      "     ",
+      "AA   ",
+      "AF   "
     ]
   },
   {
@@ -203,9 +203,9 @@
     "shape": [
       "     ",
       "     ",
-      "EE    ",
-      "EW   ",
-      "  W  "
+      "      ",
+      "EE   ",
+      "EW   "
     ]
   },
   {
@@ -214,9 +214,9 @@
     "shape": [
       "     ",
       "     ",
-      " E   ",
+      "     ",
       "AA   ",
-      " E   "
+      "AE   "
     ]
   },
   {
@@ -254,7 +254,7 @@
   },
   {
     "name": "dragon_breath",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
@@ -265,7 +265,7 @@
   },
   {
     "name": "lightning_storm",
-    "tier": 3,
+    "tier": 4,
     "shape": [
       "     ",
       "     ",
@@ -276,7 +276,7 @@
   },
   {
     "name": "drain_life",
-    "tier": -2,
+    "tier": 2,
     "shape": [
       "     ",
       "     ",
@@ -298,13 +298,46 @@
   },
   {
     "name": "evaporate",
-    "tier": -2,
+    "tier": 2,
     "shape": [
       "     ",
       "     ",
       "     ",
       "F    ",
       "FF   "
+    ]
+  },
+  {
+    "name": "forest_fire",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      "A    ",
+      "A    ",
+      "A    "
+    ]
+  },
+  {
+    "name": "cleanse",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      " A    ",
+      "WW   "
+    ]
+  },
+  {
+    "name": "charge_bolt",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      " A   ",
+      "AA    ",
+      "W    "
     ]
   }
 ]

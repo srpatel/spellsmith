@@ -9,8 +9,12 @@
 #ifndef SoundManager_hpp
 #define SoundManager_hpp
 
-extern const char *kSoundEffectSelectGem;
-extern const char *kSoundEffectDeselectGem;
+extern const char
+	*kSoundEffect_SelectGem,
+	*kSoundEffect_DeselectGem,
+	*kSoundEffect_CastSpell,
+	*kSoundEffect_Fizzle,
+	*kSoundEffect_Click;
 
 class SoundManager {
 public:

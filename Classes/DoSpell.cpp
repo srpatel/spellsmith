@@ -88,13 +88,30 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		// Convert your water gems into air gems.
 		game->grid->convertGemsOfType( GemType::WATER, GemType::AIR, chain );
 	}
+	IF_SPELL(forest_fire) {
+		// Convert your earth gems into fire gems.
+		game->grid->convertGemsOfType( GemType::EARTH, GemType::FIRE, chain );
+	}
+	IF_SPELL(charge_bolt) {
+		// Deal 3 damage for each time you've cast it!
+		Buff *charge = game->wizard->getBuffByType(BuffType::CHARGE_BOLT);
+		if (charge == nullptr) {
+			// create one!
+			charge = Buff::createChargeBolt();
+			charge->charges = 1;
+			game->wizard->addBuff(charge);
+		} else {
+			charge->charges++;
+		}
+		PROJ( D(3 * charge->charges), Color3B::BLUE );
+	}
 	IF_SPELL(drain_life) {
 		// Deal 5 damage. If this kills the enemy, gain 10 life.
 		auto target = game->enemies[game->currentEnemy];
 		PROJ( D(5), Color3B::RED );
 		// Should occur when the proj hits!
 		if (target->health <= 0) {
-			HEAL( 10 );
+			HEAL( 8 );
 		}
 
 	}
@@ -115,11 +132,11 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(poison_dart) {
-		// Deal 5 damage. Deal an extra 10 damage if they are below 50% health.
+		// Deal 5 damage. Deal an extra 5 damage if they are below 50% health.
 		int n = 5;
 		auto e = game->enemies[game->currentEnemy];
 		if (e->health * 2 < e->max_health) {
-			n += 10;
+			n += 7;
 		}
 		PROJ( D(n), Color3B::GREEN );
 	}
@@ -183,7 +200,12 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(forest_breeze) {
 		// gain 5
 		HEAL(5);
-	} 
+	}
+	IF_SPELL(cleanse) {
+		// Heal for 3 and clear the grid
+		HEAL(3);
+		game->grid->scramble();
+	}
 	IF_SPELL(lightning_bolt) {
 		// deal 1-12
 		PROJ( D_BETWEEN(1, 12), Color3B::YELLOW );
