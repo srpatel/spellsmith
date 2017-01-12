@@ -229,7 +229,7 @@ void GameScenery::setRedRingVisibility(bool visible) {
 	redring->stopAllActions();
 	auto time = 0.5f;
 	redring->runAction(
-		visible ? FadeIn::create(time) : FadeOut:create(time)
+		FadeTo::create(time, visible ? 255 : 0)
 	);
 }
 GameScenery::~GameScenery() {
