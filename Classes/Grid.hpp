@@ -12,23 +12,24 @@ struct Chain {
 
 class Grid : public cocos2d::Layer {
 public:
-    Grid(int w, int h, float maxWidth, float maxHeight);
-    Gem *get(int column, int row);
-    bool init(float maxWidth, float maxHeight);
+	Grid(int w, int h, float maxWidth, float maxHeight);
+	Gem *get(int column, int row);
+	bool init(float maxWidth, float maxHeight);
 	void scramble();
 	void createRandomCrystalGems(int, Chain *);
 	void makeCrystalsOverGemsOfType(GemType type, Chain *chain);
 	void convertGemsOfType(GemType from, GemType to, Chain *chain);
 	int destroyGemsOfType(GemType type, Chain *chain);
 	void setActive(bool);
-    cocos2d::Vec2 getSize();
-    virtual bool onTouchBegan(cocos2d::Touch *, cocos2d::Event *);
+	bool isActive();
+	cocos2d::Vec2 getSize();
+	virtual bool onTouchBegan(cocos2d::Touch *, cocos2d::Event *);
 	virtual void onTouchMoved(cocos2d::Touch *, cocos2d::Event *);
 	virtual void onTouchEnded(cocos2d::Touch *, cocos2d::Event *);
 protected:
-    int width, height;
-    Gem** grid;
-    ~Grid();
+	int width, height;
+	Gem** grid;
+	~Grid();
 	
 private:
 	bool active;
@@ -36,8 +37,8 @@ private:
 	Chain *chain = nullptr;
 	LayerColor *overlay;
 	Layer *selectedLayer;
-    void set(int column, int row, Gem *gem, bool init, GemType);
-    void refill();
+	void set(int column, int row, Gem *gem, bool init, GemType);
+	void refill();
 	cocos2d::DrawNode *line;
 	void cancelCurrentSpell();
 	void castCurrentSpell();

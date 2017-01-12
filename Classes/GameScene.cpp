@@ -88,6 +88,10 @@ bool Game::init() {
 		onEnemyClick->setSwallowTouches(true);
 		// trigger when you push down
 		onEnemyClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+			// Can't select an enemy if it's not your turn.
+			if (! this->grid->isActive())
+				return false;
+
 			Vec2 p = touch->getLocation();
 			Rect rect = scenery->getBoundingBox();
 			if(rect.containsPoint(p)) {
@@ -130,6 +134,9 @@ bool Game::init() {
 		listener->setSwallowTouches(true);
 		listener->onTouchBegan = [sprite, this](Touch* touch, Event* event)
 		{
+			// Can't select an enemy if it's not your turn.
+			if (! this->grid->isActive())
+				return false;
 			Vec2 p = touch->getLocation();
 			Rect rect = sprite->getBoundingBox();
 			
@@ -615,11 +622,13 @@ void Game::onWizardTurnOver() {
 
 void Game::attemptSetState(GameState nextstate) {
 	if (!checkGameOver()) {
+		// Game is not over:
 		state = nextstate;
 		if (state == kStateEnemySpells) {
 			// cannot use grid until enemy done
 			grid->setActive(false);
-			
+			scenery->setRedRingVisibility(false);
+
 			// enemy casts his spell
 			enemyDoTurn();
 		} else {
@@ -627,10 +636,12 @@ void Game::attemptSetState(GameState nextstate) {
 			// Tick all the wizard buffs
 			// TODO - All enemy buffs too
 			wizard->tickBuffs();
-			
+			scenery->setRedRingVisibility(true);
+
 			grid->setActive(true);
 		}
 	} else {
+		// Game is over!
 		grid->setActive(false);
 		// defer all of this until all actions are done!
 		PendingAction action = [this] {

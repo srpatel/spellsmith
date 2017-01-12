@@ -225,6 +225,13 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
 void GameScenery::setSelected(int selected) {
 	redring->setPosition((*enemies)[selected]->sprite->getPosition());
 }
+void GameScenery::setRedRingVisibility(bool visible) {
+	redring->stopAllActions();
+	auto time = 0.5f;
+	redring->runAction(
+		visible ? FadeIn::create(time) : FadeOut:create(time)
+	);
+}
 GameScenery::~GameScenery() {
 	redring->autorelease();
 }

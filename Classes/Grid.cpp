@@ -279,6 +279,10 @@ void Grid::setActive(bool active) {
 	overlay->setLocalZOrder(1);
 }
 
+bool Grid::isActive() {
+	return this->active;
+}
+
 void Grid::castCurrentSpell() {
 	if (chain) {
 		bool success = Game::get()->onCastSpell(chain);
