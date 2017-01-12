@@ -336,7 +336,11 @@ void Game::updateInventory() {
 	const float starty = layout.column_height - 110 * layout.ui_scale;
 	
 	inventoryHolder->removeAllChildren();
-	
+	for (EventListener *listener : inventoryListeners) {
+		_eventDispatcher->removeEventListener(listener);
+	}
+	inventoryListeners.clear();
+
 	// Left hand inventory
 	auto inventory = wizard->inventory;
 	for (int i = 0; i < 3; i++) {
@@ -358,8 +362,7 @@ void Game::updateInventory() {
 				return false; // if you are consuming it
 			};
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
-			// TODO : Set scale that allows spell to fit completely in the scroll
-			sprite->setScale(1.f);
+			inventoryListeners.push_back(onSpellClick);
 			inventoryHolder->addChild(sprite);
 		}
 	}
@@ -383,6 +386,7 @@ void Game::updateInventory() {
 			auto sprite = inventory[3 + i]->mininode;
 			sprite->setPosition(getBoundingBox().size.width - 18 * layout.ui_scale, starty - i * 55 * layout.ui_scale);
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
+			inventoryListeners.push_back(onSpellClick);
 			inventoryHolder->addChild(sprite);
 		}
 	}

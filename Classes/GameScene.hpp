@@ -82,6 +82,7 @@ private:
 	Node *wizard_hp_bar;
 	Label *currentRound;
 	Layer *inventoryHolder;
+	std::vector<EventListener *> inventoryListeners;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
