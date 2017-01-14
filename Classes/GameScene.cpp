@@ -519,7 +519,7 @@ bool Game::onCastSpell(Chain *chain) {
 	}
 	return success;
 }
-void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type) {
+void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type, std::function<void(void)> onhitfunc) {
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
 	auto from = Vec2(source->sprite->getPosition().x + 90 * scenery->char_scale, start_y);
 	auto to = Vec2(target->sprite->getPosition().x - 60 * scenery->char_scale, start_y);
@@ -541,7 +541,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		//  ... and if it's the shield's last charge, fade it out too.
 		to = Vec2(shield->sprite->getPosition().x, getContentSize().height - 100);
 		Sprite *shieldsprite = shield->sprite;
-		onHit = CallFunc::create([this, lastcharge, shieldsprite](){
+		onHit = CallFunc::create([this, lastcharge, shieldsprite, onhitfunc](){
 			if (lastcharge) {
 				// fade the shield out, then remove it.
 				auto fadeout = FadeOut::create(0.2);
@@ -551,6 +551,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 				auto seq = Sequence::create(fadeout, func, nullptr);
 				shieldsprite->runAction(seq);
 			}
+			if (onhitfunc) onhitfunc();
 			actionDone();
 		});
 		
@@ -560,7 +561,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		}
 	} else {
 		target->health -= damage;
-		onHit = CallFunc::create([this, damage, target](){
+		onHit = CallFunc::create([this, damage, target, onhitfunc](){
+			if (onhitfunc) onhitfunc();
 			spine::SkeletonAnimation *skeleton = nullptr;
 			if (target->is_skeleton) {
 				skeleton = (spine::SkeletonAnimation *) target->sprite;
@@ -599,9 +601,14 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	
 	runPendingAction([this, source, projectile, type]() {
 		if (source == wizard) {
-			scenery->wizardsprite->addAnimation(0,
+			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
 				type == Color3B::GREEN ? "spell_aura" : "spell_projectile",
 				false);
+			auto delay = DelayTime::create(e->endTime);
+			auto run = CallFunc::create([this](){
+				actionDone();
+			});
+			runAction(Sequence::create(delay, run, nullptr));
 		}
 		auto delay = DelayTime::create(14.0/30.0);
 		auto run = CallFunc::create([this, projectile](){
@@ -609,7 +616,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			projectile->release();
 		});
 		runAction(Sequence::create(delay, run, nullptr));
-		actionQueued();
+		actionQueued(); // projectile hit
+		actionQueued(); // animation finished
 	});
 }
 
@@ -666,7 +674,7 @@ void Game::attemptSetState(GameState nextstate) {
 						// put it in the middle of the grid
 						spellPicker->setPosition(grid->getPosition());
 						addChild(spellPicker);
-						// also remove another 2 to 5 randomly?
+						// also remove another 2
 						spellpool.erase(spellpool.begin(), spellpool.begin() +  2);
 					} else {
 						// No spells left, just go for next level!
@@ -919,7 +927,7 @@ void Game::startGame(SaveGame *save) {
 			return a->tier < b->tier;
 		});
 		// Delete the first 4 spells
-		spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
+		//spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
 		
 		// Create a round based on the current stage.
 		gotoNextEnemy();

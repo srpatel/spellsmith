@@ -1,71 +1,77 @@
 {
-"skeleton": { "hash": "/Q6bTqimD+gNoPBqz3ddJUcW38g", "spine": "3.5.32", "width": 248.51, "height": 323.33, "images": "" },
+"skeleton": {
+	"hash": "eRCd3KQJasnt7V7GZyVpPdY+mso",
+	"spine": "3.5.46",
+	"width": 245.78,
+	"height": 328.83,
+	"images": "/Users/sunil/Dropbox/GemGame/Art/spine files/player character/"
+},
 "bones": [
-	{ "name": "root", "x": 2.12, "y": 67.81 },
-	{ "name": "bone", "parent": "root", "length": 140.3, "rotation": 89.42, "x": -0.63, "y": -1.35 },
-	{ "name": "bone2", "parent": "bone", "length": 131.4, "rotation": 2.19, "x": 19.99, "y": -15.36 },
-	{ "name": "bone3", "parent": "bone2", "length": 54.58, "rotation": -2.58, "x": 142.29, "y": -7.71 },
+	{ "name": "root", "rotation": 0.26, "x": 2.12, "y": 67.81 },
+	{ "name": "bone", "parent": "root", "length": 140.3, "rotation": 89.69, "x": -0.63, "y": -1.35 },
+	{ "name": "bone2", "parent": "bone", "length": 131.4, "rotation": 2.45, "x": 19.99, "y": -15.36 },
+	{ "name": "bone3", "parent": "bone2", "length": 54.58, "rotation": -2.32, "x": 142.29, "y": -7.71 },
 	{
 		"name": "bone4",
 		"parent": "bone2",
 		"length": 57.01,
-		"rotation": 173.45,
+		"rotation": 173.71,
 		"x": 121.51,
 		"y": 21.58,
 		"scaleX": 0.945,
 		"scaleY": 0.973
 	},
-	{ "name": "bone5", "parent": "bone4", "length": 54.37, "rotation": 93.19, "x": 57.61, "y": 4.19, "scaleX": 0.914 },
-	{ "name": "bone6", "parent": "bone5", "length": 13.78, "rotation": -0.46, "x": 53.27, "y": -2.42 },
-	{ "name": "bone7", "parent": "bone2", "length": 60.16, "rotation": -128.6, "x": 121.32, "y": -17.86 },
-	{ "name": "bone8", "parent": "bone7", "length": 44.94, "rotation": 95.95, "x": 54.94, "y": 2.69 },
-	{ "name": "bone9", "parent": "bone8", "length": 18.58, "rotation": 7.01, "x": 40.33, "y": 3.01 },
-	{ "name": "bone10", "parent": "bone6", "length": 84.77, "rotation": 63.79, "x": 15.55, "y": 0.16 }
+	{ "name": "bone5", "parent": "bone4", "length": 54.37, "rotation": 93.45, "x": 57.61, "y": 4.19, "scaleX": 0.914 },
+	{ "name": "bone6", "parent": "bone5", "length": 13.78, "rotation": -0.2, "x": 53.27, "y": -2.42 },
+	{ "name": "bone7", "parent": "bone2", "length": 60.16, "rotation": -128.34, "x": 121.32, "y": -17.86 },
+	{ "name": "bone8", "parent": "bone7", "length": 44.94, "rotation": 96.21, "x": 54.94, "y": 2.69 },
+	{ "name": "bone9", "parent": "bone8", "length": 18.58, "rotation": 7.27, "x": 40.33, "y": 3.01 },
+	{ "name": "bone10", "parent": "bone6", "length": 84.77, "rotation": 64.05, "x": 15.55, "y": 0.16 }
 ],
 "slots": [
-	{ "name": "characters/wizard/back_arm_top", "bone": "bone7", "attachment": "characters/wizard/back_arm_top" },
-	{ "name": "characters/wizard/back_arm_middle", "bone": "bone8", "attachment": "characters/wizard/back_arm_middle" },
-	{ "name": "characters/wizard/Torso", "bone": "bone2", "attachment": "characters/wizard/Torso" },
-	{ "name": "characters/wizard/Staff", "bone": "bone10", "attachment": "characters/wizard/Staff" },
-	{ "name": "characters/wizard/back_arm_bottom", "bone": "bone9", "attachment": "characters/wizard/back_arm_bottom" },
-	{ "name": "characters/wizard/head", "bone": "bone3", "attachment": "characters/wizard/head" },
-	{ "name": "characters/wizard/arm_front_top", "bone": "bone4", "attachment": "characters/wizard/arm_front_top" },
-	{ "name": "characters/wizard/arm_front_middle", "bone": "bone5", "attachment": "characters/wizard/arm_front_middle" },
-	{ "name": "characters/wizard/arm_front_bottom", "bone": "bone6", "attachment": "characters/wizard/arm_front_bottom" }
+	{ "name": "Wizard_back_arm_top", "bone": "bone7", "attachment": "Wizard_back_arm_top" },
+	{ "name": "Wizard_back_arm_middle", "bone": "bone8", "attachment": "Wizard_back_arm_middle" },
+	{ "name": "Wizard_Torso", "bone": "bone2", "attachment": "Wizard_Torso" },
+	{ "name": "Wizard_Staff", "bone": "bone10", "attachment": "Wizard_Staff" },
+	{ "name": "Wizard_back_arm_bottom", "bone": "bone9", "attachment": "Wizard_back_arm_bottom" },
+	{ "name": "Wizard_head", "bone": "bone3", "attachment": "Wizard_head" },
+	{ "name": "Wizard_arm_front_top", "bone": "bone4", "attachment": "Wizard_arm_front_top" },
+	{ "name": "Wizard_arm_front_middle", "bone": "bone5", "attachment": "Wizard_arm_front_middle" },
+	{ "name": "Wizard_arm_front_bottom", "bone": "bone6", "attachment": "Wizard_arm_front_bottom" }
 ],
 "skins": {
 	"default": {
-		"characters/wizard/Staff": {
-			"characters/wizard/Staff": { "x": 41.31, "y": 0.05, "scaleX": 0.935, "rotation": -98.18, "width": 29, "height": 345 }
+		"Wizard_Staff": {
+			"Wizard_Staff": { "x": 41.31, "y": 0.05, "scaleX": 0.935, "rotation": -98.18, "width": 29, "height": 345 }
 		},
-		"characters/wizard/Torso": {
-			"characters/wizard/Torso": { "x": 61.75, "y": 24.17, "rotation": -91.61, "width": 137, "height": 299 }
+		"Wizard_Torso": {
+			"Wizard_Torso": { "x": 61.75, "y": 24.17, "rotation": -91.61, "width": 137, "height": 299 }
 		},
-		"characters/wizard/arm_front_bottom": {
-			"characters/wizard/arm_front_bottom": { "x": 12.98, "y": 3.84, "scaleX": 0.93, "scaleY": 0.97, "rotation": 6.91, "width": 30, "height": 19 }
+		"Wizard_arm_front_bottom": {
+			"Wizard_arm_front_bottom": { "x": 12.98, "y": 3.84, "scaleX": 0.93, "scaleY": 0.97, "rotation": 6.91, "width": 30, "height": 19 }
 		},
-		"characters/wizard/arm_front_middle": {
-			"characters/wizard/arm_front_middle": { "x": 33.22, "y": -0.13, "rotation": -10.36, "width": 80, "height": 46 }
+		"Wizard_arm_front_middle": {
+			"Wizard_arm_front_middle": { "x": 33.22, "y": -0.13, "rotation": -10.36, "width": 80, "height": 46 }
 		},
-		"characters/wizard/arm_front_top": {
-			"characters/wizard/arm_front_top": { "x": 25.33, "y": 17.04, "scaleX": 0.983, "scaleY": 0.897, "rotation": 109.15, "width": 72, "height": 92 }
+		"Wizard_arm_front_top": {
+			"Wizard_arm_front_top": { "x": 25.33, "y": 17.04, "scaleX": 0.983, "scaleY": 0.897, "rotation": 109.15, "width": 72, "height": 92 }
 		},
-		"characters/wizard/back_arm_bottom": {
-			"characters/wizard/back_arm_bottom": { "x": 11.62, "y": 0.73, "rotation": -47.44, "width": 24, "height": 26 }
+		"Wizard_back_arm_bottom": {
+			"Wizard_back_arm_bottom": { "x": 11.62, "y": 0.73, "rotation": -47.44, "width": 24, "height": 26 }
 		},
-		"characters/wizard/back_arm_middle": {
-			"characters/wizard/back_arm_middle": { "x": 24.16, "y": 6.59, "rotation": -65.64, "width": 66, "height": 71 }
+		"Wizard_back_arm_middle": {
+			"Wizard_back_arm_middle": { "x": 24.16, "y": 6.59, "rotation": -65.64, "width": 66, "height": 71 }
 		},
-		"characters/wizard/back_arm_top": {
-			"characters/wizard/back_arm_top": { "x": 25.92, "y": 2.26, "rotation": 35.59, "width": 80, "height": 64 }
+		"Wizard_back_arm_top": {
+			"Wizard_back_arm_top": { "x": 25.92, "y": 2.26, "rotation": 35.59, "width": 80, "height": 64 }
 		},
-		"characters/wizard/head": {
-			"characters/wizard/head": { "x": 24.06, "y": 8.68, "rotation": -89.03, "width": 81, "height": 83 }
+		"Wizard_head": {
+			"Wizard_head": { "x": 24.06, "y": 8.68, "rotation": -89.03, "width": 81, "height": 83 }
 		}
 	}
 },
 "animations": {
-	"hit": {
+	"Damage": {
 		"bones": {
 			"bone4": {
 				"rotate": [
@@ -143,7 +149,7 @@
 			}
 		}
 	},
-	"spell_projectile": {
+	"Spell1": {
 		"bones": {
 			"bone4": {
 				"rotate": [
@@ -223,7 +229,7 @@
 			}
 		}
 	},
-	"spell_aura": {
+	"Spell2": {
 		"bones": {
 			"bone4": {
 				"rotate": [
@@ -323,7 +329,7 @@
 			}
 		}
 	},
-	"spell_heal": {
+	"heal": {
 		"bones": {
 			"bone5": {
 				"rotate": [

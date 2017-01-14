@@ -374,13 +374,19 @@ void Grid::createRandomCrystalGems(int amount, Chain *chain) {
 		int x = coords[i].first;
 		int y = coords[i].second;
 		i++;
+	
 		// If this is in chain, skip it.
-		if (! ChainContainsCoords(chain, x, y)) {
-			removeChild(get(x, y)->sprite);
-			auto g = new Gem;
-			set(x, y, g, true, CRYSTAL);
-			amount--;
-		}
+		if (ChainContainsCoords(chain, x, y))
+			continue;
+		
+		// If it's already a crystal, skip it.
+		if (get(x, y)->type == CRYSTAL)
+			continue;
+		
+		removeChild(get(x, y)->sprite);
+		auto g = new Gem;
+		set(x, y, g, true, CRYSTAL);
+		amount--;
 	}
 }
 

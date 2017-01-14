@@ -63,6 +63,7 @@ public:
 	void tickBuffs();
 	inline bool dead() { return health <= 0; }
 	Layer *buffHolder;
+	void flash(Color3B c);
 };
 
 class Enemy : public Character {

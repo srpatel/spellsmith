@@ -105,5 +105,27 @@
         "amount": 5
       }
     ]
+  },
+  {
+    "name": "shaman",
+    "skeleton": {
+      "name": "shaman",
+      "skins": [
+        "animal1",
+        "animal2",
+        "red",
+        "blue"
+      ]
+    },
+    "health": 15,
+    "attack_frequency": 1,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "melee",
+        "amount": 5
+      }
+    ]
   }
 ]

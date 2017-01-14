@@ -218,6 +218,15 @@ void Character::addBuff(Buff *buff) {
 	updateBuffs();
 }
 
+void Character::flash(Color3B c) {
+	Color3B original = sprite->getColor();
+	auto f = Sequence::create(
+		EaseIn::create(TintTo::create(0.5f, c), 0.5),
+		EaseOut::create(TintTo::create(0.5f, original), 0.5),
+		nullptr);
+	sprite->runAction(f);
+}
+
 void Character::removeBuff(Buff *existing) {
 	if (existing->type == BuffType::PHASING) {
 		auto a = sprite->getActionByTag(BuffType::PHASING);

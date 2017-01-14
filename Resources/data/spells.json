@@ -44,8 +44,19 @@
     ]
   },
   {
+    "name": "heal",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "E    ",
+      "RER  "
+    ]
+  },
+  {
     "name": "chill",
-    "tier": 99,
+    "tier": 1,
     "shape": [
       "     ",
       "     ",
@@ -166,13 +177,13 @@
   },
   {
     "name": "stun_strike",
-    "tier": 99,
+    "tier": 2,
     "shape": [
       "     ",
       "     ",
       " E   ",
       "EE   ",
-      " A   "
+      "AA   "
     ]
   },
   {
@@ -228,6 +239,17 @@
       " E   ",
       "WEW  ",
       " E   "
+    ]
+  },
+  {
+    "name": "purify",
+    "tier": 2,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "     ",
+      "AA   "
     ]
   },
   {

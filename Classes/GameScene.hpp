@@ -88,7 +88,7 @@ private:
 	GameState state;
 	void attemptSetState(GameState);
 	
-	void makeProjectile(Character *source, Character *target, int damage, Color3B type);
+	void makeProjectile(Character *source, Character *target, int damage, Color3B type,std::function<void(void)> onhit = {} /*default to no callable*/);
 	
 	int numCurrentActions;
 	

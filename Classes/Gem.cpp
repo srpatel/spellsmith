@@ -55,7 +55,11 @@ void Gem::init(GemType type) {
 }
 
 void Gem::init() {
-    init(static_cast<GemType>(1 + rand() % 4));
+#if DESKTOP
+	init(CRYSTAL);
+#else
+	init(static_cast<GemType>(1 + rand() % 4));
+#endif
 }
 
 Size Gem::getSize() {

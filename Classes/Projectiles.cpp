@@ -11,6 +11,44 @@
 // Px per second
 #define PROJECTILE_SPEED 300
 
+bool BasicAnim::init(
+		Vec2 loc,
+		float scale,
+		CallFunc* onHit
+)
+{
+	if ( !Layer::init() )
+	{
+		return false;
+	}
+	
+	auto sprite = Sprite::create();
+	sprite->setPosition(loc);
+	sprite->setScale(scale);
+	// sprite->setContentSize();
+	// Animate it!
+	Vector<SpriteFrame*> frames(num);
+	char str[100] = {0};
+	for(int i = 1; i <= num; i++)
+	{
+		sprintf(str, "spells/%s/%s%02d.png", path, path, i);
+		auto frame = LoadSpriteFrame( std::string(str) );
+		frames.pushBack(frame);
+	}
+
+	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
+	
+	sprite->runAction(Sequence::create(
+		Animate::create(animation),
+		onHit,
+		nullptr
+	));
+	addChild(sprite);
+	
+	
+	return true;
+}
+
 bool BasicProjectile::init(
 		Vec2 from,
 		Vec2 to,

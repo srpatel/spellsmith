@@ -58,9 +58,9 @@ bool GameScenery::init(Size size) {
 		enemy_positions1[i].y = 8 + (i % 2) * ydiff * 0.1;
 	}
 	
-	wizardsprite = spine::SkeletonAnimation::createWithFile("spine/wizard.json", ImageManager::get()->getAtlas(), 0.4f);
+	wizardsprite = spine::SkeletonAnimation::createWithFile("spine/wizard.json", ImageManager::get()->getAtlas(), 1.0f);
 	wizardsprite->setPosition(50 * char_scale, 10 * char_scale);
-	wizardsprite->setScale(char_scale);
+	wizardsprite->setScale(char_scale * 0.4f);
 	
 	addChild(wizardsprite);
 	
@@ -193,7 +193,13 @@ void GameScenery::greyscaleMode(bool grey) {
 void GameScenery::addTextWisp(Character *enemy, std::string s, Color3B c) {
 	auto tw = TextWisp::create(s, c);
 	Node *sprite = enemy->sprite;
-	tw->setPosition(sprite->getPosition().x, sprite->getPosition().y + sprite->getBoundingBox().size.height + 5);
+	if (sprite == wizardsprite) {
+		tw->setPosition(
+			sprite->getPosition().x,
+			sprite->getPosition().y + 295 * sprite->getScale());
+	} else {
+		tw->setPosition(sprite->getPosition().x, sprite->getPosition().y + sprite->getBoundingBox().size.height + 5);
+	}
 	addChild(tw);
 }
 

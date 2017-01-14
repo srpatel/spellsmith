@@ -41,6 +41,14 @@
       "name": "Smelt",
       "description": "Deal 6 damage. Create 1 crystal gem."
     },
+	"heal": {
+      "name": "Heal",
+      "description": "Gain 7 life."
+    },
+	"purify": {
+      "name": "Purify",
+      "description": "Create 1 crystal gem."
+    },
     "zap": {
       "name": "Zap",
       "description": "Deal 10 damage to a random enemy."
@@ -71,11 +79,11 @@
     },
     "fire_cleanse": {
       "name": "Fire Cleanse",
-      "description": "Destroy all fire gems and deal 2 damage for each."
+      "description": "Destroy all fire gems and deal 3 damage for each."
     },
     "fountain_of_youth": {
       "name": "Fountain of Youth",
-      "description": "Destroy all blue gems and heal 1 for each."
+      "description": "Destroy all blue gems and heal 2 for each."
     },
     "fertilise": {
       "name": "Fertilise",

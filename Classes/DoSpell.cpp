@@ -9,6 +9,8 @@
 #include "DoSpell.hpp"
 #include "Characters.hpp"
 
+#include "Projectiles.hpp"
+
 #define IF_SPELL(s) else if (strcmp(spell->getRawName().c_str(), #s) == 0)
 
 class AmountGenerator {
@@ -21,6 +23,7 @@ public:
 #define D(_n_) (_n_ * damageModifier)
 #define D_BETWEEN(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
 
+#define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->addAnimation(0, _n_, false); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
 #define HEAL(_n_) {\
 	auto amt = _n_; \
@@ -39,6 +42,13 @@ public:
 	game->enemies[game->currentEnemy], \
 	_n_,\
 	_t_);
+#define PROJ_ONHIT(_n_, _t_, _hit_) projectile = true; \
+	game->makeProjectile(\
+	game->wizard, \
+	game->enemies[game->currentEnemy], \
+	_n_,\
+	_t_, \
+	_hit_);
 #define PROJ_RAND(_n_, _t_) projectile = true; \
 	{ int i = game->getNextAliveEnemy(rand() % game->enemies.size(), nullptr);\
 	game->makeProjectile(\
@@ -58,6 +68,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	// because we want to queue pending actions after any pending actions here are added.
 	bool projectile = false;
 	bool hasKingsCourt = game->wizard->getBuffByType(BuffType::KINGS_COURT);
+	bool doAnimation = true;
 	
 	if (1 == 0);
 	IF_SPELL(whispers_in_the_wind) {
@@ -106,33 +117,39 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		PROJ( D(3 * charge->charges), Color3B::BLUE );
 	}
 	IF_SPELL(drain_life) {
-		// Deal 5 damage. If this kills the enemy, gain 10 life.
+		// Deal 5 damage. If this kills the enemy, gain 8 life.
 		auto target = game->enemies[game->currentEnemy];
-		PROJ( D(5), Color3B::RED );
-		// Should occur when the proj hits!
-		if (target->health <= 0) {
-			HEAL( 8 );
+		int amount = D(5);
+		if (target->health > amount) {
+			PROJ( D(5), Color3B::RED );
+		} else {
+			PROJ_ONHIT( D(5), Color3B::RED, [game](){
+				game->wizard->flash(Color3B::GREEN);
+				HEAL(8);
+			} );
 		}
-
 	}
 	IF_SPELL(induce_explosion) {
 		// Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies.
 		auto target = game->enemies[game->currentEnemy];
-		PROJ( D(5), Color3B::RED );
+		auto amount = D(5);
+		auto bonus = D(10);
 		// Should occur when the proj hits!
-		if (target->health <= 0) {
-			// Deal 10 the others too!
-			for (Enemy *e : game->enemies) {
-				if (e == target) continue;
-				e->ui_health -= D(10);
-				e->health -= D(10);
-			}
-			// update when the proj hits!
-			//game->updateHealthBars();
+		if (target->health <= amount) {
+			PROJ_ONHIT( amount, Color3B::RED, [=](){
+				for (Enemy *e : game->enemies) {
+					if (e == target) continue;
+					e->ui_health -= bonus;
+					e->health -= bonus;
+				}
+				game->updateHealthBars();
+			});
+		} else {
+			PROJ(amount, Color3B::RED);
 		}
 	}
 	IF_SPELL(poison_dart) {
-		// Deal 5 damage. Deal an extra 5 damage if they are below 50% health.
+		// Deal 5 damage. Deal an extra 12 damage if they are below 50% health.
 		int n = 5;
 		auto e = game->enemies[game->currentEnemy];
 		if (e->health * 2 < e->max_health) {
@@ -147,15 +164,15 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(fire_cleanse) {
 		// Destroy all red gems and deal 2 damage for each
 		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );
-		PROJ( D(n), Color3B::RED );
+		PROJ( D(n * 3), Color3B::RED );
 	}
 	IF_SPELL(fountain_of_youth) {
 		// Destroy all blue gems and heal 1 for each
 		int n = game->grid->destroyGemsOfType( GemType::WATER, chain );
-		HEAL( n );
+		HEAL( 2 * n );
 	}
 	IF_SPELL(focus) {
-		// deal extra damage with chains for 4 turns
+		// deal extra damage with chains for 6 turns
 		game->wizard->addBuff( Buff::createFocus() );
 	}
 	IF_SPELL(channel) {
@@ -163,7 +180,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->wizard->addBuff( Buff::createKingsCourt() );
 	}
 	IF_SPELL(phase) {
-		// cast the next spell three times
+		// immortal for one turn
 		game->wizard->addBuff( Buff::createPhasing() );
 	}
 	IF_SPELL(fury) {
@@ -199,7 +216,39 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(forest_breeze) {
 		// gain 5
-		HEAL(5);
+		SKELETON_ANIMATION("spell_heal");
+		// TODO - actionDone only when the later of the animation and the skeleton finishes
+		// TODO - flash green
+		game->actionQueued();
+		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
+		auto delay = DelayTime::create(1.0f/3.0f);
+		auto addanim = CallFunc::create([game, staffOffset]() {
+			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
+				game->actionDone();
+			}));
+			game->wizard->flash(Color3B::GREEN);
+			HEAL(5);
+			game->scenery->addChild(heal);
+		});
+		game->runAction(Sequence::create(delay, addanim, nullptr));
+	}
+	IF_SPELL(heal) {
+		// gain 7
+		SKELETON_ANIMATION("spell_heal");
+		// TODO - actionDone only when the later of the animation and the skeleton finishes
+		// TODO - flash green
+		game->actionQueued();
+		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
+		auto delay = DelayTime::create(1.0f/3.0f);
+		auto addanim = CallFunc::create([game, staffOffset]() {
+			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
+				game->actionDone();
+			}));
+			game->wizard->flash(Color3B::GREEN);
+			HEAL(7);
+			game->scenery->addChild(heal);
+		});
+		game->runAction(Sequence::create(delay, addanim, nullptr));
 	}
 	IF_SPELL(cleanse) {
 		// Heal for 3 and clear the grid
@@ -221,8 +270,10 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
-		HEAL(5);
-		PROJ( D(5), Color3B::RED );
+		PROJ_ONHIT( D(5), Color3B::RED, [game](){
+			game->wizard->flash(Color3B::GREEN);
+			HEAL(5);
+		} );
 	}
 	IF_SPELL(volcanic) {
 		// deal 10 damage to everyone
@@ -237,11 +288,17 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(crystalise) {
 		// heal 3, create 3 crystal gems
 		HEAL(3);
+		game->wizard->flash(Color3B::GREEN);
 		CRYSTAL(3);
 	}
 	IF_SPELL(zap) {
 		// deal 10 to a random enemy
 		PROJ_RAND( D(10), Color3B::YELLOW );
+	}
+	IF_SPELL(purify) {
+		// deal 6 damage, create 1 crystal gem
+		PROJ( D(6), Color3B::RED );
+		CRYSTAL(1);
 	}
 	IF_SPELL(smelt) {
 		// deal 6 damage, create 1 crystal gem
@@ -293,12 +350,9 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
 	}
 	
-	// don't progress until the animation has finished
-	if (! projectile) {
-		game->scenery->wizardsprite->addAnimation(0, "spell_aura", false); // aura spell
-	} else {
-		// This happens at makeProjectile for better timing.
-		// game->scenery->wizardsprite->addAnimation(0, "spell_projectile", false); // proj spell
+	// don't show animation for projectiles (automatic) nor for spells which define their own anim.
+	if (! projectile && doAnimation) {
+		SKELETON_ANIMATION("spell_aura");
 	}
 	
 	// Flash the inventory icon
