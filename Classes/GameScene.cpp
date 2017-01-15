@@ -786,7 +786,36 @@ void Game::enemyDoTurn() {
 					// attack
 					auto a = e->monster->getAttack();
 					
+					std::vector<Enemy *> healtargets;
+					if (a->type == kAttackTypeHeal || a->type == kAttackTypeHealOther || a->type == kAttackTypeHealSelf) {
+						// Are there friendlies which need healing?
+						for (Enemy *ee : enemies) {
+							if (ee == e) {
+								if (a->type == kAttackTypeHealOther) {
+									// can't heal self if heal-other
+									continue;
+								}
+							} else {
+								if (a->type == kAttackTypeHealSelf) {
+									// can't heal other if heal-self
+									continue;
+								}
+							}
+							if (ee->health < ee->max_health && ! ee->dead()) {
+								healtargets.push_back(ee);
+							}
+						}
+						if (healtargets.size() == 0) {
+							// pick the attack after, regardless of ratio!
+							printf("Falling back!\n");
+							a = e->monster->getAttackFallback( a );
+						} else {
+							std::random_shuffle(healtargets.begin(), healtargets.end());
+						}
+					}
+					
 					PendingAction action;
+					
 					if (a->type == kAttackTypeMelee) {
 						// for melee attack:
 						// - move up to the wizard
@@ -831,9 +860,37 @@ void Game::enemyDoTurn() {
 							e->sprite->runAction(enemySeq);
 							runAction(mainSeq);
 						};
+					} else if (a->type == kAttackTypeHeal || a->type == kAttackTypeHealOther || a->type == kAttackTypeHealSelf) {
+						// Heal -- if there is another enemy to heal, then heal.
+						action = [this, e, a, healtargets]() {
+							if (e->is_skeleton) {
+								spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) e->sprite;
+									
+								skeleton->addAnimation(0, a->animation, false, 0);
+							}
+							// Wait for the heal animation
+							runAction(Sequence::create(
+								DelayTime::create(0.6),
+								CallFunc::create([a, healtargets]() {
+									int healfor = a->amount;
+							
+									Enemy *healme = healtargets[0];
+									healme->heal(healfor);
+								}),
+								nullptr
+							));
+						};
+						// Otherwise, go for a melee attack instead.
 					} else {
 						// non-melee attacks are just basic projectile for now
 						action = [this, e, a]() {
+							if (e->is_skeleton) {
+								spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) e->sprite;
+									
+								skeleton->addAnimation(0, a->animation, false, 0);
+								
+							}
+							
 							int damage = a->amount;
 							makeProjectile(e, wizard, damage, Color3B::RED);
 							// projectiles already add to action queue

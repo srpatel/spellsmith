@@ -64,6 +64,7 @@ public:
 	inline bool dead() { return health <= 0; }
 	Layer *buffHolder;
 	void flash(Color3B c);
+	void heal(int amt);
 };
 
 class Enemy : public Character {

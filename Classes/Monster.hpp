@@ -12,7 +12,12 @@
 #include "spine/SkeletonAnimation.h"
 
 enum AttackType {
-	kAttackTypeMelee = 0
+	kAttackTypeMelee = 0,
+	kAttackTypeHeal,
+	kAttackTypeHealSelf,
+	kAttackTypeHealOther,
+	
+	kAttackTypeOther,
 };
 
 class SkeletonDef {
@@ -36,9 +41,11 @@ class Monster {
 friend class MonsterManager;
 public:
 	std::string name;
+	std::string getName();
 	int hp;
 	int attack_frequency;
 	Attack *getAttack();
+	Attack *getAttackFallback(Attack *a);
 	int total_attack_ratio;
 	std::vector<Attack *> attacks;
 	spine::SkeletonAnimation *makeSkeleton();

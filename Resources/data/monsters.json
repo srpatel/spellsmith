@@ -91,11 +91,29 @@
     "skeleton": {
       "name": "dog",
       "skins": [
-        "grey",
         "brown"
       ]
     },
-    "health": 15,
+    "health": 10,
+    "attack_frequency": 1,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "fast_dog",
+    "skeleton": {
+      "name": "dog",
+      "skins": [
+        "grey"
+      ]
+    },
+    "health": 10,
     "attack_frequency": 0,
     "attacks": [
       {
@@ -112,8 +130,50 @@
       "name": "shaman",
       "skins": [
         "animal1",
-        "animal2",
-        "red",
+        "animal2"
+      ]
+    },
+    "health": 15,
+    "attack_frequency": 2,
+    "attacks": [
+      {
+        "ratio": 2,
+        "type": "heal_other",
+        "animation": "heal",
+        "amount": 3
+      },
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "melee",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "name": "fire_wizard",
+    "skeleton": {
+      "name": "shaman",
+      "skins": [
+        "red"
+      ]
+    },
+    "health": 15,
+    "attack_frequency": 1,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "melee",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "water_wizard",
+    "skeleton": {
+      "name": "shaman",
+      "skins": [
         "blue"
       ]
     },

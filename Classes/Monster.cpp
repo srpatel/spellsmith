@@ -8,7 +8,7 @@
 
 #include "Monster.hpp"
 #include "ImageManager.hpp"
-
+#include "Strings.hpp"
 #include "json/document.h"
 
 MonsterManager *MonsterManager::instance = nullptr;
@@ -21,7 +21,15 @@ MonsterManager *MonsterManager::get() {
 }
 
 static AttackType getAttackType(std::string s) {
-	return kAttackTypeMelee;
+	if (s == "melee")
+		return kAttackTypeMelee;
+	if (s == "heal")
+		return kAttackTypeHeal;
+	if (s == "heal_self")
+		return kAttackTypeHealSelf;
+	if (s == "heal_other")
+		return kAttackTypeHealOther;
+	return kAttackTypeOther;
 }
 
 Monster *MonsterManager::get(std::string name) {
@@ -128,6 +136,23 @@ Attack *Monster::getAttack() {
 	}
 	// should never happen!
 	return attacks[0];
+}
+
+// get the attack after it - ignore ratio!
+Attack *Monster::getAttackFallback(Attack *a) {
+	bool getNext = false;
+	for (Attack *attack : attacks) {
+		if (getNext)
+			return attack;
+		if (attack == a) {
+			getNext = true;
+		}
+	}
+	// should never happen!
+	return attacks[0];
+}
+std::string Monster::getName() {
+	return _(std::string("monster.") + name);
 }
 
 Attack::Attack(int _ratio, AttackType _type, std::string _animation, int _amount) :

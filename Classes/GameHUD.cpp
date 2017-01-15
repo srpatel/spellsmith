@@ -32,7 +32,7 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 	float heightPerItem = getContentSize().height / enemies->size();
 	int i = 0;
 	for (Enemy *e : *enemies) {
-		auto monsterName = Label::createWithTTF(e->monster->name, Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		auto monsterName = Label::createWithTTF(e->monster->getName(), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		monsterName->setColor(Color3B::BLACK);
 		monsterName->setAnchorPoint(Vec2(0, 0.5));
 		monsterName->setPosition(15, (enemies->size() - i - 1) * heightPerItem + heightPerItem/2);
@@ -70,6 +70,9 @@ void GameHUD::setupMonsterList(std::vector<Enemy *> *e) {
 	}
 	updateAttackClocks();
 	
+	// This shouldn't happen...but it has crashed!
+	arrow->removeFromParent();
+	
 	addChild(arrow);
 	setSelected(0);
 }
@@ -83,7 +86,7 @@ void GameHUD::updateHealthBars() {
 void GameHUD::updateAttackClocks() {
 	for (int i = 0; i < enemies->size(); i++) {
 		auto c = enemies->at(i);
-		attackclock_reds[i]->setVisible(c->attack_clock == 0);
+		attackclock_reds[i]->setVisible(c->attack_clock == 0 && ! c->dead());
 		if (c->dead() || c->attack_clock == 0) {
 			attackclocks[i]->setString(std::string(""));
 		} else {

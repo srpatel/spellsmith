@@ -25,17 +25,7 @@ public:
 
 #define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->addAnimation(0, _n_, false); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
-#define HEAL(_n_) {\
-	auto amt = _n_; \
-	game->wizard->ui_health += amt;\
-	game->wizard->health += amt;\
-	if (game->wizard->health > game->wizard->max_health) {\
-		game->wizard->ui_health = game->wizard->max_health;\
-		game->wizard->health = game->wizard->max_health;\
-	}\
-	game->updateHealthBars();\
-	game->scenery->addTextWisp(game->wizard, std::string("+") + ToString(amt), Color3B::GREEN);\
-	}
+#define HEAL(_n_) game->wizard->heal(_n_);
 #define PROJ(_n_, _t_) projectile = true; \
 	game->makeProjectile(\
 	game->wizard, \

@@ -41,11 +41,11 @@
       "name": "Smelt",
       "description": "Deal 6 damage. Create 1 crystal gem."
     },
-	"heal": {
+    "heal": {
       "name": "Heal",
       "description": "Gain 7 life."
     },
-	"purify": {
+    "purify": {
       "name": "Purify",
       "description": "Create 1 crystal gem."
     },
@@ -133,6 +133,14 @@
       "name": "Charge Bolt",
       "description": "Deal 3 damage plus 3 more for each other time you cast this spell this round."
     }
+  },
+  "monster": {
+    "dog": "Hound",
+    "fast_dog": "Greyhound",
+    "shaman": "Lupine Shaman",
+    "goblin_sword": "Goblin Swordsman",
+    "goblin_axe": "Goblin Axeman",
+    "goblin_halberd": "Goblin Halberdier"
   },
   "ui": {
     "LEVEL_WON": "congratulations",

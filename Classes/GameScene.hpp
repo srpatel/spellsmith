@@ -57,7 +57,10 @@ public:
 	void onWizardTurnOver();
 	
 	layout_t getLayout();
-    
+	GameScenery *scenery;
+    Wizard *wizard;
+	void updateHealthBars();
+	
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
 private:
@@ -69,15 +72,12 @@ private:
 	void gotoNextEnemy();
 	void showRound(Round *);
 	
-	void updateHealthBars();
 	int getNextAliveEnemy(int start, bool *allDead);
 	
 	GameHUD *hud;
-	GameScenery *scenery;
 	std::vector<Enemy *> enemies;
 	bool setSelected(int);
 	int currentEnemy;
-	Wizard *wizard;
 	std::vector<Spell *> spellpool;
 	Node *wizard_hp_bar;
 	Label *currentRound;

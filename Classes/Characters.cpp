@@ -7,6 +7,7 @@
 //
 
 #include "Characters.hpp"
+#include "GameScene.hpp"
 
 
 #if DESKTOP
@@ -216,6 +217,19 @@ void Character::addBuff(Buff *buff) {
 		sprite->runAction(f);
 	}
 	updateBuffs();
+}
+
+void Character::heal(int amt) {
+	Game *game = Game::get();
+	int max_amt = max_health - health;
+	amt = MIN(max_amt, amt);
+	health += amt;
+	ui_health += amt;
+	flash(Color3B(175, 255, 175));
+	if (game) {
+		game->updateHealthBars();
+		game->scenery->addTextWisp(this, std::string("+") + ToString(amt), Color3B::GREEN);
+	}
 }
 
 void Character::flash(Color3B c) {
