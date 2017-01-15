@@ -587,13 +587,17 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
 	if (type == Color3B::WHITE) {
-		projectile = BasicWind::create(from, to, scale, onHit);
+		auto offset = Vec2(20, 0) * scale;
+		projectile = BasicWind::create(from + offset, to, scale, onHit);
 	} else if (type == Color3B::GREEN) {
-		projectile = BasicEarth::create(from, to, scale, onHit);
+		auto offset = Vec2() * scale;
+		projectile = BasicEarth::create(from + offset, to, scale, onHit);
 	} else if (type == Color3B::BLUE) {
-		projectile = BasicWater::create(from, to, scale, onHit);
+		auto offset = Vec2(20, 0) * scale;
+		projectile = BasicWater::create(from + offset, to, scale, onHit);
 	} else {
-		projectile = BasicFire::create(from, to, scale, onHit);
+		auto offset = Vec2(0, 5) * scale;
+		projectile = BasicFire::create(from + offset, to, scale, onHit);
 	}
 	// Wait for 0.56 seconds as that is when the staff is in the right place
 	// TODO : Events

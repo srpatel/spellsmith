@@ -75,7 +75,7 @@ Round *LevelManager::generateRound(int stage) {
 		}
 	} else {
 		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "dog"));
-		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
+		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "shaman"));
 		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
 	}
 	if (r->monsters.size() > 3) {
