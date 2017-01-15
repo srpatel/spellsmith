@@ -62,7 +62,7 @@ bool GameScenery::init(Size size) {
 	wizardsprite->setPosition(50 * char_scale, 10 * char_scale);
 	wizardsprite->setScale(char_scale * 0.4f);
 	
-	addChild(wizardsprite);
+	addChild(wizardsprite, 75);
 	
 	Layer *message = Layer::create();
 	message->setPosition(size/2);

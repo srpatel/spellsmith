@@ -612,7 +612,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		}
 		auto delay = DelayTime::create(14.0/30.0);
 		auto run = CallFunc::create([this, projectile](){
-			scenery->addChild(projectile);
+			scenery->addChild(projectile, 76); // in front of "back" enemies (50), and behind "front" enemies (100)
 			projectile->release();
 		});
 		runAction(Sequence::create(delay, run, nullptr));
