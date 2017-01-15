@@ -78,5 +78,9 @@ Round *LevelManager::generateRound(int stage) {
 		r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
 	}
+	if (r->monsters.size() > 3) {
+		printf("Shouldn't happen. Remove the extra monsters.");
+		r->monsters.erase(r->monsters.end() - 3, r->monsters.end());
+	}
 	return r;
 }
