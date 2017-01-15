@@ -44,8 +44,6 @@ Round *LevelManager::generateRound(int stage) {
 		}
 	} else if (stage <= 10) {
 		int difficulty = rand() % 6;
-		
-		r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
 		if (difficulty <= 1) {
 			r->monsters.push_back(MonsterManager::get()->get("shaman"));
 			r->monsters.push_back(MonsterManager::get()->get("dog"));
