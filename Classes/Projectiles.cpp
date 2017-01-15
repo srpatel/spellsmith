@@ -60,10 +60,13 @@ bool BasicProjectile::init(
 	{
 		return false;
 	}
+	auto scaleX = (from.x > to.x) ? -1 : 1;
 	
 	auto sprite = Sprite::create();
-	sprite->setPosition(from);
-	sprite->setScale(scale);
+	
+	sprite->setPosition(from + offset * scale * scaleX);
+	sprite->setScaleY(scale);
+	sprite->setScaleX(scale * scaleX);
 	// sprite->setContentSize();
 	// Animate it!
 	Vector<SpriteFrame*> createAnimFrames(numShoot);

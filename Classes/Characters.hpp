@@ -65,6 +65,7 @@ public:
 	Layer *buffHolder;
 	void flash(Color3B c);
 	void heal(int amt);
+	virtual std::map<std::string, Vec2> getOffsets() = 0;
 };
 
 class Enemy : public Character {
@@ -74,12 +75,17 @@ public:
 	int attack_clock;
 	Enemy(Monster *, int index);
 	virtual ~Enemy();
+	virtual std::map<std::string, Vec2> getOffsets();
 private:
 };
 
 class Wizard : public Character {
 public:
+	Wizard();
 	std::vector<Spell *> inventory;
+	virtual std::map<std::string, Vec2> getOffsets();
+private:
+	std::map<std::string, Vec2> offsets;
 };
 
 #endif /* Characters_hpp */

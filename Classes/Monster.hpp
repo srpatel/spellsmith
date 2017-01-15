@@ -13,9 +13,13 @@
 
 enum AttackType {
 	kAttackTypeMelee = 0,
+	
 	kAttackTypeHeal,
 	kAttackTypeHealSelf,
 	kAttackTypeHealOther,
+	
+	kAttackTypeProjectileFire,
+	kAttackTypeProjectileWater,
 	
 	kAttackTypeOther,
 };
@@ -42,6 +46,7 @@ friend class MonsterManager;
 public:
 	std::string name;
 	std::string getName();
+	std::map<std::string, Vec2> offsets;
 	int hp;
 	int attack_frequency;
 	Attack *getAttack();

@@ -325,7 +325,20 @@ Enemy::Enemy(Monster *m, int index) {
 	sprite->retain();
 	buffHolder = Layer::create();
 	sprite->addChild(buffHolder);
+	
+	projectile_height = 81;
 }
 Enemy::~Enemy() {
 	sprite->autorelease();
+}
+std::map<std::string, Vec2> Enemy::getOffsets() {
+	return monster->offsets;
+}
+
+Wizard::Wizard() {
+	offsets["proj_from"] = Vec2(90, 0);
+	offsets["proj_to"] = Vec2(-30, 0);
+}
+std::map<std::string, Vec2> Wizard::getOffsets() {
+	return offsets;
 }

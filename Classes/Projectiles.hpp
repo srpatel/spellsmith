@@ -9,11 +9,11 @@
 #ifndef BasicFire_hpp
 #define BasicFire_hpp
 
-#define PROJECTILE(_classname, _name, _shoot, _travel, _hit) \
+#define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset) \
 class _classname : public BasicProjectile { \
 public: \
 	_classname() \
-		: BasicProjectile(#_name, _shoot, _travel, _hit) {} \
+		: BasicProjectile(#_name, _shoot, _travel, _hit, _offset) {} \
 	inline bool init(Vec2 from, Vec2 to, float scale, CallFunc* onHit){\
 		return BasicProjectile::init(from, to, scale, onHit);\
 	}\
@@ -33,14 +33,15 @@ public: \
 
 class BasicProjectile : public Layer {
 public:
-	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit) :
-		path(path), numShoot(numShoot), numTravel(numTravel), numHit(numHit){}
+	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit, Vec2 offset) :
+		path(path), numShoot(numShoot), numTravel(numTravel), numHit(numHit), offset(offset){}
 	bool init(
 		Vec2 from,
 		Vec2 to,
 		float scale,
 		CallFunc* onHit);
 protected:
+	Vec2 offset;
 	const char *path;
 	int numShoot;
 	int numTravel;
@@ -61,10 +62,10 @@ protected:
 };
 
 // TODO: Resize everything to be 150x150, positioning as needed.
-PROJECTILE(BasicFire, fireball, 19, 4, 10);
-PROJECTILE(BasicWind, windball, 13, 4, 9);
-PROJECTILE(BasicEarth, earthball, 28, 1, 23);
-PROJECTILE(BasicWater, waterball, 13, 3, 10);
+PROJECTILE(BasicFire, fireball,   /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 5));
+PROJECTILE(BasicWind, windball,   /*shoot*/ 13, /*travel*/ 4, /*hit*/  9, /*offset*/ Vec2(20, 0));
+PROJECTILE(BasicEarth, earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*offset*/ Vec2( 0, 0));
+PROJECTILE(BasicWater, waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0));
 
 ANIM(AnimHeal, heal, 11);
 

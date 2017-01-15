@@ -140,7 +140,9 @@
     "shaman": "Lupine Shaman",
     "goblin_sword": "Goblin Swordsman",
     "goblin_axe": "Goblin Axeman",
-    "goblin_halberd": "Goblin Halberdier"
+    "goblin_halberd": "Goblin Halberdier",
+    "fire_wizard": "Pyromancer",
+    "water_wizard": "Hydromancer"
   },
   "ui": {
     "LEVEL_WON": "congratulations",

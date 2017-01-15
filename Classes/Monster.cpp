@@ -29,6 +29,10 @@ static AttackType getAttackType(std::string s) {
 		return kAttackTypeHealSelf;
 	if (s == "heal_other")
 		return kAttackTypeHealOther;
+	if (s == "projectile_fire")
+		return kAttackTypeProjectileFire;
+	if (s == "projectile_water")
+		return kAttackTypeProjectileWater;
 	return kAttackTypeOther;
 }
 
@@ -76,6 +80,14 @@ void MonsterManager::init() {
 			for (int j = json_skeleton["skins"].Size() - 1; j >= 0; j--) {
 				const rapidjson::Value& a = json_skeleton["skins"][j];
 				m->skeleton.skins.push_back(a.GetString());
+			}
+		}
+		
+		if (json_monster.HasMember("offsets")) {
+			const rapidjson::Value& json_offsets = json_monster["offsets"];
+			for (auto it = json_offsets.MemberBegin(); it != json_offsets.MemberEnd(); it++) {
+				Vec2 v(it->value[0].GetDouble(), it->value[1].GetDouble());
+				m->offsets[it->name.GetString()] = v;
 			}
 		}
 		

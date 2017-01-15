@@ -1,6 +1,12 @@
 [
   {
     "name": "goblin_halberd",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "enemy_humanoid",
       "skins": [
@@ -15,7 +21,7 @@
         }
       ]
     },
-    "health": 30,
+    "health": 20,
     "attack_frequency": 4,
     "attacks": [
       {
@@ -28,6 +34,12 @@
   },
   {
     "name": "goblin_axe",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "enemy_humanoid",
       "skins": [
@@ -42,7 +54,7 @@
         }
       ]
     },
-    "health": 30,
+    "health": 20,
     "attack_frequency": 3,
     "attacks": [
       {
@@ -55,6 +67,12 @@
   },
   {
     "name": "goblin_sword",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "enemy_humanoid",
       "skins": [
@@ -69,7 +87,7 @@
         }
       ]
     },
-    "health": 15,
+    "health": 20,
     "attack_frequency": 3,
     "attacks": [
       {
@@ -88,6 +106,12 @@
   },
   {
     "name": "dog",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "dog",
       "skins": [
@@ -107,6 +131,12 @@
   },
   {
     "name": "fast_dog",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "dog",
       "skins": [
@@ -126,6 +156,16 @@
   },
   {
     "name": "shaman",
+    "offsets": {
+      "proj_from": [
+        0,
+        0
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "shaman",
       "skins": [
@@ -152,38 +192,70 @@
   },
   {
     "name": "fire_wizard",
+    "offsets": {
+      "proj_from": [
+        50,
+        -10
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "shaman",
       "skins": [
         "red"
       ]
     },
-    "health": 15,
+    "health": 25,
     "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
+        "amount": 3
+      },
+      {
+        "ratio": 2,
+        "type": "projectile_fire",
+        "animation": "cast",
         "amount": 5
       }
     ]
   },
   {
     "name": "water_wizard",
+    "offsets": {
+      "proj_from": [
+        50,
+        -10
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
     "skeleton": {
       "name": "shaman",
       "skins": [
         "blue"
       ]
     },
-    "health": 15,
+    "health": 25,
     "attack_frequency": 1,
     "attacks": [
-      {
+		{
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
+        "amount": 3
+      },
+      {
+        "ratio": 2,
+        "type": "projectile_water",
+        "animation": "cast",
         "amount": 5
       }
     ]

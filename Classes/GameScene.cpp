@@ -521,8 +521,23 @@ bool Game::onCastSpell(Chain *chain) {
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type, std::function<void(void)> onhitfunc) {
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
-	auto from = Vec2(source->sprite->getPosition().x + 90 * scenery->char_scale, start_y);
-	auto to = Vec2(target->sprite->getPosition().x - 60 * scenery->char_scale, start_y);
+	
+	auto from = Vec2(source->sprite->getPosition().x, start_y);
+	auto to = Vec2(target->sprite->getPosition().x, start_y);
+	
+	auto flip = (from.x > to.x) ? -1 : 1;
+	
+	// Add offsets
+	if (source->getOffsets().count("proj_from")) {
+		Vec2 o = source->getOffsets()["proj_from"];
+		from.x += o.x * scenery->char_scale * flip;
+		from.y += o.y * scenery->char_scale * flip;
+	}
+	if (target->getOffsets().count("proj_to")) {
+		Vec2 o = target->getOffsets()["proj_to"];
+		to.x += o.x * scenery->char_scale * flip;
+		to.y += o.y * scenery->char_scale * flip;
+	}
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
@@ -587,18 +602,15 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
 	if (type == Color3B::WHITE) {
-		auto offset = Vec2(20, 0) * scale;
-		projectile = BasicWind::create(from + offset, to, scale, onHit);
+		projectile = BasicWind::create(from, to, scale, onHit);
 	} else if (type == Color3B::GREEN) {
-		auto offset = Vec2() * scale;
-		projectile = BasicEarth::create(from + offset, to, scale, onHit);
+		projectile = BasicEarth::create(from, to, scale, onHit);
 	} else if (type == Color3B::BLUE) {
-		auto offset = Vec2(20, 0) * scale;
-		projectile = BasicWater::create(from + offset, to, scale, onHit);
+		projectile = BasicWater::create(from, to, scale, onHit);
 	} else {
-		auto offset = Vec2(0, 5) * scale;
-		projectile = BasicFire::create(from + offset, to, scale, onHit);
+		projectile = BasicFire::create(from, to, scale, onHit);
 	}
+	
 	// Wait for 0.56 seconds as that is when the staff is in the right place
 	// TODO : Events
 	projectile->retain();
@@ -621,7 +633,10 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		});
 		runAction(Sequence::create(delay, run, nullptr));
 		actionQueued(); // projectile hit
-		actionQueued(); // animation finished
+		if (source == wizard) {
+			// we only wait for the wizard's animation to finish
+			actionQueued(); // animation finished
+		}
 	});
 }
 
@@ -896,7 +911,13 @@ void Game::enemyDoTurn() {
 							}
 							
 							int damage = a->amount;
-							makeProjectile(e, wizard, damage, Color3B::RED);
+							if (a->type == kAttackTypeProjectileFire) {
+								makeProjectile(e, wizard, damage, Color3B::RED);
+							} else if (a->type == kAttackTypeProjectileWater) {
+								makeProjectile(e, wizard, damage, Color3B::BLUE);
+							} else {
+								makeProjectile(e, wizard, damage, Color3B::GREEN);
+							}
 							// projectiles already add to action queue
 						};
 					}
