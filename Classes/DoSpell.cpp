@@ -286,8 +286,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		PROJ_RAND( D(10), Color3B::YELLOW );
 	}
 	IF_SPELL(purify) {
-		// deal 6 damage, create 1 crystal gem
-		PROJ( D(6), Color3B::RED );
+		// Create 1 crystal gem
 		CRYSTAL(1);
 	}
 	IF_SPELL(smelt) {
