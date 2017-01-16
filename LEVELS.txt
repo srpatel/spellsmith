@@ -1,0 +1,29 @@
+Adventure mode doesn't have as many spells as arena mode.
+I've picked what I think are the most interesting 17 spells. 
+
+1: 1 (firewisp)
+2: 1 (forest breeze)
+3: 1 (zap)
+	3a: 1 (lightning bolt, lightning storm)
+	3b: 1 (charge bolt)
+4: 2 (precise dart, focus)
+5: 1 (crystalise)
+	5a: 2 (fury, smelt)
+	5b: 1 (volcanic eruption)
+6: 1 (drain life)
+	6a: 2 (fountain of youth, fire cleanse)
+7: 1 (fertilise)
+8: 1 (meteor strike)
+9: 1 (mystic channel)
+
+16 levels (15 chances to gain spells):
+
+                   6a
+                    |
+1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 (Boss)
+        |       |
+       3a      5a
+        |       |
+       3b      5b
+                |
+               5c

@@ -1,0 +1,46 @@
+- Ensure that animations can be queued.
+  Would be good to properly have multiple wizard animations occur such that the staff/projectile always lines up.
+- Separate damage dealing from projectile a little more (better done when more art comes back)
+- Think about game modes more.
+- Tap on wizards health to see current health (or, alternate between percentage and value?)
+- Tap on buffs to see what they do (...maybe can get rid of buffs?)
+- Better way to correlate buff visuals with buffs.
+- Focus -> make you levitate (black shadow on floor, you rise and fall when you gain/lose the buff)
+- 
+
+
+Plan:
+- Finish coding infinite mode first
+    * saving/loading
+    * sync highscores to GC/Google
+    * challenging
+    * varied
+    * fun
+- Main menu
+    * New game/continue game (same button)
+    * icons for xikka/sammy/george (or credits popup)
+    * achievements
+    * options
+    * highscores
+- Memory
+    * check there are no leaks and that memory footprint is low
+- Achievements
+    * big grid of achievements
+    * toast when you unlock an achievement
+    * sync to GC/Google.
+
+Game modes:
+
+Infinite 
+	- keep going until you die, and your level is your highscore.
+	- if the spell-list runs out, then you get cursed instead (-1 hp, -2 hp, -3 hp etc.)
+	- 30ish levels per zone?
+
+Map mode
+	- before starting a level it tells you what you will learn if you do the level
+	- vertically scrolling map with 31 locations
+	- each location has up to three rounds of enemies with up to three enemies each
+	- after completing a level you learn a spell
+	- you can equip your spells whenever you want
+	- that means there are 30 spells in the game.
+	- the 31st location is just a boss monster and is v. hard.

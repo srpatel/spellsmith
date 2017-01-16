@@ -58,7 +58,7 @@
       "description": "Deal 3 damage. 50% chance to freeze for 2 turns."
     },
     "stun_strike": {
-      "name": "Stun strike",
+      "name": "Stun Strike",
       "description": "Stun an enemy."
     },
     "earthquake": {
