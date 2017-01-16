@@ -15,7 +15,7 @@ public:
 	Grid(int w, int h, float maxWidth, float maxHeight);
 	Gem *get(int column, int row);
 	bool init(float maxWidth, float maxHeight);
-	void scramble();
+	void scramble(Chain *chain = nullptr);
 	void createRandomCrystalGems(int, Chain *);
 	void makeCrystalsOverGemsOfType(GemType type, Chain *chain);
 	void convertGemsOfType(GemType from, GemType to, Chain *chain);

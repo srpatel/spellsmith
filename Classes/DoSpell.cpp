@@ -243,7 +243,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(cleanse) {
 		// Heal for 3 and clear the grid
 		HEAL(3);
-		game->grid->scramble();
+		game->grid->scramble(chain);
 	}
 	IF_SPELL(lightning_bolt) {
 		// deal 1-12
@@ -251,8 +251,9 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(chill) {
 		// slow enemy by 2 turns
-		game->enemies[game->currentEnemy]->attack_clock += 2;
-		game->hud->updateAttackClocks();
+		game->enemies[game->currentEnemy]->addBuff(
+			Buff::createFreeze(2)
+		);
 	}
 	IF_SPELL(firewisp) {
 		// deal 6 damage

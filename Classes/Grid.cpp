@@ -305,11 +305,13 @@ void Grid::castCurrentSpell() {
 	//line->clear();
 }
 
-void Grid::scramble() {
+void Grid::scramble(Chain *chain) {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			removeChild(get(i, j)->sprite);
-			set(i, j, nullptr);
+			if (chain == nullptr || ! ChainContainsCoords(chain, i, j)) {
+				removeChild(get(i, j)->sprite);
+				set(i, j, nullptr);
+			}
 		}
 	}
 	

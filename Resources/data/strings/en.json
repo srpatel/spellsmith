@@ -18,8 +18,8 @@
       "description": "Gain 5 health."
     },
     "chill": {
-      "name": "Chill",
-      "description": "Slow enemy by 2 turns."
+      "name": "Freeze",
+      "description": "Freeze enemy for 2 turns."
     },
     "lightning_bolt": {
       "name": "Lightning Bolt",
@@ -67,7 +67,7 @@
     },
     "focus": {
       "name": "Focus",
-      "description": "Deal 50% extra damage with chains for 6 turns."
+      "description": "Deal 50% extra damage with chains this round."
     },
     "fury": {
       "name": "Fury",
@@ -102,7 +102,7 @@
       "description": "If you cast a spell next turn, copy it two extra times."
     },
     "dragon_breath": {
-      "name": "Dragon Breath",
+      "name": "Meteor Strike",
       "description": "Deal 7 damage to each enemy."
     },
     "lightning_storm": {
