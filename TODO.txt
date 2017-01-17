@@ -1,13 +1,19 @@
-- Ensure that animations can be queued.
-  Would be good to properly have multiple wizard animations occur such that the staff/projectile always lines up.
-- Separate damage dealing from projectile a little more (better done when more art comes back)
-- Think about game modes more.
-- Tap on wizards health to see current health (or, alternate between percentage and value?)
-- Tap on buffs to see what they do (...maybe can get rid of buffs?)
-- Better way to correlate buff visuals with buffs.
-- Focus -> make you levitate (black shadow on floor, you rise and fall when you gain/lose the buff)
-- 
+Next definites:
+- Create a navigation bar:
+	MAP
+	SPELLBOOK
+- On the map, the arena is one of the blobs.
+	Only available after you completed two levels.
+- Back button, which takes you back to the main menu
+- Clicking on a map blob brings up a description of the level
+	- What you will earn
+	- Who you will face
+	- What the level is called
+	- Whether you previously beat it (and, in how many moves)
 
+Main menu:
+- PLAY
+- Credit buttons
 
 Plan:
 - Finish coding infinite mode first
@@ -33,8 +39,7 @@ Game modes:
 
 Infinite 
 	- keep going until you die, and your level is your highscore.
-	- if the spell-list runs out, then you get cursed instead (-1 hp, -2 hp, -3 hp etc.)
-	- 30ish levels per zone?
+	- no bosses, just harder and harder enemies
 
 Map mode
 	- before starting a level it tells you what you will learn if you do the level

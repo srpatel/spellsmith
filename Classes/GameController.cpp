@@ -56,6 +56,9 @@ void GameController::setState(State newstate) {
 	
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer);
+
+	// Show or hide the navigation bar as appropriate
+	// ...
 }
 void GameController::startGame(SaveGame *saveGame) {
 	Game::get()->startGame(saveGame);
