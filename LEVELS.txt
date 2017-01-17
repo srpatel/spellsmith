@@ -1,17 +1,18 @@
 Adventure mode doesn't have as many spells as arena mode.
-I've picked what I think are the most interesting 17 spells. 
+I've picked what I think are the most interesting 24 spells.
 
 1: 1 (firewisp)
 2: 1 (forest breeze)
-3: 1 (zap)
+3: 1 (zap, icebolt)
 	3a: 1 (lightning bolt, lightning storm)
-	3b: 1 (charge bolt)
+	3b: 1 (charge bolt, crystalise)
 4: 2 (precise dart, focus)
-5: 1 (crystalise)
+5: 1 (healstrike, evaporate)
 	5a: 2 (fury, smelt)
-	5b: 1 (volcanic eruption)
-6: 1 (drain life)
-	6a: 2 (fountain of youth, fire cleanse)
+	5b: 1 (induce explosion)
+	5c: 1 (volcanic eruption, fire cleanse)
+6: 1 (drain life, phase)
+	6a: 2 (fountain of youth, cleanse)
 7: 1 (fertilise)
 8: 1 (meteor strike)
 9: 1 (mystic channel)
@@ -27,3 +28,24 @@ I've picked what I think are the most interesting 17 spells.
        3b      5b
                 |
                5c
+
+
+Each adventure should be one set of enemies.
+Just make the enemies tough enough : )
+
+1 : (Zero Way) 1 GS
+2 : (The Quiet Forest) 2 GS
+3 : (Tarin's Cliff) 1 WM, 2 GS
+3a: (Stormy Beach) 2 WM, 2 GA
+3b: (Electric Plateau) 3 WM
+4 : (Ranger's Lodge) 1 S, 2 GS
+5 : (Apothecary) 1 GM, 2 GS
+5a: (Blacksmith Gorna) 1 FM, 1 GS, 1 GA
+5b: (Volcano Rise) 2 FM
+5c: (Volcano Core) 3 FM
+6 : (Graveyard) 1 S, 2 D
+6a: (Fountain of Youth) 1 WM, 1 FM, 1 FD
+7 : (Fields of Plenty) 1 S, 1 D, 1 FD
+8 : (Firelands) 1 S, 1 FD, 1 FM
+9 : (Shrine to the Gods) 1 S, 2 FD
+10: (The Goblin King) Boss.
