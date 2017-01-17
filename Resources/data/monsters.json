@@ -21,7 +21,11 @@
         }
       ]
     },
+<<<<<<< Updated upstream
     "health": 50,
+=======
+    "health": 25,
+>>>>>>> Stashed changes
     "attack_frequency": 4,
     "attacks": [
       {
@@ -54,8 +58,13 @@
         }
       ]
     },
+<<<<<<< Updated upstream
     "health": 50,
     "attack_frequency": 2,
+=======
+    "health": 25,
+    "attack_frequency": 3,
+>>>>>>> Stashed changes
     "attacks": [
       {
         "ratio": 1,
@@ -87,7 +96,11 @@
         }
       ]
     },
+<<<<<<< Updated upstream
     "health": 50,
+=======
+    "health": 25,
+>>>>>>> Stashed changes
     "attack_frequency": 3,
     "attacks": [
       {
@@ -112,7 +125,11 @@
         "brown"
       ]
     },
+<<<<<<< Updated upstream
     "health": 30,
+=======
+    "health": 15,
+>>>>>>> Stashed changes
     "attack_frequency": 1,
     "attacks": [
       {
@@ -137,7 +154,11 @@
         "grey"
       ]
     },
+<<<<<<< Updated upstream
     "health": 30,
+=======
+    "health": 15,
+>>>>>>> Stashed changes
     "attack_frequency": 0,
     "attacks": [
       {
@@ -167,7 +188,11 @@
         "animal2"
       ]
     },
+<<<<<<< Updated upstream
     "health": 40,
+=======
+    "health": 20,
+>>>>>>> Stashed changes
     "attack_frequency": 2,
     "attacks": [
       {
@@ -240,7 +265,7 @@
     "health": 30,
     "attack_frequency": 1,
     "attacks": [
-		{
+      {
         "ratio": 1,
         "type": "melee",
         "animation": "melee",

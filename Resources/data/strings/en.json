@@ -149,6 +149,7 @@
     "LEVEL_LOST": "you lost",
     "RETRY_LEVEL": "retry",
     "RETURN_TO_MAP": "back",
-    "NEW_GAME": "New Game"
+    "ARENA": "Arena",
+    "ADVENTURE": "Adventure"
   }
 }

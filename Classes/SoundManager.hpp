@@ -9,6 +9,8 @@
 #ifndef SoundManager_hpp
 #define SoundManager_hpp
 
+#include "SimpleAudioEngine.h"
+
 extern const char
 	*kSoundEffect_SelectGem,
 	*kSoundEffect_DeselectGem,

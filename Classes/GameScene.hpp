@@ -80,6 +80,7 @@ private:
 	int currentEnemy;
 	std::vector<Spell *> spellpool;
 	Node *wizard_hp_bar;
+	Label *wizard_hp_text;
 	Label *currentRound;
 	Layer *inventoryHolder;
 	std::vector<EventListener *> inventoryListeners;

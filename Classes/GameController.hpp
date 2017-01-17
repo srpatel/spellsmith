@@ -16,6 +16,7 @@
 enum State {
 	kStateMainMenu = 0,
 	kStateGame,
+	kStateMap,
 	
 	kStateCount
 };

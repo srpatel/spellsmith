@@ -28,6 +28,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ImageManager.cpp \
 ../../Classes/Level.cpp \
 ../../Classes/MainMenu.cpp \
+../../Classes/MapScreen.cpp \
 ../../Classes/Monster.cpp \
 ../../Classes/Popup.cpp \
 ../../Classes/Projectiles.cpp \

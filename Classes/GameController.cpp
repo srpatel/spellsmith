@@ -9,6 +9,7 @@
 #include "GameController.hpp"
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
+#include "MapScreen.hpp"
 #include "Constants.h"
 
 GameController *GameController::instance = nullptr;
@@ -21,10 +22,15 @@ void GameController::init(Scene *root) {
 	instance->root = root;
 	
 	stateScreens = (Layer **) malloc(kStateCount * sizeof(Layer *));
+	
 	stateScreens[kStateMainMenu] = MainMenu::create();
 	stateScreens[kStateMainMenu]->retain();
+	
 	stateScreens[kStateGame] = Game::create();
 	stateScreens[kStateGame]->retain();
+	
+	stateScreens[kStateMap] = MapScreen::create();
+	stateScreens[kStateMap]->retain();
 	
 	instance->state = kStateMainMenu;
 	

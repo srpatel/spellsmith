@@ -34,39 +34,38 @@ bool MainMenu::init() {
 	title->setPosition(visibleSize.width/2, visibleSize.height * 0.75);
 	this->addChild(title);
 	
-	// Play button
-	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText _("ui.NEW_GAME");
+	float availableHeight = title->getPosition().y - title->getContentSize().height/2;
+	int numButtons = 2;
 	
-	button->setPosition(visibleSize/2);
-	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::ENDED) {
-			// For now, from scratch always!
-			SoundManager::get()->playEffect( kSoundEffect_Click );
-			GameController::get()->startGame(nullptr);
+	auto dy = availableHeight / (numButtons + 1);
+	float y = dy;
+	for (int i = numButtons - 1; i >= 0; i--, y += dy) {
+		auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+		button->setTitleFontName(Fonts::TEXT_FONT);
+		button->setTitleFontSize(Fonts::TEXT_SIZE);
+		button->setPosition(Vec2(visibleSize.width/2, y));
+		
+		if (i == 0) {
+			button->setTitleText _("ui.ADVENTURE");
+			button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+				if (type == ui::Widget::TouchEventType::ENDED) {
+					SoundManager::get()->playEffect( kSoundEffect_Click );
+					// Go to map screen
+					GameController::get()->setState(kStateMap);
+				}
+			});
+		} else if (i == 1) {
+			button->setTitleText _("ui.ARENA");
+			button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+				if (type == ui::Widget::TouchEventType::ENDED) {
+					// For now, from scratch always!
+					SoundManager::get()->playEffect( kSoundEffect_Click );
+					GameController::get()->startGame(nullptr);
+				}
+			});
 		}
-	});
-	this->addChild(button);
-
-	/*auto boy = spine::SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas", 0.6f);
-	boy->setScale(0.4);
-	boy->setPosition(visibleSize.width/2, 0);
-	// Set transitions from walk -> jump, jump -> run and run -> walk
-	boy->setMix("walk", "jump", 0.2f);
-	boy->setMix("jump", "run", 0.2f);
-	
-	boy->setMix("run", "walk", 0.2f);
-	boy->setAnimation(0, "walk", true);
-	boy->addAnimation(0, "jump", false, 3);
-	boy->addAnimation(0, "run", true);
-	
-	for (int i = 0; i < 100; i++) {
-		boy->addAnimation(0, "walk", true, 3);
-		boy->addAnimation(0, "jump", false, 3);
-		boy->addAnimation(0, "run", true);
+		this->addChild(button);
 	}
 	
-	addChild(boy);*/
 	return true;
 }

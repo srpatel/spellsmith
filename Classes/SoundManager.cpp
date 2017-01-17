@@ -1,5 +1,4 @@
 #include "SoundManager.hpp"
-#include "SimpleAudioEngine.h"
 
 // iPhone/desktop = wav
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -10,9 +9,9 @@
 
 const char *kSoundEffect_SelectGem   = "sound/gem_select" EXTENSION;
 const char *kSoundEffect_DeselectGem = "sound/gem_select" EXTENSION;
-const char *kSoundEffect_CastSpell   = "sound/spell_cast" EXTENSION;
+const char *kSoundEffect_CastSpell   = nullptr;//"sound/spell_cast" EXTENSION;
 const char *kSoundEffect_Fizzle      = "sound/fizzle"     EXTENSION;
-const char *kSoundEffect_Click       = "sound/click"      EXTENSION;
+const char *kSoundEffect_Click       = nullptr;//"sound/click"      EXTENSION;
 
 SoundManager *SoundManager::instance = nullptr;
 
@@ -27,9 +26,9 @@ void SoundManager::init() {
 	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
 	instance->preloadEffect( kSoundEffect_SelectGem );
 	instance->preloadEffect( kSoundEffect_DeselectGem );
-	instance->preloadEffect( kSoundEffect_CastSpell );
+	//instance->preloadEffect( kSoundEffect_CastSpell );
 	instance->preloadEffect( kSoundEffect_Fizzle );
-	instance->preloadEffect( kSoundEffect_Click );
+	//instance->preloadEffect( kSoundEffect_Click );
 }
 
 void SoundManager::playEffect( const char *path ) {

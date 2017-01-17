@@ -40,6 +40,7 @@ Round *LevelManager::generateRound(int stage) {
 			r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
 			r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
 		} else {
+			r->monsters.push_back(MonsterManager::get()->get("goblin_sword"));
 			r->monsters.push_back(MonsterManager::get()->get("goblin_halberd"));
 		}
 	} else if (stage <= 10) {
@@ -89,9 +90,15 @@ Round *LevelManager::generateRound(int stage) {
 			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
 		}
 	} else {
-		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "dog"));
-		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "shaman"));
-		r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
+		if (rand() % 2 == 0) {
+			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "fast_dog" : "dog"));
+			r->monsters.push_back(MonsterManager::get()->get("shaman"));
+			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "fast_dog" : "dog"));
+		} else {
+			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "dog"));
+			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "fire_wizard" : "water_wizard"));
+			r->monsters.push_back(MonsterManager::get()->get((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
+		}
 	}
 	if (r->monsters.size() > 3) {
 		printf("Shouldn't happen. Remove the extra monsters.");

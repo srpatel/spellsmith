@@ -195,8 +195,13 @@ bool Game::init() {
 		hp->setAnchorPoint(Vec2(0.5, 0));
 		hp->setScale(ui_scale);
 		hp->setPosition(20 * ui_scale, 342 * ui_scale);
+		wizard_hp_text = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
+		wizard_hp_text->setHorizontalAlignment(TextHAlignment::CENTER);
+		wizard_hp_text->setAnchorPoint(Vec2(0.5, 0.5));
+		wizard_hp_text->setPosition(grad->getPosition());
 		//hp->setGLProgram(Shaders::smokey());
 		addChild(hp);
+		addChild(wizard_hp_text);
 		wizard_hp_bar = hp;
 		
 		auto sprite = LoadSprite("ui/column_left.png");
@@ -431,6 +436,7 @@ bool Game::setSelected(int index) {
 
 void Game::updateHealthBars() {
 	wizard_hp_bar->setScaleY(wizard->ui_health / (float) wizard->max_health);
+	wizard_hp_text->setString(ToString(wizard->ui_health)/* + "/" + ToString(wizard->max_health)*/);
 	hud->updateHealthBars();
 }
 
