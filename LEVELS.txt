@@ -33,19 +33,27 @@ I've picked what I think are the most interesting 24 spells.
 Each adventure should be one set of enemies.
 Just make the enemies tough enough : )
 
-1 : (Zero Way) 1 GS
-2 : (The Quiet Forest) 2 GS
-3 : (Tarin's Cliff) 1 WM, 2 GS
-3a: (Stormy Beach) 2 WM, 2 GA
-3b: (Electric Plateau) 3 WM
-4 : (Ranger's Lodge) 1 S, 2 GS
-5 : (Apothecary) 1 GM, 2 GS
-5a: (Blacksmith Gorna) 1 FM, 1 GS, 1 GA
-5b: (Volcano Rise) 2 FM
-5c: (Volcano Core) 3 FM
-6 : (Graveyard) 1 S, 2 D
-6a: (Fountain of Youth) 1 WM, 1 FM, 1 FD
-7 : (Fields of Plenty) 1 S, 1 D, 1 FD
-8 : (Firelands) 1 S, 1 FD, 1 FM
+1 : (Zero Way)           1 GS
+2 : (The Quiet Forest)   2 GS
+3 : (Tarin's Cliff)      1 WM, 2 GS
+3a: (Stormy Beach)       2 WM, 2 GA
+3b: (Electric Plateau)   3 WM
+4 : (Ranger's Lodge)     1 S, 2 GS
+5 : (Apothecary)         1 FM, 2 GS
+5a: (Blacksmith Gorna)   1 FM, 1 GS, 1 GA
+5b: (Volcano Rise)       2 FM
+5c: (Volcano Core)       3 FM
+6 : (Graveyard)          1 S, 2 D
+6a: (Fountain of Youth)  1 WM, 1 FM, 1 FD
+7 : (Fields of Plenty)   1 S, 1 D, 1 FD
+8 : (Firelands)          1 S, 1 FD, 1 FM
 9 : (Shrine to the Gods) 1 S, 2 FD
-10: (The Goblin King) Boss.
+10: (The Goblin King)    Boss
+
+Will need a bit more variety in enemies, plus the game needs to get sufficiently harder.
+
+One option:
+	* Goblin helmet
+	* Bow and arrow
+	* Shield
+	* Axe which looks very different to Halberd (Battle axe?)
