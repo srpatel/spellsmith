@@ -1,0 +1,45 @@
+The tutorial takes the form of help boxes and other help appearing over the top of the screen during the first couple of levels.
+
+
+Level 1:
+	Single goblin enemy.
+
+	Pop-up appears saying: 
+		"Oh dear! A nasty goblin!"
+		"Shoot magic at him by drawing paths of same-coloured crystals."
+	When you dismis it, a path is highlighted on the grid.
+		You have to draw that path.
+		"That's great! Now draw a couple more chains."
+	After you've drawn a couple more (ensure goblin doesn't die):
+		Highlight the goblin's turn counter
+		"This red circle means the goblin is ready to attack."
+		"When he attacks he'll deal some damage to you."
+	When dismissed, he attacks. Then:
+		"Finish him off before he kills you!"
+		"Each chain deals 1 damage for each gem."
+	When the battle is over:
+		The normal level up dialog appears.
+
+		The "Spellbook" button is highlighted.
+		"Head to the spellbook to equip this spell!"
+
+Spellbook:
+	"Drag Firewisp from your spellbook to one of the spell slots to learn it."
+	"Now you'll be able to use it in battle!"
+
+Level 2:
+	* If you have no spell equipped, don't allow. Make sure that the spellbook button is highlighted.
+	* If you have a spell equipped, but it's not firewisp, then disable the tutorial, and randomise the grid.
+		... or just equip firewisp only for this level?
+	
+	Popup:
+		Highlight the spell on the column whilst the popup is showing.
+		"You've now got a spell! You can cast it by drawing it on the grid."
+		"Any orientation is acceptable!" // Show examples of firewisp underneath.
+	On hide:
+		Highlight firewisp a couple of times on the grid.
+	Popup:
+		"Good job! Now it's up to you..."
+
+And that's it : )
+
