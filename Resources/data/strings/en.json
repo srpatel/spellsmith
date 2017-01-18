@@ -150,6 +150,7 @@
     "RETRY_LEVEL": "retry",
     "RETURN_TO_MAP": "back",
     "ARENA": "Arena",
-    "ADVENTURE": "Adventure"
+    "ADVENTURE": "Adventure",
+    "PLAY": "PLAY"
   }
 }

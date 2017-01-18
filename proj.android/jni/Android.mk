@@ -30,6 +30,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/MainMenu.cpp \
 ../../Classes/MapScreen.cpp \
 ../../Classes/Monster.cpp \
+../../Classes/NavigationBar.cpp \
 ../../Classes/Popup.cpp \
 ../../Classes/Projectiles.cpp \
 ../../Classes/SaveData.cpp \

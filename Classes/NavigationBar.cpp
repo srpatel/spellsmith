@@ -17,8 +17,9 @@
 
 
 struct ButtonDef {
-	char *label;
-	char *imagePath;
+	const char *label;
+	const char *imagePath;
+	State state;
 };
 
 
@@ -28,19 +29,18 @@ bool NavigationBar::init() {
 	}
 	
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	setContentSize(visibleSize.width, 50);
+	setContentSize(Size(visibleSize.width, 50));
 	
 	// Background
 	auto grad = LayerColor::create();
-	grad->initWithColor(Color4B(Colours::BACKGROUND));
+	grad->initWithColor(Color4B::WHITE);
 	grad->setContentSize(getContentSize());
 	addChild(grad);
 	
 	// Buttons
-	std::vector<Node *> buttons;
-
-	buttons.push_back(ButtonDef("MAP", "ui/map.png")); // Set state to map
-	buttons.push_back(ButtonDef("SPELLBOOK", "ui/spellbook.png")); // Set state to spellbook
+	std::vector<ButtonDef> buttons;
+	buttons.push_back({"MAP", "icons/map.png", kStateMap}); // Set state to map
+	buttons.push_back({"SPELLBOOK", "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;
@@ -50,11 +50,26 @@ bool NavigationBar::init() {
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(currentX, getContentSize().height/2.0f);
 		addChild(n);
-		auto t = Label::createWithTTF(b.label, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+		auto t = Label::createWithTTF(b.label, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		t->setTextColor(Color4B::BLACK);
 		t->setPosition(currentX, 10);
 		addChild(t);
 		currentX += widthPerButton;
 		// Add onclick...
+		auto onclick = EventListenerTouchOneByOne::create();
+		onclick->setSwallowTouches(true);
+		// trigger when you push down
+		onclick->onTouchBegan = [this, n, b](Touch* touch, Event* event) -> bool {
+			Vec2 p = touch->getLocation();
+			Rect rect = n->getBoundingBox();
+			if(rect.containsPoint(p)) {
+				GameController::get()->setState(b.state);
+				return true;
+			}
+			
+			return false; // if you are consuming it
+		};
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
 	}
 
 	return true;

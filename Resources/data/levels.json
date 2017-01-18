@@ -1,163 +1,171 @@
 {
-	"1" : {
-		"depends" : "",
-		"monsters" : [
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"firewisp"
-		]
-	},
-	"2" : {
-		"depends" : "1",
-		"monsters" : [
-			"goblin_sword",
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"forest_breeze"
-		]
-	},
-	"3" : {
-		"depends" : "2",
-		"monsters" : [
-			"water_mage",
-			"goblin_sword",
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"zap", "icebolt"
-		]
-	},
-	"3a" : {
-		"depends" : "3",
-		"monsters" : [
-			"water_mage",
-			"water_mage",
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"lightning_bolt",
-			"lightning_storm"
-		]
-	},
-	"3b" : {
-		"depends" : "3a",
-		"monsters" : [
-			"water_mage",
-			"water_mage",
-			"water_mage"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"charge_bolt",
-			"crystalise"
-		]
-	},
-	"4" : {
-		"depends" : "3",
-		"monsters" : [
-			"shaman",
-			"goblin_sword",
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"poison_dart",
-			"focus"
-		]
-	},
-	"5" : {
-		"depends" : "4",
-		"monsters" : [
-			"fire_mage",
-			"goblin_sword",
-			"goblin_sword"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"healstrike", "evaporate"
-		]
-	},
-	"6" : {
-		"depends" : "5",
-		"monsters" : [
-			"shaman",
-			"dog", "dog"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"drain_life", "phase"
-		]
-	},
-	"6a" : {
-		"depends" : "6",
-		"monsters" : [
-			"water_mage",
-			"fire_mage", 
-			"fast_dog"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"fountain_of_youth", "cleanse"
-		]
-	},
-	"7" : {
-		"depends" : "6",
-		"monsters" : [
-			"shaman",
-			"dog", "fast_dog"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"fertilise"
-		]
-	},
-	"8" : {
-		"depends" : "7",
-		"monsters" : [
-			"shaman",
-			"fire_mage", "fast_dog"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"meteor_strike"
-		]
-	},
-	"9" : {
-		"depends" : "8",
-		"monsters" : [
-			"shaman",
-			"fast_dog", "fast_dog"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : [
-			"mystic_channel"
-		]
-	},
-	"10" : {
-		"depends" : "9",
-		"monsters" : [
-			"boss"
-		],
-		"x" : 0,
-		"y" : 0,
-		"rewards" : []
-	}
+  "1": {
+    "depends": "",
+    "monsters": [
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "firewisp"
+    ]
+  },
+  "2": {
+    "depends": "1",
+    "monsters": [
+      "goblin_sword",
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "forest_breeze"
+    ]
+  },
+  "3": {
+    "depends": "2",
+    "monsters": [
+      "water_mage",
+      "goblin_sword",
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "zap",
+      "icebolt"
+    ]
+  },
+  "4": {
+    "depends": "3",
+    "monsters": [
+      "shaman",
+      "goblin_sword",
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "poison_dart",
+      "focus"
+    ]
+  },
+  "5": {
+    "depends": "4",
+    "monsters": [
+      "fire_mage",
+      "goblin_sword",
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "healstrike",
+      "evaporate"
+    ]
+  },
+  "6": {
+    "depends": "5",
+    "monsters": [
+      "shaman",
+      "dog",
+      "dog"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "drain_life",
+      "phase"
+    ]
+  },
+  "7": {
+    "depends": "6",
+    "monsters": [
+      "shaman",
+      "dog",
+      "fast_dog"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "fertilise"
+    ]
+  },
+  "8": {
+    "depends": "7",
+    "monsters": [
+      "shaman",
+      "fire_mage",
+      "fast_dog"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "meteor_strike"
+    ]
+  },
+  "9": {
+    "depends": "8",
+    "monsters": [
+      "shaman",
+      "fast_dog",
+      "fast_dog"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "mystic_channel"
+    ]
+  },
+  "10": {
+    "depends": "9",
+    "monsters": [
+      "boss"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": []
+  },
+  "3a": {
+    "depends": "3",
+    "monsters": [
+      "water_mage",
+      "water_mage",
+      "goblin_sword"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "lightning_bolt",
+      "lightning_storm"
+    ]
+  },
+  "3b": {
+    "depends": "3a",
+    "monsters": [
+      "water_mage",
+      "water_mage",
+      "water_mage"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "charge_bolt",
+      "crystalise"
+    ]
+  },
+  "6a": {
+    "depends": "6",
+    "monsters": [
+      "water_mage",
+      "fire_mage",
+      "fast_dog"
+    ],
+    "x": 0,
+    "y": 0,
+    "rewards": [
+      "fountain_of_youth",
+      "cleanse"
+    ]
+  }
 }

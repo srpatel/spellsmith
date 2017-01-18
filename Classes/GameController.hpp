@@ -17,6 +17,7 @@ enum State {
 	kStateMainMenu = 0,
 	kStateGame,
 	kStateMap,
+	kStateSpellbook,
 	
 	kStateCount
 };
@@ -37,6 +38,7 @@ public:
 private:
 	static GameController *instance;
 	Scene *root;
+	Node *bar;
 	State state = kStateMainMenu;
 	std::vector<Dialog *> dialog_stack;
 };

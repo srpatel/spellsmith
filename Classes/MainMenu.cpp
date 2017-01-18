@@ -35,7 +35,7 @@ bool MainMenu::init() {
 	this->addChild(title);
 	
 	float availableHeight = title->getPosition().y - title->getContentSize().height/2;
-	int numButtons = 2;
+	int numButtons = 1;
 	
 	auto dy = availableHeight / (numButtons + 1);
 	float y = dy;
@@ -45,25 +45,14 @@ bool MainMenu::init() {
 		button->setTitleFontSize(Fonts::TEXT_SIZE);
 		button->setPosition(Vec2(visibleSize.width/2, y));
 		
-		if (i == 0) {
-			button->setTitleText _("ui.ADVENTURE");
-			button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-				if (type == ui::Widget::TouchEventType::ENDED) {
-					SoundManager::get()->playEffect( kSoundEffect_Click );
-					// Go to map screen
-					GameController::get()->setState(kStateMap);
-				}
-			});
-		} else if (i == 1) {
-			button->setTitleText _("ui.ARENA");
-			button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-				if (type == ui::Widget::TouchEventType::ENDED) {
-					// For now, from scratch always!
-					SoundManager::get()->playEffect( kSoundEffect_Click );
-					GameController::get()->startGame(nullptr);
-				}
-			});
-		}
+		button->setTitleText _("ui.PLAY");
+		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				SoundManager::get()->playEffect( kSoundEffect_Click );
+				// Go to map screen
+				GameController::get()->setState(kStateMap);
+			}
+		});
 		this->addChild(button);
 	}
 	

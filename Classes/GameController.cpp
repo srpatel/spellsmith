@@ -6,6 +6,7 @@
 //
 //
 
+#include "NavigationBar.hpp"
 #include "GameController.hpp"
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
@@ -32,6 +33,9 @@ void GameController::init(Scene *root) {
 	stateScreens[kStateMap] = MapScreen::create();
 	stateScreens[kStateMap]->retain();
 	
+	stateScreens[kStateSpellbook] = MapScreen::create();
+	stateScreens[kStateSpellbook]->retain();
+	
 	instance->state = kStateMainMenu;
 	
 	auto grad = LayerColor::create();
@@ -39,6 +43,9 @@ void GameController::init(Scene *root) {
 	grad->setPosition(Director::getInstance()->getVisibleOrigin());
 	grad->setContentSize(Director::getInstance()->getVisibleSize());
 	root->addChild(grad);
+	
+	instance->bar = NavigationBar::create();
+	instance->bar->retain();
 	
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	auto layer = stateScreens[kStateMainMenu];
@@ -53,6 +60,7 @@ GameController *GameController::get() {
 void GameController::setState(State newstate) {
 	// Do animations I guess
 	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto size = Director::getInstance()->getVisibleSize();
 	
 	auto prevLayer = stateScreens[this->state];
 	root->removeChild(prevLayer);
@@ -64,7 +72,13 @@ void GameController::setState(State newstate) {
 	root->addChild(layer);
 
 	// Show or hide the navigation bar as appropriate
-	// ...
+	if (bar->getParent())
+		bar->removeFromParent();
+	bool showBar = newstate == kStateMap || newstate == kStateSpellbook;
+	if (showBar) {
+		bar->setPosition(0, 0);
+		root->addChild(bar);
+	}
 }
 void GameController::startGame(SaveGame *saveGame) {
 	Game::get()->startGame(saveGame);
