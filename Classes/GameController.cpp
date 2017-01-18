@@ -11,6 +11,7 @@
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
 #include "MapScreen.hpp"
+#include "Spellbook.hpp"
 #include "Constants.h"
 
 GameController *GameController::instance = nullptr;
@@ -33,7 +34,7 @@ void GameController::init(Scene *root) {
 	stateScreens[kStateMap] = MapScreen::create();
 	stateScreens[kStateMap]->retain();
 	
-	stateScreens[kStateSpellbook] = MapScreen::create();
+	stateScreens[kStateSpellbook] = Spellbook::create();
 	stateScreens[kStateSpellbook]->retain();
 	
 	instance->state = kStateMainMenu;

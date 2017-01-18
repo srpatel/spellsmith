@@ -152,6 +152,8 @@
 		10FC736F1E2D79BB0096BF0E /* MapScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */; };
 		10FC73731E2EDBC30096BF0E /* NavigationBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */; };
 		10FC73741E2EDBC30096BF0E /* NavigationBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */; };
+		10FC73771E2F58870096BF0E /* Spellbook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73751E2F58870096BF0E /* Spellbook.cpp */; };
+		10FC73781E2F58870096BF0E /* Spellbook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73751E2F58870096BF0E /* Spellbook.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -378,6 +380,8 @@
 		10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapScreen.hpp; sourceTree = "<group>"; };
 		10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBar.cpp; sourceTree = "<group>"; };
 		10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NavigationBar.hpp; sourceTree = "<group>"; };
+		10FC73751E2F58870096BF0E /* Spellbook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spellbook.cpp; sourceTree = "<group>"; };
+		10FC73761E2F58870096BF0E /* Spellbook.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spellbook.hpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -557,6 +561,8 @@
 				107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */,
 				10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */,
 				10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */,
+				10FC73751E2F58870096BF0E /* Spellbook.cpp */,
+				10FC73761E2F58870096BF0E /* Spellbook.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1041,6 +1047,7 @@
 				105E0D091BF14E3F0081D8F5 /* Strings.cpp in Sources */,
 				1029933E1D62429000D1492E /* Attachment.c in Sources */,
 				102993561D62429000D1492E /* Json.c in Sources */,
+				10FC73771E2F58870096BF0E /* Spellbook.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				1087478F1C07A7920069DCAF /* Monster.cpp in Sources */,
 				10C409501CC28C5E00DED2A9 /* SpriteLoader.cpp in Sources */,
@@ -1135,6 +1142,7 @@
 				108AC5BA1D5F1C670006E5EA /* GameOverPopup.cpp in Sources */,
 				102993631D62429000D1492E /* Skeleton.c in Sources */,
 				102993351D62429000D1492E /* Animation.c in Sources */,
+				10FC73781E2F58870096BF0E /* Spellbook.cpp in Sources */,
 				102993691D62429000D1492E /* SkeletonBounds.c in Sources */,
 				102993711D62429000D1492E /* Skin.c in Sources */,
 				102993611D62429000D1492E /* RegionAttachment.c in Sources */,
