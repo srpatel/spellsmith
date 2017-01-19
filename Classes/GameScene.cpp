@@ -172,7 +172,7 @@ bool Game::init() {
 		right_col_sprite->setScale(ui_scale);
 		this->addChild(right_col_sprite);
 		
-		auto level_counter = LoadSprite("ui/level_counter.png");
+		level_counter = LoadSprite("ui/level_counter.png");
 		level_counter->setAnchorPoint(Vec2(0.5, 0.5));
 		level_counter->setPosition(getBoundingBox().size.width - 20 * ui_scale, 354 * ui_scale);
 		level_counter->setScale(ui_scale);
@@ -973,6 +973,9 @@ void Game::showRound(RoundDef *round) {
 			delete this->round;
 	}
 	this->round = round;
+
+	currentRound->setVisible( round->generated );
+	level_counter->setVisible( round->generated );
 
 	// TODO : Remove all old sprites:
 	for (Enemy *e : enemies) {

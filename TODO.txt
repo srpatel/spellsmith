@@ -1,18 +1,35 @@
 Next definites:
-- Create a navigation bar:
-	MAP
-	SPELLBOOK
 - On the map, the arena is one of the blobs.
 	Only available after you completed two levels.
 - Back button, which takes you back to the main menu
 - Clicking on a map blob brings up a description of the level
-	- What you will earn
 	- Who you will face
 	- What the level is called
 	- Whether you previously beat it (and, in how many moves)
 
+On winning a non-generated level:
+- see what you earnt
+	"Level Up!"
+	"You've learnt some new spells..." / "You've learnt a new spell"
+	[tappable pics of spells]
+	"Equip them in the spellbook!"
+	[Button: "SPELLBOOK"]
+
+If you win a non-gen level, but with no rewards, then tbd what happens!
+
+Spell book:
+Looks like the game screen, but with the nav bar at the bottom.
+Over the scenery there is a popup with says 
+	"Tap on a spell for information."
+	"To equip a spell, drag it to one of the columns"
+If you've not equipped a spell, show lines to show how to perform the equip?
+Central panel houses spells. Work out how best to show this -- grid, list etc.
+Scroll bar.
+
+Column:
+In non-gen'd level, hide the level counter.
+
 Main menu:
-- PLAY
 - Credit buttons
 
 Plan:
@@ -23,7 +40,6 @@ Plan:
     * varied
     * fun
 - Main menu
-    * New game/continue game (same button)
     * icons for xikka/sammy/george (or credits popup)
     * achievements
     * options
@@ -36,16 +52,7 @@ Plan:
     * sync to GC/Google.
 
 Game modes:
-
 Infinite 
 	- keep going until you die, and your level is your highscore.
 	- no bosses, just harder and harder enemies
 
-Map mode
-	- before starting a level it tells you what you will learn if you do the level
-	- vertically scrolling map with 31 locations
-	- each location has up to three rounds of enemies with up to three enemies each
-	- after completing a level you learn a spell
-	- you can equip your spells whenever you want
-	- that means there are 30 spells in the game.
-	- the 31st location is just a boss monster and is v. hard.
