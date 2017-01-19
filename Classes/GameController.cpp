@@ -106,3 +106,9 @@ void GameController::showOptionsDialog() {
 	root->addChild(dialog);
 	dialog_stack.push_back(dialog);
 }
+void GameController::showPreLevelDialog(RoundDef *round) {
+	Dialog *dialog = PreLevelDialog::create(round);
+	dialog->setPosition(root->getContentSize()/2);
+	root->addChild(dialog);
+	dialog_stack.push_back(dialog);
+}

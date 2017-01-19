@@ -48,6 +48,7 @@ class SpellManager {
 public:
 	static SpellManager *get();
 	void init();
+	Spell *getByName(std::string name);
 	std::vector<Spell *> spells;
 private:
 	static SpellManager *instance;

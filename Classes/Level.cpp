@@ -12,6 +12,39 @@
 
 LevelManager *LevelManager::instance = nullptr;
 
+LevelManager::LevelManager() {
+	std::string data = FileUtils::getInstance()->getStringFromFile("data/levels.json");
+	rapidjson::Document doc;
+	doc.Parse<0>(data.c_str());
+	
+	if (doc.GetType() != rapidjson::Type::kObjectType) {
+		LOG("Could not parse JSON!");
+	}
+	
+	for (rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin(); itr != doc.MemberEnd(); ++itr) {
+		std::string currentkey = itr->name.GetString();
+		//
+		RoundDef *r = new RoundDef;
+		r->name = currentkey;
+		
+		const auto &monsters = itr->value["monsters"];
+		for (int i = 0; i < monsters.Size(); i++) {
+			r->monsters.push_back(monsters[i].GetString());
+		}
+		
+		const auto &rewards = itr->value["rewards"];
+		for (int i = 0; i < rewards.Size(); i++) {
+			r->rewards.push_back(rewards[i].GetString());
+		}
+		
+		r->x = itr->value["x"].GetDouble();
+		r->y = itr->value["y"].GetDouble();
+		r->depends = itr->value["depends"].GetString();
+		
+		rounds.push_back(r);
+	}
+}
+
 LevelManager *LevelManager::get() {
 	if (instance == nullptr) {
 		instance = new LevelManager;

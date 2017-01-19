@@ -12,18 +12,28 @@
 #include "Monster.hpp"
 
 class Round;
+class RoundDef;
 
 class LevelManager {
 public:
 	static LevelManager *get();
+	LevelManager();
+	inline std::vector<RoundDef *> getRoundDefinitions(){ return rounds; }
 	Round *generateRound(int stage);
 private:
 	static LevelManager *instance;
+	std::vector<RoundDef *> rounds;
 };
 
-class Round {
-public:
-	// For now, just a list of monsters.
+struct RoundDef {
+	std::string name;
+	std::vector<std::string> monsters;
+	std::vector<std::string> rewards;
+	std::string depends;
+	float x, y;
+};
+
+struct Round {
 	std::vector<Monster *> monsters;
 };
 

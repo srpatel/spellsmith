@@ -104,6 +104,14 @@ void SpellManager::init() {
 	}
 }
 
+Spell *SpellManager::getByName(std::string name) {
+	for (Spell *s : spells) {
+		if (s->getRawName() == name)
+			return s;
+	}
+	return nullptr;
+}
+
 Spell::Spell(const char *name) {
 	this->name = name;
 	shape = NewArray;

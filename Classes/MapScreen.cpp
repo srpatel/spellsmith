@@ -6,6 +6,7 @@
 //
 //
 
+#include "Level.hpp"
 #include "MapScreen.hpp"
 #include "ui/CocosGUI.h"
 #include "Strings.hpp"
@@ -35,7 +36,35 @@ bool MapScreen::init() {
 	});
 	this->addChild(button);
 	
-	// Bottom bar for adventure mode
+	// todo: coordinates are such on the original image
+	// scale map so that width is correct, and then scale offsets by that amount too
+	float offset_y = 50;
+	for (RoundDef * r : LevelManager::get()->getRoundDefinitions()) {
+		// Make a node and add it!
+		auto n = LoadSprite("icons/mapnode.png");
+		n->setAnchorPoint(Vec2(0.5, 0.5));
+		n->setPosition(r->x, r->y + offset_y);
+		addChild(n);
+		
+		auto t = Label::createWithTTF(r->name, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		t->setTextColor(Color4B::WHITE);
+		t->setPosition(n->getPosition());
+		addChild(t);
+		
+		auto onclick = EventListenerTouchOneByOne::create();
+		onclick->setSwallowTouches(true);
+		onclick->onTouchBegan = [this, r](Touch* touch, Event* event) -> bool {
+			auto bounds = event->getCurrentTarget()->getBoundingBox();
+			
+			if (bounds.containsPoint(touch->getLocation())){
+				GameController::get()->showPreLevelDialog(r);
+				return true;
+			}
+			
+			return false; // if you are consuming it
+		};
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
+	}
 	
 	return true;
 }

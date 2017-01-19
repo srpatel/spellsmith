@@ -22,6 +22,8 @@ enum State {
 	kStateCount
 };
 
+class RoundDef;
+
 class GameController {
 public:
 	static void init(Scene *root);
@@ -34,6 +36,7 @@ public:
 	// (Model) Dialogs
 	void popDialog();
 	void showSpellInfoDialog(Spell *);
+	void showPreLevelDialog(RoundDef *round);
 	void showOptionsDialog();
 private:
 	static GameController *instance;

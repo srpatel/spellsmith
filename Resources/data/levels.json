@@ -4,8 +4,8 @@
     "monsters": [
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 50,
+    "y": 50,
     "rewards": [
       "firewisp"
     ]
@@ -16,8 +16,8 @@
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 100,
+    "y": 50,
     "rewards": [
       "forest_breeze"
     ]
@@ -29,11 +29,11 @@
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 150,
+    "y": 50,
     "rewards": [
       "zap",
-      "icebolt"
+      "ice_bolt"
     ]
   },
   "4": {
@@ -43,8 +43,8 @@
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 200,
+    "y": 50,
     "rewards": [
       "poison_dart",
       "focus"
@@ -57,8 +57,8 @@
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 250,
+    "y": 50,
     "rewards": [
       "healstrike",
       "evaporate"
@@ -71,8 +71,8 @@
       "dog",
       "dog"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 300,
+    "y": 50,
     "rewards": [
       "drain_life",
       "phase"
@@ -85,8 +85,8 @@
       "dog",
       "fast_dog"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 50,
+    "y": 100,
     "rewards": [
       "fertilise"
     ]
@@ -98,10 +98,10 @@
       "fire_mage",
       "fast_dog"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 100,
+    "y": 100,
     "rewards": [
-      "meteor_strike"
+      "dragon_breath"
     ]
   },
   "9": {
@@ -111,10 +111,10 @@
       "fast_dog",
       "fast_dog"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 150,
+    "y": 100,
     "rewards": [
-      "mystic_channel"
+      "channel"
     ]
   },
   "10": {
@@ -122,8 +122,8 @@
     "monsters": [
       "boss"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 200,
+    "y": 100,
     "rewards": []
   },
   "3a": {
@@ -133,8 +133,8 @@
       "water_mage",
       "goblin_sword"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 250,
+    "y": 100,
     "rewards": [
       "lightning_bolt",
       "lightning_storm"
@@ -147,8 +147,8 @@
       "water_mage",
       "water_mage"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 250,
+    "y": 100,
     "rewards": [
       "charge_bolt",
       "crystalise"
@@ -161,11 +161,51 @@
       "fire_mage",
       "fast_dog"
     ],
-    "x": 0,
-    "y": 0,
+    "x": 300,
+    "y": 100,
     "rewards": [
       "fountain_of_youth",
       "cleanse"
+    ]
+  },
+  "5a": {
+    "depends": "5",
+    "monsters": [
+      "goblin_sword",
+      "fire_mage",
+      "goblin_axe"
+    ],
+    "x": 50,
+    "y": 150,
+    "rewards": [
+      "fury",
+      "smelt"
+    ]
+  },
+  "5b": {
+    "depends": "5a",
+    "monsters": [
+      "fire_mage",
+      "fire_mage"
+    ],
+    "x": 100,
+    "y": 150,
+    "rewards": [
+      "induce_explosion"
+    ]
+  },
+  "5c": {
+    "depends": "5b",
+    "monsters": [
+      "fire_mage",
+      "fire_mage",
+      "fire_mage"
+    ],
+    "x": 150,
+    "y": 150,
+    "rewards": [
+      "volcanic",
+      "fire_cleanse"
     ]
   }
 }

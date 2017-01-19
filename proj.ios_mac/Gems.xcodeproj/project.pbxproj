@@ -499,22 +499,22 @@
 		1020FEE81C06754200019EB9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				105E0CF61BF14E3F0081D8F5 /* Strings.hpp */,
-				105E0CF71BF14E3F0081D8F5 /* Strings.cpp */,
-				105E0CFA1BF14E3F0081D8F5 /* Spell.hpp */,
-				105E0CFB1BF14E3F0081D8F5 /* Spell.cpp */,
-				1020FEEB1C06759400019EB9 /* SaveData.cpp */,
-				1020FEEC1C06759400019EB9 /* SaveData.hpp */,
+				109742B81DE9BDC5008E1BBD /* ImageManager.cpp */,
+				109742B91DE9BDC5008E1BBD /* ImageManager.hpp */,
 				108747891C0797CD0069DCAF /* Level.cpp */,
 				1087478A1C0797CD0069DCAF /* Level.hpp */,
 				1087478D1C07A7920069DCAF /* Monster.cpp */,
 				1087478E1C07A7920069DCAF /* Monster.hpp */,
+				1020FEEB1C06759400019EB9 /* SaveData.cpp */,
+				1020FEEC1C06759400019EB9 /* SaveData.hpp */,
 				103FB4991CD13B0D00AEB60D /* Shaders.cpp */,
 				103FB49A1CD13B0D00AEB60D /* Shaders.hpp */,
-				109742B81DE9BDC5008E1BBD /* ImageManager.cpp */,
-				109742B91DE9BDC5008E1BBD /* ImageManager.hpp */,
 				107B33BA1E22678D00F2EBDD /* SoundManager.cpp */,
 				107B33BB1E22678D00F2EBDD /* SoundManager.hpp */,
+				105E0CFB1BF14E3F0081D8F5 /* Spell.cpp */,
+				105E0CFA1BF14E3F0081D8F5 /* Spell.hpp */,
+				105E0CF71BF14E3F0081D8F5 /* Strings.cpp */,
+				105E0CF61BF14E3F0081D8F5 /* Strings.hpp */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -522,20 +522,20 @@
 		1020FEE91C06755700019EB9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				105E0D051BF14E3F0081D8F5 /* Characters.hpp */,
 				105E0D061BF14E3F0081D8F5 /* Characters.cpp */,
-				105E0CFE1BF14E3F0081D8F5 /* Grid.hpp */,
-				105E0CFF1BF14E3F0081D8F5 /* Grid.cpp */,
-				105E0D001BF14E3F0081D8F5 /* Gem.hpp */,
-				105E0D011BF14E3F0081D8F5 /* Gem.cpp */,
-				105E0D021BF14E3F0081D8F5 /* GameScene.hpp */,
-				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
-				100AEB951CC3E61400182962 /* GameHUD.cpp */,
-				100AEB961CC3E61400182962 /* GameHUD.hpp */,
-				1070AEF41CC56BB5009DA840 /* GameScenery.cpp */,
-				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
+				105E0D051BF14E3F0081D8F5 /* Characters.hpp */,
 				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
 				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
+				100AEB951CC3E61400182962 /* GameHUD.cpp */,
+				100AEB961CC3E61400182962 /* GameHUD.hpp */,
+				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
+				105E0D021BF14E3F0081D8F5 /* GameScene.hpp */,
+				1070AEF41CC56BB5009DA840 /* GameScenery.cpp */,
+				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
+				105E0D011BF14E3F0081D8F5 /* Gem.cpp */,
+				105E0D001BF14E3F0081D8F5 /* Gem.hpp */,
+				105E0CFF1BF14E3F0081D8F5 /* Grid.cpp */,
+				105E0CFE1BF14E3F0081D8F5 /* Grid.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -543,26 +543,26 @@
 		1020FEEA1C06757400019EB9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */,
-				10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */,
-				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
-				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 				102441761BF3DD3700AEC8B4 /* Dialogs.cpp */,
 				102441771BF3DD3700AEC8B4 /* Dialogs.hpp */,
 				1070E0AB1BF5188E007C06F9 /* GameController.cpp */,
 				1070E0AC1BF5188E007C06F9 /* GameController.hpp */,
-				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
-				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
-				1095273B1D3BC843002EF8CC /* Popup.cpp */,
-				1095273C1D3BC843002EF8CC /* Popup.hpp */,
 				108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */,
 				108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */,
-				107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */,
-				107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */,
+				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
+				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
 				10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */,
 				10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */,
+				10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */,
+				10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */,
+				1095273B1D3BC843002EF8CC /* Popup.cpp */,
+				1095273C1D3BC843002EF8CC /* Popup.hpp */,
 				10FC73751E2F58870096BF0E /* Spellbook.cpp */,
 				10FC73761E2F58870096BF0E /* Spellbook.hpp */,
+				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
+				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
+				107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */,
+				107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -747,15 +747,15 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				10C409481CC287D400DED2A9 /* Common */,
-				10B464DB1BFA935E00DD5E9E /* spine */,
-				105E0D271BF14F910081D8F5 /* CommonPrefix.h */,
-				105E0D041BF14E3F0081D8F5 /* Constants.h */,
 				105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				104E052D1D55E0230049EBEB /* Spells */,
+				10C409481CC287D400DED2A9 /* Common */,
+				105E0D271BF14F910081D8F5 /* CommonPrefix.h */,
+				105E0D041BF14E3F0081D8F5 /* Constants.h */,
 				1020FEE81C06754200019EB9 /* Data */,
 				1020FEE91C06755700019EB9 /* Game */,
+				104E052D1D55E0230049EBEB /* Spells */,
+				10B464DB1BFA935E00DD5E9E /* spine */,
 				1020FEEA1C06757400019EB9 /* UI */,
 			);
 			name = Classes;

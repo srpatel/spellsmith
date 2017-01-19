@@ -10,6 +10,7 @@
 #define Dialogs_hpp
 
 #include "Spell.hpp"
+#include "Level.hpp"
 
 #define SIMPLE_DIALOG(_x_) class _x_ : public Dialog {\
 public:\
@@ -37,6 +38,13 @@ public:
 	bool init(Spell *);
 	
 	CREATE_FUNC_1(SpellInfoDialog, Spell *);
+};
+
+class PreLevelDialog : public Dialog {
+public:
+	bool init(RoundDef *);
+	
+	CREATE_FUNC_1(PreLevelDialog, RoundDef *);
 };
 
 #endif /* Dialogs_hpp */

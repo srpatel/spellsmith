@@ -103,6 +103,48 @@ bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float c
 	return true;
 }
 
+
+bool PreLevelDialog::init(RoundDef *round) {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto size = Size(visibleSize.width - 50, 300);
+	
+	if ( !Dialog::init(true, false, size.width, size.height) ) {
+		return false;
+	}
+	
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
+	
+	auto label = Label::createWithTTF( round->name, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	label->setColor(Color3B::BLACK);
+	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
+	this->addChild(label, 1);
+	
+	// Add spell icons
+	float currentX = -50 * ((float) round->rewards.size() - 1) / 2.0;
+	for (std::string spellname : round->rewards) {
+		auto spell = SpellManager::get()->getByName(spellname);
+		if (spell) {
+			auto node = spell->makeNode(true);
+			node->setPositionX(currentX);
+			currentX += 50;
+			// TODO : on click, get info
+			// TODO : organise layout of multiple
+			addChild(node);
+		}
+	}
+	
+	// Add monsters
+	// ...
+	
+	// Add play button
+	// ...
+	
+	return true;
+}
+
 bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 	event->stopPropagation();
 	if (closeable) {
