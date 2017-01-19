@@ -19,22 +19,19 @@ public:
 	static LevelManager *get();
 	LevelManager();
 	inline std::vector<RoundDef *> getRoundDefinitions(){ return rounds; }
-	Round *generateRound(int stage);
+	RoundDef *generateRound(int stage);
 private:
 	static LevelManager *instance;
 	std::vector<RoundDef *> rounds;
 };
 
 struct RoundDef {
+	bool generated;
 	std::string name;
 	std::vector<std::string> monsters;
 	std::vector<std::string> rewards;
 	std::string depends;
 	float x, y;
-};
-
-struct Round {
-	std::vector<Monster *> monsters;
 };
 
 class SaveGame {

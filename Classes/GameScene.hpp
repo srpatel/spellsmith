@@ -12,12 +12,6 @@
 
 typedef std::function<void()> PendingAction;
 
-enum GameMode {
-	kModeInfinite,
-	kModeLevel,
-	kModeMultiplayer
-};
-
 enum GameState {
 	kStatePlayerTurn,
 	kStatePlayerSpells,
@@ -34,6 +28,8 @@ struct layout_t {
 	Vec2 melee_spot; //where enemies stand to hit the wizard
 };
 
+class RoundDef;
+
 class Game : public Layer {
 	friend class DoSpell;
 public:
@@ -42,6 +38,7 @@ public:
 	
 	// Restart the current game!
 	void startGame(SaveGame *save);
+	void startRound(RoundDef *round);
 	
 	Wizard *getWizard();
 	void updateInventory();
@@ -66,11 +63,10 @@ public:
 private:
 	static Game *instance;
 	
-	GameMode mode = kModeInfinite;
-	int stage; // the current monster you are facing, or the level you are on in infinite mode.
+	int stage; // the current round in infinite mode, otherwise irrelevant.
 	
 	void gotoNextEnemy();
-	void showRound(Round *);
+	void showRound(RoundDef *);
 	
 	int getNextAliveEnemy(int start, bool *allDead);
 	
@@ -88,6 +84,7 @@ private:
 	void enemyDoTurn();
 	GameState state;
 	void attemptSetState(GameState);
+	RoundDef *round;
 	
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type,std::function<void(void)> onhit = {} /*default to no callable*/);
 	

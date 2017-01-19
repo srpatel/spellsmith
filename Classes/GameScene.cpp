@@ -1,4 +1,5 @@
 #include "GameScene.hpp"
+#include "Monster.hpp"
 #include "Spell.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
@@ -8,6 +9,7 @@
 #include "DoSpell.hpp"
 #include "GameOverPopup.hpp"
 #include "SoundManager.hpp"
+#include "Level.hpp"
 
 #include "Projectiles.hpp"
 
@@ -679,18 +681,20 @@ void Game::attemptSetState(GameState nextstate) {
 		// defer all of this until all actions are done!
 		PendingAction action = [this] {
 			// state = gameend....
-			// but for now, it's infini-mode!
 			state = kStatePlayerTurn;
 			
 			bool success = true;
 			if (wizard->health <= 0) {
 				success = false;
 			}
-			
+			if (success) {
+				scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
+			} else {
+				scenery->showFlags(GameScenery::FLAG_TYPE_LOSE);
+			}
 			std::function<void()> func;
-			if (mode == kModeInfinite) {
+			if (round->generated) {
 				if (success) {
-					scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
 					// pick a new spell if there are enough left
 					if (spellpool.size() >= 2) {
 						grid->setActive(false);
@@ -703,11 +707,11 @@ void Game::attemptSetState(GameState nextstate) {
 						spellpool.erase(spellpool.begin(), spellpool.begin() +  2);
 					} else {
 						// No spells left, just go for next level!
+						// TODO : Looks a bit weird, add a dialog, just with a "next" button.
 						spellPicked();
 					}
 					state = kStatePlayerTurn;
 				} else {
-					scenery->showFlags(GameScenery::FLAG_TYPE_LOSE);
 					// You are dead!
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
@@ -722,7 +726,10 @@ void Game::attemptSetState(GameState nextstate) {
 					wizard->sprite->runAction(seq);
 				}
 			} else {
-				// Not planning on this :)
+				// round is not generated, which means it's a normal level.
+				// 1) show a dialog with the rewards, and a button to go to the spellbook.
+				// 2) save the fact that the level was completed
+				// 3) add the spells to the user's spellbook (and save those spells somewhere!)
 			}
 		};
 		runPendingAction(action);
@@ -955,13 +962,18 @@ void Game::gotoNextEnemy() {
 	grid->scramble();*/
 	
 	// we are in charge of free'ing round.
-	Round *round = LevelManager::get()->generateRound(stage);
+	RoundDef *round = LevelManager::get()->generateRound(stage);
 	currentRound->setString(ToString(stage));
 	stage++;
 	showRound(round);
-	delete round;
 }
-void Game::showRound(Round *round) {
+void Game::showRound(RoundDef *round) {
+	if (this->round) {
+		if (this->round->generated)
+			delete this->round;
+	}
+	this->round = round;
+
 	// TODO : Remove all old sprites:
 	for (Enemy *e : enemies) {
 		e->sprite->setGLProgram(Shaders::none());
@@ -969,7 +981,8 @@ void Game::showRound(Round *round) {
 		delete e;
 	}
 	enemies.clear();
-	for (Monster *m : round->monsters) {
+	for (std::string monster_name : round->monsters) {
+		Monster *m = MonsterManager::get()->get(monster_name);
 		printf("Showing monster %s\n", m->name.c_str());
 		// create an enemy from the monster
 		Enemy *enemy = new Enemy(m, enemies.size());
@@ -1030,6 +1043,11 @@ void Game::startGame(SaveGame *save) {
 		state = kStatePlayerTurn;
 		grid->setActive(true);
 	}
+}
+
+void Game::startRound(RoundDef *rounddef) {
+	currentRound->setString(""); // What should go here?
+	showRound(rounddef);
 }
 
 void Game::update(float dt) {

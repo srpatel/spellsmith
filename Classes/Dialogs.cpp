@@ -140,7 +140,17 @@ bool PreLevelDialog::init(RoundDef *round) {
 	// ...
 	
 	// Add play button
-	// ...
+	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button->setTitleFontName(Fonts::TEXT_FONT);
+	button->setTitleFontSize(Fonts::TEXT_SIZE);
+	button->setPosition(Vec2(0, -§size.height/2));
+	button->setTitleText _("ui.PLAY");
+	button->addTouchEventListener([round](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			GameController::get()->startRound(round);
+		}
+	});
+	this->addChild(button);
 	
 	return true;
 }
