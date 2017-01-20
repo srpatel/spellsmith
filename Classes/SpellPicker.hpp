@@ -11,10 +11,20 @@
 
 #include "Spell.hpp"
 
+class RoundDef;
+
 class SpellPicker : public Layer {
 public:
-	bool init(Spell *, Spell *);
+	bool init(Spell *s1, Spell *);
 	CREATE_FUNC_2(SpellPicker, Spell *, Spell *);
+private:
+};
+
+// Ack want it here because it's similar to spell picker
+class PostLevelDialog : public Layer {
+public:
+	bool init(RoundDef *);
+	CREATE_FUNC_1(PostLevelDialog, RoundDef *);
 private:
 };
 

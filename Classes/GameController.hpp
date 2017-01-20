@@ -31,7 +31,8 @@ public:
 	
 	// Game states
 	void setState(State state);
-	void startGame(SaveGame *save);
+	void startArena();
+	void startRound(RoundDef *);
 	
 	// (Model) Dialogs
 	void popDialog();

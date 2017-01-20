@@ -157,3 +157,40 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	
 	return true;
 }
+
+bool PostLevelDialog::init(RoundDef *r) {
+	if ( !Layer::init() ) {
+		return false;
+	}
+	
+	auto size = Size(200, 150);
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
+	
+	// "Pick a spell" title
+	auto label = Label::createWithTTF( "You have learnt:", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	label->setColor(Color3B::WHITE);
+	label->setPosition(Vec2(0, 50));
+	addChild(label, 1);
+	
+	auto label2 = Label::createWithTTF( "Tap for info.", Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
+	label2->setColor(Color3B::WHITE);
+	label2->setPosition(Vec2(0, -50));
+	addChild(label2, 1);
+	
+	// Add spell blobs
+	/*
+	auto sb1 = SpellBlob::create(s1);
+	sb1->setPosition(5-getContentSize().width/4, -5);
+	addChild(sb1);
+	
+	auto sb2 = SpellBlob::create(s2);
+	sb2->setPosition(-5+getContentSize().width/4, -5);
+	addChild(sb2);
+	*/
+	
+	// Add button -> spellbook
+	return true;
+}

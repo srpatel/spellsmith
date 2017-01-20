@@ -590,8 +590,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			if (target->is_skeleton) {
 				skeleton = (spine::SkeletonAnimation *) target->sprite;
 			}
-			target->ui_health -= damage;
-			scenery->addTextWisp(target, std::string("-") + ToString(damage), Color3B::RED);
+			target->damageEffect(damage);
 			if (target->ui_health <= 0 && target != wizard) {
 				if (skeleton) {
 					skeleton->addAnimation(0, "die", false);
@@ -730,6 +729,10 @@ void Game::attemptSetState(GameState nextstate) {
 				// 1) show a dialog with the rewards, and a button to go to the spellbook.
 				// 2) save the fact that the level was completed
 				// 3) add the spells to the user's spellbook (and save those spells somewhere!)
+				auto dialog = PostLevelDialog::create(round);
+				// put it in the middle of the grid
+				dialog->setPosition(grid->getPosition());
+				addChild(dialog);
 			}
 		};
 		runPendingAction(action);
@@ -879,8 +882,7 @@ void Game::enemyDoTurn() {
 							}
 							auto dealDamage = CallFunc::create([this, damage, phase](){
 								if (! phase) {
-									scenery->addTextWisp(wizard, std::string("-") + ToString(damage), Color3B::RED);
-									wizard->ui_health -= damage;
+									wizard->damageEffect(damage);
 									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
 									updateHealthBars();
 								}
@@ -996,56 +998,48 @@ void Game::showRound(RoundDef *round) {
 	currentEnemy = 0;
 	hud->setupMonsterList(&enemies);
 	
+	updateHealthBars();
+	
 	// reset game state
 	state = kStatePlayerTurn;
 	grid->setActive(true);
 }
-void Game::startGame(SaveGame *save) {
-	if (save != nullptr) {
-		// TODO
-		// Load up the previous save.
-		// - Current monster group (round)
-		// - Look/name/hash of wizard
-		// - Current score
-		// - Current spells
-		// - Current talents?
-	} else {
-		// Load a completely fresh level!
-		stage = 0;
-		
-		// reset health
-		wizard->health = wizard->max_health;
-		wizard->ui_health = wizard->max_health;
-		wizard->sprite->setOpacity(255);
-		wizard->inventory.clear();
-		for (int i = 0; i < 6; i++) {
-			wizard->inventory.push_back(nullptr);
-		}
-		
-		// copy spells across
-		spellpool = SpellManager::get()->spells;
-		
-		// sort spells by tier, but otherwise random.
-		std::random_shuffle(spellpool.begin(), spellpool.end(), [](int i) { return std::rand()%i;});
-		std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
-			return a->tier < b->tier;
-		});
-		// Delete the first 4 spells
-		//spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
-		
-		// Create a round based on the current stage.
-		gotoNextEnemy();
-		
-		updateHealthBars();
-		updateInventory();
-		
-		// shuffle grid
-		grid->scramble();
-		
-		// reset game state
-		state = kStatePlayerTurn;
-		grid->setActive(true);
+void Game::startArena() {
+	// Load a completely fresh level!
+	stage = 0;
+	
+	// reset health
+	wizard->health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
+	wizard->sprite->setOpacity(255);
+	wizard->inventory.clear();
+	for (int i = 0; i < 6; i++) {
+		wizard->inventory.push_back(nullptr);
 	}
+	
+	// copy spells across
+	spellpool = SpellManager::get()->spells;
+	
+	// sort spells by tier, but otherwise random.
+	std::random_shuffle(spellpool.begin(), spellpool.end(), [](int i) { return std::rand()%i;});
+	std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
+		return a->tier < b->tier;
+	});
+	// Delete the first 4 spells
+	//spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
+	
+	// Create a round based on the current stage.
+	gotoNextEnemy();
+	
+	updateHealthBars();
+	updateInventory();
+	
+	// shuffle grid
+	grid->scramble();
+	
+	// reset game state
+	state = kStatePlayerTurn;
+	grid->setActive(true);
 }
 
 void Game::startRound(RoundDef *rounddef) {

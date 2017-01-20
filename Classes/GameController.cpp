@@ -81,8 +81,12 @@ void GameController::setState(State newstate) {
 		root->addChild(bar);
 	}
 }
-void GameController::startGame(SaveGame *saveGame) {
-	Game::get()->startGame(saveGame);
+void GameController::startArena() {
+	Game::get()->startArena();
+	setState(kStateGame);
+}
+void GameController::startRound(RoundDef *round) {
+	Game::get()->startRound(round);
 	setState(kStateGame);
 }
 void GameController::popDialog() {

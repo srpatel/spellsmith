@@ -31,7 +31,7 @@ bool MapScreen::init() {
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			// For now, from scratch always!
-			GameController::get()->startGame(nullptr);
+			GameController::get()->startArena();
 		}
 	});
 	this->addChild(button);

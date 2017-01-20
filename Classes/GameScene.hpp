@@ -37,7 +37,7 @@ public:
     Grid *grid;
 	
 	// Restart the current game!
-	void startGame(SaveGame *save);
+	void startArena();
 	void startRound(RoundDef *round);
 	
 	Wizard *getWizard();

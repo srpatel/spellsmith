@@ -114,7 +114,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			PROJ( D(5), Color3B::RED );
 		} else {
 			PROJ_ONHIT( D(5), Color3B::RED, [game](){
-				game->wizard->flash(Color3B::GREEN);
 				HEAL(8);
 			} );
 		}
@@ -207,8 +206,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(forest_breeze) {
 		// gain 5
 		SKELETON_ANIMATION("spell_heal");
-		// TODO - actionDone only when the later of the animation and the skeleton finishes
-		// TODO - flash green
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
@@ -216,7 +213,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
 			}));
-			game->wizard->flash(Color3B::GREEN);
 			HEAL(5);
 			game->scenery->addChild(heal);
 		});
@@ -225,8 +221,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(heal) {
 		// gain 7
 		SKELETON_ANIMATION("spell_heal");
-		// TODO - actionDone only when the later of the animation and the skeleton finishes
-		// TODO - flash green
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
@@ -234,7 +228,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
 			}));
-			game->wizard->flash(Color3B::GREEN);
 			HEAL(7);
 			game->scenery->addChild(heal);
 		});
@@ -262,7 +255,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
 		PROJ_ONHIT( D(5), Color3B::RED, [game](){
-			game->wizard->flash(Color3B::GREEN);
 			HEAL(5);
 		} );
 	}
@@ -279,7 +271,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(crystalise) {
 		// heal 3, create 3 crystal gems
 		HEAL(3);
-		game->wizard->flash(Color3B::GREEN);
 		CRYSTAL(3);
 	}
 	IF_SPELL(zap) {

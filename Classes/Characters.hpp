@@ -65,6 +65,7 @@ public:
 	Layer *buffHolder;
 	void flash(Color3B c);
 	void heal(int amt);
+	void damageEffect(int damage);
 	virtual std::map<std::string, Vec2> getOffsets() = 0;
 };
 

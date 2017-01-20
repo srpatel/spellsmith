@@ -232,11 +232,20 @@ void Character::heal(int amt) {
 	}
 }
 
+void Character::damageEffect(int amt) {
+	Game *game = Game::get();
+	ui_health -= amt;
+	flash(Color3B(255, 175, 175));
+	if (game) {
+		game->scenery->addTextWisp(this, std::string("-") + ToString(amt), Color3B::RED);
+	}
+}
+
 void Character::flash(Color3B c) {
 	Color3B original = sprite->getColor();
 	auto f = Sequence::create(
-		EaseIn::create(TintTo::create(0.5f, c), 0.5),
-		EaseOut::create(TintTo::create(0.5f, original), 0.5),
+		EaseIn::create(TintTo::create(0.2f, c), 0.5),
+		EaseOut::create(TintTo::create(0.2f, original), 0.5),
 		nullptr);
 	sprite->runAction(f);
 }
