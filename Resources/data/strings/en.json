@@ -91,7 +91,7 @@
     },
     "poison_dart": {
       "name": "Precise Dart",
-      "description": "Deal 5 damage. If the enemy is below 50% health deal 12 instead."
+      "description": "Deal 5 damage. If the enemy is at full health deal 10 instead."
     },
     "induce_explosion": {
       "name": "Induce Explosion",

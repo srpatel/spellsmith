@@ -138,11 +138,11 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(poison_dart) {
-		// Deal 5 damage. Deal an extra 12 damage if they are below 50% health.
+		// Deal 5 damage. Deal 10 instead if at full health.
 		int n = 5;
 		auto e = game->enemies[game->currentEnemy];
-		if (e->health * 2 < e->max_health) {
-			n += 7;
+		if (e->health == e->max_health) {
+			n += 5;
 		}
 		PROJ( D(n), Color3B::GREEN );
 	}
