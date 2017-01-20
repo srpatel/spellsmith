@@ -34,8 +34,4 @@ struct RoundDef {
 	float x, y;
 };
 
-class SaveGame {
-	// For now - does nothing!
-};
-
 #endif /* Level_hpp */
