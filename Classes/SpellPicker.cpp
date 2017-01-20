@@ -16,17 +16,20 @@
 
 class SpellBlob : public Layer {
 public:
-	bool init(Spell *);
-	CREATE_FUNC_1(SpellBlob, Spell *);
+	bool init(Spell *, bool draggable);
+	CREATE_FUNC_2(SpellBlob, Spell *, bool);
 private:
+	bool draggable;
 	float distanceMoved;
 };
 
-bool SpellBlob::init(Spell *spell) {
+bool SpellBlob::init(Spell *spell, bool draggable) {
 	if ( !Layer::init() ) {
 		return false;
 	}
 	
+	this->draggable = draggable;
+
 	auto bg = LoadSprite("ui/spellbox.png");
 	bg->setAnchorPoint(Vec2(0.5, 0.5));
 	bg->setPosition(Vec2(0, 0));
@@ -53,75 +56,80 @@ bool SpellBlob::init(Spell *spell) {
 		bounds.origin += this->getParent()->getPosition();
 		
 		if (bounds.containsPoint(touch->getLocation())){
-			//GameController::get()->showSpellInfoDialog(spell);
+			// If it's not draggable, show the spell info dialog straight away.
+			// Otherwise, wait for the release.
+			if (! draggable)
+				GameController::get()->showSpellInfoDialog(spell);
 			return true;
 		}
 		
 		return false; // if you are consuming it
 	};
-	onClick->onTouchMoved = [this, mininode](Touch* touch, Event* event) -> bool {
-		auto offset = this->getParent()->getPosition() + getPosition();
-		mininode->setPosition(touch->getLocation() - offset);
-		distanceMoved += touch->getDelta().length();
-		// move mini-node to new location
-		return false; // if you are consuming it
-	};
-	onClick->onTouchEnded = [this, mininode, spell](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		bounds.origin -= bounds.size/2;
-		bounds.origin += this->getParent()->getPosition();
-		
-		bool doSnap = true;
-		if (bounds.containsPoint(touch->getLocation())){
-			// If haven't moved far, then do this:
-			if (distanceMoved < 2.0f) {
-				GameController::get()->showSpellInfoDialog(spell);
-			}
-		} else {
-			// if it's over a inventory spot, put the gem there
-			layout_t layout = Game::get()->getLayout();
-			const auto size = getContentSize();
-			const float starty = layout.column_height - 110 * layout.ui_scale;
-			for (int i = 0; i < 3; i++) {
-				auto bounds = Rect(
-					Vec2(18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
-					size
-				);
-				if (bounds.containsPoint(touch->getLocation())) {
-					// Set inventory to this spell
-					Game::get()->getWizard()->inventory[i] = spell;
-					mininode->removeFromParent();
-					Game::get()->updateInventory();
-					doSnap = false;
+	if (draggable) {
+		onClick->onTouchMoved = [this, mininode](Touch* touch, Event* event) -> bool {
+			auto offset = this->getParent()->getPosition() + getPosition();
+			mininode->setPosition(touch->getLocation() - offset);
+			distanceMoved += touch->getDelta().length();
+			// move mini-node to new location
+			return false; // if you are consuming it
+		};
+		onClick->onTouchEnded = [this, mininode, spell](Touch* touch, Event* event) -> bool {
+			auto bounds = event->getCurrentTarget()->getBoundingBox();
+			bounds.origin -= bounds.size/2;
+			bounds.origin += this->getParent()->getPosition();
+			
+			bool doSnap = true;
+			if (bounds.containsPoint(touch->getLocation())){
+				// If haven't moved far, then do this:
+				if (distanceMoved < 2.0f) {
+					GameController::get()->showSpellInfoDialog(spell);
+				}
+			} else {
+				// if it's over a inventory spot, put the gem there
+				layout_t layout = Game::get()->getLayout();
+				const auto size = getContentSize();
+				const float starty = layout.column_height - 110 * layout.ui_scale;
+				for (int i = 0; i < 3; i++) {
+					auto bounds = Rect(
+						Vec2(18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
+						size
+					);
+					if (bounds.containsPoint(touch->getLocation())) {
+						// Set inventory to this spell
+						Game::get()->getWizard()->inventory[i] = spell;
+						mininode->removeFromParent();
+						Game::get()->updateInventory();
+						doSnap = false;
+					}
+				}
+				for (int i = 0; i < 3; i++) {
+					auto bounds = Rect(
+									   Vec2(Game::get()->getBoundingBox().size.width - 18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
+									   size
+									   );
+					if (bounds.containsPoint(touch->getLocation())) {
+						// Set inventory to this spell
+						Game::get()->getWizard()->inventory[3 + i] = spell;
+						mininode->removeFromParent();
+						Game::get()->updateInventory();
+						doSnap = false;
+					}
 				}
 			}
-			for (int i = 0; i < 3; i++) {
-				auto bounds = Rect(
-								   Vec2(Game::get()->getBoundingBox().size.width - 18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
-								   size
-								   );
-				if (bounds.containsPoint(touch->getLocation())) {
-					// Set inventory to this spell
-					Game::get()->getWizard()->inventory[3 + i] = spell;
-					mininode->removeFromParent();
-					Game::get()->updateInventory();
-					doSnap = false;
-				}
+			
+			if (doSnap) {
+				// Snap back to original position.
+				auto snap = MoveTo::create(0.1f, Vec2::ZERO);
+				mininode->stopAllActions();
+				mininode->runAction(snap);
+			} else {
+				Game::get()->spellPicked();
+				getParent()->removeFromParent();
 			}
-		}
-		
-		if (doSnap) {
-			// Snap back to original position.
-			auto snap = MoveTo::create(0.1f, Vec2::ZERO);
-			mininode->stopAllActions();
-			mininode->runAction(snap);
-		} else {
-			Game::get()->spellPicked();
-			getParent()->removeFromParent();
-		}
-		
-		return true; // if you are consuming it
-	};
+			
+			return true; // if you are consuming it
+		};
+	}
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(onClick, this);
 	
 	return true;
@@ -149,11 +157,11 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	label2->setPosition(Vec2(0, -50));
 	addChild(label2, 1);
 	
-	auto sb1 = SpellBlob::create(s1);
+	auto sb1 = SpellBlob::create(s1, true);
 	sb1->setPosition(5-getContentSize().width/4, -5);
 	addChild(sb1);
 	
-	auto sb2 = SpellBlob::create(s2);
+	auto sb2 = SpellBlob::create(s2, true);
 	sb2->setPosition(-5+getContentSize().width/4, -5);
 	addChild(sb2);
 	
@@ -183,18 +191,18 @@ bool PostLevelDialog::init(RoundDef *r) {
 	addChild(label2, 1);
 	
 	// Add spell blobs
-	/*
-	auto sb1 = SpellBlob::create(s1);
-	sb1->setPosition(5-getContentSize().width/4, -5);
-	addChild(sb1);
-	
-	auto sb2 = SpellBlob::create(s2);
-	sb2->setPosition(-5+getContentSize().width/4, -5);
-	addChild(sb2);
-	*/
+	int numRewards = r->rewards.size();
+	float dx = (getContentSize().width/2) - 10;
+	float startX = (dx * (numRewards - 1)) / 2.0f;
+	for (std::string spellname : r->rewards) {
+		Spell *s = SpellManager::get()->getByName(spellname);
+		auto sb = SpellBlob::create(s, false);
+		sb->setPosition(startX, -5);
+		startX += dx;
+		addChild(sb);
+	}
 	
 	// Add button -> spellbook
-	// "return to menu" button
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText("Spellbook");
