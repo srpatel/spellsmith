@@ -12,7 +12,7 @@
 class Spellbook : public Layer {
 public:
 	bool init();
-	
+	void refreshSpells();
 	CREATE_FUNC(Spellbook);
 };
 

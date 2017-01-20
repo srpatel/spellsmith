@@ -18,3 +18,7 @@ bool Spellbook::init() {
 	
 	return true;
 }
+
+void Spellbook::refreshSpells() {
+	// 
+}

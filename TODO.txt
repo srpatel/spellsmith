@@ -1,3 +1,10 @@
+NEXT:
+- Show scrolling list of available spells in spellbook.
+- Allow equipping spells
+- Save inventory to Prefs
+- When starting a round, initialise the loadout.
+
+
 Next definites:
 - On the map, the arena is one of the blobs.
 	Only available after you completed two levels.
@@ -25,6 +32,14 @@ Over the scenery there is a popup with says
 If you've not equipped a spell, show lines to show how to perform the equip?
 Central panel houses spells. Work out how best to show this -- grid, list etc.
 Scroll bar.
+
+Nav bar:
+- Must be to ui_scale
+- Must be the same size as the column bottoms
+- Must animate up and down
+
+Screen transition:
+- How to transition -- doors? scrolls?
 
 Column:
 In non-gen'd level, hide the level counter.
