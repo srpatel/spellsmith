@@ -12,6 +12,8 @@
 #include "Popup.hpp"
 #include "GameScene.hpp"
 
+#include "ui/CocosGUI.h"
+
 class SpellBlob : public Layer {
 public:
 	bool init(Spell *);
@@ -192,5 +194,19 @@ bool PostLevelDialog::init(RoundDef *r) {
 	*/
 	
 	// Add button -> spellbook
+	// "return to menu" button
+	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button->setTitleFontName(Fonts::TEXT_FONT);
+	button->setTitleText("Spellbook");
+	button->setPosition(Vec2(0, -50));
+	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			// For now, from scratch always!
+			removeFromParent();
+			GameController::get()->setState(kStateSpellbook);
+		}
+	});
+	addChild(button);
+	
 	return true;
 }

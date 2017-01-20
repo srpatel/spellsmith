@@ -12,6 +12,7 @@
 #include "Strings.hpp"
 #include "Constants.h"
 #include "GameController.hpp"
+#include "SaveData.hpp"
 
 bool MapScreen::init() {
 	if ( !Layer::init() ) {
@@ -38,18 +39,34 @@ bool MapScreen::init() {
 	
 	// todo: coordinates are such on the original image
 	// scale map so that width is correct, and then scale offsets by that amount too
+	nodes = Layer::create();
+	addChild(nodes);
+	
+	return true;
+}
+
+void MapScreen::refreshNodes() {
+	nodes->removeAllChildren();
+	for (EventListener *l : listeners) {
+		_eventDispatcher->removeEventListener(l);
+	}
+	listeners.clear();
+	
 	float offset_y = 50;
 	for (RoundDef * r : LevelManager::get()->getRoundDefinitions()) {
 		// Make a node and add it!
-		auto n = LoadSprite("icons/mapnode.png");
+		auto n =
+			SaveData::isLevelComplete(r->name) ?
+			LoadSprite("icons/mapnodedone.png") :
+			LoadSprite("icons/mapnode.png");
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(r->x, r->y + offset_y);
-		addChild(n);
+		nodes->addChild(n);
 		
 		auto t = Label::createWithTTF(r->name, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 		t->setTextColor(Color4B::WHITE);
 		t->setPosition(n->getPosition());
-		addChild(t);
+		nodes->addChild(t);
 		
 		auto onclick = EventListenerTouchOneByOne::create();
 		onclick->setSwallowTouches(true);
@@ -64,7 +81,6 @@ bool MapScreen::init() {
 			return false; // if you are consuming it
 		};
 		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
+		listeners.push_back(onclick);
 	}
-	
-	return true;
 }

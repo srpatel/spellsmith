@@ -12,8 +12,11 @@
 class MapScreen : public Layer {
 public:
 	bool init();
-	
+	void refreshNodes();
 	CREATE_FUNC(MapScreen);
+private:
+	Layer *nodes;
+	std::vector<EventListener *> listeners;
 };
 
 #endif /* MapScreen_hpp */

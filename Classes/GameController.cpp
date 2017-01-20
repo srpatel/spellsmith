@@ -75,10 +75,16 @@ void GameController::setState(State newstate) {
 	// Show or hide the navigation bar as appropriate
 	if (bar->getParent())
 		bar->removeFromParent();
+	
 	bool showBar = newstate == kStateMap || newstate == kStateSpellbook;
 	if (showBar) {
 		bar->setPosition(0, 0);
 		root->addChild(bar);
+	}
+	
+	// do refreshing
+	if (newstate == kStateMap) {
+		((MapScreen *)layer)->refreshNodes();
 	}
 }
 void GameController::startArena() {

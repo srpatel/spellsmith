@@ -86,6 +86,7 @@ private:
 	GameState state;
 	void attemptSetState(GameState);
 	RoundDef *round;
+	int numMoves = 0;
 	
 	void makeProjectile(Character *source, Character *target, int damage, Color3B type,std::function<void(void)> onhit = {} /*default to no callable*/);
 	

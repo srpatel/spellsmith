@@ -10,6 +10,7 @@
 #include "GameOverPopup.hpp"
 #include "SoundManager.hpp"
 #include "Level.hpp"
+#include "SaveData.hpp"
 
 #include "Projectiles.hpp"
 
@@ -648,6 +649,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 }
 
 void Game::onWizardTurnOver() {
+	// Increment turn counter...
+	numMoves++;
 	// If the selected enemy has 0 hp, then you can't select it!
 	setSelected(currentEnemy); // We just select the current one - the logic is in here.
 	// enemy gets a shot at you!
@@ -725,14 +728,38 @@ void Game::attemptSetState(GameState nextstate) {
 					wizard->sprite->runAction(seq);
 				}
 			} else {
-				// round is not generated, which means it's a normal level.
-				// 1) show a dialog with the rewards, and a button to go to the spellbook.
-				// 2) save the fact that the level was completed
-				// 3) add the spells to the user's spellbook (and save those spells somewhere!)
-				auto dialog = PostLevelDialog::create(round);
-				// put it in the middle of the grid
-				dialog->setPosition(grid->getPosition());
-				addChild(dialog);
+				if (success) {
+					// Save the rewards
+					// TODO : Refresh the spellbook
+					for (std::string r : round->rewards) {
+						SaveData::addSpell(r);
+					}
+					
+					// Save the number of moves the level was completed in
+					SaveData::setLevelComplete(round->name, numMoves);
+					
+					// round is not generated, which means it's a normal level.
+					// 1) show a dialog with the rewards, and a button to go to the spellbook.					
+					auto dialog = PostLevelDialog::create(round);
+					// put it in the middle of the grid
+					dialog->setPosition(grid->getPosition());
+					addChild(dialog);
+				} else {
+					// TODO : This is the same branch as above...
+					
+					// You are dead!
+					auto fadeOut = FadeOut::create(0.2f);
+					auto nextLevel = CallFunc::create([this](){
+						// Dialog takes all focus!
+						auto levelEnd = GameOverPopup::create();
+						// put it in the middle of the grid
+						levelEnd->setPosition(grid->getPosition());
+						addChild(levelEnd);
+					});
+					
+					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
+					wizard->sprite->runAction(seq);
+				}
 			}
 		};
 		runPendingAction(action);
@@ -996,6 +1023,7 @@ void Game::showRound(RoundDef *round) {
 	scenery->placeMonsters(&enemies);
 	scenery->showFlags(GameScenery::FLAG_TYPE_NONE);
 	currentEnemy = 0;
+	numMoves = 0;
 	hud->setupMonsterList(&enemies);
 	
 	updateHealthBars();
