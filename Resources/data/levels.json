@@ -25,7 +25,7 @@
   "3": {
     "depends": "2",
     "monsters": [
-      "water_mage",
+      "water_wizard",
       "goblin_sword",
       "goblin_sword"
     ],
@@ -53,7 +53,7 @@
   "5": {
     "depends": "4",
     "monsters": [
-      "fire_mage",
+      "fire_wizard",
       "goblin_sword",
       "goblin_sword"
     ],
@@ -95,7 +95,7 @@
     "depends": "7",
     "monsters": [
       "shaman",
-      "fire_mage",
+      "fire_wizard",
       "fast_dog"
     ],
     "x": 100,
@@ -129,8 +129,8 @@
   "3a": {
     "depends": "3",
     "monsters": [
-      "water_mage",
-      "water_mage",
+      "water_wizard",
+      "water_wizard",
       "goblin_sword"
     ],
     "x": 250,
@@ -143,9 +143,9 @@
   "3b": {
     "depends": "3a",
     "monsters": [
-      "water_mage",
-      "water_mage",
-      "water_mage"
+      "water_wizard",
+      "water_wizard",
+      "water_wizard"
     ],
     "x": 250,
     "y": 100,
@@ -157,8 +157,8 @@
   "6a": {
     "depends": "6",
     "monsters": [
-      "water_mage",
-      "fire_mage",
+      "water_wizard",
+      "fire_wizard",
       "fast_dog"
     ],
     "x": 300,
@@ -172,7 +172,7 @@
     "depends": "5",
     "monsters": [
       "goblin_sword",
-      "fire_mage",
+      "fire_wizard",
       "goblin_axe"
     ],
     "x": 50,
@@ -185,8 +185,8 @@
   "5b": {
     "depends": "5a",
     "monsters": [
-      "fire_mage",
-      "fire_mage"
+      "fire_wizard",
+      "fire_wizard"
     ],
     "x": 100,
     "y": 150,
@@ -197,9 +197,9 @@
   "5c": {
     "depends": "5b",
     "monsters": [
-      "fire_mage",
-      "fire_mage",
-      "fire_mage"
+      "fire_wizard",
+      "fire_wizard",
+      "fire_wizard"
     ],
     "x": 150,
     "y": 150,
