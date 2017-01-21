@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include "Popup.hpp"
 #include "GameScene.hpp"
+#include "SoundManager.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -23,12 +24,12 @@ private:
 	float distanceMoved;
 };
 
-bool SpellBlob::init(Spell *spell, bool draggable) {
+bool SpellBlob::init(Spell *spell, bool d) {
 	if ( !Layer::init() ) {
 		return false;
 	}
 	
-	this->draggable = draggable;
+	this->draggable = d;
 
 	auto bg = LoadSprite("ui/spellbox.png");
 	bg->setAnchorPoint(Vec2(0.5, 0.5));
@@ -48,7 +49,7 @@ bool SpellBlob::init(Spell *spell, bool draggable) {
 	
 	auto onClick = EventListenerTouchOneByOne::create();
 	onClick->setSwallowTouches(true);
-	onClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+	onClick->onTouchBegan = [this, spell](Touch* touch, Event* event) -> bool {
 		distanceMoved = 0;
 		
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
@@ -58,6 +59,7 @@ bool SpellBlob::init(Spell *spell, bool draggable) {
 		if (bounds.containsPoint(touch->getLocation())){
 			// If it's not draggable, show the spell info dialog straight away.
 			// Otherwise, wait for the release.
+			SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
 			if (! draggable)
 				GameController::get()->showSpellInfoDialog(spell);
 			return true;
@@ -78,10 +80,12 @@ bool SpellBlob::init(Spell *spell, bool draggable) {
 			bounds.origin -= bounds.size/2;
 			bounds.origin += this->getParent()->getPosition();
 			
+			bool playSound = true;
 			bool doSnap = true;
 			if (bounds.containsPoint(touch->getLocation())){
 				// If haven't moved far, then do this:
 				if (distanceMoved < 2.0f) {
+					playSound = false;
 					GameController::get()->showSpellInfoDialog(spell);
 				}
 			} else {
@@ -119,10 +123,14 @@ bool SpellBlob::init(Spell *spell, bool draggable) {
 			
 			if (doSnap) {
 				// Snap back to original position.
+				if (playSound) {
+					SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
+				}
 				auto snap = MoveTo::create(0.1f, Vec2::ZERO);
 				mininode->stopAllActions();
 				mininode->runAction(snap);
 			} else {
+				SoundManager::get()->playEffect(kSoundEffect_UISelect);
 				Game::get()->spellPicked();
 				getParent()->removeFromParent();
 			}
