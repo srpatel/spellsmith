@@ -186,6 +186,7 @@
   },
   {
     "name": "fire_wizard",
+    "scale": 0.92,
     "offsets": {
       "proj_from": [
         50,
@@ -221,6 +222,7 @@
   },
   {
     "name": "water_wizard",
+    "scale": 0.92,
     "offsets": {
       "proj_from": [
         50,

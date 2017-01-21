@@ -22,6 +22,7 @@ const char *kSoundEffect_PHEarth     = "sound/projectile_hit_earth" EXTENSION;
 const char *kSoundEffect_PHFire      = "sound/projectile_hit_fire" EXTENSION;
 const char *kSoundEffect_PTravel     = "sound/projectile_travel" EXTENSION;
 const char *kSoundEffect_Thwack      = "sound/weapon_hit" EXTENSION;
+const char *kSoundEffect_Bite       = "sound/animal_bite" EXTENSION;
 const char *kSoundEffect_Swipe       = "sound/animal_swipe" EXTENSION;
 const char *kSoundEffect_HD1         = "sound/humanoid_death_01" EXTENSION;
 const char *kSoundEffect_HD2         = "sound/humanoid_death_02" EXTENSION;
@@ -33,6 +34,11 @@ const char *kSoundEffect_AD2         = "sound/animal_death_02" EXTENSION;
 const char *kSoundEffect_UISelect      = "sound/ui_select" EXTENSION;
 const char *kSoundEffect_UISelectMinor = "sound/ui_select_minor" EXTENSION;
 const char *kSoundEffect_UIBack        = "sound/ui_back" EXTENSION;
+
+const char *kSoundEffect_SPhase      = "sound/spell_phase" EXTENSION;
+const char *kSoundEffect_SUnphase    = "sound/spell_unphase" EXTENSION;
+const char *kSoundEffect_SRainbow    = "sound/spell_rainbow" EXTENSION;
+const char *kSoundEffect_SHeal       = "sound/spell_heal" EXTENSION;
 
 SoundManager *SoundManager::instance = nullptr;
 
@@ -69,6 +75,11 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_HD4);
 	game.push_back(kSoundEffect_AD1);
 	game.push_back(kSoundEffect_AD2);
+	
+	game.push_back(kSoundEffect_SPhase);
+	game.push_back(kSoundEffect_SUnphase);
+	game.push_back(kSoundEffect_SRainbow);
+	game.push_back(kSoundEffect_SHeal);
 
 	// use unloadEffect to ensure we don't keep them all in memory always
 }

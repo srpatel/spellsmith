@@ -907,7 +907,7 @@ void Game::enemyDoTurn() {
 									if (e->type == Humanoid) {
 										PLAY_SOUND(kSoundEffect_Thwack);
 									} else {
-										PLAY_SOUND(kSoundEffect_Swipe);
+										PLAY_SOUND(kSoundEffect_Bite);
 									}
 									wizard->damageEffect(damage);
 									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);

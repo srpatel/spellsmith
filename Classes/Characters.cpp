@@ -183,14 +183,16 @@ void Character::addBuff(Buff *buff) {
 	}
 	buffs.push_back(buff);
 	if (buff->type == BuffType::PHASING) {
+		PLAY_SOUND(kSoundEffect_SPhase);
 		auto f = Sequence::create(
 			FadeTo::create(0.2f, 125),
 			DelayTime::create(1.0f),
 			CallFunc::create([this]() {
 				// if we still have phasing, do nothing.
-				// otherwise, fade out.
+				// otherwise, fade back in.
 				Buff *existing = getBuffByType(BuffType::PHASING);
 				if (! existing) {
+					PLAY_SOUND(kSoundEffect_SUnphase);
 					auto f = FadeTo::create(0.5f, 255);
 					sprite->runAction(f);
 				}
@@ -255,6 +257,7 @@ void Character::removeBuff(Buff *existing) {
 	if (existing->type == BuffType::PHASING) {
 		auto a = sprite->getActionByTag(BuffType::PHASING);
 		if (! a) {
+			PLAY_SOUND(kSoundEffect_SUnphase);
 			auto f = FadeTo::create(0.5f, 255);
 			f->setTag(BuffType::PHASING);
 			sprite->runAction(f);

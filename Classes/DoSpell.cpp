@@ -8,6 +8,7 @@
 
 #include "DoSpell.hpp"
 #include "Characters.hpp"
+#include "SoundManager.hpp"
 
 #include "Projectiles.hpp"
 
@@ -211,8 +212,10 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		auto delay = DelayTime::create(1.0f/3.0f);
 		auto addanim = CallFunc::create([game, staffOffset]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
-				game->actionDone();
-			}));
+					game->actionDone();
+				})
+			);
+			PLAY_SOUND(kSoundEffect_SHeal);
 			HEAL(5);
 			game->scenery->addChild(heal);
 		});
@@ -228,6 +231,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
 			}));
+			PLAY_SOUND(kSoundEffect_SHeal);
 			HEAL(7);
 			game->scenery->addChild(heal);
 		});
@@ -235,6 +239,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(cleanse) {
 		// Heal for 3 and clear the grid
+		PLAY_SOUND(kSoundEffect_SHeal);
 		HEAL(3);
 		game->grid->scramble(chain);
 	}
@@ -271,6 +276,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(crystalise) {
 		// heal 3, create 3 crystal gems
 		HEAL(3);
+		PLAY_SOUND(kSoundEffect_SRainbow);
 		CRYSTAL(3);
 	}
 	IF_SPELL(zap) {

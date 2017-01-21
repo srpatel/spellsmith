@@ -29,6 +29,7 @@ extern const char
 	*kSoundEffect_UISelectMinor,
 	*kSoundEffect_UIBack,
 	*kSoundEffect_Thwack,
+	*kSoundEffect_Bite,
 	*kSoundEffect_Swipe,
 	*kSoundEffect_PTravel,
 	*kSoundEffect_HD1,
@@ -36,7 +37,11 @@ extern const char
 	*kSoundEffect_HD3,
 	*kSoundEffect_HD4,
 	*kSoundEffect_AD1,
-	*kSoundEffect_AD2;
+	*kSoundEffect_AD2,
+	*kSoundEffect_SPhase,
+	*kSoundEffect_SUnphase,
+	*kSoundEffect_SRainbow,
+	*kSoundEffect_SHeal;
 
 class SoundManager {
 public:

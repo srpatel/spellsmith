@@ -90,6 +90,11 @@ void MonsterManager::init() {
 				m->offsets[it->name.GetString()] = v;
 			}
 		}
+		if (json_monster.HasMember("scale")) {
+			m->scale = json_monster["scale"].GetDouble();
+		} else {
+			m->scale = 1;
+		}
 		
 		m->attack_frequency = json_attack_frequency.GetInt();
 		int total_attack_ratio = 0;
@@ -124,7 +129,7 @@ std::string Monster::getSkeletonName() {
 
 spine::SkeletonAnimation *Monster::makeSkeleton() {
 	auto path = (std::string("spine/") + skeleton.path + ".json");
-	auto boy = spine::SkeletonAnimation::createWithFile(path.c_str(), ImageManager::get()->getAtlas(), 0.25f);
+	auto boy = spine::SkeletonAnimation::createWithFile(path.c_str(), ImageManager::get()->getAtlas(), 0.25f * scale);
 	
 	// Set attachments
 	for (auto it : skeleton.attachments) {
