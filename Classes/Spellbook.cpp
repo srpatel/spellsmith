@@ -86,24 +86,17 @@ bool Spellbook::init() {
 		this->addChild(right_col_sprite);
 	}
 	{
-		auto grad = LoadSprite("ui/orb_bg.png");
-		grad->setAnchorPoint(Vec2(0.5, 0.5));
-		grad->setPosition(20 * ui_scale, 354 * ui_scale);
-		grad->setScale(ui_scale);
-		addChild(grad);
-		
-		auto hp = LoadSprite("ui/orb_red.png");
-		hp->setAnchorPoint(Vec2(0.5, 0));
-		hp->setScale(ui_scale);
-		hp->setPosition(20 * ui_scale, 342 * ui_scale);
-		//hp->setGLProgram(Shaders::smokey());
-		addChild(hp);
-		
 		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
 		sprite->setPosition(Vec2(0, layout.column_height));
 		sprite->setScale(ui_scale);
 		this->addChild(sprite);
+		
+		auto grad = LayerColor::create();
+		grad->initWithColor(Color4B(95, 91, 85, 255));
+		grad->setPosition(Vec2(6, 340) * ui_scale);
+		grad->setContentSize(Size(27, 30) * ui_scale);
+		this->addChild(grad);
 	}
 	// END COPY
 	
