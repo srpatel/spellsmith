@@ -165,7 +165,7 @@ void GameScenery::showFlags(int flagType) {
 				case 2:	sentence = "Dead...for now..."; break;
 				case 3:	sentence = "You will return, with a vengeance!"; break;
 				default:
-				case 4:	sentence = "Why does lightening bolt always roll 1?"; break;
+				case 4:	sentence = "Why does lightning bolt always roll 1?"; break;
 			}
 			littleText->setString( sentence );
 		}

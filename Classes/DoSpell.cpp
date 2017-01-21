@@ -17,7 +17,7 @@
 class AmountGenerator {
 public:
 	inline static int between(int min, int max) {
-		return (std::rand()%(max-min)) + min;
+		return (std::rand()%(max-min+1)) + min;
 	}
 };
 
@@ -245,7 +245,14 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(lightning_bolt) {
 		// deal 1-12
-		PROJ( D_BETWEEN(1, 12), Color3B::YELLOW );
+		int s = rand() % 10;
+		int jeanVan;
+		if (s >= 3) {
+			jeanVan = D_BETWEEN(9, 12);
+		} else {
+			jeanVan = D_BETWEEN(1, 4);
+		}
+		PROJ( jeanVan, Color3B::YELLOW );
 	}
 	IF_SPELL(chill) {
 		// slow enemy by 2 turns
