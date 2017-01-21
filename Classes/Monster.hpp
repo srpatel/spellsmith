@@ -48,6 +48,7 @@ public:
 	std::string getName();
 	std::map<std::string, Vec2> offsets;
 	int hp;
+	std::string getSkeletonName();
 	int attack_frequency;
 	Attack *getAttack();
 	Attack *getAttackFallback(Attack *a);

@@ -7,6 +7,7 @@
 //
 
 #include "Characters.hpp"
+#include "SoundManager.hpp"
 #include "GameScene.hpp"
 
 
@@ -317,6 +318,17 @@ void Character::tickBuffs() {
 	toDelete.clear();
 }
 
+float Character::die() {
+	spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) sprite;
+	spTrackEntry *e = skeleton->addAnimation(0, "die", false);
+	if (type == Humanoid) {
+		SoundManager::get()->humanoidDeath();
+	} else {
+		SoundManager::get()->animalDeath();
+	}
+	return e->endTime;
+}
+
 Enemy::Enemy(Monster *m, int index) {
 	this->index = index;
 	monster = m;
@@ -330,6 +342,10 @@ Enemy::Enemy(Monster *m, int index) {
 	ui_health = max_health;
 	is_skeleton = true;
 	sprite = monster->makeSkeleton();
+	type = Humanoid;
+	if (monster->getSkeletonName() == "dog") {
+		type = Animal;
+	}
 	projectile_height = sprite->getContentSize().height / 2.0;
 	sprite->retain();
 	buffHolder = Layer::create();
@@ -347,6 +363,7 @@ std::map<std::string, Vec2> Enemy::getOffsets() {
 Wizard::Wizard() {
 	offsets["proj_from"] = Vec2(90, 0);
 	offsets["proj_to"] = Vec2(-30, 0);
+	type = Humanoid;
 }
 std::map<std::string, Vec2> Wizard::getOffsets() {
 	return offsets;

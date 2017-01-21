@@ -46,11 +46,17 @@ struct Buff {
 
 bool BuffComparator (Buff *left, Buff *right);
 
+enum CharacterType {
+	Humanoid = 0,
+	Animal
+};
+
 class Character {
 public:
 	int max_health;
 	int health;
 	int ui_health;
+	CharacterType type;
 	bool is_skeleton = false;
 	float projectile_height;
 	Node *sprite;
@@ -65,6 +71,7 @@ public:
 	Layer *buffHolder;
 	void flash(Color3B c);
 	void heal(int amt);
+	float die();
 	void damageEffect(int damage);
 	virtual std::map<std::string, Vec2> getOffsets() = 0;
 };

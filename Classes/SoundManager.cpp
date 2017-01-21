@@ -21,8 +21,13 @@ const char *kSoundEffect_PHWater     = "sound/projectile_hit_water" EXTENSION;
 const char *kSoundEffect_PHEarth     = "sound/projectile_hit_earth" EXTENSION;
 const char *kSoundEffect_PHFire      = "sound/projectile_hit_fire" EXTENSION;
 const char *kSoundEffect_PTravel     = "sound/projectile_travel" EXTENSION;
-
 const char *kSoundEffect_Thwack      = "sound/weapon_hit" EXTENSION;
+const char *kSoundEffect_HD1         = "sound/humanoid_death_01" EXTENSION;
+const char *kSoundEffect_HD2         = "sound/humanoid_death_02" EXTENSION;
+const char *kSoundEffect_HD3         = "sound/humanoid_death_03" EXTENSION;
+const char *kSoundEffect_HD4         = "sound/humanoid_death_04" EXTENSION;
+const char *kSoundEffect_AD1         = "sound/animal_death_01" EXTENSION;
+const char *kSoundEffect_AD2         = "sound/animal_death_02" EXTENSION;
 
 const char *kSoundEffect_UISelect      = "sound/ui_select" EXTENSION;
 const char *kSoundEffect_UISelectMinor = "sound/ui_select_minor" EXTENSION;
@@ -57,6 +62,12 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_Fizzle);
 	game.push_back(kSoundEffect_Cast);
 	game.push_back(kSoundEffect_Thwack);
+	game.push_back(kSoundEffect_HD1);
+	game.push_back(kSoundEffect_HD2);
+	game.push_back(kSoundEffect_HD3);
+	game.push_back(kSoundEffect_HD4);
+	game.push_back(kSoundEffect_AD1);
+	game.push_back(kSoundEffect_AD2);
 
 	// use unloadEffect to ensure we don't keep them all in memory always
 }
@@ -77,6 +88,30 @@ void SoundManager::loader_game(bool in) {
 			instance->preloadEffect(s);
 		else
 			instance->unloadEffect(s);
+	}
+}
+
+void SoundManager::humanoidDeath() {
+	// randomly pick one of them!
+	int x = rand() % 4;
+	if (x == 0) {
+		PLAY_SOUND(kSoundEffect_HD1);
+	} else if (x == 1) {
+		PLAY_SOUND(kSoundEffect_HD2);
+	} else if (x == 2) {
+		PLAY_SOUND(kSoundEffect_HD3);
+	} else {
+		PLAY_SOUND(kSoundEffect_HD4);
+	}
+}
+
+void SoundManager::animalDeath() {
+	// randomly pick one of them!
+	int x = rand() % 2;
+	if (x == 0) {
+		PLAY_SOUND(kSoundEffect_AD1);
+	} else {
+		PLAY_SOUND(kSoundEffect_AD2);
 	}
 }
 

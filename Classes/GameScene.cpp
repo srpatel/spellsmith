@@ -571,9 +571,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			if (target->ui_health <= 0 && target != wizard) {
 				if (skeleton) {
 					actionQueued();
-					spTrackEntry *e = skeleton->addAnimation(0, "die", false);
+					auto endTime = target->die();
 					// Add a second to look at the dead body
-					auto delay = DelayTime::create(e->endTime + 0.2f);
+					auto delay = DelayTime::create(endTime + 0.2f);
 					auto run = CallFunc::create([this](){
 						actionDone();
 					});
@@ -611,6 +611,14 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
 				type == Color3B::GREEN ? "spell_aura" : "spell_projectile",
 				false);
+			// Spell aura also has a sound effect for the bash
+			/*if (type == Color3B::GREEN) {
+				auto delay = DelayTime::create(0.5667);
+				auto run = CallFunc::create([this](){
+					PLAY_SOUND(kSoundEffect_UISelect);
+				});
+				runAction(Sequence::create(delay, run, nullptr));
+			}*/
 			auto delay = DelayTime::create(e->endTime);
 			auto run = CallFunc::create([this](){
 				actionDone();

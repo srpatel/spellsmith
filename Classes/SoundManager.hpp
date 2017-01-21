@@ -29,7 +29,13 @@ extern const char
 	*kSoundEffect_UISelectMinor,
 	*kSoundEffect_UIBack,
 	*kSoundEffect_Thwack,
-	*kSoundEffect_PTravel;
+	*kSoundEffect_PTravel,
+	*kSoundEffect_HD1,
+	*kSoundEffect_HD2,
+	*kSoundEffect_HD3,
+	*kSoundEffect_HD4,
+	*kSoundEffect_AD1,
+	*kSoundEffect_AD2;
 
 class SoundManager {
 public:
@@ -40,6 +46,8 @@ public:
 	void stopHum();
 	void startPTravel();
 	void stopPTravel();
+	void humanoidDeath();
+	void animalDeath();
 	
 	void loader_game(bool in);
 private:

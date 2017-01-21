@@ -118,6 +118,10 @@ void MonsterManager::init() {
 	}
 }
 
+std::string Monster::getSkeletonName() {
+	return skeleton.path;
+}
+
 spine::SkeletonAnimation *Monster::makeSkeleton() {
 	auto path = (std::string("spine/") + skeleton.path + ".json");
 	auto boy = spine::SkeletonAnimation::createWithFile(path.c_str(), ImageManager::get()->getAtlas(), 0.25f);
