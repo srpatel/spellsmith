@@ -18,6 +18,7 @@ public:
 	static const int FLAG_TYPE_LOSE = 2;
 	virtual bool init(Size size);
 	virtual ~GameScenery();
+	void hideObjects();
 	void placeMonsters(std::vector<Enemy *> *);
 	void setSelected(int);
 	void setRedRingVisibility(bool visible);

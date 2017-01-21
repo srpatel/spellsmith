@@ -120,6 +120,10 @@ bool BasicProjectile::init(
 							}),
 							nullptr
 						));
+						// Play sound effect
+						if (sound) {
+							SoundManager::get()->playEffect(sound);
+						}
 					}),
 					nullptr
 				));

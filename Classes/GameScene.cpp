@@ -323,7 +323,8 @@ bool Game::init() {
 	onOptionsClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		
-		if (bounds.containsPoint(touch->getLocation())){
+		if (bounds.containsPoint(touch->getLocation())) {
+			PLAY_SOUND(kSoundEffect_UISelectMinor);
 			GameController::get()->showOptionsDialog();
 			return true;
 		}
@@ -370,6 +371,7 @@ void Game::updateInventory() {
 				bounds.origin -= bounds.size/2;
 				
 				if (bounds.containsPoint(touch->getLocation())){
+					PLAY_SOUND(kSoundEffect_UISelectMinor);
 					GameController::get()->showSpellInfoDialog(wizard->inventory[i]);
 					return true;
 				}
@@ -493,7 +495,7 @@ bool Game::onCastSpell(Chain *chain) {
 	if (success) {
 		// We can't draw until the enemy has had his turn
 		state = kStatePlayerSpells;
-		SoundManager::get()->playEffect( kSoundEffect_CastSpell );
+		PLAY_SOUND( kSoundEffect_Cast );
 		
 		if (spell) {
 			// cast a spell!
@@ -524,7 +526,7 @@ bool Game::onCastSpell(Chain *chain) {
 		
 		onWizardTurnOver();
 	} else {
-		SoundManager::get()->playEffect( kSoundEffect_Fizzle );
+		PLAY_SOUND( kSoundEffect_Fizzle );
 	}
 	return success;
 }
@@ -550,6 +552,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	
 	// if there's a shield, then stop early!
 	Buff *shield = target->getBuffByType(BuffType::BARRIER);
+	bool phase = target->getBuffByType(BuffType::PHASING) != nullptr;
 	CallFunc *onHit;
 	if (shield) {
 		bool lastcharge = false;
@@ -584,25 +587,39 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 			target->removeBuff(shield);
 		}
 	} else {
-		target->health -= damage;
-		onHit = CallFunc::create([this, damage, target, onhitfunc](){
-			if (onhitfunc) onhitfunc();
+		// TODO -- if phasing, don't take damage! And the projectile goes past?
+		if (! phase) {
+			target->health -= damage;
+		}
+		onHit = CallFunc::create([this, damage, target, onhitfunc, phase](){
+			if (onhitfunc) {
+				onhitfunc();
+			}
 			spine::SkeletonAnimation *skeleton = nullptr;
 			if (target->is_skeleton) {
 				skeleton = (spine::SkeletonAnimation *) target->sprite;
 			}
-			target->damageEffect(damage);
-			if (target->ui_health <= 0 && target != wizard) {
-				if (skeleton) {
-					skeleton->addAnimation(0, "die", false);
-				} else {
-					target->sprite->removeFromParent();
+			if (! phase) {
+				target->damageEffect(damage);
+				if (target->ui_health <= 0 && target != wizard) {
+					if (skeleton) {
+						actionQueued();
+						spTrackEntry *e = skeleton->addAnimation(0, "die", false);
+						// Add a second to look at the dead body
+						auto delay = DelayTime::create(e->endTime + 0.2f);
+						auto run = CallFunc::create([this](){
+							actionDone();
+						});
+						runAction(Sequence::create(delay, run, nullptr));
+					} else {
+						target->sprite->removeFromParent();
+					}
+				} else if (skeleton) {
+					// Run the "hit" animation!
+					skeleton->addAnimation(0, "hit", false);
 				}
-			} else if (skeleton) {
-				// Run the "hit" animation!
-				skeleton->addAnimation(0, "hit", false);
+				updateHealthBars();
 			}
-			updateHealthBars();
 			actionDone();
 		});
 	}
@@ -690,8 +707,10 @@ void Game::attemptSetState(GameState nextstate) {
 				success = false;
 			}
 			if (success) {
+				PLAY_SOUND( kSoundEffect_LevelWin );
 				scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
 			} else {
+				PLAY_SOUND( kSoundEffect_LevelLose );
 				scenery->showFlags(GameScenery::FLAG_TYPE_LOSE);
 			}
 			std::function<void()> func;
@@ -762,6 +781,7 @@ void Game::attemptSetState(GameState nextstate) {
 				}
 			}
 		};
+		// Delay for a bit, and then do this
 		runPendingAction(action);
 	}
 }
@@ -909,6 +929,7 @@ void Game::enemyDoTurn() {
 							}
 							auto dealDamage = CallFunc::create([this, damage, phase](){
 								if (! phase) {
+									PLAY_SOUND(kSoundEffect_Thwack);
 									wizard->damageEffect(damage);
 									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
 									updateHealthBars();

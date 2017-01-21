@@ -9,11 +9,13 @@
 #ifndef BasicFire_hpp
 #define BasicFire_hpp
 
-#define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset) \
+#include "SoundManager.hpp"
+
+#define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset, _sound) \
 class _classname : public BasicProjectile { \
 public: \
 	_classname() \
-		: BasicProjectile(#_name, _shoot, _travel, _hit, _offset) {} \
+		: BasicProjectile(#_name, _shoot, _travel, _hit, _offset, _sound) {} \
 	inline bool init(Vec2 from, Vec2 to, float scale, CallFunc* onHit){\
 		return BasicProjectile::init(from, to, scale, onHit);\
 	}\
@@ -33,8 +35,8 @@ public: \
 
 class BasicProjectile : public Layer {
 public:
-	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit, Vec2 offset) :
-		path(path), numShoot(numShoot), numTravel(numTravel), numHit(numHit), offset(offset){}
+	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit, Vec2 offset, const char *sound) :
+		path(path), numShoot(numShoot), numTravel(numTravel), numHit(numHit), offset(offset), sound(sound){}
 	bool init(
 		Vec2 from,
 		Vec2 to,
@@ -43,6 +45,7 @@ public:
 protected:
 	Vec2 offset;
 	const char *path;
+	const char *sound;
 	int numShoot;
 	int numTravel;
 	int numHit;
@@ -62,10 +65,10 @@ protected:
 };
 
 // TODO: Resize everything to be 150x150, positioning as needed.
-PROJECTILE(BasicFire, fireball,   /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 5));
-PROJECTILE(BasicWind, windball,   /*shoot*/ 13, /*travel*/ 4, /*hit*/  9, /*offset*/ Vec2(20, 0));
-PROJECTILE(BasicEarth, earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*offset*/ Vec2( 0, 0));
-PROJECTILE(BasicWater, waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0));
+PROJECTILE(BasicFire, fireball,   /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 5), kSoundEffect_PHFire);
+PROJECTILE(BasicWind, windball,   /*shoot*/ 13, /*travel*/ 4, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHAir);
+PROJECTILE(BasicEarth, earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*offset*/ Vec2( 0, 0), kSoundEffect_PHEarth);
+PROJECTILE(BasicWater, waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0), kSoundEffect_PHWater);
 
 ANIM(AnimHeal, heal, 11);
 

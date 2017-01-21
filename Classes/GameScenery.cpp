@@ -87,6 +87,11 @@ bool GameScenery::init(Size size) {
 	return true;
 }
 
+void GameScenery::hideObjects() {
+	redring->setVisible(false);
+	wizardsprite->setVisible(false);
+}
+
 void GameScenery::showFlags(int flagType) {
 	greyscaleMode(flagType != FLAG_TYPE_NONE);
 	if (flagType == FLAG_TYPE_NONE) {

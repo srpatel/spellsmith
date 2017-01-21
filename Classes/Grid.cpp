@@ -393,6 +393,7 @@ void Grid::createRandomCrystalGems(int amount, Chain *chain) {
 }
 
 void Grid::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
+	SoundManager::get()->stopHum();
 	if (currentTouch && currentTouch->getID() == touch->getID()) {
 		// check we are on the last gem
 		cocos2d::Vec2 loc = touch->getLocation();
@@ -622,6 +623,7 @@ bool Grid::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
         int row = (int) ((loc.y - bottom)/sheight);
 		
 		SoundManager::get()->playEffect(kSoundEffect_SelectGem);
+		SoundManager::get()->startHum();
 		currentTouch = touch;
 		chain = new Chain;
 		chain->next = nullptr;
