@@ -550,80 +550,45 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		to.y += o.y * scenery->char_scale * flip;
 	}
 	
-	// if there's a shield, then stop early!
-	Buff *shield = target->getBuffByType(BuffType::BARRIER);
 	bool phase = target->getBuffByType(BuffType::PHASING) != nullptr;
 	CallFunc *onHit;
-	if (shield) {
-		bool lastcharge = false;
-		if (shield->charges > 0) {
-			// Remove a charge
-			shield->charges--;
-			if (shield->charges == 0) {
-				// Animate the shield's sprite away.
-				lastcharge = true;
-			}
-		}
-		// Don't take away any health, and just animate to the shield instead!
-		//  ... and if it's the shield's last charge, fade it out too.
-		to = Vec2(shield->sprite->getPosition().x, getContentSize().height - 100);
-		Sprite *shieldsprite = shield->sprite;
-		onHit = CallFunc::create([this, lastcharge, shieldsprite, onhitfunc](){
-			if (lastcharge) {
-				// fade the shield out, then remove it.
-				auto fadeout = FadeOut::create(0.2);
-				auto func = CallFunc::create([this, shieldsprite](){
-					removeChild(shieldsprite);
-				});
-				auto seq = Sequence::create(fadeout, func, nullptr);
-				shieldsprite->runAction(seq);
-			}
-			if (onhitfunc) onhitfunc();
-			actionDone();
-		});
-		
-		// Remove the buff from the character
-		if (lastcharge) {
-			target->removeBuff(shield);
-		}
-	} else {
-		// TODO -- if phasing, don't take damage! And the projectile goes past?
-		if (! phase) {
-			target->health -= damage;
-		}
-		onHit = CallFunc::create([this, damage, target, onhitfunc, phase](){
-			SoundManager::get()->stopPTravel();
-			if (onhitfunc) {
-				onhitfunc();
-			}
-			spine::SkeletonAnimation *skeleton = nullptr;
-			if (target->is_skeleton) {
-				skeleton = (spine::SkeletonAnimation *) target->sprite;
-			}
-			if (! phase) {
-				target->damageEffect(damage);
-				if (target->ui_health <= 0 && target != wizard) {
-					if (skeleton) {
-						actionQueued();
-						spTrackEntry *e = skeleton->addAnimation(0, "die", false);
-						// Add a second to look at the dead body
-						auto delay = DelayTime::create(e->endTime + 0.2f);
-						auto run = CallFunc::create([this](){
-							actionDone();
-						});
-						runAction(Sequence::create(delay, run, nullptr));
-					} else {
-						target->sprite->removeFromParent();
-					}
-				} else if (skeleton) {
-					// Run the "hit" animation!
-					skeleton->addAnimation(0, "hit", false);
-				}
-				updateHealthBars();
-			}
-			actionDone();
-		});
+	
+	// TODO -- if phasing, don't take damage! And the projectile goes past?
+	if (! phase) {
+		target->health -= damage;
 	}
+	onHit = CallFunc::create([this, damage, target, onhitfunc, phase](){
+		SoundManager::get()->stopPTravel();
+		if (onhitfunc) {
+			onhitfunc();
+		}
+		spine::SkeletonAnimation *skeleton = nullptr;
+		if (target->is_skeleton) {
+			skeleton = (spine::SkeletonAnimation *) target->sprite;
+		}
+		if (! phase) {
+			target->damageEffect(damage);
+			if (target->ui_health <= 0 && target != wizard) {
+				if (skeleton) {
+					actionQueued();
+					spTrackEntry *e = skeleton->addAnimation(0, "die", false);
+					// Add a second to look at the dead body
+					auto delay = DelayTime::create(e->endTime + 0.2f);
+					auto run = CallFunc::create([this](){
+						actionDone();
+					});
+					runAction(Sequence::create(delay, run, nullptr));
+				} else {
+					target->sprite->removeFromParent();
+				}
+			} else if (skeleton) {
+				// Run the "hit" animation!
+				skeleton->addAnimation(0, "hit", false);
+			}
+			updateHealthBars();
+		}
+		actionDone();
+	});
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;

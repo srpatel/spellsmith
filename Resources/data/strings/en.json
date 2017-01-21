@@ -1,10 +1,6 @@
 {
   "spell": {
     "_comment": "Names of spells which can be cast",
-    "mud_shield": {
-      "name": "Mud Shield",
-      "description": "Block 2 attacks."
-    },
     "fireball": {
       "name": "Fireball",
       "description": "Deal 10 damage."

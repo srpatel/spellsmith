@@ -1,16 +1,5 @@
 [
   {
-    "name": "mud_shield",
-    "tier": 99,
-    "shape": [
-      "     ",
-      " E   ",
-      "EWE  ",
-      "EWE  ",
-      " E   "
-    ]
-  },
-  {
     "name": "fireball",
     "tier": 2,
     "shape": [
