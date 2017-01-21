@@ -12,6 +12,7 @@
 #include "Constants.h"
 #include "GameScene.hpp"
 #include "GameController.hpp"
+#include "SoundManager.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -168,6 +169,7 @@ bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 		);
 		if (! captureTouch || ! bounds.containsPoint(touch->getLocation())) {
 			auto gc = GameController::get();
+			SoundManager::get()->playEffect(kSoundEffect_UIBack);
 			gc->popDialog();
 		}
 	}

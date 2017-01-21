@@ -123,7 +123,6 @@
 		1070E0B21BF54FCE007C06F9 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */; };
 		107B33BC1E22678D00F2EBDD /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33BA1E22678D00F2EBDD /* SoundManager.cpp */; };
 		107B33BD1E22678D00F2EBDD /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33BA1E22678D00F2EBDD /* SoundManager.cpp */; };
-		107B33BF1E226C4500F2EBDD /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 107B33BE1E226C4500F2EBDD /* sound */; };
 		107B33C21E22C7FE00F2EBDD /* TextWisp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */; };
 		107B33C31E22C7FE00F2EBDD /* TextWisp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */; };
 		107B33C61E25967100F2EBDD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 107B33C51E25967100F2EBDD /* Images.xcassets */; };
@@ -355,7 +354,6 @@
 		1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MainMenu.hpp; sourceTree = "<group>"; };
 		107B33BA1E22678D00F2EBDD /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
 		107B33BB1E22678D00F2EBDD /* SoundManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundManager.hpp; sourceTree = "<group>"; };
-		107B33BE1E226C4500F2EBDD /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sound; path = ../Resources/sound; sourceTree = "<group>"; };
 		107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextWisp.cpp; sourceTree = "<group>"; };
 		107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextWisp.hpp; sourceTree = "<group>"; };
 		107B33C51E25967100F2EBDD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Gems-mobile/Images.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -687,7 +685,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				107B33BE1E226C4500F2EBDD /* sound */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -957,7 +954,6 @@
 				105E0D231BF14EB10081D8F5 /* data in Resources */,
 				10DC05031BF90E80003BA69E /* pointlight.frag in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
-				107B33BF1E226C4500F2EBDD /* sound in Resources */,
 				10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
