@@ -193,15 +193,10 @@ bool PostLevelDialog::init(RoundDef *r) {
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);
 	
-	auto label2 = Label::createWithTTF( "Tap for info.", Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
-	label2->setColor(Color3B::WHITE);
-	label2->setPosition(Vec2(0, -50));
-	addChild(label2, 1);
-	
 	// Add spell blobs
 	int numRewards = r->rewards.size();
 	float dx = (getContentSize().width/2) - 10;
-	float startX = (dx * (numRewards - 1)) / 2.0f;
+	float startX = - (dx * (numRewards - 1)) / 2.0f;
 	for (std::string spellname : r->rewards) {
 		Spell *s = SpellManager::get()->getByName(spellname);
 		auto sb = SpellBlob::create(s, false);
