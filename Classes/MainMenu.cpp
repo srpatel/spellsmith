@@ -48,7 +48,7 @@ bool MainMenu::init() {
 		button->setTitleText _("ui.PLAY");
 		button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
-				SoundManager::get()->playEffect( kSoundEffect_Click );
+				SoundManager::get()->playEffect( kSoundEffect_UISelect );
 				// Go to map screen
 				GameController::get()->setState(kStateMap);
 			}
