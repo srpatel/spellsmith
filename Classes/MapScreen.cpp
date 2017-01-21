@@ -13,6 +13,7 @@
 #include "Constants.h"
 #include "GameController.hpp"
 #include "SaveData.hpp"
+#include "SoundManager.hpp"
 
 bool MapScreen::init() {
 	if ( !Layer::init() ) {
@@ -32,6 +33,7 @@ bool MapScreen::init() {
 	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			// For now, from scratch always!
+			PLAY_SOUND( kSoundEffect_UISelect );
 			GameController::get()->startArena();
 		}
 	});
@@ -74,6 +76,7 @@ void MapScreen::refreshNodes() {
 			auto bounds = event->getCurrentTarget()->getBoundingBox();
 			
 			if (bounds.containsPoint(touch->getLocation())){
+				PLAY_SOUND( kSoundEffect_UISelect );
 				GameController::get()->showPreLevelDialog(r);
 				return true;
 			}

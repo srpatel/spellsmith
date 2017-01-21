@@ -28,7 +28,8 @@ extern const char
 	*kSoundEffect_UISelect,
 	*kSoundEffect_UISelectMinor,
 	*kSoundEffect_UIBack,
-	*kSoundEffect_Thwack;
+	*kSoundEffect_Thwack,
+	*kSoundEffect_PTravel;
 
 class SoundManager {
 public:
@@ -37,11 +38,14 @@ public:
 	void playEffect( const char *path );
 	void startHum();
 	void stopHum();
+	void startPTravel();
+	void stopPTravel();
 	
 	void loader_game(bool in);
 private:
 	static SoundManager *instance;
 	unsigned int sound_hum = -1;
+	unsigned int sound_ptravel = -1;
 	std::vector<const char *> game;
 };
 

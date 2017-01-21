@@ -148,6 +148,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	button->setTitleText _("ui.PLAY");
 	button->addTouchEventListener([round](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
+			PLAY_SOUND( kSoundEffect_UISelect );
 			GameController::get()->startRound(round);
 		}
 	});
@@ -169,7 +170,7 @@ bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 		);
 		if (! captureTouch || ! bounds.containsPoint(touch->getLocation())) {
 			auto gc = GameController::get();
-			SoundManager::get()->playEffect(kSoundEffect_UIBack);
+			PLAY_SOUND(kSoundEffect_UIBack);
 			gc->popDialog();
 		}
 	}

@@ -20,6 +20,7 @@ const char *kSoundEffect_PHAir       = "sound/projectile_hit_air" EXTENSION;
 const char *kSoundEffect_PHWater     = "sound/projectile_hit_water" EXTENSION;
 const char *kSoundEffect_PHEarth     = "sound/projectile_hit_earth" EXTENSION;
 const char *kSoundEffect_PHFire      = "sound/projectile_hit_fire" EXTENSION;
+const char *kSoundEffect_PTravel     = "sound/projectile_travel" EXTENSION;
 
 const char *kSoundEffect_Thwack      = "sound/weapon_hit" EXTENSION;
 
@@ -49,6 +50,7 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_PHWater);
 	game.push_back(kSoundEffect_PHEarth);
 	game.push_back(kSoundEffect_PHFire);
+	game.push_back(kSoundEffect_PTravel);
 	game.push_back(kSoundEffect_SelectGem);
 	game.push_back(kSoundEffect_DeselectGem);
 	game.push_back(kSoundEffect_Hum);
@@ -89,4 +91,17 @@ void SoundManager::stopHum() {
 	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
 	if (sound_hum > 0)
 		instance->stopEffect(sound_hum);
+}
+
+void SoundManager::startPTravel() {
+	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
+	if (sound_ptravel > 0)
+		instance->stopEffect(sound_ptravel);
+	sound_ptravel = instance->playEffect(kSoundEffect_PTravel, true);
+}
+
+void SoundManager::stopPTravel() {
+	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
+	if (sound_ptravel > 0)
+		instance->stopEffect(sound_ptravel);
 }

@@ -63,6 +63,7 @@ bool NavigationBar::init() {
 			Vec2 p = touch->getLocation();
 			Rect rect = n->getBoundingBox();
 			if(rect.containsPoint(p)) {
+				PLAY_SOUND( kSoundEffect_UISelect );
 				GameController::get()->setState(b.state);
 				return true;
 			}
