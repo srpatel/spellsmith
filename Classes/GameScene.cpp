@@ -902,9 +902,13 @@ void Game::enemyDoTurn() {
 							if (! phase) {
 								wizard->health -= damage;
 							}
-							auto dealDamage = CallFunc::create([this, damage, phase](){
+							auto dealDamage = CallFunc::create([this, e, damage, phase](){
 								if (! phase) {
-									PLAY_SOUND(kSoundEffect_Thwack);
+									if (e->type == Humanoid) {
+										PLAY_SOUND(kSoundEffect_Thwack);
+									} else {
+										PLAY_SOUND(kSoundEffect_Swipe);
+									}
 									wizard->damageEffect(damage);
 									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
 									updateHealthBars();

@@ -29,6 +29,7 @@ extern const char
 	*kSoundEffect_UISelectMinor,
 	*kSoundEffect_UIBack,
 	*kSoundEffect_Thwack,
+	*kSoundEffect_Swipe,
 	*kSoundEffect_PTravel,
 	*kSoundEffect_HD1,
 	*kSoundEffect_HD2,

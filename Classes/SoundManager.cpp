@@ -22,6 +22,7 @@ const char *kSoundEffect_PHEarth     = "sound/projectile_hit_earth" EXTENSION;
 const char *kSoundEffect_PHFire      = "sound/projectile_hit_fire" EXTENSION;
 const char *kSoundEffect_PTravel     = "sound/projectile_travel" EXTENSION;
 const char *kSoundEffect_Thwack      = "sound/weapon_hit" EXTENSION;
+const char *kSoundEffect_Swipe       = "sound/animal_swipe" EXTENSION;
 const char *kSoundEffect_HD1         = "sound/humanoid_death_01" EXTENSION;
 const char *kSoundEffect_HD2         = "sound/humanoid_death_02" EXTENSION;
 const char *kSoundEffect_HD3         = "sound/humanoid_death_03" EXTENSION;
