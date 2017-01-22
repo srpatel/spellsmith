@@ -985,10 +985,10 @@ void Game::enemyDoTurn() {
 void Game::gotoNextEnemy() {
 	// Clear buffs, fully heal, and clear the grid
 	wizard->clearBuffs();
-	/*wizard->ui_health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
 	wizard->health = wizard->max_health;
 	updateHealthBars();
-	grid->scramble();*/
+	/*grid->scramble();*/
 	
 	// we are in charge of free'ing round.
 	RoundDef *round = LevelManager::get()->generateRound(stage);
