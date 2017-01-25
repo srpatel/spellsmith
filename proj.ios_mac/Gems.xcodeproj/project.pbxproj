@@ -115,6 +115,8 @@
 		105E0D1A1BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */; };
 		105E0D221BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		105E0D231BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
+		1064AE041E3890C0006A567B /* SpellBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1064AE021E3890C0006A567B /* SpellBlob.cpp */; };
+		1064AE051E3890C0006A567B /* SpellBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1064AE021E3890C0006A567B /* SpellBlob.cpp */; };
 		1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
 		1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
 		1070E0AD1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
@@ -346,6 +348,8 @@
 		105E0D081BF14E3F0081D8F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		105E0D211BF14EB10081D8F5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		105E0D271BF14F910081D8F5 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
+		1064AE021E3890C0006A567B /* SpellBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellBlob.cpp; sourceTree = "<group>"; };
+		1064AE031E3890C0006A567B /* SpellBlob.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpellBlob.hpp; sourceTree = "<group>"; };
 		1070AEF41CC56BB5009DA840 /* GameScenery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScenery.cpp; sourceTree = "<group>"; };
 		1070AEF51CC56BB5009DA840 /* GameScenery.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScenery.hpp; sourceTree = "<group>"; };
 		1070E0AB1BF5188E007C06F9 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
@@ -555,6 +559,8 @@
 				10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */,
 				1095273B1D3BC843002EF8CC /* Popup.cpp */,
 				1095273C1D3BC843002EF8CC /* Popup.hpp */,
+				1064AE021E3890C0006A567B /* SpellBlob.cpp */,
+				1064AE031E3890C0006A567B /* SpellBlob.hpp */,
 				10FC73751E2F58870096BF0E /* Spellbook.cpp */,
 				10FC73761E2F58870096BF0E /* Spellbook.hpp */,
 				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
@@ -1062,6 +1068,7 @@
 				10FC736E1E2D79BB0096BF0E /* MapScreen.cpp in Sources */,
 				102993481D62429000D1492E /* BoundingBoxAttachment.c in Sources */,
 				1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */,
+				1064AE041E3890C0006A567B /* SpellBlob.cpp in Sources */,
 				102993701D62429000D1492E /* Skin.c in Sources */,
 				102993781D62429000D1492E /* TransformConstraint.c in Sources */,
 				102993361D62429000D1492E /* AnimationState.c in Sources */,
@@ -1120,6 +1127,7 @@
 				102993591D62429000D1492E /* MeshAttachment.c in Sources */,
 				1029933B1D62429000D1492E /* Atlas.c in Sources */,
 				100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */,
+				1064AE051E3890C0006A567B /* SpellBlob.cpp in Sources */,
 				1029934B1D62429000D1492E /* Cocos2dAttachmentLoader.cpp in Sources */,
 				1029937D1D62429000D1492E /* VertexAttachment.c in Sources */,
 				107B33C31E22C7FE00F2EBDD /* TextWisp.cpp in Sources */,

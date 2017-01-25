@@ -8,6 +8,7 @@
 
 #include "Spellbook.hpp"
 #include "Spell.hpp"
+#include "SpellBlob.hpp"
 #include "NavigationBar.hpp"
 #include "GameScene.hpp"
 #include "SaveData.hpp"
@@ -62,7 +63,7 @@ bool Spellbook::init() {
 		
 		spell_holder = Layer::create();
 		spell_holder->setPosition(layout.column_width, NavigationBar::HEIGHT);
-		addChild(spell_holder);
+		addChild(spell_holder, 1);
 	}
 	// Bar top
 	{
@@ -119,26 +120,18 @@ void Spellbook::refreshSpells() {
 	float dy = 65;
 	float dx = (getBoundingBox().size.width - 2 * layout.column_width) / numberPerRow;
 	for (std::string spellname : SaveData::getSpells()) {
-		printf("Adding spell %s\n", spellname.c_str());
 		Spell *spell = SpellManager::get()->getByName(spellname);
-		Layer *node = spell->makeNode(true);
 		
 		float currentX = dx * (i % numberPerRow) + dx/2.0;
 		float currentY = startY - dy * (int) (i / numberPerRow) - dy/2.0;
 		
-		node->setPosition(currentX, currentY);
-		spell_holder->addChild(node);
-		
-		auto label = Label::createWithTTF( spell->getName(), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
-		label->setColor(Color3B::WHITE);
-		label->setPosition(Vec2(currentX, currentY - 25.0));
-		spell_holder->addChild(label, 1);
+		auto sb = SpellBlob::create(spell, true);
+		sb->setPosition(currentX, currentY);
+		spell_holder->addChild(sb);
 		
 		// TODO:
-		// - On tap, show spell info.
 		// - Allow scrolling
 		// - Allow drag to column
-		// - Show box background around each spell
 		
 		i++;
 	}
