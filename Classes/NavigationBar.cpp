@@ -29,7 +29,7 @@ bool NavigationBar::init() {
 	}
 	
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	setContentSize(Size(visibleSize.width, 50));
+	setContentSize(Size(visibleSize.width, NavigationBar::HEIGHT));
 	
 	// Background
 	auto grad = LayerColor::create();
