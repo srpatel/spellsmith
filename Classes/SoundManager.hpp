@@ -41,7 +41,8 @@ extern const char
 	*kSoundEffect_SPhase,
 	*kSoundEffect_SUnphase,
 	*kSoundEffect_SRainbow,
-	*kSoundEffect_SHeal;
+	*kSoundEffect_SHeal,
+	*kSoundEffect_SRumble;
 
 class SoundManager {
 public:

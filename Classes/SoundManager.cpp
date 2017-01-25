@@ -39,6 +39,7 @@ const char *kSoundEffect_SPhase      = "sound/spell_phase" EXTENSION;
 const char *kSoundEffect_SUnphase    = "sound/spell_unphase" EXTENSION;
 const char *kSoundEffect_SRainbow    = "sound/spell_rainbow" EXTENSION;
 const char *kSoundEffect_SHeal       = "sound/spell_heal" EXTENSION;
+const char *kSoundEffect_SRumble     = "sound/spell_rumble" EXTENSION;
 
 SoundManager *SoundManager::instance = nullptr;
 
@@ -80,6 +81,7 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_SUnphase);
 	game.push_back(kSoundEffect_SRainbow);
 	game.push_back(kSoundEffect_SHeal);
+	game.push_back(kSoundEffect_SRumble);
 
 	// use unloadEffect to ensure we don't keep them all in memory always
 }

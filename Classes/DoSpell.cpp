@@ -314,6 +314,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(earthquake) {
 		// 5 damage to each enemy. 50% chance to stun.
+		PLAY_SOUND(kSoundEffect_SRumble);
 		for (Enemy *e : game->enemies) {
 			e->ui_health -= D(5);
 			e->health -= D(5);
