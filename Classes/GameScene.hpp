@@ -65,6 +65,8 @@ private:
 	
 	int stage; // the current round in infinite mode, otherwise irrelevant.
 	
+	void setup();
+	
 	void gotoNextEnemy();
 	void showRound(RoundDef *);
 	

@@ -9,13 +9,18 @@
 #ifndef Spellbook_hpp
 #define Spellbook_hpp
 
+#include "SpellBlob.hpp"
+
 class Spellbook : public Layer {
 public:
 	bool init();
 	void refreshSpells();
+	void refreshEquips();
 	CREATE_FUNC(Spellbook);
 private:
-	Layer *spell_holder;
+	Layer *spell_holder, *equipped_holder;
+	std::vector<EventListener *> equipped_listeners;
+	std::vector<SpellBlob *> blobs;
 };
 
 

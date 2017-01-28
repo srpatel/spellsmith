@@ -38,11 +38,28 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	label2->setPosition(Vec2(0, -50));
 	addChild(label2, 1);
 	
-	auto sb1 = SpellBlob::create(s1, true);
+	auto onPickSpell = [this](int invPosition, Spell *selected){
+		Game::get()->getWizard()->inventory[invPosition] = selected;
+		Game::get()->updateInventory();
+		
+		Game::get()->spellPicked();
+		removeFromParent();
+	};
+	
+	auto isBeingUsed = [this](Spell *checkme) -> bool{
+		auto inv = Game::get()->getWizard()->inventory;
+		for (int i = 0; i < 6; i++) {
+			if (inv[i] == checkme)
+				return true;
+		}
+		return false;
+	};
+	
+	auto sb1 = SpellBlob::create(s1, true, onPickSpell, isBeingUsed);
 	sb1->setPosition(5-getContentSize().width/4, -5);
 	addChild(sb1, 2);
 	
-	auto sb2 = SpellBlob::create(s2, true);
+	auto sb2 = SpellBlob::create(s2, true, onPickSpell, isBeingUsed);
 	sb2->setPosition(-5+getContentSize().width/4, -5);
 	addChild(sb2, 2);
 	
@@ -72,7 +89,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	float startX = - (dx * (numRewards - 1)) / 2.0f;
 	for (std::string spellname : r->rewards) {
 		Spell *s = SpellManager::get()->getByName(spellname);
-		auto sb = SpellBlob::create(s, false);
+		auto sb = SpellBlob::create(s, false, nullptr, nullptr);
 		sb->setPosition(startX, -5);
 		startX += dx;
 		addChild(sb);

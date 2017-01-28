@@ -8,6 +8,13 @@
 
 #include "SaveData.hpp"
 
+void SaveData::clear() {
+	// TODO - finish...
+	For(6) {
+		SaveData::setEquippedSpellAt(i, "");
+	}
+}
+
 int SaveData::getArenaScore() {
 	auto score = UserDefault::getInstance()->getIntegerForKey("inf-score", 0);
 	return score;
@@ -27,6 +34,27 @@ int SaveData::isLevelComplete(std::string name) {
 void SaveData::setLevelComplete(std::string name, int moves) {
 	std::string key = std::string("level-moves-") + name;
 	UserDefault::getInstance()->setIntegerForKey(key.c_str(), moves);
+	UserDefault::getInstance()->flush();
+}
+
+std::string SaveData::getEquippedSpellAt(int i) {
+	char key[50];
+	sprintf(key, "spell-equipped-%d", i);
+	return UserDefault::getInstance()->getStringForKey(key, "");
+}
+
+void SaveData::setEquippedSpellAt(int j, std::string name) {
+	// If the spell is already equipped, then unequip it from elsewhere
+	if (!name.empty()) {
+		For (6) {
+			if (name == SaveData::getEquippedSpellAt(i)) {
+				SaveData::setEquippedSpellAt(i, "");
+			}
+		}
+	}
+	char key[50];
+	sprintf(key, "spell-equipped-%d", j);
+	UserDefault::getInstance()->setStringForKey(key, name);
 	UserDefault::getInstance()->flush();
 }
 

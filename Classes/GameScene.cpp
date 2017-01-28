@@ -357,12 +357,15 @@ void Game::updateInventory() {
 	}
 	inventoryListeners.clear();
 
-	// Left hand inventory
 	auto inventory = wizard->inventory;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 6; i++) {
 		if (inventory.size() > i && inventory[i] != nullptr) {
 			auto sprite = inventory[i]->mininode;
-			sprite->setPosition(18 * layout.ui_scale, starty - i * 55 * layout.ui_scale);
+			auto y = starty - (i % 3) * 55 * layout.ui_scale;
+			auto x = (i < 3) ?
+				18 * layout.ui_scale :
+				getBoundingBox().size.width - 18 * layout.ui_scale;
+			sprite->setPosition(x, y);
 			auto onSpellClick = EventListenerTouchOneByOne::create();
 			onSpellClick->setSwallowTouches(true);
 			// trigger when you push down
@@ -378,30 +381,8 @@ void Game::updateInventory() {
 				
 				return false; // if you are consuming it
 			};
-			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
-			inventoryListeners.push_back(onSpellClick);
-			inventoryHolder->addChild(sprite);
-		}
-	}
-	// Right-hand inventory
-	for (int i = 0; i < 3; i++) {
-		if (inventory.size() > 3 + i && inventory[3+i] != nullptr) {
-			auto onSpellClick = EventListenerTouchOneByOne::create();
-			onSpellClick->setSwallowTouches(true);
-			// trigger when you push down
-			onSpellClick->onTouchBegan = [this, i](Touch* touch, Event* event) -> bool {
-				auto bounds = event->getCurrentTarget()->getBoundingBox();
-				bounds.origin -= bounds.size/2;
-				
-				if (bounds.containsPoint(touch->getLocation())){
-					GameController::get()->showSpellInfoDialog(wizard->inventory[3 + i]);
-					return true;
-				}
-				
-				return false; // if you are consuming it
-			};
-			auto sprite = inventory[3 + i]->mininode;
-			sprite->setPosition(getBoundingBox().size.width - 18 * layout.ui_scale, starty - i * 55 * layout.ui_scale);
+			// We need to add this to a list and delete ourselves because the sprite's destructor is never called.
+			// It's the shared mininode instance.
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);
 			inventoryListeners.push_back(onSpellClick);
 			inventoryHolder->addChild(sprite);
@@ -1036,10 +1017,8 @@ void Game::startArena() {
 	// Load a completely fresh level!
 	stage = 0;
 	
-	// reset health
-	wizard->health = wizard->max_health;
-	wizard->ui_health = wizard->max_health;
-	wizard->sprite->setOpacity(255);
+	setup();
+	
 	wizard->inventory.clear();
 	for (int i = 0; i < 6; i++) {
 		wizard->inventory.push_back(nullptr);
@@ -1059,7 +1038,6 @@ void Game::startArena() {
 	// Create a round based on the current stage.
 	gotoNextEnemy();
 	
-	updateHealthBars();
 	updateInventory();
 	
 	// shuffle grid
@@ -1069,8 +1047,26 @@ void Game::startArena() {
 	state = kStatePlayerTurn;
 	grid->setActive(true);
 }
-
+void Game::setup() {
+	// reset health
+	wizard->health = wizard->max_health;
+	wizard->ui_health = wizard->max_health;
+	wizard->sprite->setOpacity(255);
+	
+	updateHealthBars();
+}
 void Game::startRound(RoundDef *rounddef) {
+	setup();
+	
+	// Set up inv
+	wizard->inventory.clear();
+	For (6) {
+		auto sn = SaveData::getEquippedSpellAt(i);
+		Spell *spell = sn.empty() ? nullptr : SpellManager::get()->getByName(sn);
+		wizard->inventory.push_back(spell);
+	}
+	updateInventory();
+	
 	currentRound->setString(""); // What should go here?
 	showRound(rounddef);
 }

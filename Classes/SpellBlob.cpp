@@ -12,12 +12,17 @@
 #include "SoundManager.hpp"
 #include "GameScene.hpp"
 
-bool SpellBlob::init(Spell *spell, bool d) {
+bool SpellBlob::init(Spell *spell, bool draggable,
+	std::function<void(int, Spell*)> onSelect,
+	std::function<bool(Spell*)> isBeingUsed) {
 	if ( !Layer::init() ) {
 		return false;
 	}
 	
-	this->draggable = d;
+	this->spell = spell;
+	this->draggable = draggable;
+	this->dragging = false;
+	this->isBeingUsed = isBeingUsed;
 
 	auto bg = LoadSprite("ui/spellbox.png");
 	bg->setAnchorPoint(Vec2(0.5, 0.5));
@@ -30,10 +35,17 @@ bool SpellBlob::init(Spell *spell, bool d) {
 	label->setPosition(Vec2(0, -getContentSize().height/2-8));
 	this->addChild(label, 1);
 	
-	// TODO - need to make sure we don't add this in two places at once?
-	auto mininode = spell->mininode;
+	mininode_grey = spell->makeNode(true);
+	mininode_grey->setCascadeOpacityEnabled(true);
+	mininode_grey->setOpacity(125);
+	mininode_grey->setPosition(Vec2::ZERO);
+	addChild(mininode_grey, 2);
+	
+	mininode = spell->makeNode(true);
 	mininode->setPosition(Vec2::ZERO);
-	addChild(mininode, 2);
+	addChild(mininode, 3);
+	
+	refresh();
 	
 	auto onClick = EventListenerTouchOneByOne::create();
 	onClick->setSwallowTouches(true);
@@ -52,22 +64,29 @@ bool SpellBlob::init(Spell *spell, bool d) {
 			// If it's not draggable, show the spell info dialog straight away.
 			// Otherwise, wait for the release.
 			SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
-			if (! draggable)
+			if (! this->draggable) {
 				GameController::get()->showSpellInfoDialog(spell);
+			} else {
+				// Can only drag is the main mininode is visible
+				this->dragging = mininode->isVisible();
+			}
 			return true;
 		}
 		
 		return false; // if you are consuming it
 	};
 	if (draggable) {
-		onClick->onTouchMoved = [this, mininode](Touch* touch, Event* event) -> bool {
-			auto offset = this->getParent()->getPosition() + getPosition();
-			mininode->setPosition(touch->getLocation() - offset);
+		onClick->onTouchMoved = [this](Touch* touch, Event* event) -> bool {
+			if (this->dragging) {
+				auto offset = this->getParent()->getPosition() + getPosition();
+				mininode->setPosition(touch->getLocation() - offset);
+				mininode_grey->setVisible(true);
+			}
 			distanceMoved += touch->getDelta().length();
 			// move mini-node to new location
 			return false; // if you are consuming it
 		};
-		onClick->onTouchEnded = [this, mininode, spell](Touch* touch, Event* event) -> bool {
+		onClick->onTouchEnded = [this, onSelect](Touch* touch, Event* event) -> bool {
 			auto bounds = event->getCurrentTarget()->getBoundingBox();
 			bounds.origin -= bounds.size/2;
 			bounds.origin += this->getParent()->getPosition();
@@ -78,9 +97,9 @@ bool SpellBlob::init(Spell *spell, bool d) {
 				// If haven't moved far, then do this:
 				if (distanceMoved < 2.0f) {
 					playSound = false;
-					GameController::get()->showSpellInfoDialog(spell);
+					GameController::get()->showSpellInfoDialog(this->spell);
 				}
-			} else {
+			} else if (this->dragging) {
 				// if it's over a inventory spot, put the gem there
 				layout_t layout = Game::get()->getLayout();
 				const auto size = getContentSize();
@@ -91,10 +110,11 @@ bool SpellBlob::init(Spell *spell, bool d) {
 						size
 					);
 					if (bounds.containsPoint(touch->getLocation())) {
-						// Set inventory to this spell
-						Game::get()->getWizard()->inventory[i] = spell;
-						mininode->removeFromParent();
-						Game::get()->updateInventory();
+						mininode->setPosition(Vec2::ZERO);
+						mininode->setVisible(false);
+						if (onSelect) {
+							onSelect(i, this->spell);
+						}
 						doSnap = false;
 					}
 				}
@@ -104,27 +124,30 @@ bool SpellBlob::init(Spell *spell, bool d) {
 									   size
 									   );
 					if (bounds.containsPoint(touch->getLocation())) {
-						// Set inventory to this spell
-						Game::get()->getWizard()->inventory[3 + i] = spell;
-						mininode->removeFromParent();
-						Game::get()->updateInventory();
+						mininode->setPosition(Vec2::ZERO);
+						mininode->setVisible(false);
+						if (onSelect) {
+							onSelect(3 + i, this->spell);
+						}
 						doSnap = false;
 					}
 				}
 			}
-			
-			if (doSnap) {
-				// Snap back to original position.
-				if (playSound) {
-					SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
+			if (this->dragging) {
+				if (doSnap) {
+					// Snap back to original position.
+					if (playSound) {
+						SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
+					}
+					auto snap = MoveTo::create(0.1f, Vec2::ZERO);
+					auto hide = CallFunc::create([this]() {
+						mininode_grey->setVisible(false);
+					});
+					mininode->stopAllActions();
+					mininode->runAction(Sequence::create(snap, hide, nullptr));
+				} else {
+					SoundManager::get()->playEffect(kSoundEffect_UISelect);
 				}
-				auto snap = MoveTo::create(0.1f, Vec2::ZERO);
-				mininode->stopAllActions();
-				mininode->runAction(snap);
-			} else {
-				SoundManager::get()->playEffect(kSoundEffect_UISelect);
-				Game::get()->spellPicked();
-				getParent()->removeFromParent();
 			}
 			
 			return true; // if you are consuming it
@@ -132,4 +155,15 @@ bool SpellBlob::init(Spell *spell, bool d) {
 	}
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(onClick, this);
 	return true;
+}
+
+void SpellBlob::refresh() {
+	bool beingUsed;
+	if (! isBeingUsed) {
+		beingUsed = false;
+	} else {
+		beingUsed = isBeingUsed(spell);
+	}
+	mininode->setVisible(! beingUsed);
+	mininode_grey->setVisible(beingUsed);
 }

@@ -13,10 +13,15 @@
 
 class SpellBlob : public Layer {
 public:
-	bool init(Spell *, bool draggable);
-	CREATE_FUNC_2(SpellBlob, Spell *, bool);
+	bool init(Spell *, bool draggable, std::function<void(int, Spell*)> onSelect, std::function<bool(Spell*)> isBeingUsed);
+	void refresh();
+	CREATE_FUNC_4(SpellBlob, Spell *, bool, std::function<void(int, Spell*)>, std::function<bool(Spell*)>);
 private:
+	std::function<bool(Spell*)> isBeingUsed;
+	Spell *spell;
+	Node *mininode, *mininode_grey;
 	bool draggable;
+	bool dragging;
 	float distanceMoved;
 };
 
