@@ -175,9 +175,15 @@ void Spellbook::refreshSpells() {
 	blobs.clear();
 	int i = 0;
 	int numberPerRow = 3;
-	float startY = layout.column_height - layout.bar_top_height - NavigationBar::HEIGHT;
 	float dy = 65;
 	float dx = (getBoundingBox().size.width - 2 * layout.column_width) / numberPerRow;
+	
+	float totalHeight = layout.column_height - layout.bar_top_height - NavigationBar::HEIGHT;
+	
+	int numRows = (int) (totalHeight / dy);
+	
+	float startY = totalHeight;
+		
 	for (std::string spellname : SaveData::getSpells()) {
 		Spell *spell = SpellManager::get()->getByName(spellname);
 		
@@ -206,7 +212,6 @@ void Spellbook::refreshSpells() {
 		
 		// TODO:
 		// - Allow scrolling
-		// - Allow drag to column
 		
 		i++;
 	}
