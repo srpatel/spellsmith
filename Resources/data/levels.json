@@ -26,7 +26,6 @@
     "depends": "2",
     "monsters": [
       "water_wizard",
-      "goblin_sword",
       "goblin_sword"
     ],
     "x": 150,
