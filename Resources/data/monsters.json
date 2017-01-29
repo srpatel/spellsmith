@@ -255,5 +255,38 @@
         "amount": 6
       }
     ]
+  },
+  {
+    "name": "goblin_king",
+    "scale": 0.92,
+    "offsets": {
+      "proj_from": [
+        50,
+        -10
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "goblin_king"
+    },
+    "health": 100,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 2,
+        "type": "melee",
+        "animation": "ogre_attack",
+        "amount": 5
+      },
+      {
+        "ratio": 1,
+        "type": "projectile_bomb",
+        "animation": "throw_bomb",
+        "amount": 10
+      }
+    ]
   }
 ]

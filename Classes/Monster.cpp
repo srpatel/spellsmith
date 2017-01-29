@@ -33,6 +33,8 @@ static AttackType getAttackType(std::string s) {
 		return kAttackTypeProjectileFire;
 	if (s == "projectile_water")
 		return kAttackTypeProjectileWater;
+	if (s == "projectile_bomb")
+		return kAttackTypeProjectileBomb;
 	return kAttackTypeOther;
 }
 

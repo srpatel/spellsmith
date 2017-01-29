@@ -20,6 +20,7 @@ enum AttackType {
 	
 	kAttackTypeProjectileFire,
 	kAttackTypeProjectileWater,
+	kAttackTypeProjectileBomb,
 	
 	kAttackTypeOther,
 };

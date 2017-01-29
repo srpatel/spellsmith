@@ -119,7 +119,7 @@
   "10": {
     "depends": "9",
     "monsters": [
-      "boss"
+      "goblin_king"
     ],
     "x": 200,
     "y": 100,
