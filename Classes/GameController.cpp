@@ -87,6 +87,7 @@ void GameController::setState(State newstate) {
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
 	} else if (newstate == kStateSpellbook) {
+		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
 	}
 	

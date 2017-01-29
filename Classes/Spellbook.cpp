@@ -113,6 +113,58 @@ bool Spellbook::init() {
 	}
 	// END COPY
 	
+	// Pages
+	{
+		left = LoadSprite("ui/page_arrow.png");
+		right = LoadSprite("ui/page_arrow.png");
+		left->setAnchorPoint(Vec2(0.5, 0.5));
+		right->setAnchorPoint(Vec2(0.5, 0.5));
+		right->setScaleX(-1);
+		auto y = layout.column_height - layout.bar_top_height / 2 - 5 * ui_scale;
+		left->setPosition(layout.column_width + 20, y);
+		right->setPosition(getBoundingBox().size.width - layout.column_width - 20, y);
+		
+		// label in the middle
+		page_label = Label::createWithTTF( "1/1", Fonts::NUMBER_FONT, Fonts::TEXT_SIZE);
+		page_label->setPosition(getBoundingBox().size.width / 2, y);
+		addChild(page_label);
+		
+		addChild(left);
+		addChild(right);
+		
+		auto onArrowClick = EventListenerTouchOneByOne::create();
+		onArrowClick->setSwallowTouches(true);
+		// trigger when you push down
+		onArrowClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+			auto target = event->getCurrentTarget();
+			auto bounds = target->getBoundingBox();
+			
+			if (bounds.containsPoint(touch->getLocation())){
+				if (target == left) {
+					if (current_page > 0) {
+						PLAY_SOUND(kSoundEffect_UISelectMinor);
+						current_page--;
+						refreshSpells();
+					}
+				} else {
+					if (current_page < num_pages - 1) {
+						PLAY_SOUND(kSoundEffect_UISelectMinor);
+						current_page++;
+						refreshSpells();
+					}
+				}
+				return true;
+			}
+			
+			return false; // if you are consuming it
+		};
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onArrowClick, left);
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onArrowClick->clone(), right);
+	}
+	
+	current_page = 0;
+	num_pages = 1;
+	
 	return true;
 }
 
@@ -167,13 +219,8 @@ void Spellbook::refreshEquips() {
 }
 
 void Spellbook::refreshSpells() {
-	// Always refresh equips before refreshing spells
-	// (because otherwise equipped spells won't be faded out in the list)
-	refreshEquips();
-	//
 	spell_holder->removeAllChildren();
 	blobs.clear();
-	int i = 0;
 	int numberPerRow = 3;
 	float dy = 65;
 	float dx = (getBoundingBox().size.width - 2 * layout.column_width) / numberPerRow;
@@ -181,10 +228,30 @@ void Spellbook::refreshSpells() {
 	float totalHeight = layout.column_height - layout.bar_top_height - NavigationBar::HEIGHT;
 	
 	int numRows = (int) (totalHeight / dy);
+	int numPerPage = numRows * numberPerRow;
 	
-	float startY = totalHeight;
-		
-	for (std::string spellname : SaveData::getSpells()) {
+	auto spells = SaveData::getSpells();
+	
+	// Adjust dy to be exact
+	dy = totalHeight / numRows;
+	
+	// Fix num pages...
+	num_pages = ceil((float) spells.size() / numPerPage);
+	page_label->setString(ToString(current_page + 1) + std::string("/") + ToString(num_pages));
+	bool paginationVisible = num_pages > 1;
+	left->setVisible(paginationVisible);
+	right->setVisible(paginationVisible);
+	page_label->setVisible(paginationVisible);
+	left->setOpacity((current_page == 0) ? 125 : 255);
+	right->setOpacity((current_page == num_pages - 1) ? 125 : 255);
+	
+	// Shift up by 8px because that's how far down the label is from the centre of the spellblob
+	float startY = totalHeight + 8;
+	for (int i = 0; i < numPerPage; i++) {
+		int currentIndex = i + current_page * numPerPage;
+		if (spells.size() <= currentIndex)
+			break;
+		std::string spellname = spells[currentIndex];
 		Spell *spell = SpellManager::get()->getByName(spellname);
 		
 		float currentX = dx * (i % numberPerRow) + dx/2.0;
@@ -209,10 +276,5 @@ void Spellbook::refreshSpells() {
 		sb->setPosition(currentX, currentY);
 		blobs.push_back(sb);
 		spell_holder->addChild(sb);
-		
-		// TODO:
-		// - Allow scrolling
-		
-		i++;
 	}
 }

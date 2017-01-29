@@ -7,12 +7,26 @@
 //
 
 #include "SaveData.hpp"
+#include "Level.hpp"
 
 void SaveData::clear() {
+	auto ud = UserDefault::getInstance();
 	// TODO - finish...
 	For(6) {
-		SaveData::setEquippedSpellAt(i, "");
+		char key[50];
+		sprintf(key, "spell-equipped-%d", i);
+		ud->deleteValueForKey(key);
 	}
+	
+	ud->deleteValueForKey("inf-score");
+	ud->deleteValueForKey("spell-inventory");
+	
+	for (RoundDef *rd : LevelManager::get()->getRoundDefinitions()) {
+		std::string key = std::string("level-moves-") + rd->name;
+		ud->deleteValueForKey(key.c_str());
+	}
+	
+	ud->flush();
 }
 
 int SaveData::getArenaScore() {

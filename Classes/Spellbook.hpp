@@ -21,6 +21,11 @@ private:
 	Layer *spell_holder, *equipped_holder;
 	std::vector<EventListener *> equipped_listeners;
 	std::vector<SpellBlob *> blobs;
+	Node *left;
+	Node *right;
+	Label *page_label;
+	int current_page;
+	int num_pages;
 };
 
 
