@@ -1053,6 +1053,12 @@ void Game::setup() {
 	wizard->ui_health = wizard->max_health;
 	wizard->sprite->setOpacity(255);
 	
+	// reset buffs
+	wizard->clearBuffs();
+	
+	// scramble grid
+	grid->scramble();
+	
 	updateHealthBars();
 }
 void Game::startRound(RoundDef *rounddef) {

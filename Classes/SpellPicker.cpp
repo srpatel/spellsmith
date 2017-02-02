@@ -71,7 +71,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 		return false;
 	}
 	
-	auto size = Size(200, 150);
+	auto size = Size(200, 200);
 	auto popup = Popup::create(size.width, size.height);
 	popup->setPosition(size/-2);
 	this->addChild(popup);
@@ -80,7 +80,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( "You have learnt:", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
 	label->setColor(Color3B::WHITE);
-	label->setPosition(Vec2(0, 50));
+	label->setPosition(Vec2(0, 80));
 	addChild(label, 1);
 	
 	// Add spell blobs
@@ -90,7 +90,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	for (std::string spellname : r->rewards) {
 		Spell *s = SpellManager::get()->getByName(spellname);
 		auto sb = SpellBlob::create(s, false, nullptr, nullptr);
-		sb->setPosition(startX, -5);
+		sb->setPosition(startX, +8);
 		startX += dx;
 		addChild(sb);
 	}
@@ -99,7 +99,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleText("Spellbook");
-	button->setPosition(Vec2(0, -50));
+	button->setPosition(Vec2(0, -70));
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			// For now, from scratch always!

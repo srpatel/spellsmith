@@ -63,7 +63,7 @@
     },
     "focus": {
       "name": "Focus",
-      "description": "Deal 50% extra damage with chains this round."
+      "description": "For the next 6 turns, spells deal 50% extra damage."
     },
     "fury": {
       "name": "Fury",
@@ -133,7 +133,7 @@
   "monster": {
     "dog": "Hound",
     "fast_dog": "Greyhound",
-    "shaman": "Lupine Shaman",
+    "shaman": "Shaman",
     "goblin_sword": "Goblin Swordsman",
     "goblin_axe": "Goblin Axeman",
     "goblin_halberd": "Goblin Halberdier",

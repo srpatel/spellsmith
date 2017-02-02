@@ -137,7 +137,7 @@
         "grey"
       ]
     },
-    "health": 30,
+    "health": 20,
     "attack_frequency": 0,
     "attacks": [
       {
@@ -167,17 +167,17 @@
         "animal2"
       ]
     },
-    "health": 40,
+    "health": 25,
     "attack_frequency": 2,
     "attacks": [
       {
-        "ratio": 2,
+        "ratio": 1,
         "type": "heal_other",
         "animation": "heal",
         "amount": 5
       },
       {
-        "ratio": 1,
+        "ratio": 0,
         "type": "melee",
         "animation": "melee",
         "amount": 2
@@ -272,7 +272,7 @@
     "skeleton": {
       "name": "goblin_king"
     },
-    "health": 100,
+    "health": 200,
     "attack_frequency": 3,
     "attacks": [
       {

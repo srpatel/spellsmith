@@ -7,7 +7,7 @@
     "x": 50,
     "y": 50,
     "rewards": [
-      "firewisp"
+      "healstrike"
     ]
   },
   "2": {
@@ -19,7 +19,7 @@
     "x": 100,
     "y": 50,
     "rewards": [
-      "forest_breeze"
+      "poison_dart"
     ]
   },
   "3": {
@@ -32,7 +32,7 @@
     "y": 50,
     "rewards": [
       "zap",
-      "ice_bolt"
+      "fury"
     ]
   },
   "4": {
@@ -45,7 +45,7 @@
     "x": 200,
     "y": 50,
     "rewards": [
-      "poison_dart",
+      "earthquake",
       "focus"
     ]
   },
@@ -59,7 +59,7 @@
     "x": 250,
     "y": 50,
     "rewards": [
-      "healstrike",
+      "ice_bolt",
       "evaporate"
     ]
   },
@@ -87,7 +87,8 @@
     "x": 50,
     "y": 100,
     "rewards": [
-      "fertilise"
+      "fertilise",
+      "forest_breeze"
     ]
   },
   "8": {
@@ -100,7 +101,8 @@
     "x": 100,
     "y": 100,
     "rewards": [
-      "dragon_breath"
+      "dragon_breath",
+      "fireball"
     ]
   },
   "9": {
@@ -190,7 +192,8 @@
     "x": 100,
     "y": 150,
     "rewards": [
-      "induce_explosion"
+      "induce_explosion",
+      "purify"
     ]
   },
   "5c": {

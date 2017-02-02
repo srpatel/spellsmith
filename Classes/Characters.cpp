@@ -91,6 +91,23 @@ Buff *Buff::createFocus(){
 	return buff;
 }
 
+Buff *Buff::createSpellFocus(){
+	auto buff = new Buff;
+	buff->type = BuffType::SPELL_FOCUS;
+	buff->positive = true;
+	
+	buff->icon = "buffs/focus.png";
+	
+	buff->sprite = nullptr;
+	
+	buff->turns = 6; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
 Buff *Buff::createChargeBolt(){
 	auto buff = new Buff;
 	buff->type = BuffType::CHARGE_BOLT;

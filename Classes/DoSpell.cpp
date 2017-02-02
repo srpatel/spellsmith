@@ -51,9 +51,12 @@ public:
 void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	// Modifiers
 	// Rage
-	int damageModifier = 1;
+	float damageModifier = 1;
 	if (game->wizard->getBuffByType(BuffType::FURY)) {
-		damageModifier = 2;
+		damageModifier *= 2;
+	}
+	if (game->wizard->getBuffByType(BuffType::SPELL_FOCUS)) {
+		damageModifier *= 1.5;
 	}
 	// King's court is at the bottom
 	// because we want to queue pending actions after any pending actions here are added.
@@ -162,8 +165,11 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		HEAL( 2 * n );
 	}
 	IF_SPELL(focus) {
-		// deal extra damage with chains for 6 turns
-		game->wizard->addBuff( Buff::createFocus() );
+		// deal extra damage with spells for 6 turns
+		game->wizard->addBuff( Buff::createSpellFocus() );
+		
+		// OLD: deal extra damage with chains for 6 turns
+		// game->wizard->addBuff( Buff::createFocus() );
 	}
 	IF_SPELL(channel) {
 		// cast the next spell three times
