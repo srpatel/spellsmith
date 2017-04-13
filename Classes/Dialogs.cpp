@@ -146,8 +146,9 @@ bool PreLevelDialog::init(RoundDef *round) {
 	button->setTitleFontSize(Fonts::TEXT_SIZE);
 	button->setPosition(Vec2(0, 30-size.height/2));
 	button->setTitleText _("ui.PLAY");
-	button->addTouchEventListener([round](Ref* pSender, ui::Widget::TouchEventType type) {
+	button->addTouchEventListener([round, button](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
+			button->setTouchEnabled(false);
 			PLAY_SOUND( kSoundEffect_UISelect );
 			GameController::get()->startRound(round);
 		}

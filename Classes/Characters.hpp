@@ -70,6 +70,7 @@ public:
 	void updateBuffs();
 	void tickBuffs();
 	inline bool dead() { return health <= 0; }
+	inline bool ui_dead() { return ui_health <= 0; }
 	Layer *buffHolder;
 	void flash(Color3B c);
 	void heal(int amt);

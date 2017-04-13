@@ -511,6 +511,84 @@ bool Game::onCastSpell(Chain *chain) {
 	}
 	return success;
 }
+void Game::makeLightning(Character *target) {
+	float startx = target->sprite->getPosition().x;
+	float starty = target->sprite->getPosition().y + 75 * scenery->char_scale;
+	Vec2 pos{startx, starty};
+	SoundManager::get()->playEffect(kSoundEffect_SZap);
+	auto onHit = CallFunc::create([this](){
+		actionDone();
+	});
+	BasicAnim *anim;
+	int p = rand() % 3;
+	if (p == 0) {
+		anim = AnimLightning1::create(pos, scenery->char_scale, onHit);
+	} else if (p == 1) {
+		anim = AnimLightning2::create(pos, scenery->char_scale, onHit);
+	} else {
+		anim = AnimLightning3::create(pos, scenery->char_scale, onHit);
+	}
+	actionQueued();
+	scenery->addChild(anim, 100);
+}
+void Game::makeCracks(Character *target) {
+	int i = 1 + rand() % 3;
+	char str[30];
+	sprintf(str, "spells/cracks/cracks%02d.png", i);
+	auto sprite = LoadSprite( std::string(str) );
+	sprite->setScale(scenery->char_scale);
+	sprite->setPosition(target->sprite->getPosition());
+	sprite->runAction(Sequence::create(
+		DelayTime::create(1),
+		FadeOut::create(0.5),
+		RemoveSelf::create(),
+		nullptr
+	));
+	scenery->addChild(sprite);
+
+}
+void Game::makeMeteor(float xpos, float ypos, float delay) {
+	this->runAction(Sequence::create(DelayTime::create(delay), CallFunc::create(
+		[this, xpos, ypos]() {
+			Vec2 to  {xpos, ypos};
+			Vec2 from{xpos, ypos + getLayout().scenery_height};
+			auto onHit = CallFunc::create([this](){
+				actionDone();
+			});
+			Layer *projectile = BasicMeteor::create(from, to, scenery->char_scale, onHit);
+			projectile->setRotation(90);
+			scenery->addChild(projectile, 76);
+		}
+	), nullptr));
+	actionQueued();
+}
+void Game::onDamageTarget(Character *target, bool withDelay) {
+	spine::SkeletonAnimation *skeleton = nullptr;
+	if (target->is_skeleton) {
+		skeleton = (spine::SkeletonAnimation *) target->sprite;
+	}
+	if (target->ui_health <= 0 && target != wizard) {
+		if (skeleton) {
+			if (withDelay) {
+				actionQueued();
+				auto endTime = target->die();
+				// Add a second to look at the dead body
+				auto delay = DelayTime::create(endTime + 0.2f);
+				auto run = CallFunc::create([this](){
+					actionDone();
+				});
+				runAction(Sequence::create(delay, run, nullptr));
+			} else {
+				target->die();
+			}
+		} else {
+			target->sprite->removeFromParent();
+		}
+	} else if (skeleton) {
+		// Run the "hit" animation!
+		skeleton->addAnimation(0, "hit", false);
+	}
+}
 void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type, std::function<void(void)> onhitfunc) {
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
 	
@@ -543,29 +621,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 		if (onhitfunc) {
 			onhitfunc();
 		}
-		spine::SkeletonAnimation *skeleton = nullptr;
-		if (target->is_skeleton) {
-			skeleton = (spine::SkeletonAnimation *) target->sprite;
-		}
 		if (! phase) {
 			target->damageEffect(damage);
-			if (target->ui_health <= 0 && target != wizard) {
-				if (skeleton) {
-					actionQueued();
-					auto endTime = target->die();
-					// Add a second to look at the dead body
-					auto delay = DelayTime::create(endTime + 0.2f);
-					auto run = CallFunc::create([this](){
-						actionDone();
-					});
-					runAction(Sequence::create(delay, run, nullptr));
-				} else {
-					target->sprite->removeFromParent();
-				}
-			} else if (skeleton) {
-				// Run the "hit" animation!
-				skeleton->addAnimation(0, "hit", false);
-			}
+			onDamageTarget(target, true);
 			updateHealthBars();
 		}
 		actionDone();
@@ -754,7 +812,6 @@ void Game::actionQueued() {
 void Game::actionDone() {
 	numCurrentActions--;
 	// only pop one and do that!
-	
 	while (numCurrentActions == 0 && pendingActions.size() > 0) {
 		PendingAction a = pendingActions[0];
 		a();
@@ -845,7 +902,6 @@ void Game::enemyDoTurn() {
 						}
 						if (healtargets.size() == 0) {
 							// pick the attack after, regardless of ratio!
-							printf("Falling back!\n");
 							a = e->monster->getAttackFallback( a );
 						} else {
 							std::random_shuffle(healtargets.begin(), healtargets.end());
@@ -978,6 +1034,11 @@ void Game::gotoNextEnemy() {
 	showRound(round);
 }
 void Game::showRound(RoundDef *round) {
+	printf("Starting round. %d pending actions.\n", numCurrentActions);
+	if (numCurrentActions > 0) {
+		numCurrentActions = 0;
+	}
+
 	if (this->round) {
 		if (this->round->generated)
 			delete this->round;
@@ -1069,6 +1130,9 @@ void Game::startRound(RoundDef *rounddef) {
 	For (6) {
 		auto sn = SaveData::getEquippedSpellAt(i);
 		Spell *spell = sn.empty() ? nullptr : SpellManager::get()->getByName(sn);
+#if 1
+		if (i == 0) spell = SpellManager::get()->getByName("volcanic");
+#endif
 		wizard->inventory.push_back(spell);
 	}
 	updateInventory();

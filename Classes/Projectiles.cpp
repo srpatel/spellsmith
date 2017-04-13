@@ -31,7 +31,7 @@ bool BasicAnim::init(
 	char str[100] = {0};
 	for(int i = 1; i <= num; i++)
 	{
-		sprintf(str, "spells/%s/%s%02d.png", path, path, i);
+		sprintf(str, "spells/%s/%s%02d.png", path, prefix, i);
 		auto frame = LoadSpriteFrame( std::string(str) );
 		frames.pushBack(frame);
 	}
@@ -41,6 +41,7 @@ bool BasicAnim::init(
 	sprite->runAction(Sequence::create(
 		Animate::create(animation),
 		onHit,
+		RemoveSelf::create(),
 		nullptr
 	));
 	addChild(sprite);
@@ -62,7 +63,7 @@ bool BasicProjectile::init(
 	}
 	auto scaleX = (from.x > to.x) ? -1 : 1;
 	
-	auto sprite = Sprite::create();
+	this->sprite = Sprite::create();
 	
 	sprite->setPosition(from + offset * scale * scaleX);
 	sprite->setScaleY(scale);
@@ -102,12 +103,12 @@ bool BasicProjectile::init(
 	sprite->runAction(Sequence::create(
 		Animate::create(createAnimation),
 		Spawn::create(
-			CallFunc::create([this, to, sprite, hitAnimFrames, onHit, time]() {
+			CallFunc::create([this, to, hitAnimFrames, onHit, time]() {
 				// Move to target
 				sprite->runAction(Sequence::create(
 					MoveTo::create(time, to),
 					onHit,
-					CallFunc::create([this, sprite, hitAnimFrames, onHit]() {
+					CallFunc::create([this, hitAnimFrames, onHit]() {
 						// deal damage or whatever
 						// animate sprite, and remove afterwards
 						onHit->autorelease();
@@ -137,4 +138,7 @@ bool BasicProjectile::init(
 	
 	
 	return true;
+}
+void BasicProjectile::setRotation(float r) {
+	this->sprite->setRotation(r);
 }

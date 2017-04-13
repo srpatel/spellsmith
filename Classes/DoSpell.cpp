@@ -65,7 +65,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	bool doAnimation = true;
 	
 	if (1 == 0);
-	IF_SPELL(whispers_in_the_wind) {
+	IF_SPELL(whispers_in_the_wind) { // TODO
 		// Destroy all your air gems, and cast three of your spells randomly.
 		// Repeat the spell twice more!
 		std::vector<Spell *> spells;
@@ -89,15 +89,15 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 		game->grid->destroyGemsOfType( GemType::AIR, chain );
 	}
-	IF_SPELL(evaporate) {
+	IF_SPELL(evaporate) { // TODO
 		// Convert your water gems into air gems.
 		game->grid->convertGemsOfType( GemType::WATER, GemType::AIR, chain );
 	}
-	IF_SPELL(forest_fire) {
+	IF_SPELL(forest_fire) { // TODO
 		// Convert your earth gems into fire gems.
 		game->grid->convertGemsOfType( GemType::EARTH, GemType::FIRE, chain );
 	}
-	IF_SPELL(charge_bolt) {
+	IF_SPELL(charge_bolt) { // TODO
 		// Deal 3 damage for each time you've cast it!
 		Buff *charge = game->wizard->getBuffByType(BuffType::CHARGE_BOLT);
 		if (charge == nullptr) {
@@ -110,7 +110,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 		PROJ( D(3 * charge->charges), Color3B::BLUE );
 	}
-	IF_SPELL(drain_life) {
+	IF_SPELL(drain_life) { // TODO
 		// Deal 5 damage. If this kills the enemy, gain 8 life.
 		auto target = game->enemies[game->currentEnemy];
 		int amount = D(5);
@@ -122,7 +122,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			} );
 		}
 	}
-	IF_SPELL(induce_explosion) {
+	IF_SPELL(induce_explosion) { // TODO
 		// Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies.
 		auto target = game->enemies[game->currentEnemy];
 		auto amount = D(5);
@@ -141,7 +141,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			PROJ(amount, Color3B::RED);
 		}
 	}
-	IF_SPELL(poison_dart) {
+	IF_SPELL(poison_dart) { // TODO
 		// Deal 5 damage. Deal 10 instead if at full health.
 		int n = 5;
 		auto e = game->enemies[game->currentEnemy];
@@ -150,36 +150,36 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 		PROJ( D(n), Color3B::GREEN );
 	}
-	IF_SPELL(fertilise) {
+	IF_SPELL(fertilise) { // TODO
 		// Replace all green gems with crystal
 		game->grid->makeCrystalsOverGemsOfType( GemType::EARTH, chain );
 	}
-	IF_SPELL(fire_cleanse) {
+	IF_SPELL(fire_cleanse) { // TODO
 		// Destroy all red gems and deal 2 damage for each
 		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );
 		PROJ( D(n * 3), Color3B::RED );
 	}
-	IF_SPELL(fountain_of_youth) {
+	IF_SPELL(fountain_of_youth) { // TODO
 		// Destroy all blue gems and heal 1 for each
 		int n = game->grid->destroyGemsOfType( GemType::WATER, chain );
 		HEAL( 2 * n );
 	}
-	IF_SPELL(focus) {
+	IF_SPELL(focus) { // TODO
 		// deal extra damage with spells for 6 turns
 		game->wizard->addBuff( Buff::createSpellFocus() );
 		
 		// OLD: deal extra damage with chains for 6 turns
 		// game->wizard->addBuff( Buff::createFocus() );
 	}
-	IF_SPELL(channel) {
+	IF_SPELL(channel) { // TODO
 		// cast the next spell three times
 		game->wizard->addBuff( Buff::createKingsCourt() );
 	}
 	IF_SPELL(phase) {
-		// immortal for one turn
+		// immortal for one turn (sound effect in addBuff somehow)
 		game->wizard->addBuff( Buff::createPhasing() );
 	}
-	IF_SPELL(fury) {
+	IF_SPELL(fury) { // TODO
 		// deal double damage next turn
 		game->wizard->addBuff( Buff::createFury() );
 	}
@@ -187,7 +187,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		// deal 10 damage
 		PROJ( D(10), Color3B::RED );
 	}
-	IF_SPELL(mud_shield) {
+	IF_SPELL(mud_shield) { // BENCHED
 		// block next 2 attacks
 		Buff *shield = game->wizard->getBuffByType(BuffType::BARRIER);
 	 
@@ -243,7 +243,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		});
 		game->runAction(Sequence::create(delay, addanim, nullptr));
 	}
-	IF_SPELL(cleanse) {
+	IF_SPELL(cleanse) { // TODO
 		// Heal for 3 and clear the grid
 		PLAY_SOUND(kSoundEffect_SHeal);
 		HEAL(3);
@@ -258,7 +258,12 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		} else {
 			jeanVan = D_BETWEEN(1, 4);
 		}
-		PROJ( jeanVan, Color3B::YELLOW );
+		auto e = game->enemies[game->currentEnemy];
+		game->makeLightning(e);
+		e->health -= jeanVan;
+		e->ui_health -= jeanVan;
+		game->onDamageTarget(e, false);
+		game->updateHealthBars();
 	}
 	IF_SPELL(chill) {
 		// slow enemy by 2 turns
@@ -277,35 +282,63 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		} );
 	}
 	IF_SPELL(volcanic) {
+		// Create lots of downwards meteors
+		game->runPendingAction([damageModifier, game]() {
+			For(10) {
+				// Random position, random delay
+				float xpos = game->scenery->getBoundingBox().size.width * ((float) rand() / RAND_MAX);
+				float ypos = 5 + 0.8 * game->wizard->projectile_height * ((float) rand() / RAND_MAX);
+				game->makeMeteor(xpos, ypos, i / 10.0);
+				if (i == 5) {
+					game->runPendingAction([game, damageModifier]() {
+						bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
+						if (! phase) {
+							game->wizard->ui_health -= D(10);
+							game->onDamageTarget(game->wizard, false);
+						}
+						for (Enemy *e : game->enemies) {
+							if (e->ui_dead()) continue;
+							phase = e->getBuffByType(BuffType::PHASING) != nullptr;
+							if (! phase) {
+								e->ui_health -= D(10);
+								game->onDamageTarget(e, false);
+							}
+						}
+						game->updateHealthBars();
+					});
+				}
+			}
+		});
 		// deal 10 damage to everyone
-		game->wizard->ui_health -= D(10);
-		game->wizard->health -= D(10);
-		for (Enemy *e : game->enemies) {
-			e->ui_health -= D(10);
-			e->health -= D(10);
+		// TODO : update healthbars later
+		bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
+		if (! phase) {
+			game->wizard->health -= D(10);
 		}
-		game->updateHealthBars();
+		for (Enemy *e : game->enemies) {
+			if (e->dead()) continue;
+			phase = e->getBuffByType(BuffType::PHASING) != nullptr;
+			if (! phase) {
+				e->health -= D(10);
+			}
+		}
 	}
-	IF_SPELL(crystalise) {
+	IF_SPELL(crystalise) { // TODO
 		// heal 3, create 3 crystal gems
 		HEAL(3);
 		PLAY_SOUND(kSoundEffect_SRainbow);
 		CRYSTAL(3);
 	}
-	IF_SPELL(zap) {
-		// deal 10 to a random enemy
-		PROJ_RAND( D(10), Color3B::YELLOW );
-	}
-	IF_SPELL(purify) {
+	IF_SPELL(purify) { // TODO
 		// Create 1 crystal gem
 		CRYSTAL(1);
 	}
-	IF_SPELL(smelt) {
+	IF_SPELL(smelt) { // TODO
 		// deal 6 damage, create 1 crystal gem
 		PROJ( D(6), Color3B::RED );
 		CRYSTAL(1);
 	}
-	IF_SPELL(ice_bolt) {
+	IF_SPELL(ice_bolt) { // TODO
 		// deal 3 damage, 50% chance to freeze 2
 		PROJ( D(3), Color3B::BLUE );
 		if (rand() % 2) {
@@ -314,38 +347,70 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 												   );
 		}
 	}
+	IF_SPELL(dragon_breath) { // TODO
+		// Deal 7 damage to each enemy.
+		for (Enemy *e : game->enemies) {
+			if (e->dead()) continue;
+			e->ui_health -= D(7);
+			e->health -= D(7);
+			game->onDamageTarget(e, false);
+		}
+		game->updateHealthBars();
+	}
+	IF_SPELL(zap) {
+		// deal 10 to a random enemy
+		int i = game->getNextAliveEnemy(rand() % game->enemies.size(), nullptr);
+		auto e = game->enemies[i];
+		game->makeLightning(e);
+		e->health -= D(10);
+		e->ui_health -= D(10);
+		game->onDamageTarget(e, false);
+		game->updateHealthBars();
+	}
 	IF_SPELL(stun_strike) {
 		// stun
-		game->enemies[game->currentEnemy]->addBuff(Buff::createStun());
+		auto target = game->enemies[game->currentEnemy];
+		game->runPendingAction([damageModifier, game, target]() {
+			PLAY_SOUND(kSoundEffect_PHEarth);
+			game->makeCracks(target);
+		});
+		target->addBuff(Buff::createStun());
 	}
 	IF_SPELL(earthquake) {
 		// 5 damage to each enemy. 50% chance to stun.
-		PLAY_SOUND(kSoundEffect_SRumble);
 		for (Enemy *e : game->enemies) {
+			if (e->ui_dead()) continue;
 			e->ui_health -= D(5);
-			e->health -= D(5);
 			if (rand() % 2) {
 				e->addBuff(Buff::createStun());
 			}
 		}
-		game->updateHealthBars();
-	}
-	IF_SPELL(dragon_breath) {
-		// Deal 7 damage to each enemy.
-		for (Enemy *e : game->enemies) {
-			e->ui_health -= D(7);
-			e->health -= D(7);
-		}
-		game->updateHealthBars();
+		game->runPendingAction([damageModifier, game]() {
+			PLAY_SOUND(kSoundEffect_SRumble);
+			for (Enemy *e : game->enemies) {
+				if (e->dead()) continue;
+				game->makeCracks(e);
+				e->health -= D(5);
+				game->onDamageTarget(e, false);
+			}
+			game->updateHealthBars();
+		});
 	}
 	IF_SPELL(lightning_storm) {
 		// Deal 3-10 damage to each enemy.
 		for (Enemy *e : game->enemies) {
+			if (e->dead()) continue;
 			int amt = D_BETWEEN(3, 10);
 			e->ui_health -= amt;
 			e->health -= amt;
+			
+			game->runPendingAction([game, e, amt]() {
+				game->makeLightning(e);
+				e->health -= amt;
+				game->onDamageTarget(e, false);
+				game->updateHealthBars();
+			});
 		}
-		game->updateHealthBars();
 	}
 	else {
 		LOG("No spell definition found for %s.\n", spell->getRawName().c_str());
