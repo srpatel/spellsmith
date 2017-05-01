@@ -26,6 +26,7 @@ private:
 };
 
 struct RoundDef {
+	int id = 0;
 	bool generated;
 	std::string name;
 	std::vector<std::string> monsters;

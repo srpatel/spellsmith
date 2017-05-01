@@ -1035,6 +1035,7 @@ void Game::gotoNextEnemy() {
 }
 void Game::showRound(RoundDef *round) {
 	printf("Starting round. %d pending actions.\n", numCurrentActions);
+	scenery->setImage(round->id);
 	if (numCurrentActions > 0) {
 		numCurrentActions = 0;
 	}
@@ -1130,9 +1131,6 @@ void Game::startRound(RoundDef *rounddef) {
 	For (6) {
 		auto sn = SaveData::getEquippedSpellAt(i);
 		Spell *spell = sn.empty() ? nullptr : SpellManager::get()->getByName(sn);
-#if 1
-		if (i == 0) spell = SpellManager::get()->getByName("volcanic");
-#endif
 		wizard->inventory.push_back(spell);
 	}
 	updateInventory();

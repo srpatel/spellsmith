@@ -148,6 +148,54 @@
 		"neck": {
 			"neck": { "name": "characters/goblin/4/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
 		}
+	},
+	"icegoblin1": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/5_ice/arm_front_end", "x": 14.7, "y": 2.52, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/5_ice/arm_front_mid", "x": 30.19, "y": -10.05, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/5_ice/arm_front_top", "x": 33.71, "y": -14.53, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/5_ice/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/5_ice/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/5_ice/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/5_ice/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
+		},
+		"torso": {
+			"characters/goblin/5_ice/torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
+		}
+	},
+	"icegoblin2": {
+		"arm_front_end": {
+			"arm_front_end": { "name": "characters/goblin/6_ice/arm_front_end", "x": 14.7, "y": 2.52, "rotation": 167.24, "width": 113, "height": 114 }
+		},
+		"arm_front_mid": {
+			"arm_front_mid": { "name": "characters/goblin/6_ice/arm_front_mid", "x": 30.19, "y": -10.05, "rotation": 156.87, "width": 113, "height": 114 }
+		},
+		"bone3": {
+			"arm_front_top": { "name": "characters/goblin/6_ice/arm_front_top", "x": 33.71, "y": -14.53, "rotation": 61.1, "width": 113, "height": 114 }
+		},
+		"images/goblin1/arm_back": {
+			"arm_back": { "name": "characters/goblin/6_ice/arm_back", "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 113, "height": 114 }
+		},
+		"images/goblin1/head": {
+			"head": { "name": "characters/goblin/6_ice/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
+			"head_eyes_closed": { "name": "characters/goblin/5_ice/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+		},
+		"neck": {
+			"neck": { "name": "characters/goblin/6_ice/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
+		},
+		"torso": {
+			"characters/goblin/6_ice/torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
+		}
 	}
 },
 "animations": {

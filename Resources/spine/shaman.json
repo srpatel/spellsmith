@@ -46,11 +46,11 @@
 	{ "name": "robes", "bone": "robeback", "attachment": "robes" },
 	{ "name": "arm1", "bone": "rightarm1", "attachment": "characters/shaman/arm1" },
 	{ "name": "arm2", "bone": "rightarm2", "attachment": "characters/shaman/arm2" },
-	{ "name": "staff", "bone": "bone", "attachment": "characters/shaman/staff" },
+	{ "name": "staff", "bone": "bone", "attachment": "staff" },
 	{ "name": "arm3", "bone": "rightarm3", "attachment": "characters/shaman/arm3" },
 	{ "name": "head", "bone": "head", "attachment": "head" },
 	{ "name": "head_dmg", "bone": "head" },
-	{ "name": "staff2", "bone": "staffdrop", "attachment": "characters/shaman/staff" }
+	{ "name": "staff2", "bone": "staffdrop", "attachment": "staff" }
 ],
 "skins": {
 	"default": {
@@ -97,10 +97,10 @@
 			"characters/shaman/neck": { "x": 16.16, "y": -7.38, "rotation": -94.97, "width": 57, "height": 52 }
 		},
 		"staff": {
-			"characters/shaman/staff": { "x": 25.17, "y": 7.63, "rotation": -94.37, "width": 69, "height": 359 }
+			"staff": { "name": "characters/shaman/staff", "x": 25.17, "y": 7.63, "rotation": -94.37, "width": 69, "height": 359 }
 		},
 		"staff2": {
-			"characters/shaman/staff": { "x": 21.62, "y": -5.31, "rotation": -95.2, "width": 69, "height": 359 }
+			"staff": { "name": "characters/shaman/staff", "x": 21.62, "y": -5.31, "rotation": -95.2, "width": 69, "height": 359 }
 		},
 		"torso": {
 			"characters/shaman/torso": { "x": 77.73, "y": -10.52, "rotation": -92.14, "width": 73, "height": 206 }
@@ -160,6 +160,71 @@
 		},
 		"robes": {
 			"robes": { "name": "characters/shaman/robes4", "x": 121.62, "y": 13.89, "rotation": 86.94, "width": 150, "height": 332 }
+		}
+	},
+	"necromancer": {
+		"head": {
+			"head": { "name": "characters/shaman/necromancer/head", "x": 58.15, "y": -29.23, "rotation": -104.04, "width": 180, "height": 200 }
+		},
+		"head_dmg": {
+			"head_dmg": { "name": "characters/shaman/necromancer/head_alt", "x": 58.11, "y": -29.22, "rotation": -104.04, "width": 180, "height": 200 }
+		},
+		"robebackskins": {
+			"robebackskins": { "name": "characters/shaman/necromancer/robeback", "x": 192.48, "y": 3.53, "scaleX": 0.8, "scaleY": 0.88, "rotation": 92.14, "width": 120, "height": 93 }
+		},
+		"robes": {
+			"robes": { "name": "characters/shaman/necromancer/robes", "x": 121.62, "y": 13.89, "rotation": 86.94, "width": 150, "height": 332 }
+		},
+		"arm1": {
+			"characters/shaman/necromancer/arm1": { "x": 44.6, "y": -3.55, "rotation": 80.1, "width": 32, "height": 106 }
+		},
+		"arm2": {
+			"characters/shaman/necromancer/arm2": { "x": 32.09, "y": -2.16, "scaleX": 1.084, "rotation": 96.75, "width": 25, "height": 98 }
+		},
+		"arm3": {
+			"characters/shaman/necromancer/arm3": { "x": 2.19, "y": -0.25, "scaleX": 0.866, "rotation": 101.85, "width": 29, "height": 44 }
+		},
+		"arm4": {
+			"characters/shaman/necromancer/arm1": { "x": 51.38, "y": 6.78, "rotation": 85.97, "width": 32, "height": 106 }
+		},
+		"arm5": {
+			"characters/shaman/necromancer/arm2": { "x": 28.95, "y": -2.32, "rotation": 96.14, "width": 25, "height": 98 }
+		},
+		"arm6": {
+			"characters/shaman/necromancer/arm3": { "x": 2.69, "y": -1.14, "scaleX": 0.81, "rotation": 106.58, "width": 29, "height": 44 }
+		},
+		"fingers": {
+			"characters/shaman/necromancer/fingers": { "x": 6.78, "y": -2.72, "rotation": -28.44, "width": 29, "height": 44 }
+		},
+		"leg1": {
+			"characters/shaman/necromancer/leg1": { "x": 46.7, "y": 6.87, "scaleY": 1.099, "rotation": 89.35, "width": 38, "height": 146 }
+		},
+		"leg2": {
+			"characters/shaman/necromancer/leg2": { "x": 35.76, "y": 0.69, "rotation": 81.13, "width": 46, "height": 129 }
+		},
+		"leg3": {
+			"characters/shaman/necromancer/leg3": { "x": 18.46, "y": -1.92, "rotation": 149.62, "width": 99, "height": 40 }
+		},
+		"leg4": {
+			"characters/shaman/necromancer/leg1": { "x": 34.67, "y": -0.62, "scaleY": 1.177, "rotation": 93.37, "width": 38, "height": 146 }
+		},
+		"leg5": {
+			"characters/shaman/necromancer/leg2": { "x": 36.39, "y": -1.18, "rotation": 84.45, "width": 46, "height": 129 }
+		},
+		"leg6": {
+			"characters/shaman/necromancer/leg3": { "x": 11.52, "y": -4.37, "rotation": 156.5, "width": 99, "height": 40 }
+		},
+		"neck": {
+			"characters/shaman/necromancer/neck": { "x": 16.16, "y": -7.38, "rotation": -94.97, "width": 57, "height": 52 }
+		},
+		"staff": {
+			"staff": { "name": "characters/shaman/necromancer/staff", "x": 25.17, "y": 7.63, "rotation": -94.37, "width": 69, "height": 359 }
+		},
+		"staff2": {
+			"staff": { "name": "characters/shaman/necromancer/staff", "x": 21.62, "y": -5.31, "rotation": -95.2, "width": 69, "height": 359 }
+		},
+		"torso": {
+			"characters/shaman/necromancer/torso": { "x": 77.73, "y": -10.52, "rotation": -92.14, "width": 73, "height": 206 }
 		}
 	}
 },

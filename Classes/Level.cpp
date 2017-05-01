@@ -20,11 +20,12 @@ LevelManager::LevelManager() {
 	if (doc.GetType() != rapidjson::Type::kObjectType) {
 		LOG("Could not parse JSON!");
 	}
-	
+	int i = 0;
 	for (rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin(); itr != doc.MemberEnd(); ++itr) {
 		std::string currentkey = itr->name.GetString();
 		//
 		RoundDef *r = new RoundDef;
+		r->id = i++;
 		r->name = currentkey;
 		
 		const auto &monsters = itr->value["monsters"];
@@ -55,6 +56,7 @@ LevelManager *LevelManager::get() {
 
 RoundDef *LevelManager::generateRound(int stage) {
 	auto r = new RoundDef;
+	r->id = stage;
 	r->generated = true;
 	if (stage == 0) {
 		r->monsters.push_back("goblin_sword");

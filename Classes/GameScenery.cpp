@@ -23,14 +23,24 @@ bool GameScenery::init(Size size) {
 	
 	setContentSize(size);
 	
-	scenery = LoadSprite("ui/scenery.png");
+	scenery = LoadSprite("background/Graveyard1.png");
 	scenery->setAnchorPoint(Vec2(0.5, 0.5));
+	
+	//Fit width:
 	float targetWidth = size.width;
 	float actualWidth = scenery->getBoundingBox().size.width;
 	float ratio = targetWidth/actualWidth;
-	if (ratio > 1) {
+	if (ratio > 1)
+	{
 		scenery->setScale(targetWidth/actualWidth);
 	}
+	
+	// Fit height
+	/*float targetHeight = size.height;
+	float actualHeight = scenery->getBoundingBox().size.height;
+	float ratio = targetHeight/actualHeight;
+	scenery->setScale(ratio);*/
+	
 	scenery->setPosition(Vec2(size.width/2, (size.height)/2));
 	addChild(scenery, -2);
 	
@@ -85,6 +95,22 @@ bool GameScenery::init(Size size) {
 	littleText->setOpacity(0);
 	
 	return true;
+}
+
+void GameScenery::setImage(int a) {
+	const char *name = nullptr;
+	a = a % 6;
+	if (a < 0) a += 6;
+	switch (a) {
+		case 0: name = "background/forest1.png"; break;
+		case 1: name = "background/forest2.png"; break;
+		case 2: name = "background/graveyard.png"; break;
+		case 3: name = "background/tundra.png"; break;
+		case 4: name = "background/volcano.png"; break;
+		case 5: name = "background/scenery.png"; break;
+	}
+	auto sf = LoadSpriteFrame(name);
+	scenery->setSpriteFrame(sf);
 }
 
 void GameScenery::hideObjects() {

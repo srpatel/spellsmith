@@ -33,6 +33,37 @@
     ]
   },
   {
+    "name": "ice_goblin",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "enemy_humanoid",
+      "skins": [
+        "icegoblin1",
+        "icegoblin2"
+      ],
+      "attachments": [
+        {
+          "weapon": "characters/goblin/halberd"
+        }
+      ]
+    },
+    "health": 50,
+    "attack_frequency": 4,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack_lunge",
+        "amount": 10
+      }
+    ]
+  },
+  {
     "name": "goblin_axe",
     "offsets": {
       "proj_to": [
@@ -165,6 +196,41 @@
       "skins": [
         "animal1",
         "animal2"
+      ]
+    },
+    "health": 25,
+    "attack_frequency": 2,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "heal_other",
+        "animation": "heal",
+        "amount": 5
+      },
+      {
+        "ratio": 0,
+        "type": "melee",
+        "animation": "melee",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "name": "necromancer",
+    "offsets": {
+      "proj_from": [
+        0,
+        0
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "shaman",
+      "skins": [
+        "necromancer"
       ]
     },
     "health": 25,

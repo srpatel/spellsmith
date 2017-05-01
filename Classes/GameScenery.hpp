@@ -26,6 +26,7 @@ public:
 	CREATE_FUNC_1(GameScenery, Size);
 	spine::SkeletonAnimation *wizardsprite;
 	void showFlags(int flagType);
+	void setImage(int a);
 	float char_scale;
 private:
 	void greyscaleMode(bool);
