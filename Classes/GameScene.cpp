@@ -81,9 +81,9 @@ bool Game::init() {
 	{
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		
-		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
+		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height + 5));
 		scenery->setAnchorPoint(Vec2(0, 0));
-		scenery->setPosition(0, layout.column_height);
+		scenery->setPosition(0, layout.column_height - 5);
 		addChild(scenery);
 		
 		// Click on scenery to select the enemy at that x-pos (ish)
@@ -1035,7 +1035,7 @@ void Game::gotoNextEnemy() {
 }
 void Game::showRound(RoundDef *round) {
 	printf("Starting round. %d pending actions.\n", numCurrentActions);
-	scenery->setImage(round->id);
+	scenery->setImage(round->bg);
 	if (numCurrentActions > 0) {
 		numCurrentActions = 0;
 	}

@@ -1,35 +1,40 @@
 {
   "1": {
     "depends": "",
+    "bg": "forest1",
     "monsters": [
-      "goblin_sword"
+      "necromancer",
+      "ice_goblin",
+      "ice_goblin"
     ],
-    "x": 50,
-    "y": 50,
+    "x": 268,
+    "y": 98,
     "rewards": [
       "healstrike"
     ]
   },
   "2": {
     "depends": "1",
+    "bg": "forest1",
     "monsters": [
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 100,
-    "y": 50,
+    "x": 313,
+    "y": 204,
     "rewards": [
       "poison_dart"
     ]
   },
   "3": {
     "depends": "2",
+    "bg": "graveyard1",
     "monsters": [
       "water_wizard",
       "goblin_sword"
     ],
-    "x": 150,
-    "y": 50,
+    "x": 294,
+    "y": 348,
     "rewards": [
       "zap",
       "fury"
@@ -37,13 +42,14 @@
   },
   "4": {
     "depends": "3",
+    "bg": "forest2",
     "monsters": [
       "shaman",
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 200,
-    "y": 50,
+    "x": 210,
+    "y": 481,
     "rewards": [
       "earthquake",
       "focus"
@@ -51,13 +57,14 @@
   },
   "5": {
     "depends": "4",
+    "bg": "forest2",
     "monsters": [
       "fire_wizard",
       "goblin_sword",
       "goblin_sword"
     ],
-    "x": 250,
-    "y": 50,
+    "x": 341,
+    "y": 626,
     "rewards": [
       "ice_bolt",
       "evaporate"
@@ -65,13 +72,14 @@
   },
   "6": {
     "depends": "5",
+    "bg": "volcano1",
     "monsters": [
       "shaman",
       "dog",
       "dog"
     ],
-    "x": 300,
-    "y": 50,
+    "x": 398,
+    "y": 784,
     "rewards": [
       "drain_life",
       "phase"
@@ -79,13 +87,14 @@
   },
   "7": {
     "depends": "6",
+    "bg": "lake1",
     "monsters": [
       "shaman",
       "dog",
       "fast_dog"
     ],
-    "x": 50,
-    "y": 100,
+    "x": 324,
+    "y": 887,
     "rewards": [
       "fertilise",
       "forest_breeze"
@@ -93,13 +102,14 @@
   },
   "8": {
     "depends": "7",
+    "bg": "lake1",
     "monsters": [
       "shaman",
       "fire_wizard",
       "fast_dog"
     ],
-    "x": 100,
-    "y": 100,
+    "x": 340,
+    "y": 1050,
     "rewards": [
       "dragon_breath",
       "fireball"
@@ -107,104 +117,97 @@
   },
   "9": {
     "depends": "8",
+    "bg": "volcano2",
     "monsters": [
       "shaman",
       "fast_dog",
       "fast_dog"
     ],
-    "x": 150,
-    "y": 100,
+    "x": 345,
+    "y": 1196,
     "rewards": [
       "channel"
     ]
   },
   "10": {
     "depends": "9",
+    "bg": "volcano2",
     "monsters": [
       "goblin_king"
     ],
-    "x": 200,
-    "y": 100,
+    "x": 300,
+    "y": 1317,
     "rewards": []
   },
   "3a": {
     "depends": "3",
+    "bg": "graveyard1",
     "monsters": [
       "water_wizard",
       "water_wizard",
       "goblin_sword"
     ],
-    "x": 250,
-    "y": 100,
+    "x": 178,
+    "y": 350,
     "rewards": [
       "lightning_bolt",
       "lightning_storm"
     ]
   },
-  "3b": {
-    "depends": "3a",
-    "monsters": [
-      "water_wizard",
-      "water_wizard",
-      "water_wizard"
-    ],
-    "x": 250,
-    "y": 100,
-    "rewards": [
-      "charge_bolt",
-      "crystalise"
-    ]
-  },
-  "6a": {
-    "depends": "6",
+  "5a": {
+    "depends": "5",
+    "bg": "volcano1",
     "monsters": [
       "water_wizard",
       "fire_wizard",
       "fast_dog"
     ],
-    "x": 300,
-    "y": 100,
+    "x": 580,
+    "y": 786,
     "rewards": [
       "fountain_of_youth",
       "cleanse"
     ]
   },
-  "5a": {
-    "depends": "5",
+  "4a": {
+    "depends": "4",
+    "bg": "tundra1",
     "monsters": [
       "goblin_sword",
       "fire_wizard",
       "goblin_axe"
     ],
-    "x": 50,
-    "y": 150,
+    "x": 119,
+    "y": 630,
     "rewards": [
       "fury",
       "smelt"
     ]
   },
-  "5b": {
-    "depends": "5a",
+  "4b": {
+    "depends": "4a",
+    "bg": "tundra1",
     "monsters": [
       "fire_wizard",
       "fire_wizard"
     ],
-    "x": 100,
-    "y": 150,
+    "x": 80,
+    "y": 754,
     "rewards": [
       "induce_explosion",
       "purify"
     ]
   },
-  "5c": {
-    "depends": "5b",
+  "4c": {
+    "depends": "4b",
+    "bg": "tundra1",
     "monsters": [
       "fire_wizard",
       "fire_wizard",
       "fire_wizard"
     ],
-    "x": 150,
-    "y": 150,
+    "x": 94,
+    "y": 859,
     "rewards": [
       "volcanic",
       "fire_cleanse"

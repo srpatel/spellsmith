@@ -148,5 +148,22 @@
     "ARENA": "Arena",
     "ADVENTURE": "Adventure",
     "PLAY": "PLAY"
+  },
+  "level": {
+    "1": "Forest",
+    "2": "South Gate",
+    "3": "Graveyard",
+    "4": "Fork",
+    "5": "No Man's Land",
+    "6": "Mountain Pass",
+    "7": "Marsh",
+    "8": "Bridge",
+    "9": "Great Mountain",
+    "10": "Castle",
+    "3a": "Abandoned Church",
+    "4a": "Mage's Tower",
+    "4b": "Frost Plains",
+    "4c": "Ice Mountain",
+    "5a": "Volcano"
   }
 }

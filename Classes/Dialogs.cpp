@@ -118,7 +118,8 @@ bool PreLevelDialog::init(RoundDef *round) {
 	this->addChild(popup);
 	setContentSize(size);
 	
-	auto label = Label::createWithTTF( round->name, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	auto roundName = _(std::string("level.")+round->name);
+	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
 	this->addChild(label, 1);

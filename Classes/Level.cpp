@@ -27,6 +27,7 @@ LevelManager::LevelManager() {
 		RoundDef *r = new RoundDef;
 		r->id = i++;
 		r->name = currentkey;
+		r->bg = std::string("bg_") + itr->value["bg"].GetString() + ".png";
 		
 		const auto &monsters = itr->value["monsters"];
 		for (int i = 0; i < monsters.Size(); i++) {

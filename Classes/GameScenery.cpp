@@ -23,23 +23,20 @@ bool GameScenery::init(Size size) {
 	
 	setContentSize(size);
 	
-	scenery = LoadSprite("background/Graveyard1.png");
+	scenery = LoadLargeSprite("bg_graveyard1.png");
 	scenery->setAnchorPoint(Vec2(0.5, 0.5));
 	
 	//Fit width:
 	float targetWidth = size.width;
 	float actualWidth = scenery->getBoundingBox().size.width;
-	float ratio = targetWidth/actualWidth;
-	if (ratio > 1)
-	{
-		scenery->setScale(targetWidth/actualWidth);
-	}
+	float wRatio = targetWidth/actualWidth;
 	
-	// Fit height
-	/*float targetHeight = size.height;
+	float targetHeight = size.height;
 	float actualHeight = scenery->getBoundingBox().size.height;
-	float ratio = targetHeight/actualHeight;
-	scenery->setScale(ratio);*/
+	float hRatio = targetHeight/actualHeight;
+	
+	float ratio = MAX(hRatio, wRatio);
+	scenery->setScale(ratio);
 	
 	scenery->setPosition(Vec2(size.width/2, (size.height)/2));
 	addChild(scenery, -2);
@@ -97,9 +94,9 @@ bool GameScenery::init(Size size) {
 	return true;
 }
 
-void GameScenery::setImage(int a) {
-	const char *name = nullptr;
-	a = a % 6;
+void GameScenery::setImage(std::string bg) {
+	//const char *name = nullptr;
+	/*a = a % 6;
 	if (a < 0) a += 6;
 	switch (a) {
 		case 0: name = "background/forest1.png"; break;
@@ -108,9 +105,9 @@ void GameScenery::setImage(int a) {
 		case 3: name = "background/tundra.png"; break;
 		case 4: name = "background/volcano.png"; break;
 		case 5: name = "background/scenery.png"; break;
-	}
-	auto sf = LoadSpriteFrame(name);
-	scenery->setSpriteFrame(sf);
+	}*/
+	//auto sf = LoadLargeSprite(bg);
+	scenery->setTexture(bg);
 }
 
 void GameScenery::hideObjects() {

@@ -29,6 +29,7 @@ struct RoundDef {
 	int id = 0;
 	bool generated;
 	std::string name;
+	std::string bg;
 	std::vector<std::string> monsters;
 	std::vector<std::string> rewards;
 	std::string depends;

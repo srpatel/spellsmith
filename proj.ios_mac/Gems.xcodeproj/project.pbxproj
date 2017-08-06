@@ -117,6 +117,8 @@
 		105E0D231BF14EB10081D8F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 105E0D211BF14EB10081D8F5 /* data */; };
 		1064AE041E3890C0006A567B /* SpellBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1064AE021E3890C0006A567B /* SpellBlob.cpp */; };
 		1064AE051E3890C0006A567B /* SpellBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1064AE021E3890C0006A567B /* SpellBlob.cpp */; };
+		106C3F181EFEAA9300CE7411 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106C3F161EFEAA9300CE7411 /* Map.cpp */; };
+		106C3F191EFEAA9300CE7411 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106C3F161EFEAA9300CE7411 /* Map.cpp */; };
 		1070AEF61CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
 		1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070AEF41CC56BB5009DA840 /* GameScenery.cpp */; };
 		1070E0AD1BF5188E007C06F9 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1070E0AB1BF5188E007C06F9 /* GameController.cpp */; };
@@ -350,6 +352,8 @@
 		105E0D271BF14F910081D8F5 /* CommonPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPrefix.h; sourceTree = "<group>"; };
 		1064AE021E3890C0006A567B /* SpellBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellBlob.cpp; sourceTree = "<group>"; };
 		1064AE031E3890C0006A567B /* SpellBlob.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpellBlob.hpp; sourceTree = "<group>"; };
+		106C3F161EFEAA9300CE7411 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
+		106C3F171EFEAA9300CE7411 /* Map.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Map.hpp; sourceTree = "<group>"; };
 		1070AEF41CC56BB5009DA840 /* GameScenery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScenery.cpp; sourceTree = "<group>"; };
 		1070AEF51CC56BB5009DA840 /* GameScenery.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScenery.hpp; sourceTree = "<group>"; };
 		1070E0AB1BF5188E007C06F9 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
@@ -567,6 +571,8 @@
 				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 				107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */,
 				107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */,
+				106C3F161EFEAA9300CE7411 /* Map.cpp */,
+				106C3F171EFEAA9300CE7411 /* Map.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1042,6 +1048,7 @@
 				105E0D131BF14E3F0081D8F5 /* Gem.cpp in Sources */,
 				102993421D62429000D1492E /* AttachmentVertices.cpp in Sources */,
 				1070E0B11BF54FCE007C06F9 /* MainMenu.cpp in Sources */,
+				106C3F181EFEAA9300CE7411 /* Map.cpp in Sources */,
 				102993381D62429000D1492E /* AnimationStateData.c in Sources */,
 				1020FEED1C06759400019EB9 /* SaveData.cpp in Sources */,
 				1087478B1C0797CD0069DCAF /* Level.cpp in Sources */,
@@ -1126,6 +1133,7 @@
 				10FC73741E2EDBC30096BF0E /* NavigationBar.cpp in Sources */,
 				102993591D62429000D1492E /* MeshAttachment.c in Sources */,
 				1029933B1D62429000D1492E /* Atlas.c in Sources */,
+				106C3F191EFEAA9300CE7411 /* Map.cpp in Sources */,
 				100AEB981CC3E61400182962 /* GameHUD.cpp in Sources */,
 				1064AE051E3890C0006A567B /* SpellBlob.cpp in Sources */,
 				1029934B1D62429000D1492E /* Cocos2dAttachmentLoader.cpp in Sources */,
