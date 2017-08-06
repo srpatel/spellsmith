@@ -25,34 +25,38 @@ bool MapScroll::init() {
 	addChild(map);
 	
 	// Add nodes!
-	nodes = Layer::create();
-	addChild(nodes);
+	Layer *nodesHolder = Layer::create();
+	addChild(nodesHolder);
 	
-	nodes->removeAllChildren();
-	for (EventListener *l : listeners) {
+	nodesHolder->removeAllChildren();
+	/*for (EventListener *l : listeners) {
 		_eventDispatcher->removeEventListener(l);
 	}
-	listeners.clear();
+	listeners.clear();*/
 	
 	//float offset_y = 50;
 	for (RoundDef * r : LevelManager::get()->getRoundDefinitions()) {
 		// Make a node and add it!
-		auto n =
-			SaveData::isLevelComplete(r->name) ?
-			LoadSprite("map/node_green.png") :
-			LoadSprite("map/node_red.png");
+		auto n = LoadSprite("map/node_red.png");
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		Vec2 pos(r->x, r->y);
 		pos *= scale;
 		pos -= getContentSize() / 2;
 		n->setPosition(pos);
-		nodes->addChild(n);
+		nodes[r] = n;
+		nodesHolder->addChild(n);
 		
 		auto onclick = EventListenerTouchOneByOne::create();
 		onclick->setSwallowTouches(true);
 		onclick->onTouchBegan = [this, r](Touch* touch, Event* event) -> bool {
 			auto bounds = event->getCurrentTarget()->getBoundingBox();
 			bounds.origin += getPosition();
+			
+			// Can only click on me if the dependency is completed
+			auto depends = r->depends;
+			if (!depends.empty() && !SaveData::isLevelComplete(depends)) {
+				return false;
+			}
 			
 			if (bounds.containsPoint(touch->getLocation())){
 				PLAY_SOUND( kSoundEffect_UISelect );
@@ -63,8 +67,25 @@ bool MapScroll::init() {
 			return false; // if you are consuming it
 		};
 		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
-		listeners.push_back(onclick);
+		//listeners.push_back(onclick);
 	}
 	
+	refreshNodes();
+	
 	return true;
+}
+
+void MapScroll::refreshNodes() {
+	for (auto n : nodes) {
+		bool completed =  SaveData::isLevelComplete(n.first->name);
+		auto sprite = n.second;
+		auto frame = LoadSpriteFrame(completed ?
+			"map/node_green.png" :
+			"map/node_red.png");
+		sprite->setSpriteFrame(frame);
+		
+		// Is the dependency completed?
+		auto depends = n.first->depends;
+		sprite->setVisible(completed || depends.empty() || SaveData::isLevelComplete(depends));
+	}
 }

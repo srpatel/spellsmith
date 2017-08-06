@@ -9,8 +9,6 @@
 #ifndef Level_hpp
 #define Level_hpp
 
-#include "Monster.hpp"
-
 class Round;
 class RoundDef;
 

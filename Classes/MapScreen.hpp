@@ -9,14 +9,15 @@
 #ifndef MapScreen_hpp
 #define MapScreen_hpp
 
+class MapScroll;
+
 class MapScreen : public Layer {
 public:
 	bool init();
 	void refreshNodes();
 	CREATE_FUNC(MapScreen);
 private:
-	Layer *nodes;
-	std::vector<EventListener *> listeners;
+	MapScroll *map;
 };
 
 #endif /* MapScreen_hpp */

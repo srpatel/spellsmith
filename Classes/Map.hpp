@@ -9,15 +9,17 @@
 #ifndef Map_hpp
 #define Map_hpp
 
+class RoundDef;
+
 class MapScroll : public Layer {
 public:
 	bool init();
+	void refreshNodes();
 	CREATE_FUNC(MapScroll);
 private:
 	bool dragging;
 	float downY;
-	Layer *nodes;
-	std::vector<EventListener *> listeners;
+	std::map<RoundDef *, Sprite *> nodes;
 };
 
 #endif /* Map_hpp */

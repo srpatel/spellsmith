@@ -33,7 +33,7 @@ bool MapScreen::init() {
 	
 	// must multiply by scale factor because we load the
 	// same resource in all resolutions
-	auto map = MapScroll::create();
+	map = MapScroll::create();
 	
 	auto buffer = 50;
 	auto mapMaxY = bottomY + map->getContentSize().height/2;
@@ -66,7 +66,7 @@ bool MapScreen::init() {
 		
 		return false; // if you are consuming it
 	};
-	onclick->onTouchMoved = [this, map, mapPreferredMaxY, mapMaxY, mapPreferredMinY, mapMinY, top, bot](Touch* touch, Event* event) -> bool {
+	onclick->onTouchMoved = [this, mapPreferredMaxY, mapMaxY, mapPreferredMinY, mapMinY, top, bot](Touch* touch, Event* event) -> bool {
 		auto dy = touch->getDelta().y;
 		auto cy = map->getPositionY();
 		auto newY = cy + dy;
@@ -134,53 +134,11 @@ bool MapScreen::init() {
 	});
 	this->addChild(button);
 	*/
-	// todo: coordinates are such on the original image
-	// scale map so that width is correct, and then scale offsets by that amount too
-	nodes = Layer::create();
-	nodes->setVisible(false);
-	addChild(nodes);
 	
 	return true;
 }
 
 void MapScreen::refreshNodes() {
+	map->refreshNodes();
 	return;
-	nodes->removeAllChildren();
-	for (EventListener *l : listeners) {
-		_eventDispatcher->removeEventListener(l);
-	}
-	listeners.clear();
-	
-	float offset_y = 50;
-	for (RoundDef * r : LevelManager::get()->getRoundDefinitions()) {
-		// Make a node and add it!
-		auto n =
-			SaveData::isLevelComplete(r->name) ?
-			LoadSprite("icons/mapnodedone.png") :
-			LoadSprite("icons/mapnode.png");
-		n->setAnchorPoint(Vec2(0.5, 0.5));
-		n->setPosition(r->x, r->y + offset_y);
-		nodes->addChild(n);
-		
-		auto t = Label::createWithTTF(r->name, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-		t->setTextColor(Color4B::WHITE);
-		t->setPosition(n->getPosition());
-		nodes->addChild(t);
-		
-		auto onclick = EventListenerTouchOneByOne::create();
-		onclick->setSwallowTouches(true);
-		onclick->onTouchBegan = [this, r](Touch* touch, Event* event) -> bool {
-			auto bounds = event->getCurrentTarget()->getBoundingBox();
-			
-			if (bounds.containsPoint(touch->getLocation())){
-				PLAY_SOUND( kSoundEffect_UISelect );
-				GameController::get()->showPreLevelDialog(r);
-				return true;
-			}
-			
-			return false; // if you are consuming it
-		};
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
-		listeners.push_back(onclick);
-	}
 }

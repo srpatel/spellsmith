@@ -95,18 +95,6 @@ bool GameScenery::init(Size size) {
 }
 
 void GameScenery::setImage(std::string bg) {
-	//const char *name = nullptr;
-	/*a = a % 6;
-	if (a < 0) a += 6;
-	switch (a) {
-		case 0: name = "background/forest1.png"; break;
-		case 1: name = "background/forest2.png"; break;
-		case 2: name = "background/graveyard.png"; break;
-		case 3: name = "background/tundra.png"; break;
-		case 4: name = "background/volcano.png"; break;
-		case 5: name = "background/scenery.png"; break;
-	}*/
-	//auto sf = LoadLargeSprite(bg);
 	scenery->setTexture(bg);
 }
 
