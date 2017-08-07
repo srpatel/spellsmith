@@ -3,9 +3,12 @@
     "depends": "",
     "bg": "forest1",
     "monsters": [
-      "necromancer",
-      "ice_goblin",
-      "ice_goblin"
+      [
+        "goblin_sword"
+      ],
+      [
+        "goblin_sword"
+      ]
     ],
     "x": 268,
     "y": 98,
@@ -17,8 +20,10 @@
     "depends": "1",
     "bg": "forest1",
     "monsters": [
-      "goblin_sword",
-      "goblin_sword"
+      [
+        "goblin_sword",
+        "goblin_sword"
+      ]
     ],
     "x": 313,
     "y": 204,
@@ -30,8 +35,10 @@
     "depends": "2",
     "bg": "graveyard1",
     "monsters": [
-      "water_wizard",
-      "goblin_sword"
+      [
+        "necromancer",
+        "goblin_sword"
+      ]
     ],
     "x": 294,
     "y": 348,
@@ -44,9 +51,11 @@
     "depends": "3",
     "bg": "forest2",
     "monsters": [
-      "shaman",
-      "goblin_sword",
-      "goblin_sword"
+      [
+        "shaman",
+        "dog",
+        "goblin_sword"
+      ]
     ],
     "x": 210,
     "y": 481,
@@ -59,9 +68,11 @@
     "depends": "4",
     "bg": "forest2",
     "monsters": [
-      "fire_wizard",
-      "goblin_sword",
-      "goblin_sword"
+      [
+        "dog",
+        "shaman",
+        "dog"
+      ]
     ],
     "x": 341,
     "y": 626,
@@ -74,9 +85,11 @@
     "depends": "5",
     "bg": "volcano1",
     "monsters": [
-      "shaman",
-      "dog",
-      "dog"
+      [
+        "fire_wizard",
+        "dog",
+        "dog"
+      ]
     ],
     "x": 398,
     "y": 784,
@@ -89,9 +102,11 @@
     "depends": "6",
     "bg": "lake1",
     "monsters": [
-      "shaman",
-      "dog",
-      "fast_dog"
+      [
+        "water_wizard",
+        "dog",
+        "water_wizard"
+      ]
     ],
     "x": 324,
     "y": 887,
@@ -104,9 +119,11 @@
     "depends": "7",
     "bg": "lake1",
     "monsters": [
-      "shaman",
-      "fire_wizard",
-      "fast_dog"
+      [
+        "water_wizard",
+        "water_wizard",
+        "water_wizard"
+      ]
     ],
     "x": 340,
     "y": 1050,
@@ -119,9 +136,11 @@
     "depends": "8",
     "bg": "volcano2",
     "monsters": [
-      "shaman",
-      "fast_dog",
-      "fast_dog"
+      [
+        "goblin_halberd",
+        "goblin_halberd",
+        "goblin_halberd"
+      ]
     ],
     "x": 345,
     "y": 1196,
@@ -133,7 +152,9 @@
     "depends": "9",
     "bg": "volcano2",
     "monsters": [
-      "goblin_king"
+      [
+        "goblin_king"
+      ]
     ],
     "x": 300,
     "y": 1317,
@@ -143,9 +164,11 @@
     "depends": "3",
     "bg": "graveyard1",
     "monsters": [
-      "water_wizard",
-      "water_wizard",
-      "goblin_sword"
+      [
+        "necromancer",
+        "necromancer",
+        "goblin_sword"
+      ]
     ],
     "x": 178,
     "y": 350,
@@ -158,9 +181,11 @@
     "depends": "5",
     "bg": "volcano1",
     "monsters": [
-      "water_wizard",
-      "fire_wizard",
-      "fast_dog"
+      [
+        "fire_wizard",
+        "fire_wizard",
+        "fast_dog"
+      ]
     ],
     "x": 580,
     "y": 786,
@@ -173,9 +198,11 @@
     "depends": "4",
     "bg": "tundra1",
     "monsters": [
-      "goblin_sword",
-      "fire_wizard",
-      "goblin_axe"
+      [
+        "goblin_sword",
+        "water_wizard",
+        "goblin_axe"
+      ]
     ],
     "x": 119,
     "y": 630,
@@ -188,8 +215,10 @@
     "depends": "4a",
     "bg": "tundra1",
     "monsters": [
-      "fire_wizard",
-      "fire_wizard"
+      [
+        "water_wizard",
+        "water_wizard"
+      ]
     ],
     "x": 80,
     "y": 754,
@@ -202,9 +231,11 @@
     "depends": "4b",
     "bg": "tundra1",
     "monsters": [
-      "fire_wizard",
-      "fire_wizard",
-      "fire_wizard"
+      [
+        "water_wizard",
+        "water_wizard",
+        "water_wizard"
+      ]
     ],
     "x": 94,
     "y": 859,

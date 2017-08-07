@@ -138,7 +138,8 @@
     "goblin_axe": "Goblin Axeman",
     "goblin_halberd": "Goblin Halberdier",
     "fire_wizard": "Pyromancer",
-    "water_wizard": "Hydromancer"
+    "water_wizard": "Hydromancer",
+    "necromancer": "Necromancer"
   },
   "ui": {
     "LEVEL_WON": "congratulations",

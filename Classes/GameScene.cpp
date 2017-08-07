@@ -186,6 +186,23 @@ bool Game::init() {
 			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
 			354 * ui_scale);
 		addChild(currentRound);
+		
+		currentWaveHeading = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
+		currentWaveHeading->setString("WAVE");
+		currentWaveHeading->setHorizontalAlignment(TextHAlignment::CENTER);
+		currentWaveHeading->setAnchorPoint(Vec2(0.5, 0.5));
+		currentWaveHeading->setPosition(
+			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
+			366 * ui_scale);
+		addChild(currentWaveHeading);
+		
+		currentWave = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
+		currentWave->setHorizontalAlignment(TextHAlignment::CENTER);
+		currentWave->setAnchorPoint(Vec2(0.5, 0.5));
+		currentWave->setPosition(
+			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
+			354 * ui_scale);
+		addChild(currentWave);
 	}
 	{
 		auto grad = LoadSprite("ui/orb_bg.png");
@@ -721,8 +738,17 @@ void Game::attemptSetState(GameState nextstate) {
 				success = false;
 			}
 			if (success) {
-				PLAY_SOUND( kSoundEffect_LevelWin );
-				scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
+				// go to the next round
+				wave++;
+				if (round->waves.size() == wave) {
+					// There are no more waves! Show level win
+					PLAY_SOUND( kSoundEffect_LevelWin );
+					scenery->showFlags(GameScenery::FLAG_TYPE_WIN);
+				} else {
+					// There are more waves. Show the enemies.
+					showRound(round, wave);
+					return;
+				}
 			} else {
 				PLAY_SOUND( kSoundEffect_LevelLose );
 				scenery->showFlags(GameScenery::FLAG_TYPE_LOSE);
@@ -1020,6 +1046,8 @@ void Game::enemyDoTurn() {
 	}
 }
 void Game::gotoNextEnemy() {
+	// this is for arena...
+	
 	// Clear buffs, fully heal, and clear the grid
 	wizard->clearBuffs();
 	wizard->ui_health = wizard->max_health;
@@ -1031,9 +1059,9 @@ void Game::gotoNextEnemy() {
 	RoundDef *round = LevelManager::get()->generateRound(stage);
 	currentRound->setString(ToString(stage));
 	stage++;
-	showRound(round);
+	showRound(round, 0);
 }
-void Game::showRound(RoundDef *round) {
+void Game::showRound(RoundDef *round, int wave) {
 	printf("Starting round. %d pending actions.\n", numCurrentActions);
 	scenery->setImage(round->bg);
 	if (numCurrentActions > 0) {
@@ -1045,7 +1073,13 @@ void Game::showRound(RoundDef *round) {
 			delete this->round;
 	}
 	this->round = round;
+	this->wave = wave;
 
+	int numWaves = round->waves.size();
+	currentWaveHeading->setVisible( ! round->generated && numWaves > 1 );
+	currentWave->setVisible( ! round->generated && numWaves > 1 );
+	currentWave->setString(ToString(wave + 1) + " of " + ToString(numWaves));
+	
 	currentRound->setVisible( round->generated );
 	level_counter->setVisible( round->generated );
 
@@ -1056,7 +1090,8 @@ void Game::showRound(RoundDef *round) {
 		delete e;
 	}
 	enemies.clear();
-	for (std::string monster_name : round->monsters) {
+	auto monsters = round->waves[wave];
+	for (std::string monster_name : monsters) {
 		Monster *m = MonsterManager::get()->get(monster_name);
 		printf("Showing monster %s\n", m->name.c_str());
 		// create an enemy from the monster
@@ -1136,7 +1171,7 @@ void Game::startRound(RoundDef *rounddef) {
 	updateInventory();
 	
 	currentRound->setString(""); // What should go here?
-	showRound(rounddef);
+	showRound(rounddef, 0);
 }
 
 void Game::update(float dt) {

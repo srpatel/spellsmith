@@ -40,7 +40,7 @@ bool MapScroll::init() {
 		auto n = LoadSprite("map/node_red.png");
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		Vec2 pos(r->x, r->y);
-		pos *= scale;
+		pos *= 0.4;
 		pos -= getContentSize() / 2;
 		n->setPosition(pos);
 		nodes[r] = n;

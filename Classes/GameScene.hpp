@@ -68,7 +68,7 @@ private:
 	void setup();
 	
 	void gotoNextEnemy();
-	void showRound(RoundDef *);
+	void showRound(RoundDef *, int wave);
 	
 	int getNextAliveEnemy(int start, bool *allDead);
 	
@@ -80,6 +80,8 @@ private:
 	Node *wizard_hp_bar;
 	Label *wizard_hp_text;
 	Label *currentRound;
+	Label *currentWaveHeading;
+	Label *currentWave;
 	Node *level_counter;
 	Layer *inventoryHolder;
 	std::vector<EventListener *> inventoryListeners;
@@ -88,6 +90,7 @@ private:
 	GameState state;
 	void attemptSetState(GameState);
 	RoundDef *round;
+	int wave;
 	int numMoves = 0;
 	
 	// Helper

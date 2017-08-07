@@ -11,7 +11,7 @@
 
 class NavigationBar : public Layer {
 public:
-	static const int HEIGHT = 50;
+	static const int HEIGHT = 55;
 	bool init();
 	
 	CREATE_FUNC(NavigationBar);

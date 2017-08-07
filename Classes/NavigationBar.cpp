@@ -31,11 +31,13 @@ bool NavigationBar::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	setContentSize(Size(visibleSize.width, NavigationBar::HEIGHT));
 	
-	// Background
-	auto grad = LayerColor::create();
-	grad->initWithColor(Color4B::WHITE);
-	grad->setContentSize(getContentSize());
-	addChild(grad);
+	auto sprite = LoadSprite("ui/nav_bar.png");
+	auto ratio = 55.0f / sprite->getContentSize().height;
+	sprite->setAnchorPoint(Vec2(0.5, 1));
+	sprite->setScale(3, -ratio);
+	sprite->setPosition(Vec2(visibleSize.width/2, 0));
+	//	sprite->setScale(ui_scale);
+	addChild(sprite);
 	
 	// Buttons
 	std::vector<ButtonDef> buttons;
