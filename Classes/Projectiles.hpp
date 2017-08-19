@@ -75,6 +75,7 @@ PROJECTILE(BasicWind,   windball,  /*shoot*/ 13, /*travel*/ 4, /*hit*/  9, /*off
 PROJECTILE(BasicEarth,  earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*offset*/ Vec2( 0, 0), kSoundEffect_PHEarth);
 PROJECTILE(BasicWater,  waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0), kSoundEffect_PHWater);
 PROJECTILE(BasicMeteor, meteor,    /*shoot*/  0, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHFire);
+PROJECTILE(BasicPurple, drainlife,    /*shoot*/  11, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(10, 0), kSoundEffect_PHWater);
 
 ANIM(AnimHeal, "castheal", 11, "castheal");
 ANIM(AnimFire, "castfire", 11, "castfire");

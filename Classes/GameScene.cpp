@@ -503,12 +503,17 @@ bool Game::onCastSpell(Chain *chain) {
 			
 			// immedietely apply health change to health
 			// create a projectile which, when appropriate, change ui_health
-			Color3B colour;
-			switch (chain->type) {
-				case FIRE:  colour = Color3B::RED; break;
-				case WATER: colour = Color3B::BLUE; break;
-				case AIR:   colour = Color3B::WHITE; break;
-				case EARTH: colour = Color3B::GREEN; break;
+			const char *colour;
+			auto chainType = chain->type;
+			if (chainType == CRYSTAL) {
+				// pick one at random!
+				chainType = static_cast<GemType>(1 + (rand() % 4));
+			}
+			switch (chainType) {
+				case FIRE:  colour = "fire"; break;
+				case WATER: colour = "water"; break;
+				case AIR:   colour = "wind"; break;
+				case EARTH: colour = "earth"; break;
 				default:break;
 			}
 			
@@ -606,7 +611,7 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 		skeleton->addAnimation(0, "hit", false);
 	}
 }
-void Game::makeProjectile(Character *source, Character *target, int damage, Color3B type, std::function<void(void)> onhitfunc) {
+void Game::makeProjectile(Character *source, Character *target, int damage, const char *type, std::function<void(void)> onhitfunc) {
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
 	
 	auto from = Vec2(source->sprite->getPosition().x, start_y);
@@ -648,14 +653,16 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
-	if (type == Color3B::WHITE) {
+	if (! strcmp(type, "wind")) {
 		projectile = BasicWind::create(from, to, scale, onHit);
-	} else if (type == Color3B::GREEN) {
+	} else if (! strcmp(type, "earth")) {
 		projectile = BasicEarth::create(from, to, scale, onHit);
-	} else if (type == Color3B::BLUE) {
+	} else if (! strcmp(type, "water")) {
 		projectile = BasicWater::create(from, to, scale, onHit);
-	} else {
+	} else if (! strcmp(type, "fire")) {
 		projectile = BasicFire::create(from, to, scale, onHit);
+	} else if (! strcmp(type, "purple")) {
+		projectile = BasicPurple::create(from, to, scale, onHit);
 	}
 	
 	// Wait for 0.56 seconds as that is when the staff is in the right place
@@ -665,7 +672,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Colo
 	runPendingAction([this, source, projectile, type]() {
 		if (source == wizard) {
 			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
-				type == Color3B::GREEN ? "spell_aura" : "spell_projectile",
+				strcmp(type, "earth") ? "spell_projectile" : "spell_aura",
 				false);
 			// Spell aura also has a sound effect for the bash
 			/*if (type == Color3B::GREEN) {
@@ -1017,11 +1024,11 @@ void Game::enemyDoTurn() {
 							
 							int damage = a->amount;
 							if (a->type == kAttackTypeProjectileFire) {
-								makeProjectile(e, wizard, damage, Color3B::RED);
+								makeProjectile(e, wizard, damage, "fire");
 							} else if (a->type == kAttackTypeProjectileWater) {
-								makeProjectile(e, wizard, damage, Color3B::BLUE);
+								makeProjectile(e, wizard, damage, "water");
 							} else {
-								makeProjectile(e, wizard, damage, Color3B::GREEN);
+								makeProjectile(e, wizard, damage, "earth");
 							}
 							// projectiles already add to action queue
 						};
@@ -1109,6 +1116,26 @@ void Game::showRound(RoundDef *round, int wave) {
 	// reset game state
 	state = kStatePlayerTurn;
 	grid->setActive(true);
+	
+	// TUTORIAL
+	// If this is round 1, and it hasn't been completed before, then we show a tutorial!
+	if (round->name == "1") {
+		// we remove the completed check for now, for testing
+		//grid->setActive(false);
+		// Predetermined grid
+		// Show a box over the grid which says:
+		// Oh no! There is a goblin in your path!
+		// [Tap]
+		// Thankfully you are a mage, and can make short work of it.
+		// [Tap]
+		// -- box now appears over the scenery
+		// -- everything except a path of gems is faded out
+		// Draw a chain of gems to attack the goblin!
+		// -- once done, box disappears
+		// That's it! Keep it up!
+		// [Tap]
+		// -- now you're on your own!
+	}
 }
 void Game::startArena() {
 	// Load a completely fresh level!
