@@ -634,9 +634,11 @@ void Game::makeProjectile(Character *source, Character *target, int damage, cons
 	bool phase = target->getBuffByType(BuffType::PHASING) != nullptr;
 	CallFunc *onHit;
 	
-	// TODO -- if phasing, don't take damage! And the projectile goes past?
+	// If phasing, don't take damage! And the projectile goes past?
 	if (! phase) {
 		target->health -= damage;
+	} else {
+		to.x = -50.0;
 	}
 	onHit = CallFunc::create([this, damage, target, onhitfunc, phase](){
 		SoundManager::get()->stopPTravel();
