@@ -82,5 +82,7 @@ ANIM(AnimFire, "castfire", 11, "castfire");
 ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100");
 ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200");
 ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300");
+ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00");
+ANIM(AnimStarsTop, "stars/top", 4, "starsfront00");
 
 #endif /* BasicFire_hpp */

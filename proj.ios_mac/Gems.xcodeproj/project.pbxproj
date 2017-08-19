@@ -136,6 +136,8 @@
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
 		108747901C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
+		10894F1E1F489FB500669A6A /* Buff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10894F1C1F489FB500669A6A /* Buff.cpp */; };
+		10894F1F1F489FB500669A6A /* Buff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10894F1C1F489FB500669A6A /* Buff.cpp */; };
 		108AC5B91D5F1C670006E5EA /* GameOverPopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */; };
 		108AC5BA1D5F1C670006E5EA /* GameOverPopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */; };
 		1095273D1D3BC843002EF8CC /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095273B1D3BC843002EF8CC /* Popup.cpp */; };
@@ -370,6 +372,8 @@
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		1087478E1C07A7920069DCAF /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
+		10894F1C1F489FB500669A6A /* Buff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Buff.cpp; sourceTree = "<group>"; };
+		10894F1D1F489FB500669A6A /* Buff.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Buff.hpp; sourceTree = "<group>"; };
 		108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverPopup.cpp; sourceTree = "<group>"; };
 		108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameOverPopup.hpp; sourceTree = "<group>"; };
 		1095273B1D3BC843002EF8CC /* Popup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Popup.cpp; sourceTree = "<group>"; };
@@ -542,6 +546,8 @@
 				105E0D001BF14E3F0081D8F5 /* Gem.hpp */,
 				105E0CFF1BF14E3F0081D8F5 /* Grid.cpp */,
 				105E0CFE1BF14E3F0081D8F5 /* Grid.hpp */,
+				10894F1C1F489FB500669A6A /* Buff.cpp */,
+				10894F1D1F489FB500669A6A /* Buff.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1042,6 +1048,7 @@
 				1029934C1D62429000D1492E /* Event.c in Sources */,
 				102993461D62429000D1492E /* BoneData.c in Sources */,
 				105E0D191BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
+				10894F1E1F489FB500669A6A /* Buff.cpp in Sources */,
 				1029936E1D62429000D1492E /* SkeletonRenderer.cpp in Sources */,
 				108AC5B91D5F1C670006E5EA /* GameOverPopup.cpp in Sources */,
 				102993601D62429000D1492E /* RegionAttachment.c in Sources */,
@@ -1156,6 +1163,7 @@
 				102993351D62429000D1492E /* Animation.c in Sources */,
 				10FC73781E2F58870096BF0E /* Spellbook.cpp in Sources */,
 				102993691D62429000D1492E /* SkeletonBounds.c in Sources */,
+				10894F1F1F489FB500669A6A /* Buff.cpp in Sources */,
 				102993711D62429000D1492E /* Skin.c in Sources */,
 				102993611D62429000D1492E /* RegionAttachment.c in Sources */,
 				102993451D62429000D1492E /* Bone.c in Sources */,

@@ -72,7 +72,17 @@ void SaveData::setEquippedSpellAt(int j, std::string name) {
 	UserDefault::getInstance()->flush();
 }
 
+#if DESKTOP
+	#include "Spell.hpp"
+#endif
+
 std::vector<std::string> SaveData::getSpells() {
+#if DESKTOP
+	std::vector<std::string> result;
+	for (Spell *spell : SpellManager::get()->spells)
+		result.push_back(spell->getRawName());
+	return result;
+#else
 	std::string list = UserDefault::getInstance()->getStringForKey("spell-inventory", "");
 	
 	std::vector<std::string> result;
@@ -87,6 +97,7 @@ std::vector<std::string> SaveData::getSpells() {
         result.push_back(list.substr(begin));
 	}
 	return result;
+#endif
 }
 
 void SaveData::addSpell(std::string name) {
