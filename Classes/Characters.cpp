@@ -159,6 +159,8 @@ Enemy::Enemy(Monster *m, int index) {
 		head_offset = {-30, 60};
 	} else if (monster->getSkeletonName() == "shaman") {
 		head_offset = {-4, 115};
+	} else if (monster->getSkeletonName() == "goblin_king") {
+		head_offset = {25, 150};
 	} else {
 		head_offset = {-18, 85};
 	}
