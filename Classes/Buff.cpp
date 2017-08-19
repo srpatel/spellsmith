@@ -8,7 +8,9 @@
 
 #include "Buff.hpp"
 #include "Characters.hpp"
+#include "Projectiles.hpp"
 #include "SoundManager.hpp"
+#include "GameScene.hpp"
 
 bool BuffComparator (Buff *left, Buff *right) {
 	return left->priority <= right->priority;
@@ -57,8 +59,35 @@ Buff *Buff::createFreeze(int amount){
 
 Buff *Buff::createStun(){
 	class StunBuff : public Buff {
-		void apply(Character *c) {}
-		void remove(Character *c) {}
+		Node *top = nullptr;
+		Node *bottom = nullptr;
+		void apply(Character *c) {
+			// add stars around the head
+			auto char_scale = Game::get()->scenery->char_scale;
+			Vec2 pos = c->sprite->getPosition() + c->head_offset * char_scale;
+			
+			top = AnimStarsTop::create(pos, 0.8f, nullptr, true);
+			bottom = AnimStarsBottom::create(pos, 0.8f, nullptr, true);
+			
+			auto fadeIn = FadeIn::create(0.5);
+			top->runAction(fadeIn);
+			bottom->runAction(fadeIn->clone());
+			
+			// enemy is at 50-100, so we use 25 and 125
+			c->sprite->getParent()->addChild(top, 125);
+			c->sprite->getParent()->addChild(bottom, 25);
+		}
+		void remove(Character *c) {
+			// fade them out!
+			auto seq = Sequence::create(
+				DelayTime::create(0.5),
+				FadeOut::create(0.5),
+				RemoveSelf::create(),
+				nullptr
+			);
+			top->runAction(seq);
+			bottom->runAction(seq->clone());
+		}
 	};
 	auto buff = new StunBuff;
 	buff->type = BuffType::STUN;

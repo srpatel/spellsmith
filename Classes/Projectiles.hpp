@@ -22,15 +22,15 @@ public: \
 	CREATE_FUNC_4(_classname, Vec2, Vec2, float, CallFunc*);\
 }
 
-#define ANIM(_classname, _name, _num, _fileprefix) \
+#define ANIM(_classname, _name, _num, _fileprefix, _looping) \
 class _classname : public BasicAnim { \
 public: \
 	_classname() \
 		: BasicAnim(_name, _num, _fileprefix) {} \
-	inline bool init(Vec2 loc, float scale, CallFunc* onHit){\
-		return BasicAnim::init(loc, scale, onHit);\
+	inline bool init(Vec2 loc, float scale, CallFunc* onHit, bool looping){\
+		return BasicAnim::init(loc, scale, onHit, looping);\
 	}\
-	CREATE_FUNC_3(_classname, Vec2, float, CallFunc*);\
+	CREATE_FUNC_4(_classname, Vec2, float, CallFunc*, bool);\
 }
 
 class BasicProjectile : public Layer {
@@ -62,7 +62,8 @@ public:
 	bool init(
 		Vec2 loc,
 		float scale,
-		CallFunc* onHit);
+		CallFunc* onHit,
+		bool looping);
 protected:
 	const char *path;
 	const char *prefix;
@@ -77,12 +78,12 @@ PROJECTILE(BasicWater,  waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*off
 PROJECTILE(BasicMeteor, meteor,    /*shoot*/  0, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHFire);
 PROJECTILE(BasicPurple, drainlife,    /*shoot*/  11, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(10, 0), kSoundEffect_PHWater);
 
-ANIM(AnimHeal, "castheal", 11, "castheal");
-ANIM(AnimFire, "castfire", 11, "castfire");
-ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100");
-ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200");
-ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300");
-ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00");
-ANIM(AnimStarsTop, "stars/top", 4, "starsfront00");
+ANIM(AnimHeal, "castheal", 11, "castheal", false);
+ANIM(AnimFire, "castfire", 11, "castfire", false);
+ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100", false);
+ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200", false);
+ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300", false);
+ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00", true);
+ANIM(AnimStarsTop, "stars/top", 4, "starsfront00", true);
 
 #endif /* BasicFire_hpp */

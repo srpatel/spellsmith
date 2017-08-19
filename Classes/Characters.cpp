@@ -154,6 +154,14 @@ Enemy::Enemy(Monster *m, int index) {
 	sprite->addChild(buffHolder);
 	
 	projectile_height = 81;
+	
+	if (monster->getSkeletonName() == "dog") {
+		head_offset = {-30, 60};
+	} else if (monster->getSkeletonName() == "shaman") {
+		head_offset = {-4, 115};
+	} else {
+		head_offset = {-18, 85};
+	}
 }
 Enemy::~Enemy() {
 	sprite->autorelease();

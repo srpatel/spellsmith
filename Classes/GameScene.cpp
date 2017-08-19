@@ -544,11 +544,11 @@ void Game::makeLightning(Character *target) {
 	BasicAnim *anim;
 	int p = rand() % 3;
 	if (p == 0) {
-		anim = AnimLightning1::create(pos, scenery->char_scale, onHit);
+		anim = AnimLightning1::create(pos, scenery->char_scale, onHit, false);
 	} else if (p == 1) {
-		anim = AnimLightning2::create(pos, scenery->char_scale, onHit);
+		anim = AnimLightning2::create(pos, scenery->char_scale, onHit, false);
 	} else {
-		anim = AnimLightning3::create(pos, scenery->char_scale, onHit);
+		anim = AnimLightning3::create(pos, scenery->char_scale, onHit, false);
 	}
 	actionQueued();
 	scenery->addChild(anim, 100);

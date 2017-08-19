@@ -26,6 +26,7 @@ public:
 	CharacterType type;
 	bool is_skeleton = false;
 	float projectile_height;
+	Vec2 head_offset;
 	Node *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);

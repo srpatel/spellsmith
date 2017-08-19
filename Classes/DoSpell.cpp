@@ -219,7 +219,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		auto addanim = CallFunc::create([game, staffOffset]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 					game->actionDone();
-				})
+				}), false
 			);
 			PLAY_SOUND(kSoundEffect_SHeal);
 			HEAL(5);
@@ -236,7 +236,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		auto addanim = CallFunc::create([game, staffOffset]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
-			}));
+			}), false);
 			PLAY_SOUND(kSoundEffect_SHeal);
 			HEAL(7);
 			game->scenery->addChild(heal);

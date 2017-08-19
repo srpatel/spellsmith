@@ -14,13 +14,16 @@
 bool BasicAnim::init(
 		Vec2 loc,
 		float scale,
-		CallFunc* onHit
+		CallFunc* onHit,
+		bool looping
 )
 {
 	if ( !Layer::init() )
 	{
 		return false;
 	}
+	
+	this->setCascadeOpacityEnabled(true);
 	
 	auto sprite = Sprite::create();
 	sprite->setPosition(loc);
@@ -38,12 +41,18 @@ bool BasicAnim::init(
 
 	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
 	
-	sprite->runAction(Sequence::create(
-		Animate::create(animation),
-		onHit,
-		RemoveSelf::create(),
-		nullptr
-	));
+	if (looping) {
+		sprite->runAction(
+			RepeatForever::create(Animate::create(animation))
+		);
+	} else {
+		sprite->runAction(Sequence::create(
+			Animate::create(animation),
+			onHit,
+			RemoveSelf::create(),
+			nullptr
+		));
+	}
 	addChild(sprite);
 	
 	
