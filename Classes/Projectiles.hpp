@@ -88,5 +88,6 @@ ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200", false);
 ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300", false);
 ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00", true);
 ANIM(AnimStarsTop, "stars/top", 4, "starsfront00", true);
+ANIM(AnimBlueGlow, "fountain", 26, "fountain", true);
 
 #endif /* BasicFire_hpp */

@@ -142,11 +142,36 @@ Buff *Buff::createFocus(){
 }
 
 Buff *Buff::createSpellFocus(){
-	auto buff = new EmptyBuff;
+	class FocusBuff : public Buff {
+		Node *glow;
+		void _apply(Character *c) override {
+			auto char_scale = Game::get()->scenery->char_scale;
+			Vec2 pos = c->sprite->getPosition();
+			pos.y += char_scale * 65;
+			
+			glow = AnimBlueGlow::create(pos, 1.5 * char_scale, nullptr, true);
+			
+			auto fadeIn = FadeIn::create(1);
+			glow->runAction(fadeIn);
+			
+			// enemy is at 50-100, so we use 25 and 125
+			c->sprite->getParent()->addChild(glow, 125);
+		}
+		void _remove(Character *c) override {
+			auto seq = Sequence::create(
+				DelayTime::create(0.5),
+				FadeOut::create(1),
+				RemoveSelf::create(),
+				nullptr
+			);
+			glow->runAction(seq);
+		}
+	};
+	auto buff = new FocusBuff;
 	buff->type = BuffType::SPELL_FOCUS;
 	buff->positive = true;
 	
-	buff->icon = "buffs/focus.png";
+	buff->icon = "";
 	
 	buff->sprite = nullptr;
 	
