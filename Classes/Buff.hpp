@@ -31,6 +31,9 @@ struct Buff {
 	int turns; // -1 = forever, n = lasts n more turns
 	int charges; // -1 = infinite, n = n charges remaining
 	
+	bool applied = false;
+	bool queuedRemoved = false;
+	
 	int priority;
 	
 	virtual void apply(Character *c) = 0;
@@ -45,6 +48,7 @@ struct Buff {
 	static Buff *createFocus();
 	static Buff *createSpellFocus();
 	static Buff *createChargeBolt();
+	
 	virtual ~Buff();
 };
 

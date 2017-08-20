@@ -533,25 +533,53 @@ bool Game::onCastSpell(Chain *chain) {
 	}
 	return success;
 }
-void Game::makeLightning(Character *target) {
+void Game::wizardBashAnimationByQueue() {
+	// Do the wizard's staff bash animation, and only run queue once it hits the
+	// floor.
+	// Awful naming.
+	runPendingAction([=]() {
+		scenery->wizardsprite->addAnimation(0, "spell_aura", false);
+		actionQueued();
+		auto q = Sequence::create(
+			DelayTime::create(0.5667f),
+			CallFunc::create([=](){
+				actionDone();
+			}),
+			nullptr
+		);
+		scenery->wizardsprite->runAction(q);
+	});
+}
+void Game::makeLightning(Character *target, int amt) {
 	float startx = target->sprite->getPosition().x;
 	float starty = target->sprite->getPosition().y + 75 * scenery->char_scale;
-	Vec2 pos{startx, starty};
-	SoundManager::get()->playEffect(kSoundEffect_SZap);
-	auto onHit = CallFunc::create([this](){
-		actionDone();
+	target->health -= amt;
+	runPendingAction([=]() {
+		Vec2 pos{startx, starty};
+		SoundManager::get()->playEffect(kSoundEffect_SZap);
+		auto onHit = CallFunc::create([this, target, amt](){
+			actionDone();
+		});
+		BasicAnim *anim;
+		int p = rand() % 3;
+		if (p == 0) {
+			anim = AnimLightning1::create(pos, scenery->char_scale, onHit, false);
+		} else if (p == 1) {
+			anim = AnimLightning2::create(pos, scenery->char_scale, onHit, false);
+		} else {
+			anim = AnimLightning3::create(pos, scenery->char_scale, onHit, false);
+		}
+		anim->runAction(Sequence::create(
+			DelayTime::create(0.3f),
+			CallFunc::create([=](){
+				target->ui_health -= amt;
+				onDamageTarget(target, false);
+				updateHealthBars();
+			}),
+			nullptr));
+		scenery->addChild(anim, 100);
+		actionQueued();
 	});
-	BasicAnim *anim;
-	int p = rand() % 3;
-	if (p == 0) {
-		anim = AnimLightning1::create(pos, scenery->char_scale, onHit, false);
-	} else if (p == 1) {
-		anim = AnimLightning2::create(pos, scenery->char_scale, onHit, false);
-	} else {
-		anim = AnimLightning3::create(pos, scenery->char_scale, onHit, false);
-	}
-	actionQueued();
-	scenery->addChild(anim, 100);
 }
 void Game::makeCracks(Character *target) {
 	int i = 1 + rand() % 3;
@@ -590,6 +618,7 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 		skeleton = (spine::SkeletonAnimation *) target->sprite;
 	}
 	if (target->ui_health <= 0 && target != wizard) {
+		target->clearBuffs();
 		if (skeleton) {
 			if (withDelay) {
 				actionQueued();

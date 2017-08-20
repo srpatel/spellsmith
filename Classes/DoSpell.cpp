@@ -25,6 +25,7 @@ public:
 #define D_BETWEEN(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
 
 #define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->addAnimation(0, _n_, false); doAnimation = false;
+#define WIZARD_BASH_ANIMATION(_n_) game->wizardBashAnimationByQueue(); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
 #define HEAL(_n_) game->wizard->heal(_n_);
 #define PROJ(_n_, _t_) projectile = true; \
@@ -259,11 +260,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			jeanVan = D_BETWEEN(1, 4);
 		}
 		auto e = game->enemies[game->currentEnemy];
-		game->makeLightning(e);
-		e->health -= jeanVan;
-		e->ui_health -= jeanVan;
-		game->onDamageTarget(e, false);
-		game->updateHealthBars();
+		WIZARD_BASH_ANIMATION();
+		game->makeLightning(e, jeanVan);
 	}
 	IF_SPELL(chill) {
 		// slow enemy by 2 turns
@@ -361,55 +359,56 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		// deal 10 to a random enemy
 		int i = game->getNextAliveEnemy(rand() % game->enemies.size(), nullptr);
 		auto e = game->enemies[i];
-		game->makeLightning(e);
-		e->health -= D(10);
-		e->ui_health -= D(10);
-		game->onDamageTarget(e, false);
-		game->updateHealthBars();
+		WIZARD_BASH_ANIMATION();
+		game->makeLightning(e, D(10));
 	}
 	IF_SPELL(stun_strike) {
 		// stun
 		auto target = game->enemies[game->currentEnemy];
-		game->runPendingAction([damageModifier, game, target]() {
+		WIZARD_BASH_ANIMATION();
+		auto buff = Buff::createStun();
+		target->addBuff(buff, false);
+		game->runPendingAction([damageModifier, game, target, buff]() {
 			PLAY_SOUND(kSoundEffect_PHEarth);
 			game->makeCracks(target);
+			buff->apply(target);
 		});
-		target->addBuff(Buff::createStun());
 	}
 	IF_SPELL(earthquake) {
 		// 5 damage to each enemy. 50% chance to stun.
+		std::list<std::pair<Buff *, Character *>> buffs;
 		for (Enemy *e : game->enemies) {
-			if (e->ui_dead()) continue;
-			e->ui_health -= D(5);
-			if (rand() % 2) {
-				e->addBuff(Buff::createStun());
+			if (e->dead()) continue;
+			e->health -= D(5);
+			if (rand() % 2 || true) {
+				Buff *buff = Buff::createStun();
+				buffs.push_back({buff, e});
+				e->addBuff(buff, true);
 			}
 		}
-		game->runPendingAction([damageModifier, game]() {
+		WIZARD_BASH_ANIMATION();
+		game->runPendingAction([=]() {
 			PLAY_SOUND(kSoundEffect_SRumble);
+//			for (auto x : buffs) {
+//				x.first->apply(x.second);
+//			}
 			for (Enemy *e : game->enemies) {
-				if (e->dead()) continue;
+				if (e->ui_dead()) continue;
 				game->makeCracks(e);
-				e->health -= D(5);
-				game->onDamageTarget(e, false);
+				e->ui_health -= D(5);
+				game->onDamageTarget(e, true);
 			}
 			game->updateHealthBars();
 		});
 	}
 	IF_SPELL(lightning_storm) {
+		WIZARD_BASH_ANIMATION();
+		
 		// Deal 3-10 damage to each enemy.
 		for (Enemy *e : game->enemies) {
 			if (e->dead()) continue;
 			int amt = D_BETWEEN(3, 10);
-			e->ui_health -= amt;
-			e->health -= amt;
-			
-			game->runPendingAction([game, e, amt]() {
-				game->makeLightning(e);
-				e->health -= amt;
-				game->onDamageTarget(e, false);
-				game->updateHealthBars();
-			});
+			game->makeLightning(e, amt);
 		}
 	}
 	else {

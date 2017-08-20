@@ -28,14 +28,15 @@ Buff *Character::getBuffByType(BuffType type) {
 	return ret;
 }
 
-void Character::addBuff(Buff *buff) {
+void Character::addBuff(Buff *buff, bool apply) {
 	Buff *existing = getBuffByType(buff->type);
 	if (existing != nullptr) {
 		// remove the old one first (to-do, only remove if the new one is better?)
 		removeBuff(existing);
 	}
 	buffs.push_back(buff);
-	buff->apply(this);
+	if (apply)
+		buff->apply(this);
 	updateBuffs();
 }
 
@@ -87,11 +88,13 @@ void Character::updateBuffs() {
 	float totalWidth = 15 * buffs.size() + 10 * (buffs.size() - 1);
 	float x = totalWidth/2, y = 0;
 	for (Buff *b : buffs) {
-		Sprite *s = LoadSprite(b->icon);
-		s->setAnchorPoint(Vec2(0.5, 0.5));
-		buffHolder->addChild(s);
-		// also draw num charges
-		s->setPosition(x += 25, y);
+		if (! b->icon.empty()) {
+			Sprite *s = LoadSprite(b->icon);
+			s->setAnchorPoint(Vec2(0.5, 0.5));
+			buffHolder->addChild(s);
+			// also draw num charges
+			s->setPosition(x += 25, y);
+		}
 	}
 }
 

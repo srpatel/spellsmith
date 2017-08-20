@@ -97,10 +97,11 @@ private:
 	void onDamageTarget(Character *target, bool withDelay); // Called to show the target taking damage (recoil/death animation, flash red)
 	
 	// Spell effects
+	void wizardBashAnimationByQueue();
 	void makeProjectile(Character *source, Character *target, int damage, const char *type, std::function<void(void)> onhit = {} /*default to no callable*/);
 	void makeMeteor(float xpos, float ypos, float delay);
 	void makeCracks(Character *target);
-	void makeLightning(Character *target);
+	void makeLightning(Character *target, int amt);
 	
 	int numCurrentActions;
 	

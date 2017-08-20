@@ -17,9 +17,22 @@ bool BuffComparator (Buff *left, Buff *right) {
 }
 
 class EmptyBuff : public Buff {
-	void apply(Character *c) {}
-	void remove(Character *c) {}
+	void apply(Character *c) {
+		applied = true;
+		if (queuedRemoved) {
+			remove(c);
+		}
+	}
+	void remove(Character *c) {
+		if (!applied) {
+			// if the buff isn't applied yet...remove it straight after it gets added
+			queuedRemoved = true;
+			return;
+		}
+		// ...
+	}
 };
+
 
 Buff *Buff::createMudshield() {
 	auto buff = new EmptyBuff;
@@ -59,29 +72,35 @@ Buff *Buff::createFreeze(int amount){
 
 Buff *Buff::createStun(){
 	class StunBuff : public Buff {
-		Node *top = nullptr;
-		Node *bottom = nullptr;
+		Node *top, *bottom;
 		void apply(Character *c) {
-			// add stars around the head
+			applied = true;
 			auto char_scale = Game::get()->scenery->char_scale;
 			Vec2 pos = c->sprite->getPosition() + c->head_offset * char_scale;
 			
 			top = AnimStarsTop::create(pos, 0.8f, nullptr, true);
 			bottom = AnimStarsBottom::create(pos, 0.8f, nullptr, true);
 			
-			auto fadeIn = FadeIn::create(0.5);
+			auto fadeIn = FadeIn::create(1);
 			top->runAction(fadeIn);
 			bottom->runAction(fadeIn->clone());
 			
 			// enemy is at 50-100, so we use 25 and 125
 			c->sprite->getParent()->addChild(top, 125);
 			c->sprite->getParent()->addChild(bottom, 25);
+			if (queuedRemoved) {
+				remove(c);
+			}
 		}
 		void remove(Character *c) {
-			// fade them out!
+			if (!applied) {
+				// if the buff isn't applied yet...remove it straight after it gets added
+				queuedRemoved = true;
+				return;
+			}
 			auto seq = Sequence::create(
 				DelayTime::create(0.5),
-				FadeOut::create(0.5),
+				FadeOut::create(1),
 				RemoveSelf::create(),
 				nullptr
 			);
@@ -93,7 +112,7 @@ Buff *Buff::createStun(){
 	buff->type = BuffType::STUN;
 	buff->positive = true;
 	
-	buff->icon = "buffs/stun.png";
+	buff->icon = ""; //"buffs/stun.png";
 	
 	buff->sprite = nullptr;
 	
@@ -206,7 +225,7 @@ Buff *Buff::createFury(){
 	buff->type = BuffType::FURY;
 	buff->positive = true;
 	
-	buff->icon = "buffs/fury.png";
+	buff->icon = ""; //"buffs/fury.png";
 	
 	buff->sprite = nullptr;
 	
@@ -254,7 +273,7 @@ Buff *Buff::createPhasing(){
 	buff->type = BuffType::PHASING;
 	buff->positive = true;
 	
-	buff->icon = "buffs/phase.png";
+	buff->icon = ""; // "buffs/phase.png";
 	
 	buff->sprite = nullptr;
 	

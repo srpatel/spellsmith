@@ -30,7 +30,7 @@ public:
 	Node *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
-	void addBuff(Buff *);
+	void addBuff(Buff *, bool apply = true);
 	void removeBuff(Buff *);
 	void clearBuffs();
 	void updateBuffs();
