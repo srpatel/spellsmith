@@ -109,16 +109,16 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		} else {
 			charge->charges++;
 		}
-		PROJ( D(3 * charge->charges), "water" );
+		PROJ( D(3 * charge->charges), ptBasicWater );
 	}
 	IF_SPELL(drain_life) {
 		// Deal 5 damage. If this kills the enemy, gain 8 life.
 		auto target = game->enemies[game->currentEnemy];
 		int amount = D(5);
 		if (target->health > amount) {
-			PROJ( D(5), "purple" );
+			PROJ( D(5), ptBasicPurple );
 		} else {
-			PROJ_ONHIT( D(5), "purple", [game](){
+			PROJ_ONHIT( D(5), ptBasicPurple, [game](){
 				HEAL(8);
 			} );
 		}
@@ -130,7 +130,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		auto bonus = D(10);
 		// Should occur when the proj hits!
 		if (target->health <= amount) {
-			PROJ_ONHIT( amount, "fire", [=](){
+			PROJ_ONHIT( amount, ptBasicFire, [=](){
 				for (Enemy *e : game->enemies) {
 					if (e == target) continue;
 					e->ui_health -= bonus;
@@ -139,7 +139,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 				game->updateHealthBars();
 			});
 		} else {
-			PROJ(amount, "fire");
+			PROJ(amount, ptBasicFire );
 		}
 	}
 	IF_SPELL(poison_dart) { // TODO
@@ -149,7 +149,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		if (e->health == e->max_health) {
 			n += 5;
 		}
-		PROJ( D(n), "earth" );
+		PROJ( D(n), ptBasicEarth );
 	}
 	IF_SPELL(fertilise) { // TODO
 		// Replace all green gems with crystal
@@ -158,7 +158,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(fire_cleanse) { // TODO
 		// Destroy all red gems and deal 2 damage for each
 		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );
-		PROJ( D(n * 3), "fire" );
+		PROJ( D(n * 3), ptBasicFire );
 	}
 	IF_SPELL(fountain_of_youth) { // TODO
 		// Destroy all blue gems and heal 1 for each
@@ -186,7 +186,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(fireball) {
 		// deal 10 damage
-		PROJ( D(10), "fire" );
+		PROJ( D(10), ptBasicFire );
 	}
 	IF_SPELL(mud_shield) { // BENCHED
 		// block next 2 attacks
@@ -271,17 +271,29 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(firewisp) {
 		// deal 6 damage
-		PROJ( D(6), "fire" );
+		PROJ( D(6), ptBasicFire );
 	}
 	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
-		PROJ_ONHIT( D(5), "fire", [game](){
+		PROJ_ONHIT( D(5), ptBasicFire, [game](){
 			HEAL(5);
 		} );
 	}
 	IF_SPELL(volcanic) {
 		// Create lots of downwards meteors
+		SKELETON_ANIMATION("spell_heal");
 		game->runPendingAction([damageModifier, game]() {
+			game->actionQueued();
+			Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
+			auto delay = DelayTime::create(1.0f/3.0f);
+			auto addanim = CallFunc::create([game, staffOffset]() {
+				auto heal = AnimFire::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
+						game->actionDone();
+					}), false
+				);
+				game->scenery->addChild(heal);
+			});
+			game->runAction(Sequence::create(delay, addanim, nullptr));
 			For(10) {
 				// Random position, random delay
 				float xpos = game->scenery->getBoundingBox().size.width * ((float) rand() / RAND_MAX);
@@ -308,7 +320,6 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			}
 		});
 		// deal 10 damage to everyone
-		// TODO : update healthbars later
 		bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
 		if (! phase) {
 			game->wizard->health -= D(10);
@@ -333,12 +344,12 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(smelt) { // TODO
 		// deal 6 damage, create 1 crystal gem
-		PROJ( D(6), "fire" );
+		PROJ( D(6), ptBasicFire );
 		CRYSTAL(1);
 	}
 	IF_SPELL(ice_bolt) { // TODO
 		// deal 3 damage, 50% chance to freeze 2
-		PROJ( D(3), "water" );
+		PROJ( D(3), ptBasicWater );
 		if (rand() % 2) {
 			game->enemies[game->currentEnemy]->addBuff(
 												   Buff::createFreeze(2)

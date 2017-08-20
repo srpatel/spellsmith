@@ -503,17 +503,17 @@ bool Game::onCastSpell(Chain *chain) {
 			
 			// immedietely apply health change to health
 			// create a projectile which, when appropriate, change ui_health
-			const char *colour;
+			ProjectileType colour;
 			auto chainType = chain->type;
 			if (chainType == CRYSTAL) {
 				// pick one at random!
 				chainType = static_cast<GemType>(1 + (rand() % 4));
 			}
 			switch (chainType) {
-				case FIRE:  colour = "fire"; break;
-				case WATER: colour = "water"; break;
-				case AIR:   colour = "wind"; break;
-				case EARTH: colour = "earth"; break;
+				case FIRE:  colour = ptBasicFire; break;
+				case WATER: colour = ptBasicWater; break;
+				case AIR:   colour = ptBasicWind; break;
+				case EARTH: colour = ptBasicEarth; break;
 				default:break;
 			}
 			
@@ -640,7 +640,7 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 		skeleton->addAnimation(0, "hit", false);
 	}
 }
-void Game::makeProjectile(Character *source, Character *target, int damage, const char *type, std::function<void(void)> onhitfunc) {
+void Game::makeProjectile(Character *source, Character *target, int damage, ProjectileType type, std::function<void(void)> onhitfunc) {
 	auto start_y = source->sprite->getPosition().y + source->projectile_height * scenery->char_scale;
 	
 	auto from = Vec2(source->sprite->getPosition().x, start_y);
@@ -684,16 +684,21 @@ void Game::makeProjectile(Character *source, Character *target, int damage, cons
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	Layer *projectile;
-	if (! strcmp(type, "wind")) {
+	if (type == ptBasicWind) {
 		projectile = BasicWind::create(from, to, scale, onHit);
-	} else if (! strcmp(type, "earth")) {
+	} else if (type == ptBasicEarth) {
 		projectile = BasicEarth::create(from, to, scale, onHit);
-	} else if (! strcmp(type, "water")) {
+	} else if (type == ptBasicWater) {
 		projectile = BasicWater::create(from, to, scale, onHit);
-	} else if (! strcmp(type, "fire")) {
+	} else if (type == ptBasicFire) {
 		projectile = BasicFire::create(from, to, scale, onHit);
-	} else if (! strcmp(type, "purple")) {
+	} else if (type == ptBasicPurple) {
 		projectile = BasicPurple::create(from, to, scale, onHit);
+	} else if (type == ptBasicMeteor) {
+		projectile = BasicMeteor::create(from, to, scale, onHit);
+	} else {
+		printf("Unrecognised projectile type!\n");
+		projectile = BasicFire::create(from, to, scale, onHit);
 	}
 	
 	// Wait for 0.56 seconds as that is when the staff is in the right place
@@ -703,7 +708,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, cons
 	runPendingAction([this, source, projectile, type]() {
 		if (source == wizard) {
 			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
-				strcmp(type, "earth") ? "spell_projectile" : "spell_aura",
+				type != ptBasicEarth ? "spell_projectile" : "spell_aura",
 				false);
 			// Spell aura also has a sound effect for the bash
 			/*if (type == Color3B::GREEN) {
@@ -1055,11 +1060,11 @@ void Game::enemyDoTurn() {
 							
 							int damage = a->amount;
 							if (a->type == kAttackTypeProjectileFire) {
-								makeProjectile(e, wizard, damage, "fire");
+								makeProjectile(e, wizard, damage, ptBasicFire);
 							} else if (a->type == kAttackTypeProjectileWater) {
-								makeProjectile(e, wizard, damage, "water");
+								makeProjectile(e, wizard, damage, ptBasicWater);
 							} else {
-								makeProjectile(e, wizard, damage, "earth");
+								makeProjectile(e, wizard, damage, ptBasicEarth);
 							}
 							// projectiles already add to action queue
 						};

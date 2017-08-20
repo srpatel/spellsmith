@@ -20,7 +20,8 @@ public: \
 		return BasicProjectile::init(from, to, scale, onHit);\
 	}\
 	CREATE_FUNC_4(_classname, Vec2, Vec2, float, CallFunc*);\
-}
+};\
+const ProjectileType pt ## _classname = __COUNTER__;
 
 #define ANIM(_classname, _name, _num, _fileprefix, _looping) \
 class _classname : public BasicAnim { \
@@ -69,6 +70,8 @@ protected:
 	const char *prefix;
 	int num;
 };
+
+typedef int ProjectileType;
 
 // TODO: Resize everything to be 150x150, positioning as needed.
 PROJECTILE(BasicFire,   fireball,  /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 5), kSoundEffect_PHFire);

@@ -9,6 +9,7 @@
 #include "GameHUD.hpp"
 #include "GameScenery.hpp"
 #include "Level.hpp"
+#include "Projectiles.hpp"
 
 typedef std::function<void()> PendingAction;
 
@@ -98,7 +99,7 @@ private:
 	
 	// Spell effects
 	void wizardBashAnimationByQueue();
-	void makeProjectile(Character *source, Character *target, int damage, const char *type, std::function<void(void)> onhit = {} /*default to no callable*/);
+	void makeProjectile(Character *source, Character *target, int damage, ProjectileType type, std::function<void(void)> onhit = {} /*default to no callable*/);
 	void makeMeteor(float xpos, float ypos, float delay);
 	void makeCracks(Character *target);
 	void makeLightning(Character *target, int amt);
