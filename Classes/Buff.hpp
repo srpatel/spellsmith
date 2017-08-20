@@ -33,11 +33,15 @@ struct Buff {
 	
 	bool applied = false;
 	bool queuedRemoved = false;
+	bool willDeleteSelf = false;
 	
 	int priority;
 	
-	virtual void apply(Character *c) = 0;
-	virtual void remove(Character *c) = 0;
+	virtual void apply(Character *c);
+	virtual void remove(Character *c, bool deleteSelf);
+	
+	virtual void _apply(Character *c) = 0;
+	virtual void _remove(Character *c) = 0;
 	
 	static Buff *createMudshield();
 	static Buff *createFreeze(int amount);

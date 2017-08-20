@@ -16,21 +16,30 @@ bool BuffComparator (Buff *left, Buff *right) {
 	return left->priority <= right->priority;
 }
 
+void Buff::apply(Character *c) {
+	applied = true;
+	_apply(c);
+	if (queuedRemoved) {
+		remove(c, willDeleteSelf);
+	}
+}
+
+void Buff::remove(Character *c, bool deleteSelf) {
+	if (!applied) {
+		// if the buff isn't applied yet...remove it straight after it gets added
+		queuedRemoved = true;
+		willDeleteSelf = deleteSelf;
+	} else {
+		_remove(c);
+		if (deleteSelf) {
+			delete this;
+		}
+	}
+}
+
 class EmptyBuff : public Buff {
-	void apply(Character *c) {
-		applied = true;
-		if (queuedRemoved) {
-			remove(c);
-		}
-	}
-	void remove(Character *c) {
-		if (!applied) {
-			// if the buff isn't applied yet...remove it straight after it gets added
-			queuedRemoved = true;
-			return;
-		}
-		// ...
-	}
+	void _apply(Character *c) override { }
+	void _remove(Character *c) override { }
 };
 
 
@@ -73,8 +82,7 @@ Buff *Buff::createFreeze(int amount){
 Buff *Buff::createStun(){
 	class StunBuff : public Buff {
 		Node *top, *bottom;
-		void apply(Character *c) {
-			applied = true;
+		void _apply(Character *c) override {
 			auto char_scale = Game::get()->scenery->char_scale;
 			Vec2 pos = c->sprite->getPosition() + c->head_offset * char_scale;
 			
@@ -88,16 +96,8 @@ Buff *Buff::createStun(){
 			// enemy is at 50-100, so we use 25 and 125
 			c->sprite->getParent()->addChild(top, 125);
 			c->sprite->getParent()->addChild(bottom, 25);
-			if (queuedRemoved) {
-				remove(c);
-			}
 		}
-		void remove(Character *c) {
-			if (!applied) {
-				// if the buff isn't applied yet...remove it straight after it gets added
-				queuedRemoved = true;
-				return;
-			}
+		void _remove(Character *c) override {
 			auto seq = Sequence::create(
 				DelayTime::create(0.5),
 				FadeOut::create(1),
@@ -194,7 +194,7 @@ Buff *Buff::createKingsCourt(){
 
 Buff *Buff::createFury(){
 	class FuryBuff : public Buff {
-		void apply(Character *c) {
+		void _apply(Character *c) override {
 			auto f = Sequence::create(
 				TintTo::create(0.2f, 255, 125, 125),
 				DelayTime::create(1.0f),
@@ -212,7 +212,7 @@ Buff *Buff::createFury(){
 			c->sprite->stopActionByTag(BuffType::FURY);
 			c->sprite->runAction(f);
 		}
-		void remove(Character *c) {
+		void _remove(Character *c) override {
 			auto a = c->sprite->getActionByTag(BuffType::FURY);
 			if (! a) {
 				auto f = TintTo::create(0.5f, 255, 255, 255);
@@ -239,7 +239,7 @@ Buff *Buff::createFury(){
 
 Buff *Buff::createPhasing(){
 	class PhasingBuff : public Buff {
-		void apply(Character *c) {
+		void _apply(Character *c) override {
 			PLAY_SOUND(kSoundEffect_SPhase);
 			auto f = Sequence::create(
 				FadeTo::create(0.2f, 125),
@@ -259,7 +259,7 @@ Buff *Buff::createPhasing(){
 			c->sprite->stopActionByTag(BuffType::PHASING);
 			c->sprite->runAction(f);
 		}
-		void remove(Character *c) {
+		void _remove(Character *c) override {
 			auto a = c->sprite->getActionByTag(BuffType::PHASING);
 			if (! a) {
 				PLAY_SOUND(kSoundEffect_SUnphase);

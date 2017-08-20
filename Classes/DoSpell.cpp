@@ -380,18 +380,18 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		for (Enemy *e : game->enemies) {
 			if (e->dead()) continue;
 			e->health -= D(5);
-			if (rand() % 2 || true) {
+			if (rand() % 2) {
 				Buff *buff = Buff::createStun();
 				buffs.push_back({buff, e});
-				e->addBuff(buff, true);
+				e->addBuff(buff, false);
 			}
 		}
 		WIZARD_BASH_ANIMATION();
 		game->runPendingAction([=]() {
 			PLAY_SOUND(kSoundEffect_SRumble);
-//			for (auto x : buffs) {
-//				x.first->apply(x.second);
-//			}
+			for (auto x : buffs) {
+				x.first->apply(x.second);
+			}
 			for (Enemy *e : game->enemies) {
 				if (e->ui_dead()) continue;
 				game->makeCracks(e);

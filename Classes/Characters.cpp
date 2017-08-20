@@ -72,13 +72,13 @@ void Character::flash(Color3B c) {
 }
 
 void Character::removeBuff(Buff *existing) {
-	existing->remove(this);
-	
 	auto position = std::find(buffs.begin(), buffs.end(), existing);
 	if (position != buffs.end()) {
 		buffs.erase(position);
 	}
-	delete existing;
+	
+	existing->remove(this, true);
+	// delete existing;
 	
 	updateBuffs();
 }
