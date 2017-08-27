@@ -5,9 +5,6 @@
     "monsters": [
       [
         "goblin_sword"
-      ],
-      [
-        "goblin_sword"
       ]
     ],
     "x": 268,
@@ -20,6 +17,10 @@
     "depends": "1",
     "bg": "forest1",
     "monsters": [
+      [
+        "goblin_sword",
+        "goblin_sword"
+      ],
       [
         "goblin_sword",
         "goblin_sword"

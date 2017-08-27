@@ -11,6 +11,7 @@
 #include "SoundManager.hpp"
 #include "Level.hpp"
 #include "SaveData.hpp"
+#include "Tutorial.hpp"
 
 #include "Projectiles.hpp"
 
@@ -1155,16 +1156,8 @@ void Game::showRound(RoundDef *round, int wave) {
 	
 	// TUTORIAL
 	// If this is round 1, and it hasn't been completed before, then we show a tutorial!
-	if (round->name == "1") {
-		// we remove the completed check for now, for testing
-		//grid->setActive(false);
-		// Predetermined grid
-		// Show a box over the grid which says:
-		// Oh no! There is a goblin in your path!
-		// [Tap]
-		// Thankfully you are a mage, and can make short work of it.
-		// [Tap]
-		// -- box now appears over the scenery
+	if (round->name == "1" && wave == 0) {
+		Tutorial::activate(1);
 		// -- everything except a path of gems is faded out
 		// Draw a chain of gems to attack the goblin!
 		// -- once done, box disappears
@@ -1223,6 +1216,7 @@ void Game::setup() {
 }
 void Game::startRound(RoundDef *rounddef) {
 	setup();
+	Tutorial::cancelAll();
 	
 	// Set up inv
 	wizard->inventory.clear();
@@ -1234,6 +1228,7 @@ void Game::startRound(RoundDef *rounddef) {
 	updateInventory();
 	
 	currentRound->setString(""); // What should go here?
+	
 	showRound(rounddef, 0);
 }
 

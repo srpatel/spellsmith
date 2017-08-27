@@ -91,6 +91,8 @@
 		1029937D1D62429000D1492E /* VertexAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = 102993331D62429000D1492E /* VertexAttachment.c */; };
 		102993A51D6245B300D1492E /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 102993A41D6245B300D1492E /* spine */; };
 		102993A61D6245B300D1492E /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 102993A41D6245B300D1492E /* spine */; };
+		1035F3CE1F53440B006C1CB8 /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */; };
+		1035F3CF1F53440B006C1CB8 /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */; };
 		103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
@@ -329,6 +331,8 @@
 		102993A21D6242B400D1492E /* TransformConstraintData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransformConstraintData.h; sourceTree = "<group>"; };
 		102993A31D6242B400D1492E /* VertexAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexAttachment.h; sourceTree = "<group>"; };
 		102993A41D6245B300D1492E /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
+		1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
+		1035F3CD1F53440B006C1CB8 /* Tutorial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
@@ -548,6 +552,8 @@
 				105E0CFE1BF14E3F0081D8F5 /* Grid.hpp */,
 				10894F1C1F489FB500669A6A /* Buff.cpp */,
 				10894F1D1F489FB500669A6A /* Buff.hpp */,
+				1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */,
+				1035F3CD1F53440B006C1CB8 /* Tutorial.hpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1085,6 +1091,7 @@
 				1064AE041E3890C0006A567B /* SpellBlob.cpp in Sources */,
 				102993701D62429000D1492E /* Skin.c in Sources */,
 				102993781D62429000D1492E /* TransformConstraint.c in Sources */,
+				1035F3CE1F53440B006C1CB8 /* Tutorial.cpp in Sources */,
 				102993361D62429000D1492E /* AnimationState.c in Sources */,
 				102993741D62429000D1492E /* SlotData.c in Sources */,
 				10FC73731E2EDBC30096BF0E /* NavigationBar.cpp in Sources */,
@@ -1147,6 +1154,7 @@
 				1029937D1D62429000D1492E /* VertexAttachment.c in Sources */,
 				107B33C31E22C7FE00F2EBDD /* TextWisp.cpp in Sources */,
 				104E05311D55E0390049EBEB /* Projectiles.cpp in Sources */,
+				1035F3CF1F53440B006C1CB8 /* Tutorial.cpp in Sources */,
 				1029935B1D62429000D1492E /* PathAttachment.c in Sources */,
 				1070AEF71CC56BB5009DA840 /* GameScenery.cpp in Sources */,
 				1029937B1D62429000D1492E /* TransformConstraintData.c in Sources */,

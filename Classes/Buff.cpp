@@ -147,9 +147,9 @@ Buff *Buff::createSpellFocus(){
 		void _apply(Character *c) override {
 			auto char_scale = Game::get()->scenery->char_scale;
 			Vec2 pos = c->sprite->getPosition();
-			pos.y += char_scale * 65;
+			pos.y += char_scale * 75;
 			
-			glow = AnimBlueGlow::create(pos, 1.5 * char_scale, nullptr, true);
+			glow = AnimBlueGlow::create(pos, 2 * char_scale, nullptr, true);
 			
 			auto fadeIn = FadeIn::create(1);
 			glow->runAction(fadeIn);
@@ -171,7 +171,7 @@ Buff *Buff::createSpellFocus(){
 	buff->type = BuffType::SPELL_FOCUS;
 	buff->positive = true;
 	
-	buff->icon = "";
+	buff->icon = "buffs/focus.png";
 	
 	buff->sprite = nullptr;
 	

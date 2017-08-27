@@ -16,6 +16,8 @@ public:
 	Gem *get(int column, int row);
 	bool init(float maxWidth, float maxHeight);
 	void scramble(Chain *chain = nullptr);
+	void preset(int which);
+	void flashPreset(int which);
 	void createRandomCrystalGems(int, Chain *);
 	void makeCrystalsOverGemsOfType(GemType type, Chain *chain);
 	void convertGemsOfType(GemType from, GemType to, Chain *chain);

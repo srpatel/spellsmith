@@ -33,6 +33,7 @@ class RoundDef;
 
 class Game : public Layer {
 	friend class DoSpell;
+	friend class Tutorial;
 public:
 	static Game *get();
     Grid *grid;

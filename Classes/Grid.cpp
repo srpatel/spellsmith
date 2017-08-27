@@ -11,6 +11,7 @@
 #include "Shaders.hpp"
 #include "Constants.h"
 #include "SoundManager.hpp"
+#include "Tutorial.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -287,6 +288,7 @@ void Grid::castCurrentSpell() {
 	if (chain) {
 		bool success = Game::get()->onCastSpell(chain);
 		if (success) {
+			Tutorial::activate(3);
 			Chain *sentinel = chain;
 			while (sentinel) {
 				Chain *current = sentinel;
@@ -313,6 +315,59 @@ void Grid::scramble(Chain *chain) {
 				set(i, j, nullptr);
 			}
 		}
+	}
+	
+	refill();
+}
+
+void Grid::flashPreset(int which) {
+	std::set<std::pair<int, int>> specials;
+	if (which == 1) {
+		// Fire gems!
+		specials.insert(std::make_pair(0, 3));
+		specials.insert(std::make_pair(1, 4));
+		specials.insert(std::make_pair(2, 3));
+		specials.insert(std::make_pair(3, 3));
+		specials.insert(std::make_pair(4, 3));
+		specials.insert(std::make_pair(4, 2));
+	}
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			auto g = get(i, j);
+			g->sprite->stopAllActions();
+			if (specials.find(std::make_pair(i, j)) != specials.end()) {
+				// Flash it!
+				g->sprite->runAction(RepeatForever::create(Sequence::create(
+					FadeTo::create(0.5, 160),
+					FadeTo::create(0.5, 255),
+					nullptr
+				)));
+			} else {
+				// Dim it
+				g->sprite->setOpacity(specials.empty() ? 255 : 125);
+			}
+		}
+	}
+}
+
+void Grid::preset(int which) {
+	// Delete all existing gems NOW, to override the scramble.
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			removeChild(get(i, j)->sprite);
+			set(i, j, nullptr);
+		}
+	}
+	if (which == 1) {
+		int row = 0;
+		int col = 0;
+#define S(t) set(row, col++, new Gem, true, t);
+#define R() row++; col=0;
+S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::AIR  )  R()
+S(GemType::AIR  ) S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE )  R()
+S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH)  R()
+S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE ) S(GemType::WATER)  R()
+S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::EARTH)
 	}
 	
 	refill();

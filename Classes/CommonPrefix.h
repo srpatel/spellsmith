@@ -25,6 +25,8 @@ USING_NS_CC;
 #define For2(_i, _j) for (int i = 0; i < _i; i++)\
 for (int j = 0; j < _j; j++)
 
+#define CENTRE(_x_) (_x_->getPosition() + _x_->getContentSize()/2)
+
 #define DEBUG 1
 #if DEBUG
 	//#define LOG(_x_) do { printf(__FILE__ ":%d %s\n", __LINE__, _x_); } while (0)
