@@ -344,7 +344,11 @@ void Grid::flashPreset(int which) {
 				)));
 			} else {
 				// Dim it
-				g->sprite->setOpacity(specials.empty() ? 255 : 125);
+				if (specials.empty()) {
+					g->sprite->runAction(FadeTo::create(0.5, 255));
+				} else {
+					g->sprite->runAction(FadeTo::create(0.5, 125));
+				}
 			}
 		}
 	}
