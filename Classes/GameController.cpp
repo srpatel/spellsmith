@@ -106,7 +106,6 @@ void GameController::setState(State newstate) {
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	
 	auto prevLayer = stateScreens[this->state];
-	root->removeChild(prevLayer);
 	
 	auto layer = stateScreens[newstate];
 	this->state = newstate;
