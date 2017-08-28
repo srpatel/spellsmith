@@ -118,7 +118,7 @@
         }
       ]
     },
-    "health": 50,
+    "health": 30,
     "attack_frequency": 3,
     "attacks": [
       {
