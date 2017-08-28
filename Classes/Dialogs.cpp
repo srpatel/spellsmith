@@ -87,10 +87,13 @@ bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float c
 	addChild(background);
 	
 	if (closeable) {
-		auto closebutton = LoadSprite("ui/cross.png");
+		/*auto closebutton = LoadSprite("ui/cross.png");
 		closebutton->setAnchorPoint(Vec2(1, 1));
-		closebutton->setPosition(Vec2(size.width/2 - 10, size.height/2 - 10));
-		this->addChild(closebutton, 1);
+		closebutton->setPosition(Vec2(size.width/2 - 10, size.height/2 - 10));*/
+		/*auto closebutton = ui::Button::create("ui/buttonclose.png", "ui/buttonclose.png", "ui/buttonclose.png", TEXTURE_TYPE);
+		closebutton->setAnchorPoint(Vec2(1, 1));
+		closebutton->setPosition(Vec2(centralWidth/2 - 10, centralHeight/2 - 10));
+		this->addChild(closebutton, 1);*/
 	}
 	
 	auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
