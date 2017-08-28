@@ -99,7 +99,9 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 				// If haven't moved far, then do this:
 				if (distanceMoved < 2.0f) {
 					playSound = false;
-					GameController::get()->showSpellInfoDialog(this->spell);
+					if (draggingAllowed) {
+						GameController::get()->showSpellInfoDialog(this->spell);
+					}
 				}
 			} else if (this->dragging) {
 				// if it's over a inventory spot, put the gem there

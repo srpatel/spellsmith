@@ -455,12 +455,18 @@ bool Game::onCastSpell(Chain *chain) {
 			// Spell shot
 			LOG("%s\n", s->getName().c_str());
 			spell = s;
+			Tutorial::activate(103);
 			break;
 		}
 	}
+	bool canTryChain = true;
+	// We don't allow chains at some point in the tutorial
+	if (Tutorial::getCurrent() == 102) {
+		canTryChain = false;
+	}
 	// Don't allow single gems.
 	// TODO : it might be possible to get locked out! Super unlikely to ever happen though...
-	if (!success && chain->next != nullptr) {
+	if (!success && chain->next != nullptr && canTryChain) {
 		success = true;
 		// Always allow gems all of the same colour
 		auto t = chain->type;
@@ -492,6 +498,7 @@ bool Game::onCastSpell(Chain *chain) {
 	}
 	
 	if (success) {
+		Tutorial::activate(104);
 		// We can't draw until the enemy has had his turn
 		state = kStatePlayerSpells;
 		PLAY_SOUND( kSoundEffect_Cast );
@@ -1163,12 +1170,8 @@ void Game::showRound(RoundDef *round, int wave) {
 	// If this is round 1, and it hasn't been completed before, then we show a tutorial!
 	if (round->name == "1" && wave == 0) {
 		Tutorial::activate(1);
-		// -- everything except a path of gems is faded out
-		// Draw a chain of gems to attack the goblin!
-		// -- once done, box disappears
-		// That's it! Keep it up!
-		// [Tap]
-		// -- now you're on your own!
+	} else if (round->name == "2" && wave == 0) {
+		Tutorial::activate(101);
 	}
 }
 void Game::startArena() {

@@ -23,6 +23,7 @@ enum State {
 };
 
 class RoundDef;
+class NavigationBar;
 
 class GameController {
 public:
@@ -45,7 +46,7 @@ public:
 private:
 	static GameController *instance;
 	Scene *root;
-	Node *bar;
+	NavigationBar *bar;
 	State state = kStateMainMenu;
 	std::vector<Dialog *> dialog_stack;
 };

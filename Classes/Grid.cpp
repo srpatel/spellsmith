@@ -331,6 +331,12 @@ void Grid::flashPreset(int which) {
 		specials.insert(std::make_pair(3, 3));
 		specials.insert(std::make_pair(4, 3));
 		specials.insert(std::make_pair(4, 2));
+	} else if (which == 2) {
+		// Fire gems!
+		specials.insert(std::make_pair(2, 2));
+		specials.insert(std::make_pair(3, 3));
+		specials.insert(std::make_pair(2, 3));
+		specials.insert(std::make_pair(3, 2));
 	}
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
@@ -373,6 +379,16 @@ S(GemType::AIR  ) S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemTyp
 S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH)  R()
 S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE ) S(GemType::WATER)  R()
 S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::EARTH)
+	} else if (which == 2) {
+		int row = 0;
+		int col = 0;
+#define S(t) set(row, col++, new Gem, true, t);
+#define R() row++; col=0;
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )  R()
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )  R()
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::NONE )  R()
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::AIR  ) S(GemType::NONE )  R()
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
 	}
 	
 	refill();

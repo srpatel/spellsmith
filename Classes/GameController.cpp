@@ -87,6 +87,7 @@ void GameController::setState(State newstate) {
 	// do refreshing
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
+		Tutorial::activate(11);
 	} else if (newstate == kStateSpellbook) {
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
@@ -109,6 +110,7 @@ void GameController::startRound(RoundDef *round) {
 }
 void GameController::enableBar(bool enable) {
 	// Place something over the nav bar (like the grid)
+	bar->setEnabled(enable);
 }
 void GameController::popDialog() {
 	if (dialog_stack.size()) {

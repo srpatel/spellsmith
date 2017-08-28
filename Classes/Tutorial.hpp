@@ -13,6 +13,7 @@ class Tutorial {
 public:
 	static void activate(int number);
 	static void cancelAll();
+	static int getCurrent();
 };
 
 #endif /* Tutorial_hpp */
