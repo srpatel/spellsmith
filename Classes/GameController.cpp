@@ -172,28 +172,37 @@ void GameController::startRound(RoundDef *round) {
 void GameController::popDialog() {
 	if (dialog_stack.size()) {
 		Dialog *last_dialog = dialog_stack[dialog_stack.size() - 1];
-		root->removeChild(last_dialog);
+		last_dialog->runAction(Sequence::create(
+			FadeOut::create(0.1f),
+			RemoveSelf::create(),
+			nullptr
+		));
+		//root->removeChild(last_dialog);
 		dialog_stack.pop_back();
 	} else {
 		// shouldn't get here!
 	}
 }
-void GameController::showSpellInfoDialog(Spell *spell) {
-	Dialog *dialog = SpellInfoDialog::create(spell);
+void GameController::pushDialog(Dialog *dialog) {
 	dialog->setPosition(root->getContentSize()/2);
 	root->addChild(dialog, kDepthPopup);
+	dialog->setOpacity(0);
+	dialog->setCascadeOpacityEnabled(true);
 	dialog_stack.push_back(dialog);
+	dialog->runAction(FadeIn::create(0.1f));
+}
+void GameController::showSpellInfoDialog(Spell *spell) {
+	Dialog *dialog = SpellInfoDialog::create(spell);
+	pushDialog(dialog);
 	Tutorial::activate(8);
 }
 void GameController::showOptionsDialog() {
 	Dialog *dialog = OptionsDialog::create();
-	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog, kDepthPopup);
+	pushDialog(dialog);
 	dialog_stack.push_back(dialog);
 }
 void GameController::showPreLevelDialog(RoundDef *round) {
 	Dialog *dialog = PreLevelDialog::create(round);
-	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog, kDepthPopup);
+	pushDialog(dialog);
 	dialog_stack.push_back(dialog);
 }

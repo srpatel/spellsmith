@@ -16,6 +16,8 @@ bool Popup::init(float width, float height) {
 		return false;
 	}
 	
+	setCascadeOpacityEnabled(true);
+	
 	setContentSize(Size(width, height));
 	
 	auto sprite = ui::Scale9Sprite::createWithSpriteFrame(

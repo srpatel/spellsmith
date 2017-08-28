@@ -145,12 +145,14 @@
     "LEVEL_WON": "congratulations",
     "LEVEL_LOST": "you lost",
     "RETRY_LEVEL": "retry",
-    "RETURN_TO_MAP": "back",
+    "BACK": "back",
     "ARENA": "Arena",
     "ADVENTURE": "Adventure",
     "PLAY": "PLAY",
     "TAP_TO_CLOSE": "[Tap to close]",
-    "TAP_TO_CONTINUE": "[Tap to continue]"
+    "TAP_TO_CONTINUE": "[Tap to continue]",
+    "OPTIONS": "Options",
+    "RETURN_TO_MAP": "Return to map"
   },
   "level": {
     "1": "Forest",

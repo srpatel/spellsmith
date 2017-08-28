@@ -51,6 +51,7 @@ private:
 	Node *fader;
 	State state = kStateMainMenu;
 	std::vector<Dialog *> dialog_stack;
+	void pushDialog(Dialog *dialog);
 };
 
 #endif /* GameController_hpp */

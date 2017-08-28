@@ -135,6 +135,7 @@ std::string Spell::getName() {
 
 Layer *Spell::makeNode(bool mini) {
 	auto layer = Layer::create();
+	layer->setCascadeOpacityEnabled(true);
 	layer->setContentSize(Size(40, 40));
 	
 	int width = 0, height = 0;
