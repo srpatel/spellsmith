@@ -82,18 +82,20 @@ bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float c
 	
 	auto size = Director::getInstance()->getVisibleSize();
 	
-	auto background = cocos2d::DrawNode::create();
-	background->drawSolidRect(Vec2(size / -2), Vec2(size / 2), Color4F(Colours::SEMIBLACK));
+	auto background = LayerColor::create();
+	background->initWithColor({0, 0, 0, 180});
+	background->setContentSize(size);
+	background->setPosition(size/-2);
 	addChild(background);
 	
 	if (closeable) {
-		/*auto closebutton = LoadSprite("ui/cross.png");
-		closebutton->setAnchorPoint(Vec2(1, 1));
-		closebutton->setPosition(Vec2(size.width/2 - 10, size.height/2 - 10));*/
-		/*auto closebutton = ui::Button::create("ui/buttonclose.png", "ui/buttonclose.png", "ui/buttonclose.png", TEXTURE_TYPE);
-		closebutton->setAnchorPoint(Vec2(1, 1));
-		closebutton->setPosition(Vec2(centralWidth/2 - 10, centralHeight/2 - 10));
-		this->addChild(closebutton, 1);*/
+		auto ttc = Label::createWithTTF(_("ui.TAP_TO_CLOSE"), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		ttc->setDimensions(size.width - 20, 0);
+		ttc->setColor(Color3B::WHITE);
+		ttc->setAlignment(TextHAlignment::CENTER);
+		// position the label on the center of the screen
+		ttc->setPosition(Vec2(0, -size.height / 2 + ttc->getContentSize().height));
+		addChild(ttc);
 	}
 	
 	auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
