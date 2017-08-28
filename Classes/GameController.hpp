@@ -40,7 +40,8 @@ public:
 	void showPreLevelDialog(RoundDef *round);
 	void showOptionsDialog();
 	
-	Layer *getCurrent();
+	Layer *getScreen(State state = kStateCount);
+	void enableBar(bool enable);
 private:
 	static GameController *instance;
 	Scene *root;

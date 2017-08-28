@@ -14,6 +14,7 @@
 #include "GameController.hpp"
 #include "SoundManager.hpp"
 #include "SaveData.hpp"
+#include "Tutorial.hpp"
 #include "Constants.h"
 
 static layout_t layout;
@@ -258,6 +259,7 @@ void Spellbook::refreshSpells() {
 		float currentY = startY - dy * (int) (i / numberPerRow) - dy/2.0;
 		
 		auto onSelect = [this](int invPosition, Spell *selected){
+			Tutorial::activate(10);
 			SaveData::setEquippedSpellAt(invPosition, selected->getRawName());
 			refreshEquips();
 		};

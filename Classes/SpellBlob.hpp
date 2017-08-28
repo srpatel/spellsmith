@@ -12,11 +12,13 @@
 #include "Spell.hpp"
 
 class SpellBlob : public Layer {
+	friend class Tutorial;
 public:
 	bool init(Spell *, bool draggable, std::function<void(int, Spell*)> onSelect, std::function<bool(Spell*)> isBeingUsed);
 	void refresh();
 	CREATE_FUNC_4(SpellBlob, Spell *, bool, std::function<void(int, Spell*)>, std::function<bool(Spell*)>);
 private:
+	static bool draggingAllowed;
 	std::function<bool(Spell*)> isBeingUsed;
 	Spell *spell;
 	Node *mininode, *mininode_grey;

@@ -12,6 +12,7 @@
 #include "SpellBlob.hpp"
 
 class Spellbook : public Layer {
+	friend class Tutorial;
 public:
 	bool init();
 	void refreshSpells();

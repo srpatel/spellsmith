@@ -8,6 +8,7 @@
 
 #include "Popup.hpp"
 #include "Dialogs.hpp"
+#include "Tutorial.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
 #include "GameScene.hpp"
@@ -174,6 +175,7 @@ bool Dialog::onTouchBegan(Touch *touch, Event *event) {
 			auto gc = GameController::get();
 			PLAY_SOUND(kSoundEffect_UIBack);
 			gc->popDialog();
+			Tutorial::activate(9);
 		}
 	}
 	return true;

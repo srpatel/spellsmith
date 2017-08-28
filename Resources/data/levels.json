@@ -10,7 +10,7 @@
     "x": 268,
     "y": 98,
     "rewards": [
-      "healstrike"
+      "fireball"
     ]
   },
   "2": {
@@ -130,7 +130,7 @@
     "y": 1050,
     "rewards": [
       "dragon_breath",
-      "fireball"
+      "healstrike"
     ]
   },
   "9": {

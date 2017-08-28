@@ -12,6 +12,8 @@
 #include "SoundManager.hpp"
 #include "GameScene.hpp"
 
+bool SpellBlob::draggingAllowed = true;
+
 bool SpellBlob::init(Spell *spell, bool draggable,
 	std::function<void(int, Spell*)> onSelect,
 	std::function<bool(Spell*)> isBeingUsed) {
@@ -64,7 +66,7 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 			// If it's not draggable, show the spell info dialog straight away.
 			// Otherwise, wait for the release.
 			SoundManager::get()->playEffect(kSoundEffect_UISelectMinor);
-			if (! this->draggable) {
+			if (! this->draggable || ! draggingAllowed) {
 				GameController::get()->showSpellInfoDialog(spell);
 			} else {
 				// Can only drag is the main mininode is visible

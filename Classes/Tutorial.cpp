@@ -8,6 +8,8 @@
 
 #include "Tutorial.hpp"
 #include "GameScene.hpp"
+#include "Spellbook.hpp"
+#include "SpellBlob.hpp"
 #include "GameController.hpp"
 #include "Popup.hpp"
 #include "Constants.h"
@@ -17,6 +19,7 @@
 
 int currentLevel = -1;
 Layer *currentPopup = nullptr;
+std::list<Node *> others;
 
 Layer *makeTextBox(EventDispatcher *ed, std::string text, int location, bool withTtc, float delay) {
 	auto game = Game::get();
@@ -109,16 +112,30 @@ void Tutorial::activate(int number) {
 	bool start = number == 1;
 	bool prec = number == currentLevel + 1;
 	
+	// If you're on 4, you can also advance to 7
+	if (number == 7 && currentLevel == 4)
+		prec = true;
+	
 	// Don't progress to the next tutorial unless you're starting a chain
 	// or are moving to the next tutorial.
 	if (! start && ! prec)
 		return;
 
 	// Popups which stay visible twice: 3
+	auto remover = Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr);
 	if (currentPopup != nullptr && number != 3) {
-		currentPopup->runAction(Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr));
+		currentPopup->stopAllActions();
+		currentPopup->runAction(remover->clone());
 		currentPopup = nullptr;
 	}
+	if (! others.empty()) {
+		for (Node *n : others) {
+			n->stopAllActions();
+			n->runAction(remover->clone());
+		}
+		others.clear();
+	}
+	
 	currentLevel = number;
 	if (number == 1) {
 		// Start down this path!
@@ -158,11 +175,69 @@ void Tutorial::activate(int number) {
 	} else if (number == 6) {
 		game->grid->setActive(true);
 	} else if (number == 7) {
-		// Learn spell
+		// If our spellbook contains only one spell, and there are no
+		// spells equipped, we do this.
+		
+		auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
+		
+		// Disable navigation
+		GameController::get()->enableBar(false);
+		
+		// Disallow dragging spells
+		SpellBlob::draggingAllowed = false;
+		
+		// Learn spell text
 		auto popup = makeTextBox(game->_eventDispatcher,
-			"You've learnt a new spell! You should equip it so you "
-			" can use it in battle.",
+			"You've learnt a new spell! Tap it to find out what "
+			"it does.",
 			kPosScenery, false, 0.5);
-		GameController::get()->getCurrent()->addChild(popup);
+		spellbook->addChild(popup);
+		
+		// Flash new spell
+		/*auto blob = spellbook->blobs[0];
+		auto fadeIn = EaseIn::create(FadeIn::create(1), 0.5f);
+		auto fadeOut = EaseOut::create(FadeOut::create(1), 0.5f);
+		auto sequence = RepeatForever::create(Sequence::create(fadeIn, fadeOut, DelayTime::create(0.5f), nullptr));
+		blob->runAction(sequence);*/
+		// ???
+	} else if (number == 8) {
+		//auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
+		//auto blob = spellbook->blobs[0];
+		//blob->stopAllActions();
+	} else if (number == 9) {
+		auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
+		auto popup = makeTextBox(game->_eventDispatcher,
+			"That seems pretty good! You should equip it so you "
+			"can use it in battle. Drag it to an empty slot.",
+			kPosScenery, false, 0.5);
+		spellbook->addChild(popup);
+		
+		// Show arrow
+		auto finger = LoadSprite("ui/fingerpoint.png");
+		finger->setAnchorPoint(Vec2(0.5, 1));
+		auto blob = spellbook->blobs[0];
+		layout_t layout = Game::get()->getLayout();
+		auto fromPos = blob->getPosition() + blob->getParent()->getPosition();
+		auto toPos = Vec2(18 * layout.ui_scale, layout.column_height - 110 * layout.ui_scale);
+		spellbook->addChild(finger, 100);
+		finger->setOpacity(0);
+		finger->runAction(RepeatForever::create(
+			Sequence::create(
+				MoveTo::create(0, fromPos),
+				FadeIn::create(0.2f),
+				DelayTime::create(0.2f),
+				MoveTo::create(0.8f, toPos),
+				DelayTime::create(0.2f),
+				FadeOut::create(0.2f),
+				nullptr
+			)
+		));
+		others.push_back(finger);
+		
+		// Re-allow dragging spells
+		SpellBlob::draggingAllowed = true;
+	} else if (number == 10) {
+		// Re-enable ui
+		GameController::get()->enableBar(true);
 	}
 }

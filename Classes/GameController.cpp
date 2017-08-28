@@ -88,14 +88,15 @@ void GameController::setState(State newstate) {
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
 	} else if (newstate == kStateSpellbook) {
-		Tutorial::activate(7);
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
+		Tutorial::activate(7);
 	}
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);
 }
-Layer *GameController::getCurrent() {
+Layer *GameController::getScreen(State state) {
+	if (state == kStateCount) state = this->state;
 	return stateScreens[state];
 }
 void GameController::startArena() {
@@ -105,6 +106,9 @@ void GameController::startArena() {
 void GameController::startRound(RoundDef *round) {
 	Game::get()->startRound(round);
 	setState(kStateGame);
+}
+void GameController::enableBar(bool enable) {
+	// Place something over the nav bar (like the grid)
 }
 void GameController::popDialog() {
 	if (dialog_stack.size()) {
@@ -120,6 +124,7 @@ void GameController::showSpellInfoDialog(Spell *spell) {
 	dialog->setPosition(root->getContentSize()/2);
 	root->addChild(dialog);
 	dialog_stack.push_back(dialog);
+	Tutorial::activate(8);
 }
 void GameController::showOptionsDialog() {
 	Dialog *dialog = OptionsDialog::create();
