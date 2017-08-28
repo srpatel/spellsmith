@@ -148,7 +148,9 @@
     "RETURN_TO_MAP": "back",
     "ARENA": "Arena",
     "ADVENTURE": "Adventure",
-    "PLAY": "PLAY"
+    "PLAY": "PLAY",
+    "TAP_TO_CLOSE": "[Tap to close]",
+    "TAP_TO_CONTINUE": "[Tap to continue]"
   },
   "level": {
     "1": "Forest",
@@ -166,5 +168,16 @@
     "4b": "Frost Plains",
     "4c": "Ice Mountain",
     "5a": "Volcano"
+  },
+  "tutorial": {
+    "1": "Oh, heavens! There is a goblin in the path. We'd better take care of it...",
+    "2": "Draw chains of the same colour to deal damage.",
+    "5": "Every few turns the enemies will attack you. Make sure you kill them before they kill you!",
+    "7": "You've learnt a new spell! Tap it to find out what it does.",
+    "9": "That seems pretty good! You should equip it so you can use it in battle. Drag it to an empty slot.",
+    "10": "Now you're ready for the next challenge! Head back to the map to continue your journey...",
+    "101": "This might be tricky! You'd better use your new spell.",
+    "102": "Draw the spell in any orientation to cast it!",
+    "103": "Nice work! You have many spells to learn yet, and many enemies to defeat. Good luck!"
   }
 }

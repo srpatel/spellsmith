@@ -13,6 +13,7 @@
 #include "SpellBlob.hpp"
 #include "GameController.hpp"
 #include "Popup.hpp"
+#include "Strings.hpp"
 #include "Constants.h"
 
 #define kPosGrid 1
@@ -46,7 +47,7 @@ Layer *makeTextBox(EventDispatcher *ed, std::string text, int location, bool wit
 	
 	if (withTtc) {
 		// tap to continue label
-		auto ttc = Label::createWithTTF("[Tap to continue]", Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		auto ttc = Label::createWithTTF(_("ui.TAP_TO_CONTINUE"), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
 		ttc->setDimensions(size.width - 20, 0);
 		ttc->setAlignment(TextHAlignment::CENTER);
 		// position the label on the center of the screen
@@ -156,8 +157,7 @@ void Tutorial::activate(int number) {
 			
 			// Make text box over grid...
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Oh, heavens! There is a goblin in the path. "
-				"We'd better take care of it...",
+				_("tutorial.1"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
 		} else if (number == 2) {
@@ -166,7 +166,7 @@ void Tutorial::activate(int number) {
 			// Fade out everything except the path we want to suggest
 			
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Draw chains of the same colour to deal damage.",
+				_("tutorial.2"),
 				kPosScenery, false, 0.5);
 			game->addChild(popup);
 		} else if (number == 3) {
@@ -176,8 +176,7 @@ void Tutorial::activate(int number) {
 		} else if (number == 5) {
 			game->grid->setActive(false);
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Every few turns the enemies will attack you. "
-				"Make sure you kill them before they kill you!",
+				_("tutorial.5"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
 			// point to red circle
@@ -221,8 +220,7 @@ void Tutorial::activate(int number) {
 			
 			// Learn spell text
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"You've learnt a new spell! Tap it to find out what "
-				"it does.",
+				_("tutorial.7"),
 				kPosScenery, false, 0.5);
 			spellbook->addChild(popup);
 			
@@ -240,8 +238,7 @@ void Tutorial::activate(int number) {
 		} else if (number == 9) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"That seems pretty good! You should equip it so you "
-				"can use it in battle. Drag it to an empty slot.",
+				_("tutorial.9"),
 				kPosScenery, false, 0.5);
 			spellbook->addChild(popup);
 			
@@ -272,8 +269,7 @@ void Tutorial::activate(int number) {
 		} else if (number == 10) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Now you're ready for the next challenge! "
-				"Head back to the map to continue your journey...",
+				_("tutorial.10"),
 				kPosScenery, false, 1);
 			spellbook->addChild(popup, 100);
 			
@@ -316,8 +312,7 @@ void Tutorial::activate(int number) {
 			
 			// Make text box over grid...
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"This might be tricky! You'd better use your new "
-				"spell.",
+				_("tutorial.101"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
 		} else if (number == 102) {
@@ -325,15 +320,14 @@ void Tutorial::activate(int number) {
 			game->grid->flashPreset(2);
 			// Make text box over grid...
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Draw the spell in any orientation to cast it!",
+				_("tutorial.102"),
 				kPosScenery, false, 0);
 			game->addChild(popup);
 		} else if (number == 103) {
 			game->grid->flashPreset(0);
 			// Make text box over grid...
 			auto popup = makeTextBox(game->_eventDispatcher,
-				"Nice work! You have many spells to learn yet, and "
-				"many enemies to defeat. Good luck!",
+				_("tutorial.103"),
 				kPosScenery, true, 0.5);
 			game->addChild(popup);
 		} else if (number == 104) {
