@@ -8,6 +8,7 @@
 
 #include "Tutorial.hpp"
 #include "GameScene.hpp"
+#include "GameController.hpp"
 #include "Popup.hpp"
 #include "Constants.h"
 
@@ -74,7 +75,7 @@ Layer *makeTextBox(EventDispatcher *ed, std::string text, int location, bool wit
 	if (withTtc) {
 		auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
 		touchListener->setSwallowTouches(true);
-		touchListener->onTouchBegan = [game, popup, size, position](Touch *touch, Event *event) {
+		touchListener->onTouchBegan = [game, popup, size, position, ed, touchListener](Touch *touch, Event *event) {
 			auto bounds = Rect(
 				position,
 				size
@@ -82,6 +83,8 @@ Layer *makeTextBox(EventDispatcher *ed, std::string text, int location, bool wit
 			if (bounds.containsPoint(touch->getLocation())) {
 				event->stopPropagation();
 				Tutorial::activate(currentLevel + 1);
+				// remove this listener...
+				ed->removeEventListener(touchListener);
 				return true;
 			}
 			return false;
@@ -111,7 +114,8 @@ void Tutorial::activate(int number) {
 	if (! start && ! prec)
 		return;
 
-	if (currentPopup != nullptr) {
+	// Popups which stay visible twice: 3
+	if (currentPopup != nullptr && number != 3) {
 		currentPopup->runAction(Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr));
 		currentPopup = nullptr;
 	}
@@ -142,5 +146,23 @@ void Tutorial::activate(int number) {
 	} else if (number == 3) {
 		// Fade everything in...
 		game->grid->flashPreset(0);
+	} else if (number == 4) {
+	} else if (number == 5) {
+		game->grid->setActive(false);
+		auto popup = makeTextBox(game->_eventDispatcher,
+			"Every few turns the enemies will attack you. "
+			"Make sure you kill them before they kill you!",
+			kPosGrid, true, 0);
+		game->addChild(popup);
+		// point to red circle
+	} else if (number == 6) {
+		game->grid->setActive(true);
+	} else if (number == 7) {
+		// Learn spell
+		auto popup = makeTextBox(game->_eventDispatcher,
+			"You've learnt a new spell! You should equip it so you "
+			" can use it in battle.",
+			kPosScenery, false, 0.5);
+		GameController::get()->getCurrent()->addChild(popup);
 	}
 }

@@ -768,6 +768,11 @@ void Game::attemptSetState(GameState nextstate) {
 			scenery->setRedRingVisibility(true);
 
 			grid->setActive(true);
+			
+			// If an enemy is red...
+			if (enemies[0]->attack_clock == 0) {
+				Tutorial::activate(5);
+			}
 		}
 	} else {
 		// Game is over!

@@ -39,6 +39,8 @@ public:
 	void showSpellInfoDialog(Spell *);
 	void showPreLevelDialog(RoundDef *round);
 	void showOptionsDialog();
+	
+	Layer *getCurrent();
 private:
 	static GameController *instance;
 	Scene *root;

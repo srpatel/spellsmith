@@ -14,6 +14,7 @@
 #include "Spellbook.hpp"
 #include "Constants.h"
 #include "SoundManager.hpp"
+#include "Tutorial.hpp"
 
 GameController *GameController::instance = nullptr;
 
@@ -87,11 +88,15 @@ void GameController::setState(State newstate) {
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
 	} else if (newstate == kStateSpellbook) {
+		Tutorial::activate(7);
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
 	}
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);
+}
+Layer *GameController::getCurrent() {
+	return stateScreens[state];
 }
 void GameController::startArena() {
 	Game::get()->startArena();

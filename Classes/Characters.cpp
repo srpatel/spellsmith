@@ -139,7 +139,7 @@ Enemy::Enemy(Monster *m, int index) {
 	monster = m;
 	attack_clock = monster->attack_frequency;
 #if EASY_MODE
-	max_health = 10;
+	max_health = 20;
 #else
 	max_health = monster->hp;
 #endif

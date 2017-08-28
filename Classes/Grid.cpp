@@ -288,6 +288,7 @@ void Grid::castCurrentSpell() {
 	if (chain) {
 		bool success = Game::get()->onCastSpell(chain);
 		if (success) {
+			Tutorial::activate(4);
 			Tutorial::activate(3);
 			Chain *sentinel = chain;
 			while (sentinel) {
@@ -338,8 +339,8 @@ void Grid::flashPreset(int which) {
 			if (specials.find(std::make_pair(i, j)) != specials.end()) {
 				// Flash it!
 				g->sprite->runAction(RepeatForever::create(Sequence::create(
-					FadeTo::create(0.5, 160),
-					FadeTo::create(0.5, 255),
+					EaseOut::create(FadeTo::create(0.5, 160), 0.5),
+					EaseIn::create(FadeTo::create(0.5, 255), 0.5),
 					nullptr
 				)));
 			} else {
