@@ -42,6 +42,8 @@ bool BasicAnim::init(
 	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
 	
 	if (looping) {
+		// Unsure the difference between these:
+		// animation->setLoops(-1);
 		sprite->runAction(
 			RepeatForever::create(Animate::create(animation))
 		);
