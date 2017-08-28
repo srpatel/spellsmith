@@ -61,14 +61,23 @@ void GameController::init(Scene *root) {
 	root->addChild(instance->bar, kDepthNavBar);
 	
 	auto size = Director::getInstance()->getVisibleSize();
-	auto button = ui::Button::create("ui/buttonback.png", "ui/buttonback.png", "ui/buttonback.png", TEXTURE_TYPE);
-	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::ENDED) {
+	auto button = LoadSprite("ui/buttonback.png");
+	auto onClick = EventListenerTouchOneByOne::create();
+	onClick->setSwallowTouches(true);
+	onClick->onTouchBegan = [size, button](Touch *touch, Event *event) -> bool {
+		auto bounds = Rect(
+			0, size.height - button->getContentSize().height - 20,
+			button->getContentSize().width + 20, button->getContentSize().height + 20
+		);
+		if (bounds.containsPoint(touch->getLocation())){
 			SoundManager::get()->playEffect( kSoundEffect_UISelect );
-			// Go to map screen
 			GameController::get()->setState(kStateMap);
+			return true;
 		}
-	});
+		return false;
+	};
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onClick, button);
+	
 	instance->button = button;
 	instance->button->setPosition(Vec2(button->getContentSize().width/2 + 10, size.height + button->getContentSize().height/2 + 10));
 	root->addChild(instance->button, kDepthBackButton);

@@ -23,7 +23,8 @@ int currentLevel = -1;
 Layer *currentPopup = nullptr;
 std::list<Node *> others;
 
-Layer *makeTextBox(EventDispatcher *ed, std::string text, int location, bool withTtc, float delay) {
+Layer *makeTextBox(std::string text, int location, bool withTtc, float delay) {
+	EventDispatcher *ed = Director::getInstance()->getEventDispatcher();
 	auto game = Game::get();
 	if (currentPopup != nullptr) {
 		currentPopup->removeFromParent();
@@ -156,7 +157,7 @@ void Tutorial::activate(int number) {
 			game->grid->setActive(false);
 			
 			// Make text box over grid...
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.1"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
@@ -165,7 +166,7 @@ void Tutorial::activate(int number) {
 			game->grid->flashPreset(1);
 			// Fade out everything except the path we want to suggest
 			
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.2"),
 				kPosScenery, false, 0.5);
 			game->addChild(popup);
@@ -175,7 +176,7 @@ void Tutorial::activate(int number) {
 		} else if (number == 4) {
 		} else if (number == 5) {
 			game->grid->setActive(false);
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.5"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
@@ -219,7 +220,7 @@ void Tutorial::activate(int number) {
 			SpellBlob::draggingAllowed = false;
 			
 			// Learn spell text
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.7"),
 				kPosScenery, false, 0.5);
 			spellbook->addChild(popup);
@@ -237,7 +238,7 @@ void Tutorial::activate(int number) {
 			//blob->stopAllActions();
 		} else if (number == 9) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.9"),
 				kPosScenery, false, 0.5);
 			spellbook->addChild(popup);
@@ -268,7 +269,7 @@ void Tutorial::activate(int number) {
 			SpellBlob::draggingAllowed = true;
 		} else if (number == 10) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.10"),
 				kPosScenery, false, 1);
 			spellbook->addChild(popup, 100);
@@ -311,7 +312,7 @@ void Tutorial::activate(int number) {
 			game->grid->setActive(false);
 			
 			// Make text box over grid...
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.101"),
 				kPosGrid, true, 0);
 			game->addChild(popup);
@@ -319,14 +320,14 @@ void Tutorial::activate(int number) {
 			game->grid->setActive(true);
 			game->grid->flashPreset(2);
 			// Make text box over grid...
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.102"),
 				kPosScenery, false, 0);
 			game->addChild(popup);
 		} else if (number == 103) {
 			game->grid->flashPreset(0);
 			// Make text box over grid...
-			auto popup = makeTextBox(game->_eventDispatcher,
+			auto popup = makeTextBox(
 				_("tutorial.103"),
 				kPosScenery, true, 0.5);
 			game->addChild(popup);
