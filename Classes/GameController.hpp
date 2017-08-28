@@ -42,11 +42,13 @@ public:
 	void showOptionsDialog();
 	
 	Layer *getScreen(State state = kStateCount);
-	void enableBar(bool enable);
+	void showButton(bool show);
 private:
 	static GameController *instance;
 	Scene *root;
 	NavigationBar *bar;
+	Node *button;
+	Node *fader;
 	State state = kStateMainMenu;
 	std::vector<Dialog *> dialog_stack;
 };

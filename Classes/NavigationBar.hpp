@@ -14,10 +14,11 @@ public:
 	static const int HEIGHT = 55;
 	bool init();
 	inline void setEnabled(bool enabled) {this->enabled = enabled;}
-	
+	void resetButtons();
 	CREATE_FUNC(NavigationBar);
 private:
 	bool enabled = true;
+	Layer *buttonHolder;
 };
 
 #endif /* NavigationBar_hpp */

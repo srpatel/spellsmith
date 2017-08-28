@@ -213,7 +213,8 @@ void Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			GameController::get()->enableBar(false);
+			//GameController::get()->enableBar(false);
+			GameController::get()->showButton(false);
 			
 			// Disallow dragging spells
 			SpellBlob::draggingAllowed = false;
@@ -272,12 +273,13 @@ void Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			auto popup = makeTextBox(game->_eventDispatcher,
 				"Now you're ready for the next challenge! "
-				"Head to the map to continue your journey...",
-				kPosScenery, false, 0.5);
+				"Head back to the map to continue your journey...",
+				kPosScenery, false, 1);
 			spellbook->addChild(popup, 100);
 			
 			// Re-enable ui
-			GameController::get()->enableBar(true);
+			//GameController::get()->enableBar(true);
+			GameController::get()->showButton(true);
 		} else if (number == 11) {
 		}
 	} else

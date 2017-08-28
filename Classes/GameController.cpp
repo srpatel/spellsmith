@@ -16,6 +16,15 @@
 #include "SoundManager.hpp"
 #include "Tutorial.hpp"
 
+#include "ui/CocosGUI.h"
+
+// Nav bar and back button
+#define kDepthFader 200
+#define kDepthPopup 100
+#define kDepthNavBar 50
+#define kDepthBackButton 51
+#define kDepthScene 0
+
 GameController *GameController::instance = nullptr;
 
 static Layer **stateScreens;
@@ -48,22 +57,53 @@ void GameController::init(Scene *root) {
 	root->addChild(grad);
 	
 	instance->bar = NavigationBar::create();
-	instance->bar->retain();
+	instance->bar->setPosition(Vec2(0, -NavigationBar::HEIGHT));
+	root->addChild(instance->bar, kDepthNavBar);
+	
+	auto size = Director::getInstance()->getVisibleSize();
+	auto button = ui::Button::create("ui/buttonback.png", "ui/buttonback.png", "ui/buttonback.png", TEXTURE_TYPE);
+	button->addTouchEventListener([](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			SoundManager::get()->playEffect( kSoundEffect_UISelect );
+			// Go to map screen
+			GameController::get()->setState(kStateMap);
+		}
+	});
+	instance->button = button;
+	instance->button->setPosition(Vec2(button->getContentSize().width/2 + 10, size.height + button->getContentSize().height/2 + 10));
+	root->addChild(instance->button, kDepthBackButton);
+	
+	auto fader = LayerColor::create();
+	fader->initWithColor(Color4B::BLACK);
+	fader->setContentSize(size);
+	fader->setOpacity(0);
+	root->addChild(fader, kDepthFader);
+	instance->fader = fader;
 	
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	auto layer = stateScreens[kStateMainMenu];
 	layer->setPosition(origin.x, origin.y);
-	root->addChild(layer);
+	root->addChild(layer, kDepthScene);
 }
 
 GameController *GameController::get() {
 	return instance;
 }
 
+void GameController::showButton(bool show) {
+	auto size = Director::getInstance()->getVisibleSize();
+	button->stopAllActions();
+	button->runAction(MoveTo::create(0.2f, Vec2(
+		button->getContentSize().width/2 + 10,
+		size.height + (show ? -1 : 1) * (button->getContentSize().height/2 + 10))));
+}
+
 void GameController::setState(State newstate) {
+	if (newstate == this->state)
+		return;
+	
 	// Do animations I guess
 	auto origin = Director::getInstance()->getVisibleOrigin();
-	auto size = Director::getInstance()->getVisibleSize();
 	
 	auto prevLayer = stateScreens[this->state];
 	root->removeChild(prevLayer);
@@ -72,17 +112,25 @@ void GameController::setState(State newstate) {
 	this->state = newstate;
 	
 	layer->setPosition(origin.x, origin.y);
-	root->addChild(layer);
-
-	// Show or hide the navigation bar as appropriate
-	if (bar->getParent())
-		bar->removeFromParent();
 	
-	bool showBar = newstate == kStateMap || newstate == kStateSpellbook;
-	if (showBar) {
-		bar->setPosition(0, 0);
-		root->addChild(bar);
-	}
+	// Show the fader!
+	fader->runAction(Sequence::create(
+		FadeIn::create(0.2f),
+		CallFunc::create([this, prevLayer, layer](){
+			root->removeChild(prevLayer);
+			root->addChild(layer, kDepthScene);
+		}),
+		FadeOut::create(0.2f),
+		nullptr));
+
+	// Navigation bar
+	bool showBar = newstate == kStateMap;
+	bar->stopAllActions();
+	bar->resetButtons();
+	bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
+	
+	// Back button
+	showButton(newstate == kStateSpellbook);
 	
 	// do refreshing
 	if (newstate == kStateMap) {
@@ -105,13 +153,14 @@ void GameController::startArena() {
 	setState(kStateGame);
 }
 void GameController::startRound(RoundDef *round) {
+	popDialog();
 	Game::get()->startRound(round);
 	setState(kStateGame);
 }
-void GameController::enableBar(bool enable) {
+/*void GameController::enableBar(bool enable) {
 	// Place something over the nav bar (like the grid)
 	bar->setEnabled(enable);
-}
+}*/
 void GameController::popDialog() {
 	if (dialog_stack.size()) {
 		Dialog *last_dialog = dialog_stack[dialog_stack.size() - 1];
@@ -124,19 +173,19 @@ void GameController::popDialog() {
 void GameController::showSpellInfoDialog(Spell *spell) {
 	Dialog *dialog = SpellInfoDialog::create(spell);
 	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog);
+	root->addChild(dialog, kDepthPopup);
 	dialog_stack.push_back(dialog);
 	Tutorial::activate(8);
 }
 void GameController::showOptionsDialog() {
 	Dialog *dialog = OptionsDialog::create();
 	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog);
+	root->addChild(dialog, kDepthPopup);
 	dialog_stack.push_back(dialog);
 }
 void GameController::showPreLevelDialog(RoundDef *round) {
 	Dialog *dialog = PreLevelDialog::create(round);
 	dialog->setPosition(root->getContentSize()/2);
-	root->addChild(dialog);
+	root->addChild(dialog, kDepthPopup);
 	dialog_stack.push_back(dialog);
 }
