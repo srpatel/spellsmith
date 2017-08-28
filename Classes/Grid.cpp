@@ -347,6 +347,7 @@ void Grid::flashPreset(int which) {
 				g->sprite->runAction(RepeatForever::create(Sequence::create(
 					EaseOut::create(FadeTo::create(0.5, 160), 0.5),
 					EaseIn::create(FadeTo::create(0.5, 255), 0.5),
+					DelayTime::create(0.2f),
 					nullptr
 				)));
 			} else {
@@ -354,7 +355,7 @@ void Grid::flashPreset(int which) {
 				if (specials.empty()) {
 					g->sprite->runAction(FadeTo::create(0.5, 255));
 				} else {
-					g->sprite->runAction(FadeTo::create(0.5, 125));
+					g->sprite->runAction(FadeTo::create(0.5, 60));
 				}
 			}
 		}
@@ -385,10 +386,10 @@ S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::FIRE ) S(GemTyp
 #define S(t) set(row, col++, new Gem, true, t);
 #define R() row++; col=0;
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )  R()
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::NONE )  R()
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::NONE )  R()
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::AIR  ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::AIR  ) S(GemType::FIRE ) S(GemType::NONE )
 	}
 	
 	refill();
