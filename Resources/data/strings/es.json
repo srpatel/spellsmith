@@ -1,0 +1,185 @@
+{
+  "spell": {
+    "_comment": "Names of spells which can be cast",
+    "fireball": {
+      "name": "Bola de fuego",
+      "description": "Infligir 10 p. de daño."
+    },
+    "firewisp": {
+      "name": "Mechón de fuego",
+      "description": "Infligir 6 p. de daño."
+    },
+    "forest_breeze": {
+      "name": "Vientos del Bosque",
+      "description": "Recibir 5 p. de sanación."
+    },
+    "chill": {
+      "name": "Congelir",
+      "description": "Congelir un enemigo para 2 turnos."
+    },
+    "lightning_bolt": {
+      "name": "Lightning Bolt",
+      "description": "Deal 1 to 12 damage."
+    },
+    "healstrike": {
+      "name": "Healstrike",
+      "description": "Heal for 5. Deal 5 damage."
+    },
+    "volcanic": {
+      "name": "Volcanic Eruption",
+      "description": "Deal 10 damage to EVERYONE."
+    },
+    "crystalise": {
+      "name": "Crystalise",
+      "description": "Heal for 3. Create 3 crystal gems."
+    },
+    "smelt": {
+      "name": "Smelt",
+      "description": "Deal 6 damage. Create 1 crystal gem."
+    },
+    "heal": {
+      "name": "Heal",
+      "description": "Gain 7 life."
+    },
+    "purify": {
+      "name": "Purify",
+      "description": "Create 1 crystal gem."
+    },
+    "zap": {
+      "name": "Zap",
+      "description": "Deal 10 damage to a random enemy."
+    },
+    "ice_bolt": {
+      "name": "Ice Bolt",
+      "description": "Deal 3 damage. 50% chance to freeze for 2 turns."
+    },
+    "stun_strike": {
+      "name": "Stun Strike",
+      "description": "Stun an enemy."
+    },
+    "earthquake": {
+      "name": "Earthquake",
+      "description": "Deal 5 damage to each enemy. 50% chance for each to get stunned."
+    },
+    "focus": {
+      "name": "Focus",
+      "description": "For the next 6 turns, spells deal 50% extra damage."
+    },
+    "fury": {
+      "name": "Fury",
+      "description": "Deal double damage next turn."
+    },
+    "phase": {
+      "name": "Phase",
+      "description": "Become immune to damage next turn."
+    },
+    "fire_cleanse": {
+      "name": "Fire Cleanse",
+      "description": "Destroy all fire gems and deal 3 damage for each."
+    },
+    "fountain_of_youth": {
+      "name": "Fountain of Youth",
+      "description": "Destroy all blue gems and heal 2 for each."
+    },
+    "fertilise": {
+      "name": "Fertilise",
+      "description": "Replace all green gems with crystal gems."
+    },
+    "poison_dart": {
+      "name": "Precise Dart",
+      "description": "Deal 5 damage. If the enemy is at full health deal 10 instead."
+    },
+    "induce_explosion": {
+      "name": "Induce Explosion",
+      "description": "Deal 5 damage. If this kills the enemy, deal 10 damage to all other enemies."
+    },
+    "channel": {
+      "name": "Mystic Channel",
+      "description": "If you cast a spell next turn, copy it two extra times."
+    },
+    "dragon_breath": {
+      "name": "Meteor Strike",
+      "description": "Deal 7 damage to each enemy."
+    },
+    "lightning_storm": {
+      "name": "Lightning Storm",
+      "description": "Deal 3-10 damage to each enemy."
+    },
+    "whispers_in_the_wind": {
+      "name": "Whispers in the Wind",
+      "description": "Destroy all your air gems, and cast three of your spells randomly."
+    },
+    "drain_life": {
+      "name": "Drain Life",
+      "description": "Deal 5 damage. If this kills the enemy, gain 8 life."
+    },
+    "evaporate": {
+      "name": "Evaporate",
+      "description": "Convert your water gems into air gems."
+    },
+    "cleanse": {
+      "name": "Cleanse",
+      "description": "Heal for 3 and clear the grid."
+    },
+    "forest_fire": {
+      "name": "Forest Fire",
+      "description": "Turn your earth gems into fire gems."
+    },
+    "charge_bolt": {
+      "name": "Charge Bolt",
+      "description": "Deal 3 damage plus 3 more for each other time you cast this spell this round."
+    }
+  },
+  "monster": {
+    "dog": "Hound",
+    "fast_dog": "Greyhound",
+    "shaman": "Shaman",
+    "goblin_sword": "Goblin Swordsman",
+    "goblin_axe": "Goblin Axeman",
+    "goblin_halberd": "Goblin Halberdier",
+    "fire_wizard": "Pyromancer",
+    "water_wizard": "Hydromancer",
+    "necromancer": "Necromancer"
+  },
+  "ui": {
+    "LEVEL_WON": "cartas de felicidaded",
+    "LEVEL_LOST": "perdiste",
+    "RETRY_LEVEL": "otra vez",
+    "BACK": "regresar",
+    "ARENA": "Arena",
+    "ADVENTURE": "Aventura",
+    "PLAY": "EMPEZAR",
+    "TAP_TO_CLOSE": "[Teclear para cerrar]",
+    "TAP_TO_CONTINUE": "[Teclear para continuar]",
+    "OPTIONS": "Opciones",
+    "RETURN_TO_MAP": "Volver al plano"
+  },
+  "level": {
+    "1": "Bosque",
+    "2": "Portal del sur",
+    "3": "Graveyard",
+    "4": "Fork",
+    "5": "No Man's Land",
+    "6": "Mountain Pass",
+    "7": "Marsh",
+    "8": "Bridge",
+    "9": "Great Mountain",
+    "10": "Castle",
+    "3a": "Abandoned Church",
+    "4a": "Mage's Tower",
+    "4b": "Frost Plains",
+    "4c": "Ice Mountain",
+    "5a": "Volcano"
+  },
+  "tutorial": {
+    "1": "Oh, heavens! There is a goblin in the path. We'd better take care of it...",
+    "2": "Draw chains of the same colour to deal damage.",
+    "5": "Every few turns the enemies will attack you. Make sure you kill them before they kill you!",
+    "7": "You've learnt a new spell! Tap it to find out what it does.",
+    "9": "That seems pretty good! You should equip it so you can use it in battle. Drag it to an empty slot.",
+    "10": "Now you're ready for the next challenge! Head back to the map to continue your journey...",
+    "101": "This might be tricky! You'd better use your new spell.",
+    "102": "Draw the spell in any orientation to cast it!",
+    "103": "Nice work! You have many spells to learn yet, and many enemies to defeat. Good luck!"
+  }
+}
