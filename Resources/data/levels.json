@@ -25,7 +25,7 @@
     "x": 313,
     "y": 204,
     "rewards": [
-      "poison_dart"
+      "forest_breeze"
     ]
   },
   "3": {
@@ -40,8 +40,7 @@
     "x": 294,
     "y": 348,
     "rewards": [
-      "zap",
-      "fury"
+      "phase"
     ]
   },
   "4": {
@@ -57,7 +56,7 @@
     "x": 210,
     "y": 481,
     "rewards": [
-      "earthquake",
+      "poison_dart",
       "focus"
     ]
   },
@@ -74,8 +73,8 @@
     "x": 341,
     "y": 626,
     "rewards": [
-      "ice_bolt",
-      "evaporate"
+      "forest_fire",
+      "fire_cleanse"
     ]
   },
   "6": {
@@ -91,8 +90,7 @@
     "x": 398,
     "y": 784,
     "rewards": [
-      "drain_life",
-      "phase"
+      "healstrike"
     ]
   },
   "7": {
@@ -109,7 +107,7 @@
     "y": 887,
     "rewards": [
       "fertilise",
-      "forest_breeze"
+      "heal"
     ]
   },
   "8": {
@@ -125,8 +123,7 @@
     "x": 340,
     "y": 1050,
     "rewards": [
-      "dragon_breath",
-      "healstrike"
+      "fountain_of_youth"
     ]
   },
   "9": {
@@ -170,8 +167,7 @@
     "x": 178,
     "y": 350,
     "rewards": [
-      "lightning_bolt",
-      "lightning_storm"
+      "drain_life"
     ]
   },
   "5a": {
@@ -187,8 +183,8 @@
     "x": 580,
     "y": 786,
     "rewards": [
-      "fountain_of_youth",
-      "cleanse"
+      "smelt",
+      "volcanic"
     ]
   },
   "4a": {
@@ -204,8 +200,7 @@
     "x": 119,
     "y": 630,
     "rewards": [
-      "fury",
-      "smelt"
+      "zap"
     ]
   },
   "4b": {
@@ -220,8 +215,7 @@
     "x": 80,
     "y": 754,
     "rewards": [
-      "induce_explosion",
-      "purify"
+      "ice_bolt"
     ]
   },
   "4c": {
@@ -237,8 +231,8 @@
     "x": 94,
     "y": 859,
     "rewards": [
-      "volcanic",
-      "fire_cleanse"
+      "lightning_storm",
+      "focus"
     ]
   }
 }

@@ -80,11 +80,7 @@ void Grid::set(int column, int row, Gem *gem, bool init = false, GemType type = 
     grid[index] = gem;
     
     if (init) {
-		if (type == NONE) {
-			gem->init();
-		} else {
-			gem->init(type);
-		}
+		initNewGem(gem, type);
 		
         gem->sprite->setOpacity(0);
         auto fadeIn = cocos2d::FadeIn::create(.1f);
@@ -96,6 +92,18 @@ void Grid::set(int column, int row, Gem *gem, bool init = false, GemType type = 
 		gem->sprite->setPosition(ii * Gem::getSize().width, jj * Gem::getSize().height);
         addChild(gem->sprite);
     }
+}
+
+void Grid::initNewGem(Gem *gem, GemType type = NONE) {
+	if (type == NONE && ! futureGems.empty()) {
+		type = futureGems.front();
+		futureGems.pop_front();
+	}
+	if (type == NONE) {
+		gem->init();
+	} else {
+		gem->init(type);
+	}
 }
 
 cocos2d::Vec2 Grid::getSize() {
@@ -370,26 +378,22 @@ void Grid::preset(int which) {
 			set(i, j, nullptr);
 		}
 	}
+	#define S(t) futureGems.push_back(t);
 	if (which == 1) {
-		int row = 0;
-		int col = 0;
-#define S(t) set(row, col++, new Gem, true, t);
-#define R() row++; col=0;
-S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::AIR  )  R()
-S(GemType::AIR  ) S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE )  R()
-S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH)  R()
-S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE ) S(GemType::WATER)  R()
+// bottom left																	top left
+S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::AIR  )
+S(GemType::AIR  ) S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE )
+S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::EARTH)
+S(GemType::WATER) S(GemType::AIR  ) S(GemType::WATER) S(GemType::FIRE ) S(GemType::WATER)
 S(GemType::FIRE ) S(GemType::EARTH) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::EARTH)
+// bottom right																	top right
 	} else if (which == 2) {
-		int row = 0;
-		int col = 0;
-#define S(t) set(row, col++, new Gem, true, t);
-#define R() row++; col=0;
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::AIR  ) S(GemType::NONE )  R()
-S(GemType::NONE ) S(GemType::NONE ) S(GemType::AIR  ) S(GemType::FIRE ) S(GemType::NONE )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::AIR  )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::AIR  ) S(GemType::FIRE )
+S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
+S(GemType::FIRE ) S(GemType::FIRE )
 	}
 	
 	refill();
@@ -775,7 +779,7 @@ void Grid::refill() {
 		for (int j = 0; j < height; j++) {
 			Gem *g = get(i, j);
 			if (!g->didInit) {
-				g->init();
+				initNewGem(g);
 				if (!column_stagger_done) {
 					column_stagger_done = true;
 					column_stagger += COLUMN_STAGGER_AMOUNT;

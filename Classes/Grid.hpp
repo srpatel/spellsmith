@@ -49,6 +49,8 @@ private:
 	void onTouchMovePart(Vec2 loc);
 	bool doesLineIntersectCell(Vec2 start, Vec2 end, int column, int row);
 	bool isAboveLine(Vec2 start, Vec2 end, Vec2 point);
+	std::list<GemType> futureGems;
+	void initNewGem(Gem *gem, GemType type);
 	
 	bool diagonals_allowed;
 };
