@@ -542,8 +542,6 @@
 			children = (
 				105E0D061BF14E3F0081D8F5 /* Characters.cpp */,
 				105E0D051BF14E3F0081D8F5 /* Characters.hpp */,
-				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
-				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
 				100AEB951CC3E61400182962 /* GameHUD.cpp */,
 				100AEB961CC3E61400182962 /* GameHUD.hpp */,
 				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
@@ -598,6 +596,8 @@
 		104E052D1D55E0230049EBEB /* Spells */ = {
 			isa = PBXGroup;
 			children = (
+				100F9E531CD332E5001118C1 /* DoSpell.cpp */,
+				100F9E541CD332E5001118C1 /* DoSpell.hpp */,
 				104E052E1D55E0390049EBEB /* Projectiles.cpp */,
 				104E052F1D55E0390049EBEB /* Projectiles.hpp */,
 			);

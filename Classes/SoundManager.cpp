@@ -7,6 +7,8 @@
 #define EXTENSION ".wav"
 #endif
 
+const char *kSoundEffect_None        = nullptr;
+
 const char *kSoundEffect_SelectGem   = "sound/gem_select" EXTENSION;
 const char *kSoundEffect_DeselectGem = "sound/gem_deselect" EXTENSION;
 const char *kSoundEffect_Cast        = "sound/cast" EXTENSION;
@@ -41,6 +43,7 @@ const char *kSoundEffect_SRainbow    = "sound/spell_rainbow" EXTENSION;
 const char *kSoundEffect_SHeal       = "sound/spell_heal" EXTENSION;
 const char *kSoundEffect_SRumble     = "sound/spell_rumble" EXTENSION;
 const char *kSoundEffect_SZap        = "sound/spell_zap" EXTENSION;
+const char *kSoundEffect_SWhistle    = "sound/dart_whistle_hit" EXTENSION;
 
 SoundManager *SoundManager::instance = nullptr;
 
@@ -49,6 +52,28 @@ SoundManager *SoundManager::get() {
 		instance = new SoundManager;
 	}
 	return instance;
+}
+
+void SoundManager::toggleMute() {
+	setMute(! getMute());
+}
+
+bool SoundManager::getMute() {
+	return oldVolume <= 0;
+}
+
+void SoundManager::setMute(bool mute) {
+	if (mute) {
+		oldVolume = CocosDenshion::SimpleAudioEngine::getInstance()->getEffectsVolume();
+		setVolume(0);
+	} else {
+		setVolume(oldVolume);
+		oldVolume = 0;
+	}
+}
+
+void SoundManager::setVolume(float volume) {
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(volume);
 }
 
 void SoundManager::init() {
@@ -84,6 +109,7 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_SHeal);
 	game.push_back(kSoundEffect_SRumble);
 	game.push_back(kSoundEffect_SZap);
+	game.push_back(kSoundEffect_SWhistle);
 
 	// use unloadEffect to ensure we don't keep them all in memory always
 }

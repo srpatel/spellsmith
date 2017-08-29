@@ -677,7 +677,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	} else {
 		to.x = -50.0;
 	}
-	onHit = CallFunc::create([this, damage, target, onhitfunc, phase](){
+	onHit = CallFunc::create([this, damage, target, onhitfunc, phase, type](){
 		SoundManager::get()->stopPTravel();
 		if (onhitfunc) {
 			onhitfunc();
@@ -694,7 +694,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	if (damage >= 10) {
 		scale *= 2;
 	}
-	Layer *projectile;
+	BasicProjectile *projectile;
 	if (type == ptBasicWind) {
 		projectile = BasicWind::create(from, to, scale, onHit);
 	} else if (type == ptBasicEarth) {
@@ -707,9 +707,15 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 		projectile = BasicPurple::create(from, to, scale, onHit);
 	} else if (type == ptBasicMeteor) {
 		projectile = BasicMeteor::create(from, to, scale, onHit);
+	} else if (type == ptBasicDart) {
+		projectile = BasicDart::create(from, to, 1, onHit);
 	} else {
 		printf("Unrecognised projectile type!\n");
 		projectile = BasicFire::create(from, to, scale, onHit);
+	}
+	
+	if (phase) {
+		projectile->turnOffSound();
 	}
 	
 	// Wait for 0.56 seconds as that is when the staff is in the right place
@@ -722,13 +728,21 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 				type != ptBasicEarth ? "spell_projectile" : "spell_aura",
 				false);
 			// Spell aura also has a sound effect for the bash
-			/*if (type == Color3B::GREEN) {
+			/*if (type == ptBasicEarth) {
 				auto delay = DelayTime::create(0.5667);
 				auto run = CallFunc::create([this](){
 					PLAY_SOUND(kSoundEffect_UISelect);
 				});
 				runAction(Sequence::create(delay, run, nullptr));
 			}*/
+			// Poison dart sound effect happens here
+			if (type == ptBasicDart) {
+				auto delay = DelayTime::create(0.5667);
+				auto run = CallFunc::create([this](){
+					PLAY_SOUND(kSoundEffect_SWhistle);
+				});
+				runAction(Sequence::create(delay, run, nullptr));
+			}
 			auto delay = DelayTime::create(e->endTime);
 			auto run = CallFunc::create([this](){
 				actionDone();
@@ -736,9 +750,11 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 			runAction(Sequence::create(delay, run, nullptr));
 		}
 		auto delay = DelayTime::create(14.0/30.0);
-		auto run = CallFunc::create([this, projectile](){
+		auto run = CallFunc::create([this, type, projectile](){
 			scenery->addChild(projectile, 76); // in front of "back" enemies (50), and behind "front" enemies (100)
-			SoundManager::get()->startPTravel();
+			if (type != ptBasicDart) {
+				SoundManager::get()->startPTravel();
+			}
 			projectile->release();
 		});
 		runAction(Sequence::create(delay, run, nullptr));

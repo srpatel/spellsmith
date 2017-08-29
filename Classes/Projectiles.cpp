@@ -65,7 +65,8 @@ bool BasicProjectile::init(
 		Vec2 from,
 		Vec2 to,
 		float scale,
-		CallFunc* onHit
+		CallFunc* onHit,
+		float time
 )
 {
 	if ( !Layer::init() )
@@ -110,7 +111,7 @@ bool BasicProjectile::init(
 	auto moveAnimation = Animation::createWithSpriteFrames(moveAnimFrames, 0.1f);
 	moveAnimation->setLoops(-1);
 	onHit->retain();
-	float time = from.distance(to) / PROJECTILE_SPEED;
+	if (time < 0) time = from.distance(to) / PROJECTILE_SPEED;
 	sprite->runAction(Sequence::create(
 		Animate::create(createAnimation),
 		Spawn::create(
@@ -134,7 +135,7 @@ bool BasicProjectile::init(
 						));
 						// Play sound effect
 						if (sound) {
-							SoundManager::get()->playEffect(sound);
+							PLAY_SOUND(sound);
 						}
 					}),
 					nullptr

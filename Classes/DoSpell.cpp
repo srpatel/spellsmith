@@ -149,7 +149,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		if (e->health == e->max_health) {
 			n += 5;
 		}
-		PROJ( D(n), ptBasicEarth );
+		PROJ( D(n), ptBasicDart );
 	}
 	IF_SPELL(fertilise) { // TODO
 		// Replace all green gems with crystal

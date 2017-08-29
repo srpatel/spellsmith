@@ -14,6 +14,7 @@
 #define PLAY_SOUND(_s_) SoundManager::get()->playEffect( _s_ )
 
 extern const char
+	*kSoundEffect_None,
 	*kSoundEffect_SelectGem,
 	*kSoundEffect_DeselectGem,
 	*kSoundEffect_Hum,
@@ -43,12 +44,17 @@ extern const char
 	*kSoundEffect_SRainbow,
 	*kSoundEffect_SHeal,
 	*kSoundEffect_SRumble,
-	*kSoundEffect_SZap;
+	*kSoundEffect_SZap,
+	*kSoundEffect_SWhistle;
 
 class SoundManager {
 public:
 	static SoundManager *get();
 	void init();
+	bool getMute();
+	void toggleMute();
+	void setMute(bool);
+	void setVolume(float vol); // [0, 1]
 	void playEffect( const char *path );
 	void startHum();
 	void stopHum();
@@ -62,6 +68,7 @@ private:
 	static SoundManager *instance;
 	unsigned int sound_hum = -1;
 	unsigned int sound_ptravel = -1;
+	float oldVolume = 1;
 	std::vector<const char *> game;
 };
 

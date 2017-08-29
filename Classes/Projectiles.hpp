@@ -11,13 +11,14 @@
 
 #include "SoundManager.hpp"
 
-#define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset, _sound) \
+#define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset, _sound) PROJECTILE_TIME(_classname, _name, _shoot, _travel, _hit, _offset, _sound, -1)
+#define PROJECTILE_TIME(_classname, _name, _shoot, _travel, _hit, _offset, _sound, _time) \
 class _classname : public BasicProjectile { \
 public: \
 	_classname() \
 		: BasicProjectile(#_name, _shoot, _travel, _hit, _offset, _sound) {} \
 	inline bool init(Vec2 from, Vec2 to, float scale, CallFunc* onHit){\
-		return BasicProjectile::init(from, to, scale, onHit);\
+		return BasicProjectile::init(from, to, scale, onHit, _time);\
 	}\
 	CREATE_FUNC_4(_classname, Vec2, Vec2, float, CallFunc*);\
 };\
@@ -36,15 +37,17 @@ public: \
 
 class BasicProjectile : public Layer {
 public:
-	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit, Vec2 offset, const char *sound) :
+	BasicProjectile(const char *path, int numShoot, int numTravel, int numHit, Vec2 offset, const char *sound, float time = -1) :
 		path(path), numShoot(numShoot), numTravel(numTravel), numHit(numHit), offset(offset), sound(sound){}
 	bool init(
 		Vec2 from,
 		Vec2 to,
 		float scale,
-		CallFunc* onHit);
+		CallFunc* onHit,
+		float time);
 public:
 	void setRotation(float r);
+	inline void turnOffSound() {sound = nullptr;}
 protected:
 	Vec2 offset;
 	const char *path;
@@ -80,6 +83,7 @@ PROJECTILE(BasicEarth,  earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*off
 PROJECTILE(BasicWater,  waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0), kSoundEffect_PHWater);
 PROJECTILE(BasicMeteor, meteor,    /*shoot*/  0, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHFire);
 PROJECTILE(BasicPurple, drainlife,    /*shoot*/  11, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(10, 0), kSoundEffect_PHWater);
+PROJECTILE_TIME(BasicDart, dart,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 0), kSoundEffect_None, 0.3);
 
 ANIM(AnimHeal, "castheal", 11, "castheal", false);
 ANIM(AnimFire, "castfire", 11, "castfire", false);
