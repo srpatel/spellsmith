@@ -349,23 +349,27 @@ void Grid::flashPreset(int which) {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			auto g = get(i, j);
-			g->sprite->stopAllActions();
+			g->sprite->stopActionByTag(10);
+			Action *action;
 			if (specials.find(std::make_pair(i, j)) != specials.end()) {
 				// Flash it!
-				g->sprite->runAction(RepeatForever::create(Sequence::create(
+				action = RepeatForever::create(Sequence::create(
 					EaseOut::create(FadeTo::create(0.5, 160), 0.5),
 					EaseIn::create(FadeTo::create(0.5, 255), 0.5),
 					DelayTime::create(0.2f),
 					nullptr
-				)));
+				));
 			} else {
 				// Dim it
 				if (specials.empty()) {
-					g->sprite->runAction(FadeTo::create(0.5, 255));
+					action = FadeTo::create(0.5, 255);
 				} else {
-					g->sprite->runAction(FadeTo::create(0.5, 60));
+					action = FadeTo::create(0.5, 60);
 				}
 			}
+			action->setTag(10);
+			g->sprite->runAction(action);
+			// This action needs to run after others?
 		}
 	}
 }
