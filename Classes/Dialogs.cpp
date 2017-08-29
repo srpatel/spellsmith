@@ -60,7 +60,7 @@ bool SpellInfoDialog::init(Spell *spell) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto size = Size(visibleSize.width - 50, 300);
 	
-	if ( !Dialog::init(true, true, size.width, size.height) ) {
+	if ( !Dialog::init(true, false, size.width, size.height) ) {
 		return false;
 	}
 	
