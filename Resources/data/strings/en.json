@@ -147,6 +147,7 @@
     "RETRY_LEVEL": "retry",
     "BACK": "back",
     "ARENA": "Arena",
+    "START_ARENA": "Start Arena",
     "ADVENTURE": "Adventure",
     "PLAY": "PLAY",
     "TAP_TO_CLOSE": "[Tap to close]",
