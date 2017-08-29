@@ -51,6 +51,7 @@ bool Spellbook::init() {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		
 		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
+		scenery->setImage("bg_lab1.png");
 		scenery->hideObjects();
 		scenery->setAnchorPoint(Vec2(0, 0));
 		scenery->setPosition(0, layout.column_height);
