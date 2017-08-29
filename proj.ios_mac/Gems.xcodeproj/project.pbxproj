@@ -93,6 +93,8 @@
 		102993A61D6245B300D1492E /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 102993A41D6245B300D1492E /* spine */; };
 		1035F3CE1F53440B006C1CB8 /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */; };
 		1035F3CF1F53440B006C1CB8 /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */; };
+		1035F3D31F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */; };
+		1035F3D41F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */; };
 		103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
@@ -333,6 +335,8 @@
 		102993A41D6245B300D1492E /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
 		1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		1035F3CD1F53440B006C1CB8 /* Tutorial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
+		1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArenaScreen.cpp; sourceTree = "<group>"; };
+		1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArenaScreen.hpp; sourceTree = "<group>"; };
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
@@ -567,6 +571,8 @@
 				1070E0AC1BF5188E007C06F9 /* GameController.hpp */,
 				108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */,
 				108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */,
+				1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */,
+				1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */,
 				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
 				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
 				10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */,
@@ -1043,6 +1049,7 @@
 				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				1029934E1D62429000D1492E /* EventData.c in Sources */,
 				102993541D62429000D1492E /* IkConstraintData.c in Sources */,
+				1035F3D31F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */,
 				102993761D62429000D1492E /* spine-cocos2dx.cpp in Sources */,
 				102993401D62429000D1492E /* AttachmentLoader.c in Sources */,
 				1029933C1D62429000D1492E /* AtlasAttachmentLoader.c in Sources */,
@@ -1181,6 +1188,7 @@
 				105E0D0A1BF14E3F0081D8F5 /* Strings.cpp in Sources */,
 				10FC736F1E2D79BB0096BF0E /* MapScreen.cpp in Sources */,
 				102993571D62429000D1492E /* Json.c in Sources */,
+				1035F3D41F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */,
 				1029933F1D62429000D1492E /* Attachment.c in Sources */,
 				105E0D121BF14E3F0081D8F5 /* Grid.cpp in Sources */,
 			);

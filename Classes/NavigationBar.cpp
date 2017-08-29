@@ -32,6 +32,9 @@ void NavigationBar::resetButtons() {
 	if (! spells.empty()) {
 		buttons.push_back({"SPELLBOOK", "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
+	if (SaveData::isLevelComplete("3")) {
+		buttons.push_back({"ARENA", "icons/map.png", kStateArena}); // Set state to arena
+	}
 
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;

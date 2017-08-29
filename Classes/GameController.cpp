@@ -11,6 +11,7 @@
 #include "MainMenu.hpp"
 #include "GameScene.hpp"
 #include "MapScreen.hpp"
+#include "ArenaScreen.hpp"
 #include "Spellbook.hpp"
 #include "Constants.h"
 #include "SoundManager.hpp"
@@ -47,6 +48,9 @@ void GameController::init(Scene *root) {
 	
 	stateScreens[kStateSpellbook] = Spellbook::create();
 	stateScreens[kStateSpellbook]->retain();
+	
+	stateScreens[kStateArena] = ArenaScreen::create();
+	stateScreens[kStateArena]->retain();
 	
 	instance->state = kStateMainMenu;
 	
@@ -124,21 +128,21 @@ void GameController::setState(State newstate) {
 	// Show the fader!
 	fader->runAction(Sequence::create(
 		FadeIn::create(0.2f),
-		CallFunc::create([this, prevLayer, layer](){
+		CallFunc::create([this, prevLayer, layer, newstate](){
 			root->removeChild(prevLayer);
 			root->addChild(layer, kDepthScene);
+		
+			// Navigation bar
+			bool showBar = newstate == kStateMap;
+			bar->stopAllActions();
+			bar->resetButtons();
+			bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
+		
+			// Back button
+			showButton(newstate == kStateSpellbook || newstate == kStateArena);
 		}),
 		FadeOut::create(0.2f),
 		nullptr));
-
-	// Navigation bar
-	bool showBar = newstate == kStateMap;
-	bar->stopAllActions();
-	bar->resetButtons();
-	bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
-	
-	// Back button
-	showButton(newstate == kStateSpellbook);
 	
 	// do refreshing
 	if (newstate == kStateMap) {

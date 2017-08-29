@@ -18,6 +18,7 @@ enum State {
 	kStateGame,
 	kStateMap,
 	kStateSpellbook,
+	kStateArena,
 	
 	kStateCount
 };
