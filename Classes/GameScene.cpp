@@ -691,6 +691,9 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	});
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
+	if (damage >= 10) {
+		scale *= 2;
+	}
 	Layer *projectile;
 	if (type == ptBasicWind) {
 		projectile = BasicWind::create(from, to, scale, onHit);

@@ -124,9 +124,9 @@ void Tutorial::activate(int number) {
 	if (! start && ! prec)
 		return;
 
-	// Popups which stay visible twice: 3
+	// Popups which stay visible twice: 3 (not anymore)
 	auto remover = Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr);
-	if (currentPopup != nullptr && number != 3) {
+	if (currentPopup != nullptr /*&& number != 3*/) {
 		currentPopup->stopAllActions();
 		// Sometimes we don't want to fade it out (when changing screens)
 		if (number == 11) {
