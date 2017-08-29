@@ -24,11 +24,18 @@ bool MapScreen::init() {
 	
 	auto size = Director::getInstance()->getVisibleSize();
 	
+	auto title = LoadSprite("main/logo.png");
+	title->setScale(0.5);
+	title->setAnchorPoint(Vec2(0.5, 0.5));
+	Vec2 pos(size.width/2, size.height - title->getContentSize().height/4 - 20);
+	title->setPosition(pos);
+	this->addChild(title);
+	
 	// Add map and scroll blobs
 	auto top = LoadSprite("map/scroll1.png");
 	auto bot = LoadSprite("map/scroll1.png");
 	
-	auto topY = size.height - top->getContentSize().height / 2 - 10;
+	auto topY = pos.y - title->getContentSize().height/4 - top->getContentSize().height / 2 - 10;
 	auto bottomY = NavigationBar::HEIGHT + top->getContentSize().height / 2 + 10;
 	
 	// must multiply by scale factor because we load the
