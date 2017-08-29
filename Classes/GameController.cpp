@@ -140,6 +140,14 @@ void GameController::setState(State newstate) {
 		
 			// Back button
 			showButton(newstate == kStateSpellbook || newstate == kStateArena);
+		
+			// tutorials
+			if (newstate == kStateMap) {
+				Tutorial::activate(11);
+			} else if (newstate == kStateSpellbook) {
+				Tutorial::activate(7);
+				Tutorial::activate(201);
+			}
 		}),
 		FadeOut::create(0.2f),
 		nullptr));
@@ -147,11 +155,9 @@ void GameController::setState(State newstate) {
 	// do refreshing
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
-		Tutorial::activate(11);
 	} else if (newstate == kStateSpellbook) {
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
-		Tutorial::activate(7);
 	}
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);

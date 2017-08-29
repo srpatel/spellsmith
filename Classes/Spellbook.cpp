@@ -261,6 +261,7 @@ void Spellbook::refreshSpells() {
 		
 		auto onSelect = [this](int invPosition, Spell *selected){
 			Tutorial::activate(10);
+			Tutorial::activate(202);
 			SaveData::setEquippedSpellAt(invPosition, selected->getRawName());
 			refreshEquips();
 		};

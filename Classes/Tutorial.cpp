@@ -116,7 +116,7 @@ int Tutorial::getCurrent() {
 void Tutorial::activate(int number) {
 	auto game = Game::get();
 	// Starting numbers: 1, 7, 101
-	bool start = number == 1 || number == 7 || number == 101;
+	bool start = number == 1 || number == 7 || number == 101 || number == 201;
 	bool prec = number == currentLevel + 1;
 	
 	// Don't progress to the next tutorial unless you're starting a chain
@@ -332,6 +332,71 @@ void Tutorial::activate(int number) {
 				kPosScenery, true, 0.5);
 			game->addChild(popup);
 		} else if (number == 104) {
+		}
+	} else
+	// Tutorial for 4th spell
+	if (number < 300) {
+		if (number == 201) {
+			// If our spellbook contains >=4 spells, and there are only
+			// spells equipped in the left column.
+			bool rightColumn = false;
+			for (int i = 3; i < 6; i++) {
+				std::string name = SaveData::getEquippedSpellAt(i);
+				if (! name.empty()) {
+					rightColumn = true;
+					break;
+				}
+			}
+			
+			if (rightColumn || SaveData::getSpells().size() < 4) {
+				// No need to do tut.
+				currentLevel = -1;
+				return;
+			}
+			
+			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
+			
+			// Disable navigation
+			//GameController::get()->enableBar(false);
+			GameController::get()->showButton(false);
+			
+			// Learn spell text
+			auto popup = makeTextBox(
+				_("tutorial.201"),
+				kPosScenery, false, 0.5);
+			spellbook->addChild(popup);
+			
+			// Show arrow
+			auto finger = LoadSprite("ui/fingerpoint.png");
+			finger->setAnchorPoint(Vec2(0.5, 1));
+			SpellBlob *blob = nullptr;
+			for (SpellBlob *sb : spellbook->blobs) {
+				if (sb->mininode->isVisible()) {
+					blob = sb;
+					break;
+				}
+			}
+			if (blob != nullptr) {
+				layout_t layout = Game::get()->getLayout();
+				auto fromPos = blob->getPosition() + blob->getParent()->getPosition();
+				auto toPos = Vec2(Game::get()->getBoundingBox().size.width - 18 * layout.ui_scale, layout.column_height - 110 * layout.ui_scale);
+				spellbook->addChild(finger, 100);
+				finger->setOpacity(0);
+				finger->runAction(RepeatForever::create(
+					Sequence::create(
+						MoveTo::create(0, fromPos),
+						FadeIn::create(0.2f),
+						DelayTime::create(0.2f),
+						MoveTo::create(0.8f, toPos),
+						DelayTime::create(0.2f),
+						FadeOut::create(0.2f),
+						nullptr
+					)
+				));
+				others.push_back(finger);
+			}
+		} else if (number == 202) {
+			GameController::get()->showButton(true);
 		}
 	}
 }
