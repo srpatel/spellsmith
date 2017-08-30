@@ -1172,7 +1172,15 @@ void Game::showRound(RoundDef *round, int wave) {
 	// TODO : Remove all old sprites:
 	for (Enemy *e : enemies) {
 		e->sprite->setGLProgram(Shaders::none());
-		e->sprite->removeFromParent();
+		if (wave > 0) {
+			e->sprite->runAction(Sequence::create(
+				FadeOut::create(0.5f),
+				RemoveSelf::create(),
+				nullptr
+			));
+		} else {
+			e->sprite->removeFromParent();
+		}
 		delete e;
 	}
 	enemies.clear();
@@ -1184,7 +1192,7 @@ void Game::showRound(RoundDef *round, int wave) {
 		Enemy *enemy = new Enemy(m, enemies.size());
 		enemies.push_back( enemy );
 	}
-	scenery->placeMonsters(&enemies);
+	scenery->placeMonsters(&enemies, wave > 0 ? 2 : 0);
 	scenery->showFlags(GameScenery::FLAG_TYPE_NONE);
 	currentEnemy = 0;
 	numMoves = 0;

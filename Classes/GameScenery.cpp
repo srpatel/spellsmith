@@ -219,7 +219,7 @@ void GameScenery::addTextWisp(Character *enemy, std::string s, Color3B c) {
 	addChild(tw);
 }
 
-void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
+void GameScenery::placeMonsters(std::vector<Enemy *> *e, float delay) {
 	enemies = e;
 	Vec2 *enemy_positions;
 	if (enemies->size() == 3)
@@ -234,6 +234,8 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e) {
 		enemy->sprite->setPosition(enemy_positions[i++]);
 		enemy->sprite->setScale(char_scale);
 		enemy->buffHolder->setPosition(0.77 * enemy->sprite->getContentSize().width, enemy->sprite->getContentSize().height);
+		enemy->sprite->setOpacity(0);
+		enemy->sprite->runAction(Sequence::create(DelayTime::create(delay), FadeIn::create(0.5), nullptr));
 		addChild(enemy->sprite, 100);
 	}
 	if (enemies->size() == 3) {

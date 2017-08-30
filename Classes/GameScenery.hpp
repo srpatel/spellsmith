@@ -19,7 +19,7 @@ public:
 	virtual bool init(Size size);
 	virtual ~GameScenery();
 	void hideObjects();
-	void placeMonsters(std::vector<Enemy *> *);
+	void placeMonsters(std::vector<Enemy *> *, float delay);
 	void setSelected(int);
 	void setRedRingVisibility(bool visible);
 	void addTextWisp(Character *enemy, std::string s, Color3B c); // nullptr = wizard

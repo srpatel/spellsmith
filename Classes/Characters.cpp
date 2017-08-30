@@ -147,6 +147,7 @@ Enemy::Enemy(Monster *m, int index) {
 	ui_health = max_health;
 	is_skeleton = true;
 	sprite = monster->makeSkeleton();
+	sprite->setCascadeOpacityEnabled(true);
 	type = Humanoid;
 	if (monster->getSkeletonName() == "dog") {
 		type = Animal;
