@@ -22,6 +22,7 @@ const char *kSoundEffect_PHAir       = "sound/projectile_hit_air" EXTENSION;
 const char *kSoundEffect_PHWater     = "sound/projectile_hit_water" EXTENSION;
 const char *kSoundEffect_PHEarth     = "sound/projectile_hit_earth" EXTENSION;
 const char *kSoundEffect_PHFire      = "sound/projectile_hit_fire" EXTENSION;
+const char *kSoundEffect_PHIce      = "sound/projectile_hit_ice" EXTENSION;
 const char *kSoundEffect_PTravel     = "sound/projectile_travel" EXTENSION;
 const char *kSoundEffect_Thwack      = "sound/weapon_hit" EXTENSION;
 const char *kSoundEffect_Bite       = "sound/animal_bite" EXTENSION;
@@ -89,6 +90,7 @@ void SoundManager::init() {
 	game.push_back(kSoundEffect_PHWater);
 	game.push_back(kSoundEffect_PHEarth);
 	game.push_back(kSoundEffect_PHFire);
+	game.push_back(kSoundEffect_PHIce);
 	game.push_back(kSoundEffect_PTravel);
 	game.push_back(kSoundEffect_SelectGem);
 	game.push_back(kSoundEffect_DeselectGem);

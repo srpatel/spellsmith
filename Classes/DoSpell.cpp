@@ -344,12 +344,12 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(smelt) { // TODO
 		// deal 6 damage, create 1 crystal gem
-		PROJ( D(6), ptBasicFire );
+		PROJ( D(6), ptBasicAnvil );
 		CRYSTAL(1);
 	}
 	IF_SPELL(ice_bolt) { // TODO
 		// deal 3 damage, 50% chance to freeze 2
-		PROJ( D(3), ptBasicWater );
+		PROJ( D(3), ptBasicIce );
 		if (rand() % 2) {
 			game->enemies[game->currentEnemy]->addBuff(
 												   Buff::createFreeze(2)

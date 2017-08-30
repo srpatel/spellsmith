@@ -117,8 +117,12 @@ bool BasicProjectile::init(
 		Spawn::create(
 			CallFunc::create([this, to, hitAnimFrames, onHit, time]() {
 				// Move to target
+				ActionInterval *moveTo = MoveTo::create(time, to);
+				if (type == ptBasicAnvil) {
+					moveTo = EaseIn::create(moveTo, 2);
+				}
 				sprite->runAction(Sequence::create(
-					MoveTo::create(time, to),
+					moveTo,
 					onHit,
 					CallFunc::create([this, hitAnimFrames, onHit]() {
 						// deal damage or whatever

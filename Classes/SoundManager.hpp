@@ -26,6 +26,7 @@ extern const char
 	*kSoundEffect_PHWater,
 	*kSoundEffect_PHEarth,
 	*kSoundEffect_PHFire,
+	*kSoundEffect_PHIce,
 	*kSoundEffect_UISelect,
 	*kSoundEffect_UISelectMinor,
 	*kSoundEffect_UIBack,

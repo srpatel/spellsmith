@@ -604,7 +604,6 @@ void Game::makeCracks(Character *target) {
 		nullptr
 	));
 	scenery->addChild(sprite);
-
 }
 void Game::makeMeteor(float xpos, float ypos, float delay) {
 	this->runAction(Sequence::create(DelayTime::create(delay), CallFunc::create(
@@ -669,6 +668,11 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 		to.y += o.y * scenery->char_scale * flip;
 	}
 	
+	// Anvil flies in from the sky
+	if (type == ptBasicAnvil) {
+		from = Vec2(source->sprite->getPosition().x, scenery->getContentSize().height);
+	}
+	
 	bool phase = target->getBuffByType(BuffType::PHASING) != nullptr;
 	CallFunc *onHit;
 	
@@ -707,9 +711,13 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	} else if (type == ptBasicPurple) {
 		projectile = BasicPurple::create(from, to, scale, onHit);
 	} else if (type == ptBasicMeteor) {
-		projectile = BasicMeteor::create(from, to, scale, onHit);
+		projectile = BasicMeteor::create(from, to, 1, onHit);
 	} else if (type == ptBasicDart) {
 		projectile = BasicDart::create(from, to, 1, onHit);
+	} else if (type == ptBasicAnvil) {
+		projectile = BasicAnvil::create(from, to, 1, onHit);
+	} else if (type == ptBasicIce) {
+		projectile = BasicIce::create(from, to, 1, onHit);
 	} else {
 		printf("Unrecognised projectile type!\n");
 		projectile = BasicFire::create(from, to, scale, onHit);
@@ -725,18 +733,22 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	
 	runPendingAction([this, source, projectile, type]() {
 		if (source == wizard) {
+			const char* projectile_type = "spell_projectile";
+			if (type == ptBasicAnvil || type == ptBasicEarth) {
+				projectile_type = "spell_aura";
+			}
 			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
-				type != ptBasicEarth ? "spell_projectile" : "spell_aura",
+				projectile_type,
 				false);
 			// Spell aura also has a sound effect for the bash
-			/*if (type == ptBasicEarth) {
+			/*if (!strcmp(projectile_type, "spell_aura")) {
 				auto delay = DelayTime::create(0.5667);
 				auto run = CallFunc::create([this](){
 					PLAY_SOUND(kSoundEffect_UISelect);
 				});
 				runAction(Sequence::create(delay, run, nullptr));
 			}*/
-			// Poison dart sound effect happens here
+			// Poison dart sound effect happens here instead
 			if (type == ptBasicDart) {
 				auto delay = DelayTime::create(0.5667);
 				auto run = CallFunc::create([this](){
@@ -1156,7 +1168,7 @@ void Game::showRound(RoundDef *round, int wave) {
 	currentWave->setVisible( ! round->generated && numWaves > 1 );
 	currentWave->setString(ToString(wave + 1) + " of " + ToString(numWaves));
 	
-	if (numWaves > 0) {
+	if (numWaves > 1) {
 		// Show the "wave x of y" popup
 		auto sceneCentre = scenery->getPosition();
 		auto sceneSize = scenery->getContentSize();
