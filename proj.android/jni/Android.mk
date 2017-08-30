@@ -47,6 +47,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/Strings.cpp \
 ../../Classes/TextWisp.cpp \
 ../../Classes/Tutorial.cpp \
+../../Classes/Util.cpp \
 ../../Classes/spine/Animation.c \
 ../../Classes/spine/AnimationState.c \
 ../../Classes/spine/AnimationStateData.c \

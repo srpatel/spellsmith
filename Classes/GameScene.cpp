@@ -12,6 +12,7 @@
 #include "Level.hpp"
 #include "SaveData.hpp"
 #include "Tutorial.hpp"
+#include "Util.hpp"
 
 #include "Projectiles.hpp"
 
@@ -1154,6 +1155,16 @@ void Game::showRound(RoundDef *round, int wave) {
 	currentWaveHeading->setVisible( ! round->generated && numWaves > 1 );
 	currentWave->setVisible( ! round->generated && numWaves > 1 );
 	currentWave->setString(ToString(wave + 1) + " of " + ToString(numWaves));
+	
+	if (numWaves > 0) {
+		// Show the "wave x of y" popup
+		auto sceneCentre = scenery->getPosition();
+		auto sceneSize = scenery->getContentSize();
+		Layer *textPopup = makeLargeTemporaryTextPopup("Wave " + ToString(wave + 1) + " of " + ToString(numWaves));
+		auto position = sceneCentre + sceneSize/2 - textPopup->getContentSize()/2;
+		textPopup->setPosition(position);
+		addChild(textPopup);
+	}
 	
 	currentRound->setVisible( round->generated );
 	level_counter->setVisible( round->generated );
