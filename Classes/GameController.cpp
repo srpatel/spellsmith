@@ -70,7 +70,7 @@ void GameController::init(Scene *root) {
 	onClick->setSwallowTouches(true);
 	onClick->onTouchBegan = [size, button](Touch *touch, Event *event) -> bool {
 		auto bounds = Rect(
-			0, size.height - button->getContentSize().height - 20,
+			Game::get()->getBoundingBox().size.width - (button->getContentSize().width + 20), size.height - button->getContentSize().height - 20,
 			button->getContentSize().width + 20, button->getContentSize().height + 20
 		);
 		if (bounds.containsPoint(touch->getLocation())){
@@ -83,7 +83,7 @@ void GameController::init(Scene *root) {
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onClick, button);
 	
 	instance->button = button;
-	instance->button->setPosition(Vec2(button->getContentSize().width/2 + 10, size.height + button->getContentSize().height/2 + 10));
+	instance->button->setPosition(Vec2(Game::get()->getBoundingBox().size.width - (button->getContentSize().width/2 + 10), size.height + button->getContentSize().height/2 + 10));
 	root->addChild(instance->button, kDepthBackButton);
 	
 	auto fader = LayerColor::create();
@@ -107,7 +107,7 @@ void GameController::showButton(bool show) {
 	auto size = Director::getInstance()->getVisibleSize();
 	button->stopAllActions();
 	button->runAction(MoveTo::create(0.2f, Vec2(
-		button->getContentSize().width/2 + 10,
+		button->getPosition().x,
 		size.height + (show ? -1 : 1) * (button->getContentSize().height/2 + 10))));
 }
 
