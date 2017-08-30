@@ -15,8 +15,10 @@ class MapScreen : public Layer {
 public:
 	bool init();
 	void refreshNodes();
+	void scrollToUncomplete();
 	CREATE_FUNC(MapScreen);
 private:
+	float mapMaxY, mapMinY;
 	MapScroll *map;
 };
 

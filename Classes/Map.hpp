@@ -10,8 +10,10 @@
 #define Map_hpp
 
 class RoundDef;
+class MapScreen;
 
 class MapScroll : public Layer {
+	friend class MapScreen;
 public:
 	bool init();
 	void refreshNodes();

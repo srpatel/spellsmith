@@ -155,6 +155,8 @@ void GameController::setState(State newstate) {
 	// do refreshing
 	if (newstate == kStateMap) {
 		((MapScreen *)layer)->refreshNodes();
+		// Scroll so that first undefeated node is visible
+		((MapScreen *)layer)->scrollToUncomplete();
 	} else if (newstate == kStateSpellbook) {
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();

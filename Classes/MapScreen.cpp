@@ -43,9 +43,9 @@ bool MapScreen::init() {
 	map = MapScroll::create();
 	
 	auto buffer = 50;
-	auto mapMaxY = bottomY + map->getContentSize().height/2;
+	mapMaxY = bottomY + map->getContentSize().height/2;
 	auto mapPreferredMaxY = mapMaxY;
-	auto mapMinY = mapMaxY - (map->getContentSize().height - (topY - bottomY)) - top->getContentSize().height/2 + 5;
+	mapMinY = mapMaxY - (map->getContentSize().height - (topY - bottomY)) - top->getContentSize().height/2 + 5;
 	auto mapPreferredMinY = mapMinY;
 	
 	auto clippedSize = Rect(Point::ZERO, Size(482/2, topY - bottomY));
@@ -73,7 +73,7 @@ bool MapScreen::init() {
 		
 		return false; // if you are consuming it
 	};
-	onclick->onTouchMoved = [this, mapPreferredMaxY, mapMaxY, mapPreferredMinY, mapMinY, top, bot](Touch* touch, Event* event) -> bool {
+	onclick->onTouchMoved = [this, mapPreferredMaxY, mapPreferredMinY, top, bot](Touch* touch, Event* event) -> bool {
 		auto dy = touch->getDelta().y;
 		auto cy = map->getPositionY();
 		auto newY = cy + dy;
@@ -143,6 +143,31 @@ bool MapScreen::init() {
 	*/
 	
 	return true;
+}
+
+void MapScreen::scrollToUncomplete() {
+	Node *lowestUncomplete = nullptr;
+	for (auto p : map->nodes) {
+		bool completed =  SaveData::isLevelComplete(p.first->name);
+		if (! completed) {
+			if (lowestUncomplete == nullptr
+				|| p.second->getPositionY() < lowestUncomplete->getPositionY()) {
+				lowestUncomplete = p.second;
+			}
+		}
+	}
+	if (lowestUncomplete != nullptr) {
+		// Scroll to this position!
+		float current = map->getPositionY();
+		float target = mapMaxY
+			- (lowestUncomplete->getPositionY() + map->getContentSize().height/2) // node distance from bottom of map
+			+ map->getContentSize().height / 2; // aim for it to be 1/3 from the top
+		if (current > target) {
+			if (target > mapMaxY) target = mapMaxY;
+			if (target < mapMinY) target = mapMinY;
+			map->setPositionY(target);
+		}
+	}
 }
 
 void MapScreen::refreshNodes() {
