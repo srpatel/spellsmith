@@ -29,6 +29,8 @@ bool Spellbook::init() {
 	if ( !ColumnScreen::init() ) {
 		return false;
 	}
+	
+	setBackground("bg_lab1.png");
 		
 	spell_holder = Layer::create();
 	spell_holder->setPosition(layout.column_width, NavigationBar::HEIGHT);

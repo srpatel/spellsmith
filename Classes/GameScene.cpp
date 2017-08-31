@@ -60,6 +60,11 @@ bool Game::init() {
 	wizard->health = wizard->max_health;
 	wizard->ui_health = wizard->max_health;
 	
+	scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height -layout.column_height + 5), background);
+	scenery->setAnchorPoint(Vec2(0, 0));
+	scenery->setPosition(0, layout.column_height - 5);
+	addChild(scenery);
+	
 	{
 		// Click on scenery to select the enemy at that x-pos (ish)
 		auto onEnemyClick = EventListenerTouchOneByOne::create();
@@ -1041,7 +1046,7 @@ void Game::gotoNextEnemy() {
 }
 void Game::showRound(RoundDef *round, int wave) {
 	printf("Starting round. %d pending actions.\n", numCurrentActions);
-	scenery->setImage(round->bg);
+	setBackground(round->bg);
 	if (numCurrentActions > 0) {
 		numCurrentActions = 0;
 	}

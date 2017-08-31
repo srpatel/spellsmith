@@ -28,10 +28,11 @@ public:
 	virtual void onSelect();
 	void setMapButtonVisible(bool);
 	
-	GameScenery *scenery;
+	void setBackground(std::string);
 	
 	CREATE_FUNC(ColumnScreen);
 protected:
+	Sprite *background;
 	layout_t layout;
 	Sprite *bar_top, *right_col_sprite, *map_button, *mute_button;
 private:

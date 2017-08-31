@@ -17,23 +17,22 @@ public:
 	static const int FLAG_TYPE_NONE = 0;
 	static const int FLAG_TYPE_WIN  = 1;
 	static const int FLAG_TYPE_LOSE = 2;
-	virtual bool init(Size size);
+	virtual bool init(Size size, Sprite *background);
 	virtual ~GameScenery();
 	void hideObjects();
 	void placeMonsters(std::vector<Enemy *> *, float delay);
 	void setSelected(int);
 	void setRedRingVisibility(bool visible);
 	void addTextWisp(Character *enemy, std::string s, Color3B c); // nullptr = wizard
-	CREATE_FUNC_1(GameScenery, Size);
+	CREATE_FUNC_2(GameScenery, Size, Sprite *);
 	spine::SkeletonAnimation *wizardsprite;
 	void showFlags(int flagType);
-	void setImage(std::string bg);
 	float char_scale;
 private:
 	void greyscaleMode(bool);
 	std::vector<Enemy *> *enemies;
 	Sprite *redring;
-	Sprite *scenery;
+	Sprite *background;
 	Vec2 enemy_positions3[3];
 	Vec2 enemy_positions2[3];
 	Vec2 enemy_positions1[3];

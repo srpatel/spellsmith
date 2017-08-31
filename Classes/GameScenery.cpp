@@ -12,38 +12,22 @@
 #include "ImageManager.hpp"
 #include "TextWisp.hpp"
 
-bool GameScenery::init(Size size) {
+bool GameScenery::init(Size size, Sprite *background) {
 	if ( !Layer::init() )
 	{
 		return false;
 	}
+	
+	this->background = background;
 	
 	flags[0] = nullptr;
 	flags[1] = nullptr;
 	
 	setContentSize(size);
 	
-	scenery = LoadLargeSprite("bg_graveyard1.png");
-	scenery->setAnchorPoint(Vec2(0.5, 0.5));
-	
-	//Fit width:
-	float targetWidth = size.width;
-	float actualWidth = scenery->getBoundingBox().size.width;
-	float wRatio = targetWidth/actualWidth;
-	
-	float targetHeight = size.height;
-	float actualHeight = scenery->getBoundingBox().size.height;
-	float hRatio = targetHeight/actualHeight;
-	
-	float ratio = MAX(hRatio, wRatio);
-	scenery->setScale(ratio);
-	
-	scenery->setPosition(Vec2(size.width/2, (size.height)/2));
-	addChild(scenery, -2);
-	
-	char_scale = size.height / scenery->getBoundingBox().size.height > 1 ?
+	char_scale = size.height / background->getBoundingBox().size.height > 1 ?
 						1 :
-						size.height / scenery->getBoundingBox().size.height;
+						size.height / background->getBoundingBox().size.height;
 	
 	redring = LoadSprite("ui/redring.png");
 	redring->setAnchorPoint(Vec2(0.5, 0.2));
@@ -92,10 +76,6 @@ bool GameScenery::init(Size size) {
 	littleText->setOpacity(0);
 	
 	return true;
-}
-
-void GameScenery::setImage(std::string bg) {
-	scenery->setTexture(bg);
 }
 
 void GameScenery::hideObjects() {
@@ -198,7 +178,7 @@ void GameScenery::greyscaleMode(bool grey) {
 	GLProgramState *state = GLProgramState::create(shader);
 	state->setUniformFloat("u_start_time", _director->getTotalFrames() * _director->getAnimationInterval());
 	state->setUniformInt("u_direction", grey ? 1 : -1);
-	scenery->setGLProgramState(state);
+	background->setGLProgramState(state);
 	wizardsprite->setGLProgramState(state);
 	if (enemies != nullptr)
 		for (Enemy *e : *enemies) {

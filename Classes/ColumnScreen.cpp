@@ -15,8 +15,8 @@
 	return layout;
 }*/
 
-#define kDepthBarTop 0
-#define kDepthBarBottom 0
+#define kDepthBarTop 1
+#define kDepthBarBottom 1
 #define kDepthColumns 5
 #define kDepthSmokey 20
 #define kDepthButton 10
@@ -72,11 +72,25 @@ bool ColumnScreen::init() {
 	// Scenery
 	{
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
+		Size scenerySize(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height + 5);
+		background = LoadLargeSprite("bg_graveyard1.png");
+		background->setAnchorPoint(Vec2(0.5, 0.5));
 		
-		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height + 5));
-		scenery->setAnchorPoint(Vec2(0, 0));
-		scenery->setPosition(0, layout.column_height - 5);
-		addChild(scenery);
+		//Fit width:
+		float targetWidth = scenerySize.width;
+		float actualWidth = background->getBoundingBox().size.width;
+		float wRatio = targetWidth/actualWidth;
+		
+		float targetHeight = scenerySize.height;
+		float actualHeight = background->getBoundingBox().size.height;
+		float hRatio = targetHeight/actualHeight;
+		
+		float ratio = MAX(hRatio, wRatio);
+		background->setScale(ratio);
+		
+		//background->setPosition({visibleSize.height - ratio * scenerySize.height/2, ratio * scenerySize.width / 2});
+		background->setPosition({visibleSize.width / 2, visibleSize.height - background->getBoundingBox().size.height/2});
+		addChild(background, 0);
 	}
 	// Gem background
 	{
@@ -188,4 +202,8 @@ bool ColumnScreen::init() {
     this->scheduleUpdate();
     
     return true;
+}
+
+void ColumnScreen::setBackground(std::string texture) {
+	background->setTexture(texture);
 }

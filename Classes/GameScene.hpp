@@ -50,6 +50,8 @@ public:
 	
 	layout_t getLayout();
 	
+	GameScenery *scenery;
+	
     Wizard *wizard;
 	void updateHealthBars();
 	
@@ -90,6 +92,8 @@ private:
 	RoundDef *round;
 	int wave;
 	int numMoves = 0;
+	
+	
 	
 	// Helper
 	void onDamageTarget(Character *target, bool withDelay); // Called to show the target taking damage (recoil/death animation, flash red)
