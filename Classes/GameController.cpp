@@ -26,6 +26,8 @@
 #define kDepthBackButton 51
 #define kDepthScene 0
 
+#define BACK_BUTTON_LEFT 1
+
 GameController *GameController::instance = nullptr;
 
 static Layer **stateScreens;
@@ -67,11 +69,20 @@ void GameController::init(Scene *root) {
 	auto size = Director::getInstance()->getVisibleSize();
 	auto button = LoadSprite("ui/buttonback.png");
 	auto onClick = EventListenerTouchOneByOne::create();
+	button->setPosition(Vec2(
+#if BACK_BUTTON_LEFT
+		(button->getContentSize().width/2 + 10),
+#else
+		Game::get()->getBoundingBox().size.width - (button->getContentSize().width/2 + 10),
+#endif
+		size.height + button->getContentSize().height/2 + 10));
 	onClick->setSwallowTouches(true);
 	onClick->onTouchBegan = [size, button](Touch *touch, Event *event) -> bool {
 		auto bounds = Rect(
-			Game::get()->getBoundingBox().size.width - (button->getContentSize().width + 20), size.height - button->getContentSize().height - 20,
-			button->getContentSize().width + 20, button->getContentSize().height + 20
+			button->getPosition().x - button->getContentSize().width/2 - 10,
+			button->getPosition().y - button->getContentSize().height/2 - 10,
+			button->getContentSize().width + 20,
+			button->getContentSize().height + 20
 		);
 		if (bounds.containsPoint(touch->getLocation())){
 			SoundManager::get()->playEffect( kSoundEffect_UISelect );
@@ -83,7 +94,6 @@ void GameController::init(Scene *root) {
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onClick, button);
 	
 	instance->button = button;
-	instance->button->setPosition(Vec2(Game::get()->getBoundingBox().size.width - (button->getContentSize().width/2 + 10), size.height + button->getContentSize().height/2 + 10));
 	root->addChild(instance->button, kDepthBackButton);
 	
 	auto fader = LayerColor::create();

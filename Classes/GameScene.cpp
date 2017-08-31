@@ -330,7 +330,7 @@ bool Game::init() {
                         __/ |    
                        |___/
  */
-	Sprite *optionsButton = LoadSprite("ui/options.png");
+	/*Sprite *optionsButton = LoadSprite("ui/options.png");
 	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
 	optionsButton->setScale(ui_scale);
 	optionsButton->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
@@ -350,7 +350,50 @@ bool Game::init() {
 		
 		return false; // if you are consuming it
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onOptionsClick, optionsButton);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onOptionsClick, optionsButton);*/
+	Sprite *mapButton = LoadSprite("icons/map.png");
+	mapButton->setAnchorPoint(Vec2(0.5, 0.5));
+	mapButton->setScale(ui_scale);
+	mapButton->setPosition(getBoundingBox().size.width - layout.column_width/2 + 4, 34 * ui_scale);
+	addChild(mapButton);
+	auto onMapClick = EventListenerTouchOneByOne::create();
+	onMapClick->setSwallowTouches(true);
+	// trigger when you push down
+	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		if (bounds.containsPoint(touch->getLocation())) {
+			// TODO : Are you sure you want to go back to the map?
+			PLAY_SOUND(kSoundEffect_UISelectMinor);
+			GameController::get()->setState(kStateMap);
+			return true;
+		}
+		return false; // if you are consuming it
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMapClick, mapButton);
+	
+	Sprite *muteButton = LoadSprite("icons/speaker.png");
+	muteButton->setAnchorPoint(Vec2(0.5, 0.5));
+	muteButton->setScale(ui_scale);
+	muteButton->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
+	addChild(muteButton);
+	auto onMuteClick = EventListenerTouchOneByOne::create();
+	onMuteClick->setSwallowTouches(true);
+	// trigger when you push down
+	onMuteClick->onTouchBegan = [this, muteButton](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		if (bounds.containsPoint(touch->getLocation())) {
+			SoundManager::get()->toggleMute();
+			PLAY_SOUND( kSoundEffect_UISelect );
+			muteButton->setSpriteFrame(
+				SoundManager::get()->getMute() ?
+				"icons/speakercross.png" :
+				"icons/speaker.png"
+			);
+			return true;
+		}
+		return false; // if you are consuming it
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, muteButton);
 	
 	// Grid must be topmost.
 	this->addChild(this->grid);
