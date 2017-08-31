@@ -17,8 +17,8 @@
 
 #define kDepthBarTop 0
 #define kDepthBarBottom 0
-#define kDepthBarColumns 5
-#define kDepthBarSmokey 20
+#define kDepthColumns 5
+#define kDepthSmokey 20
 #define kDepthButton 10
 
 void ColumnScreen::onSelect() {
@@ -27,6 +27,12 @@ void ColumnScreen::onSelect() {
 		"icons/speakercross.png" :
 		"icons/speaker.png"
 	);
+}
+
+void ColumnScreen::setMapButtonVisible(bool visible) {
+	canClickMap = visible;
+	map_button->stopAllActions();
+	map_button->runAction(FadeTo::create(0.2, visible ? 255 : 0));
 }
 
 bool ColumnScreen::init() {
@@ -106,14 +112,14 @@ bool ColumnScreen::init() {
 		right_col_sprite->setAnchorPoint(Vec2(1, 1));
 		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
 		right_col_sprite->setScale(ui_scale);
-		this->addChild(right_col_sprite, kDepthBarColumns);
+		this->addChild(right_col_sprite, kDepthColumns);
 	}
 	{
 		auto sprite = LoadSprite("ui/column_left.png");
 		sprite->setAnchorPoint(Vec2(0, 1));
 		sprite->setPosition(Vec2(0, layout.column_height));
 		sprite->setScale(ui_scale);
-		this->addChild(sprite, kDepthBarColumns);
+		this->addChild(sprite, kDepthColumns);
 	}
 	
 	// Smokey
@@ -121,7 +127,7 @@ bool ColumnScreen::init() {
 		auto sprite = LoadLargeSprite("smokey.png");
 		sprite->setAnchorPoint(Vec2(0.5, 1));
 		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
-		this->addChild(sprite, kDepthBarSmokey);
+		this->addChild(sprite, kDepthSmokey);
 	}
 
 	
@@ -145,7 +151,7 @@ bool ColumnScreen::init() {
 	// trigger when you push down
 	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		if (bounds.containsPoint(touch->getLocation())) {
+		if (canClickMap && bounds.containsPoint(touch->getLocation())) {
 			// TODO : Are you sure you want to go back to the map?
 			PLAY_SOUND(kSoundEffect_UISelect);
 			GameController::get()->setState(kStateMap);

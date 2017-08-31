@@ -34,6 +34,16 @@ Game *Game::get() {
 	return instance;
 }
 
+void Game::onSelect() {
+	ColumnScreen::onSelect();
+	if (post_level_dialog != nullptr) {
+		post_level_dialog->removeFromParent();
+		post_level_dialog->autorelease();
+		post_level_dialog = nullptr;
+	}
+	setMapButtonVisible(true);
+}
+
 bool Game::init() {
     if ( !ColumnScreen::init() ) {
         return false;
@@ -111,7 +121,7 @@ bool Game::init() {
 		level_counter->setAnchorPoint(Vec2(0.5, 0.5));
 		level_counter->setPosition(getBoundingBox().size.width - 20 * layout.ui_scale, 354 * layout.ui_scale);
 		level_counter->setScale(layout.ui_scale);
-		addChild(level_counter, 3);
+		addChild(level_counter, 6);
 		
 		currentRound = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
@@ -191,7 +201,7 @@ bool Game::init() {
                                       |___/
 */
 	inventoryHolder = Layer::create();
-	addChild(inventoryHolder);
+	addChild(inventoryHolder, 6);
 	updateInventory();
 	
 /*
@@ -760,11 +770,17 @@ void Game::attemptSetState(GameState nextstate) {
 					SaveData::setLevelComplete(round->name, numMoves);
 					
 					// round is not generated, which means it's a normal level.
-					// 1) show a dialog with the rewards, and a button to go to the spellbook.					
-					auto dialog = PostLevelDialog::create(round);
+					// 1) show a dialog with the rewards, and a button to go to the spellbook.
+					if (post_level_dialog != nullptr) {
+						post_level_dialog->removeFromParent();
+						post_level_dialog->autorelease();
+					}
+					
+					post_level_dialog = PostLevelDialog::create(round);
+					post_level_dialog->retain();
 					// put it in the middle of the grid
-					dialog->setPosition(grid->getPosition());
-					addChild(dialog);
+					post_level_dialog->setPosition(grid->getPosition());
+					addChild(post_level_dialog, 0, "post_level_dialog");
 				} else {
 					// TODO : This is the same branch as above...
 					

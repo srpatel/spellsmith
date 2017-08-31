@@ -149,6 +149,10 @@ void Tutorial::activate(int number) {
 	// Tutorial for level 1.
 	if (number < 100) {
 		if (number == 1) {
+			// TODO : Check you haven't done this already?
+			// Just for this button display:
+			game->setMapButtonVisible(false);
+			
 			// Start down this path!
 			// Grid fakeout -- pre-determine grid.
 			game->grid->preset(1);
@@ -182,6 +186,7 @@ void Tutorial::activate(int number) {
 			game->addChild(popup);
 			// point to red circle
 		} else if (number == 6) {
+			game->setMapButtonVisible(true);
 			game->grid->setActive(true);
 		} else if (number == 7) {
 			// If our spellbook contains only one spell, and there are no
@@ -213,8 +218,8 @@ void Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			//GameController::get()->enableBar(false);
 			GameController::get()->showButton(false);
+			spellbook->setMapButtonVisible(false);
 			
 			// Disallow dragging spells
 			SpellBlob::draggingAllowed = false;
@@ -275,8 +280,8 @@ void Tutorial::activate(int number) {
 			spellbook->addChild(popup, 100);
 			
 			// Re-enable ui
-			//GameController::get()->enableBar(true);
 			GameController::get()->showButton(true);
+			spellbook->setMapButtonVisible(true);
 		} else if (number == 11) {
 		}
 	} else
@@ -357,8 +362,8 @@ void Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			//GameController::get()->enableBar(false);
 			GameController::get()->showButton(false);
+			spellbook->setMapButtonVisible(false);
 			
 			// Learn spell text
 			auto popup = makeTextBox(
@@ -397,6 +402,9 @@ void Tutorial::activate(int number) {
 			}
 		} else if (number == 202) {
 			GameController::get()->showButton(true);
+			
+			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
+			spellbook->setMapButtonVisible(true);
 		}
 	}
 }

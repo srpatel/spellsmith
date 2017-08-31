@@ -32,10 +32,10 @@ bool Spellbook::init() {
 		
 	spell_holder = Layer::create();
 	spell_holder->setPosition(layout.column_width, NavigationBar::HEIGHT);
-	addChild(spell_holder, 4);
+	addChild(spell_holder, 7);
 	
 	equipped_holder = Layer::create();
-	addChild(equipped_holder, 3);
+	addChild(equipped_holder, 6);
 	
 	auto grad = LayerColor::create();
 	grad->initWithColor(Color4B(95, 91, 85, 255));
@@ -57,10 +57,10 @@ bool Spellbook::init() {
 		// label in the middle
 		page_label = Label::createWithTTF( "1/1", Fonts::NUMBER_FONT, Fonts::TEXT_SIZE);
 		page_label->setPosition(getBoundingBox().size.width / 2, y);
-		addChild(page_label);
+		addChild(page_label, 1);
 		
-		addChild(left);
-		addChild(right);
+		addChild(left, 1);
+		addChild(right, 1);
 		
 		auto onArrowClick = EventListenerTouchOneByOne::create();
 		onArrowClick->setSwallowTouches(true);
@@ -96,12 +96,6 @@ bool Spellbook::init() {
 	num_pages = 1;
 	
 	return true;
-}
-
-void Spellbook::setMapButtonVisible(bool visible) {
-	canClickMap = visible;
-	map_button->stopAllActions();
-	map_button->runAction(FadeTo::create(0.5, visible ? 255 : 0));
 }
 
 void Spellbook::refreshEquips() {

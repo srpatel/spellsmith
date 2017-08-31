@@ -19,7 +19,6 @@ public:
 	virtual void onSelect();
 	void refreshSpells();
 	void refreshEquips();
-	void setMapButtonVisible(bool);
 	CREATE_FUNC(Spellbook);
 	Sprite *mute_button;
 private:
@@ -28,7 +27,6 @@ private:
 	std::vector<SpellBlob *> blobs;
 	Node *left;
 	Node *right;
-	bool canClickMap = true;
 	Label *page_label;
 	int current_page;
 	int num_pages;

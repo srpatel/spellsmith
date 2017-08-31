@@ -119,9 +119,6 @@ void GameController::showButton(bool show) {
 	button->runAction(MoveTo::create(0.2f, Vec2(
 		button->getPosition().x,
 		size.height + (show ? -1 : 1) * (button->getContentSize().height/2 + 10))));
-	
-	// We enable/disable the map button in spellbook too
-	((Spellbook *) stateScreens[kStateSpellbook])->setMapButtonVisible(show);
 }
 
 void GameController::setState(State newstate) {
@@ -175,13 +172,13 @@ Screen *GameController::getScreen(State state) {
 	return stateScreens[state];
 }
 void GameController::startArena() {
-	Game::get()->startArena();
 	setState(kStateGame);
+	Game::get()->startArena();
 }
 void GameController::startRound(RoundDef *round) {
 	popDialog();
-	Game::get()->startRound(round);
 	setState(kStateGame);
+	Game::get()->startRound(round);
 }
 /*void GameController::enableBar(bool enable) {
 	// Place something over the nav bar (like the grid)

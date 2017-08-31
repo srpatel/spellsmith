@@ -26,6 +26,7 @@ class ColumnScreen : public Screen {
 public:
 	bool init();
 	virtual void onSelect();
+	void setMapButtonVisible(bool);
 	
 	GameScenery *scenery;
 	
@@ -33,6 +34,8 @@ public:
 protected:
 	layout_t layout;
 	Sprite *bar_top, *right_col_sprite, *map_button, *mute_button;
+private:
+	bool canClickMap = true;
 };
 
 #endif /* ColumnScreen_hpp */

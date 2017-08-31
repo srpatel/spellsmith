@@ -29,6 +29,8 @@ public:
 	static Game *get();
     Grid *grid;
 	
+	virtual void onSelect();
+	
 	// Restart the current game!
 	void startArena();
 	void startRound(RoundDef *round);
@@ -78,6 +80,7 @@ private:
 	Label *currentWaveHeading;
 	Label *currentWave;
 	Node *level_counter;
+	Node *post_level_dialog;
 	Layer *inventoryHolder;
 	std::vector<EventListener *> inventoryListeners;
 	bool checkGameOver();
