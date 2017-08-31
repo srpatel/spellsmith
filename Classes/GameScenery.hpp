@@ -7,6 +7,7 @@
 //
 
 #ifndef GameScenery_hpp
+#define GameScenery_hpp
 
 #include "Characters.hpp"
 #include "spine.h"

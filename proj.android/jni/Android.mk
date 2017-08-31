@@ -18,6 +18,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ArenaScreen.cpp \
 ../../Classes/Buff.cpp \
 ../../Classes/Characters.cpp \
+../../Classes/ColumnScreen.cpp \
 ../../Classes/Dialogs.cpp \
 ../../Classes/DoSpell.cpp \
 ../../Classes/GameController.cpp \

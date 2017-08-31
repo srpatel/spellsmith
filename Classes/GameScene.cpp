@@ -35,14 +35,11 @@ Game *Game::get() {
 }
 
 bool Game::init() {
-    if ( !Layer::init() ) {
+    if ( !ColumnScreen::init() ) {
         return false;
     }
 	
 	instance = this;
-    
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-	setContentSize(visibleSize);
 	
 	state = kStatePlayerTurn;
 	
@@ -53,41 +50,7 @@ bool Game::init() {
 	wizard->health = wizard->max_health;
 	wizard->ui_health = wizard->max_health;
 	
-	auto right_col_sprite = LoadSprite("ui/column_right.png");
-	
-	
-	layout.column_height = right_col_sprite->getBoundingBox().size.height;
-	layout.column_width = right_col_sprite->getBoundingBox().size.width;
-	
-	// if the scenery is too small...
-	float min_scenery_height = 105;
-	float ui_scale = 1;
-	float current_scenery_height = getBoundingBox().size.height - layout.column_height;
-	if (current_scenery_height < min_scenery_height) {
-		layout.column_height = getBoundingBox().size.height - min_scenery_height;
-		ui_scale = layout.column_height / right_col_sprite->getBoundingBox().size.height;
-		layout.column_width *= ui_scale;
-	}
-	layout.ui_scale = ui_scale;
-/*
- _                _                                   _     
-| |              | |                                 | |    
-| |__   __ _  ___| | ____ _ _ __ ___  _   _ _ __   __| |___ 
-| '_ \ / _` |/ __| |/ / _` | '__/ _ \| | | | '_ \ / _` / __|
-| |_) | (_| | (__|   < (_| | | | (_) | |_| | | | | (_| \__ \
-|_.__/ \__,_|\___|_|\_\__, |_|  \___/ \__,_|_| |_|\__,_|___/
-                       __/ |                                
-                      |___/
-*/
-	// Scenery
 	{
-		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
-		
-		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height + 5));
-		scenery->setAnchorPoint(Vec2(0, 0));
-		scenery->setPosition(0, layout.column_height - 5);
-		addChild(scenery);
-		
 		// Click on scenery to select the enemy at that x-pos (ish)
 		auto onEnemyClick = EventListenerTouchOneByOne::create();
 		onEnemyClick->setSwallowTouches(true);
@@ -118,32 +81,17 @@ bool Game::init() {
 		};
 		_eventDispatcher->addEventListenerWithSceneGraphPriority(onEnemyClick, scenery);
 	}
-	// Gem background
-	{
-		auto grad = LayerColor::create();
-		grad->initWithColor(Color4B(Colours::GEM_BACKGROUND));
-		grad->setPosition(Director::getInstance()->getVisibleOrigin());
-		grad->setContentSize(Size(getBoundingBox().size.width, layout.column_height));
-		this->addChild(grad);
-	}
 	// Bar top
 	{
-		auto sprite = LoadSprite("ui/bar_top.png");
-		layout.bar_top_height = sprite->getBoundingBox().size.height * ui_scale;
-		sprite->setAnchorPoint(Vec2(0.5, 1));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
-		
 		auto listener = EventListenerTouchOneByOne::create();
 		listener->setSwallowTouches(true);
-		listener->onTouchBegan = [sprite, this](Touch* touch, Event* event)
+		listener->onTouchBegan = [this](Touch* touch, Event* event)
 		{
 			// Can't select an enemy if it's not your turn.
 			if (! this->grid->isActive())
 				return false;
 			Vec2 p = touch->getLocation();
-			Rect rect = sprite->getBoundingBox();
+			Rect rect = bar_top->getBoundingBox();
 			
 			// Hard coded because we don't want to include the top part of the bar.
 			if(rect.containsPoint(p) && p.y < rect.origin.y + 61)
@@ -154,83 +102,61 @@ bool Game::init() {
 			
 			return false;
 		};
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, sprite);
-	}
-	
-	// bar bottom
-	{
-		auto sprite = LoadSprite("ui/bar_bottom.png");
-		layout.bar_bottom_height = sprite->getBoundingBox().size.height * ui_scale;
-		sprite->setAnchorPoint(Vec2(0.5, 0));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, bar_top);
 	}
 	
 	// Columns
 	{
-		//auto sprite = LoadSprite("ui/column_right.png");
-		right_col_sprite->setAnchorPoint(Vec2(1, 1));
-		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
-		right_col_sprite->setScale(ui_scale);
-		this->addChild(right_col_sprite);
-		
 		level_counter = LoadSprite("ui/level_counter.png");
 		level_counter->setAnchorPoint(Vec2(0.5, 0.5));
-		level_counter->setPosition(getBoundingBox().size.width - 20 * ui_scale, 354 * ui_scale);
-		level_counter->setScale(ui_scale);
-		addChild(level_counter);
+		level_counter->setPosition(getBoundingBox().size.width - 20 * layout.ui_scale, 354 * layout.ui_scale);
+		level_counter->setScale(layout.ui_scale);
+		addChild(level_counter, 3);
 		
 		currentRound = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentRound->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentRound->setAnchorPoint(Vec2(0.5, 0.5));
 		currentRound->setPosition(
-			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
-			354 * ui_scale);
-		addChild(currentRound);
+			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 3,
+			354 * layout.ui_scale);
+		addChild(currentRound, 6);
 		
 		currentWaveHeading = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentWaveHeading->setString("WAVE");
 		currentWaveHeading->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentWaveHeading->setAnchorPoint(Vec2(0.5, 0.5));
 		currentWaveHeading->setPosition(
-			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
-			366 * ui_scale);
-		addChild(currentWaveHeading);
+			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 3,
+			366 * layout.ui_scale);
+		addChild(currentWaveHeading, 6);
 		
 		currentWave = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		currentWave->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentWave->setAnchorPoint(Vec2(0.5, 0.5));
 		currentWave->setPosition(
-			getBoundingBox().size.width - ui_scale * right_col_sprite->getContentSize().width/2 + ui_scale * 3,
-			354 * ui_scale);
-		addChild(currentWave);
+			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 3,
+			354 * layout.ui_scale);
+		addChild(currentWave, 6);
 	}
 	{
 		auto grad = LoadSprite("ui/orb_bg.png");
 		grad->setAnchorPoint(Vec2(0.5, 0.5));
-		grad->setPosition(20 * ui_scale, 354 * ui_scale);
-		grad->setScale(ui_scale);
-		addChild(grad);
+		grad->setPosition(20 * layout.ui_scale, 354 * layout.ui_scale);
+		grad->setScale(layout.ui_scale);
+		addChild(grad, 1);
 		
 		auto hp = LoadSprite("ui/orb_red.png");
 		hp->setAnchorPoint(Vec2(0.5, 0));
-		hp->setScale(ui_scale);
-		hp->setPosition(20 * ui_scale, 342 * ui_scale);
+		hp->setScale(layout.ui_scale);
+		hp->setPosition(20 * layout.ui_scale, 342 * layout.ui_scale);
 		wizard_hp_text = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
 		wizard_hp_text->setHorizontalAlignment(TextHAlignment::CENTER);
 		wizard_hp_text->setAnchorPoint(Vec2(0.5, 0.5));
 		wizard_hp_text->setPosition(grad->getPosition());
 		//hp->setGLProgram(Shaders::smokey());
-		addChild(hp);
-		addChild(wizard_hp_text);
+		addChild(hp, 1);
+		addChild(wizard_hp_text, 6);
 		wizard_hp_bar = hp;
-		
-		auto sprite = LoadSprite("ui/column_left.png");
-		sprite->setAnchorPoint(Vec2(0, 1));
-		sprite->setPosition(Vec2(0, layout.column_height));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
 	}
 
 /*
@@ -268,14 +194,6 @@ bool Game::init() {
 	addChild(inventoryHolder);
 	updateInventory();
 	
-	// Smokey
-	{
-		auto sprite = LoadLargeSprite("smokey.png");
-		sprite->setAnchorPoint(Vec2(0.5, 1));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
-		this->addChild(sprite);
-	}
-	
 /*
       _                          _                
      | |                        | |               
@@ -308,97 +226,9 @@ bool Game::init() {
 		Size(getBoundingBox().size.width - layout.column_width * 2, layout.ui_scale * 20 * 2));
 	hud->setPosition(Vec2(layout.column_width, layout.column_height - layout.bar_top_height + layout.ui_scale * 15));
 	this->addChild(hud);
-	
-/*              _ _                  _ _
-               | | |                (_) |           
- ___ _ __   ___| | |  ___ _ __  _ __ _| |_ ___  ___ 
-/ __| '_ \ / _ \ | | / __| '_ \| '__| | __/ _ \/ __|
-\__ \ |_) |  __/ | | \__ \ |_) | |  | | ||  __/\__ \
-|___/ .__/ \___|_|_| |___/ .__/|_|  |_|\__\___||___/
-    | |                  | |                        
-    |_|                  |_|
-*/
 
-	
-
-/*   _ _       _
-    | (_)     | |                
-  __| |_  __ _| | ___   __ _ ___ 
- / _` | |/ _` | |/ _ \ / _` / __|
-| (_| | | (_| | | (_) | (_| \__ \
- \__,_|_|\__,_|_|\___/ \__, |___/
-                        __/ |    
-                       |___/
- */
-	/*Sprite *optionsButton = LoadSprite("ui/options.png");
-	optionsButton->setAnchorPoint(Vec2(0.5, 0.5));
-	optionsButton->setScale(ui_scale);
-	optionsButton->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
-	addChild(optionsButton);
-	
-	auto onOptionsClick = EventListenerTouchOneByOne::create();
-	onOptionsClick->setSwallowTouches(true);
-	// trigger when you push down
-	onOptionsClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		
-		if (bounds.containsPoint(touch->getLocation())) {
-			PLAY_SOUND(kSoundEffect_UISelectMinor);
-			GameController::get()->showOptionsDialog();
-			return true;
-		}
-		
-		return false; // if you are consuming it
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onOptionsClick, optionsButton);*/
-	Sprite *mapButton = LoadSprite("icons/map.png");
-	mapButton->setAnchorPoint(Vec2(0.5, 0.5));
-	mapButton->setScale(ui_scale);
-	mapButton->setPosition(getBoundingBox().size.width - layout.column_width/2 + 4, 34 * ui_scale);
-	addChild(mapButton);
-	auto onMapClick = EventListenerTouchOneByOne::create();
-	onMapClick->setSwallowTouches(true);
-	// trigger when you push down
-	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		if (bounds.containsPoint(touch->getLocation())) {
-			// TODO : Are you sure you want to go back to the map?
-			PLAY_SOUND(kSoundEffect_UISelect);
-			GameController::get()->setState(kStateMap);
-			return true;
-		}
-		return false; // if you are consuming it
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMapClick, mapButton);
-	
-	mute_button = LoadSprite("icons/speaker.png");
-	mute_button->setAnchorPoint(Vec2(0.5, 0.5));
-	mute_button->setScale(ui_scale);
-	mute_button->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
-	addChild(mute_button);
-	auto onMuteClick = EventListenerTouchOneByOne::create();
-	onMuteClick->setSwallowTouches(true);
-	// trigger when you push down
-	onMuteClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		if (bounds.containsPoint(touch->getLocation())) {
-			SoundManager::get()->toggleMute();
-			PLAY_SOUND( kSoundEffect_UISelect );
-			mute_button->setSpriteFrame(
-				SoundManager::get()->getMute() ?
-				"icons/speakercross.png" :
-				"icons/speaker.png"
-			);
-			return true;
-		}
-		return false; // if you are consuming it
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, mute_button);
-	
 	// Grid must be topmost.
 	this->addChild(this->grid);
-	
-    this->scheduleUpdate();
     
     return true;
 }

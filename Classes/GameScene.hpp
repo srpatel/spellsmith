@@ -10,6 +10,7 @@
 #include "GameScenery.hpp"
 #include "Level.hpp"
 #include "Projectiles.hpp"
+#include "ColumnScreen.hpp"
 
 typedef std::function<void()> PendingAction;
 
@@ -19,19 +20,9 @@ enum GameState {
 	kStateEnemySpells
 };
 
-struct layout_t {
-	float ui_scale;
-	float column_height;
-	float column_width;
-	float bar_top_height;
-	float bar_bottom_height;
-	float scenery_height;
-	Vec2 melee_spot; //where enemies stand to hit the wizard
-};
-
 class RoundDef;
 
-class Game : public Layer {
+class Game : public ColumnScreen {
 	friend class DoSpell;
 	friend class Tutorial;
 public:
@@ -56,7 +47,7 @@ public:
 	void onWizardTurnOver();
 	
 	layout_t getLayout();
-	GameScenery *scenery;
+	
     Wizard *wizard;
 	void updateHealthBars();
 	

@@ -10,8 +10,9 @@
 #define Spellbook_hpp
 
 #include "SpellBlob.hpp"
+#include "ColumnScreen.hpp"
 
-class Spellbook : public Layer {
+class Spellbook : public ColumnScreen {
 	friend class Tutorial;
 public:
 	bool init();
@@ -26,7 +27,6 @@ private:
 	std::vector<SpellBlob *> blobs;
 	Node *left;
 	Node *right;
-	Node *map_button;
 	bool canClickMap = true;
 	Label *page_label;
 	int current_page;

@@ -20,146 +20,22 @@
 static layout_t layout;
 
 bool Spellbook::init() {
-	if ( !Layer::init() ) {
+	if ( !ColumnScreen::init() ) {
 		return false;
 	}
-	
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	setContentSize(visibleSize);
-	
-	// COPIED FROM GAMESCENE
-	auto right_col_sprite = LoadSprite("ui/column_right.png");
-	
-	
-	layout.column_height = right_col_sprite->getBoundingBox().size.height;
-	layout.column_width = right_col_sprite->getBoundingBox().size.width;
-	
-	GameScenery *scenery;
-	
-	// if the scenery is too small...
-	float min_scenery_height = 105;
-	float ui_scale = 1;
-	float current_scenery_height = getBoundingBox().size.height - layout.column_height;
-	if (current_scenery_height < min_scenery_height) {
-		layout.column_height = getBoundingBox().size.height - min_scenery_height;
-		ui_scale = layout.column_height / right_col_sprite->getBoundingBox().size.height;
-		layout.column_width *= ui_scale;
-	}
-	layout.ui_scale = ui_scale;
-	// Scenery
-	{
-		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		
-		scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height));
-		scenery->setImage("bg_lab1.png");
-		scenery->hideObjects();
-		scenery->setAnchorPoint(Vec2(0, 0));
-		scenery->setPosition(0, layout.column_height);
-		addChild(scenery);
-	}
-	// Gem background
-	{
-		auto grad = LayerColor::create();
-		grad->initWithColor(Color4B(Colours::GEM_BACKGROUND));
-		grad->setPosition(Director::getInstance()->getVisibleOrigin());
-		grad->setContentSize(Size(getBoundingBox().size.width, layout.column_height));
-		this->addChild(grad);
-		
-		spell_holder = Layer::create();
-		spell_holder->setPosition(layout.column_width, NavigationBar::HEIGHT);
-		addChild(spell_holder, 2);
-		
-		equipped_holder = Layer::create();
-		addChild(equipped_holder, 1);
-	}
-	// Bar top
-	{
-		auto sprite = LoadSprite("ui/bar_top.png");
-		layout.bar_top_height = sprite->getBoundingBox().size.height * ui_scale;
-		sprite->setAnchorPoint(Vec2(0.5, 1));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, layout.column_height));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
-	}
+	spell_holder = Layer::create();
+	spell_holder->setPosition(layout.column_width, NavigationBar::HEIGHT);
+	addChild(spell_holder, 4);
 	
-	// bar bottom
-	{
-		auto sprite = LoadSprite("ui/bar_bottom.png");
-		layout.bar_bottom_height = sprite->getBoundingBox().size.height * ui_scale;
-		sprite->setAnchorPoint(Vec2(0.5, 0));
-		sprite->setPosition(Vec2(getBoundingBox().size.width/2, 0));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
-	}
+	equipped_holder = Layer::create();
+	addChild(equipped_holder, 3);
 	
-	// Columns
-	{
-		//auto sprite = LoadSprite("ui/column_right.png");
-		right_col_sprite->setAnchorPoint(Vec2(1, 1));
-		right_col_sprite->setPosition(Vec2(getBoundingBox().size.width, layout.column_height));
-		right_col_sprite->setScale(ui_scale);
-		this->addChild(right_col_sprite);
-	}
-	{
-		auto sprite = LoadSprite("ui/column_left.png");
-		sprite->setAnchorPoint(Vec2(0, 1));
-		sprite->setPosition(Vec2(0, layout.column_height));
-		sprite->setScale(ui_scale);
-		this->addChild(sprite);
-		
-		auto grad = LayerColor::create();
-		grad->initWithColor(Color4B(95, 91, 85, 255));
-		grad->setPosition(Vec2(6, 340) * ui_scale);
-		grad->setContentSize(Size(27, 30) * ui_scale);
-		this->addChild(grad);
-	}
-	map_button = LoadSprite("icons/map.png");
-	map_button->setAnchorPoint(Vec2(0.5, 0.5));
-	map_button->setScale(ui_scale);
-	map_button->setPosition(getBoundingBox().size.width - layout.column_width/2 + 4, 34 * ui_scale);
-	addChild(map_button);
-	auto onMapClick = EventListenerTouchOneByOne::create();
-	onMapClick->setSwallowTouches(true);
-	// trigger when you push down
-	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		// Can't click if faded out
-		if (! canClickMap)
-			return false;
-		if (bounds.containsPoint(touch->getLocation())) {
-			// TODO : Are you sure you want to go back to the map?
-			PLAY_SOUND(kSoundEffect_UISelect);
-			GameController::get()->setState(kStateMap);
-			return true;
-		}
-		return false; // if you are consuming it
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMapClick, map_button);
-	
-	mute_button = LoadSprite("icons/speaker.png");
-	mute_button->setAnchorPoint(Vec2(0.5, 0.5));
-	mute_button->setScale(ui_scale);
-	mute_button->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
-	addChild(mute_button);
-	auto onMuteClick = EventListenerTouchOneByOne::create();
-	onMuteClick->setSwallowTouches(true);
-	// trigger when you push down
-	onMuteClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-		auto bounds = event->getCurrentTarget()->getBoundingBox();
-		if (bounds.containsPoint(touch->getLocation())) {
-			SoundManager::get()->toggleMute();
-			PLAY_SOUND( kSoundEffect_UISelect );
-			mute_button->setSpriteFrame(
-				SoundManager::get()->getMute() ?
-				"icons/speakercross.png" :
-				"icons/speaker.png"
-			);
-			return true;
-		}
-		return false; // if you are consuming it
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, mute_button);
-	// END COPY
+	auto grad = LayerColor::create();
+	grad->initWithColor(Color4B(95, 91, 85, 255));
+	grad->setPosition(Vec2(6, 340) * layout.ui_scale);
+	grad->setContentSize(Size(27, 30) * layout.ui_scale);
+	this->addChild(grad, 6);
 	
 	// Pages
 	{
@@ -168,7 +44,7 @@ bool Spellbook::init() {
 		left->setAnchorPoint(Vec2(0.5, 0.5));
 		right->setAnchorPoint(Vec2(0.5, 0.5));
 		right->setScaleX(-1);
-		auto y = layout.column_height - layout.bar_top_height / 2 - 5 * ui_scale;
+		auto y = layout.column_height - layout.bar_top_height / 2 - 5 * layout.ui_scale;
 		left->setPosition(layout.column_width + 20, y);
 		right->setPosition(getBoundingBox().size.width - layout.column_width - 20, y);
 		

@@ -173,17 +173,17 @@ void GameController::setState(State newstate) {
 	} else if (newstate == kStateSpellbook) {
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
-		((Spellbook *)layer)->mute_button->setSpriteFrame(
+		/*((Spellbook *)layer)->mute_button->setSpriteFrame(
 				SoundManager::get()->getMute() ?
 				"icons/speakercross.png" :
 				"icons/speaker.png"
-			);
+			);*/
 	} else if (newstate == kStateGame) {
-		((Game *)layer)->mute_button->setSpriteFrame(
+		/*((Game *)layer)->mute_button->setSpriteFrame(
 				SoundManager::get()->getMute() ?
 				"icons/speakercross.png" :
 				"icons/speaker.png"
-			);
+			);*/
 	}
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);

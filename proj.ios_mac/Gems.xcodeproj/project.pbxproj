@@ -97,6 +97,8 @@
 		1035F3D41F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */; };
 		1035F3D71F56A449006C1CB8 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3D51F56A449006C1CB8 /* Util.cpp */; };
 		1035F3D81F56A449006C1CB8 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3D51F56A449006C1CB8 /* Util.cpp */; };
+		1035F3DC1F589583006C1CB8 /* ColumnScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */; };
+		1035F3DD1F589583006C1CB8 /* ColumnScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */; };
 		103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
@@ -341,6 +343,8 @@
 		1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArenaScreen.hpp; sourceTree = "<group>"; };
 		1035F3D51F56A449006C1CB8 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		1035F3D61F56A449006C1CB8 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnScreen.cpp; sourceTree = "<group>"; };
+		1035F3DB1F589583006C1CB8 /* ColumnScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColumnScreen.hpp; sourceTree = "<group>"; };
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
@@ -595,6 +599,8 @@
 				106C3F171EFEAA9300CE7411 /* Map.hpp */,
 				1035F3D51F56A449006C1CB8 /* Util.cpp */,
 				1035F3D61F56A449006C1CB8 /* Util.hpp */,
+				1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */,
+				1035F3DB1F589583006C1CB8 /* ColumnScreen.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1114,6 +1120,7 @@
 				102993581D62429000D1492E /* MeshAttachment.c in Sources */,
 				102993681D62429000D1492E /* SkeletonBounds.c in Sources */,
 				1029935C1D62429000D1492E /* PathConstraint.c in Sources */,
+				1035F3DC1F589583006C1CB8 /* ColumnScreen.cpp in Sources */,
 				109742BA1DE9BDC5008E1BBD /* ImageManager.cpp in Sources */,
 				102993641D62429000D1492E /* SkeletonAnimation.cpp in Sources */,
 				105E0D151BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
@@ -1129,6 +1136,7 @@
 			files = (
 				1029934F1D62429000D1492E /* EventData.c in Sources */,
 				105E0D161BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
+				1035F3DD1F589583006C1CB8 /* ColumnScreen.cpp in Sources */,
 				1070E0AE1BF5188E007C06F9 /* GameController.cpp in Sources */,
 				102993491D62429000D1492E /* BoundingBoxAttachment.c in Sources */,
 				100F9E561CD332E5001118C1 /* DoSpell.cpp in Sources */,
