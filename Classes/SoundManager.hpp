@@ -55,7 +55,6 @@ public:
 	bool getMute();
 	void toggleMute();
 	void setMute(bool);
-	void setVolume(float vol); // [0, 1]
 	void playEffect( const char *path );
 	void startHum();
 	void stopHum();
@@ -69,7 +68,7 @@ private:
 	static SoundManager *instance;
 	unsigned int sound_hum = -1;
 	unsigned int sound_ptravel = -1;
-	float oldVolume = 1;
+	bool muted = false;
 	std::vector<const char *> game;
 };
 

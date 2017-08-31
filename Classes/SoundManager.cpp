@@ -60,21 +60,15 @@ void SoundManager::toggleMute() {
 }
 
 bool SoundManager::getMute() {
-	return oldVolume <= 0;
+	return muted;
 }
 
 void SoundManager::setMute(bool mute) {
 	if (mute) {
-		oldVolume = CocosDenshion::SimpleAudioEngine::getInstance()->getEffectsVolume();
-		setVolume(0);
-	} else {
-		setVolume(oldVolume);
-		oldVolume = 0;
+		auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
+		instance->stopAllEffects();
 	}
-}
-
-void SoundManager::setVolume(float volume) {
-	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(volume);
+	muted = mute;
 }
 
 void SoundManager::init() {
@@ -117,6 +111,7 @@ void SoundManager::init() {
 }
 
 void SoundManager::playEffect( const char *path ) {
+	if (muted) return;
 #if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 	if (path != nullptr) {
 		auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -136,6 +131,7 @@ void SoundManager::loader_game(bool in) {
 }
 
 void SoundManager::humanoidDeath() {
+	if (muted) return;
 	// randomly pick one of them!
 	int x = rand() % 4;
 	if (x == 0) {
@@ -150,6 +146,7 @@ void SoundManager::humanoidDeath() {
 }
 
 void SoundManager::animalDeath() {
+	if (muted) return;
 	// randomly pick one of them!
 	int x = rand() % 2;
 	if (x == 0) {
@@ -160,6 +157,7 @@ void SoundManager::animalDeath() {
 }
 
 void SoundManager::startHum() {
+	if (muted) return;
 	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
 	if (sound_hum > 0)
 		instance->stopEffect(sound_hum);
@@ -173,6 +171,7 @@ void SoundManager::stopHum() {
 }
 
 void SoundManager::startPTravel() {
+	if (muted) return;
 	auto instance = CocosDenshion::SimpleAudioEngine::getInstance();
 	if (sound_ptravel > 0)
 		instance->stopEffect(sound_ptravel);

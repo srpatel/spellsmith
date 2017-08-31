@@ -35,7 +35,18 @@ bool OptionsDialog::init() {
 	this->addChild(label, 1);
 	
 	// Mute button
-	// ???
+	auto mute = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	mute->setTitleFontName(Fonts::TEXT_FONT);
+	mute->setTitleFontSize(Fonts::TEXT_SIZE);
+	mute->setPosition(Vec2(0, 70-size.height/2));
+	mute->setTitleText("toggle mute");
+	mute->addTouchEventListener([mute](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			SoundManager::get()->toggleMute();
+			PLAY_SOUND( kSoundEffect_UISelect );
+		}
+	});
+	this->addChild(mute);
 	
 	// Return to menu
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
