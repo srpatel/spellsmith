@@ -63,6 +63,7 @@ RoundDef *LevelManager::generateRound(int stage) {
 	auto r = new RoundDef;
 	r->id = stage;
 	r->generated = true;
+	r->bg = "bg_arena.png";
 	std::vector<std::string> wave;
 	if (stage == 0) {
 		wave.push_back("goblin_sword");

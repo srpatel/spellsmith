@@ -119,6 +119,9 @@ void GameController::showButton(bool show) {
 	button->runAction(MoveTo::create(0.2f, Vec2(
 		button->getPosition().x,
 		size.height + (show ? -1 : 1) * (button->getContentSize().height/2 + 10))));
+	
+	// We enable/disable the map button in spellbook too
+	((Spellbook *) stateScreens[kStateSpellbook])->setMapButtonVisible(show);
 }
 
 void GameController::setState(State newstate) {
@@ -170,6 +173,17 @@ void GameController::setState(State newstate) {
 	} else if (newstate == kStateSpellbook) {
 		((Spellbook *)layer)->refreshEquips();
 		((Spellbook *)layer)->refreshSpells();
+		((Spellbook *)layer)->mute_button->setSpriteFrame(
+				SoundManager::get()->getMute() ?
+				"icons/speakercross.png" :
+				"icons/speaker.png"
+			);
+	} else if (newstate == kStateGame) {
+		((Game *)layer)->mute_button->setSpriteFrame(
+				SoundManager::get()->getMute() ?
+				"icons/speakercross.png" :
+				"icons/speaker.png"
+			);
 	}
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);

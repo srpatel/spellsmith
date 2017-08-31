@@ -113,6 +113,52 @@ bool Spellbook::init() {
 		grad->setContentSize(Size(27, 30) * ui_scale);
 		this->addChild(grad);
 	}
+	map_button = LoadSprite("icons/map.png");
+	map_button->setAnchorPoint(Vec2(0.5, 0.5));
+	map_button->setScale(ui_scale);
+	map_button->setPosition(getBoundingBox().size.width - layout.column_width/2 + 4, 34 * ui_scale);
+	addChild(map_button);
+	auto onMapClick = EventListenerTouchOneByOne::create();
+	onMapClick->setSwallowTouches(true);
+	// trigger when you push down
+	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		// Can't click if faded out
+		if (! canClickMap)
+			return false;
+		if (bounds.containsPoint(touch->getLocation())) {
+			// TODO : Are you sure you want to go back to the map?
+			PLAY_SOUND(kSoundEffect_UISelect);
+			GameController::get()->setState(kStateMap);
+			return true;
+		}
+		return false; // if you are consuming it
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMapClick, map_button);
+	
+	mute_button = LoadSprite("icons/speaker.png");
+	mute_button->setAnchorPoint(Vec2(0.5, 0.5));
+	mute_button->setScale(ui_scale);
+	mute_button->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
+	addChild(mute_button);
+	auto onMuteClick = EventListenerTouchOneByOne::create();
+	onMuteClick->setSwallowTouches(true);
+	// trigger when you push down
+	onMuteClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		if (bounds.containsPoint(touch->getLocation())) {
+			SoundManager::get()->toggleMute();
+			PLAY_SOUND( kSoundEffect_UISelect );
+			mute_button->setSpriteFrame(
+				SoundManager::get()->getMute() ?
+				"icons/speakercross.png" :
+				"icons/speaker.png"
+			);
+			return true;
+		}
+		return false; // if you are consuming it
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, mute_button);
 	// END COPY
 	
 	// Pages
@@ -168,6 +214,12 @@ bool Spellbook::init() {
 	num_pages = 1;
 	
 	return true;
+}
+
+void Spellbook::setMapButtonVisible(bool visible) {
+	canClickMap = visible;
+	map_button->stopAllActions();
+	map_button->runAction(FadeTo::create(0.5, visible ? 255 : 0));
 }
 
 void Spellbook::refreshEquips() {

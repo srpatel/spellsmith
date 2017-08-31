@@ -363,7 +363,7 @@ bool Game::init() {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		if (bounds.containsPoint(touch->getLocation())) {
 			// TODO : Are you sure you want to go back to the map?
-			PLAY_SOUND(kSoundEffect_UISelectMinor);
+			PLAY_SOUND(kSoundEffect_UISelect);
 			GameController::get()->setState(kStateMap);
 			return true;
 		}
@@ -371,20 +371,20 @@ bool Game::init() {
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMapClick, mapButton);
 	
-	Sprite *muteButton = LoadSprite("icons/speaker.png");
-	muteButton->setAnchorPoint(Vec2(0.5, 0.5));
-	muteButton->setScale(ui_scale);
-	muteButton->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
-	addChild(muteButton);
+	mute_button = LoadSprite("icons/speaker.png");
+	mute_button->setAnchorPoint(Vec2(0.5, 0.5));
+	mute_button->setScale(ui_scale);
+	mute_button->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
+	addChild(mute_button);
 	auto onMuteClick = EventListenerTouchOneByOne::create();
 	onMuteClick->setSwallowTouches(true);
 	// trigger when you push down
-	onMuteClick->onTouchBegan = [this, muteButton](Touch* touch, Event* event) -> bool {
+	onMuteClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		if (bounds.containsPoint(touch->getLocation())) {
 			SoundManager::get()->toggleMute();
 			PLAY_SOUND( kSoundEffect_UISelect );
-			muteButton->setSpriteFrame(
+			mute_button->setSpriteFrame(
 				SoundManager::get()->getMute() ?
 				"icons/speakercross.png" :
 				"icons/speaker.png"
@@ -393,7 +393,7 @@ bool Game::init() {
 		}
 		return false; // if you are consuming it
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, muteButton);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(onMuteClick, mute_button);
 	
 	// Grid must be topmost.
 	this->addChild(this->grid);
@@ -1182,9 +1182,9 @@ void Game::gotoNextEnemy() {
 	
 	// Clear buffs, fully heal, and clear the grid
 	wizard->clearBuffs();
-	wizard->ui_health = wizard->max_health;
-	wizard->health = wizard->max_health;
-	updateHealthBars();
+	//wizard->ui_health = wizard->max_health;
+	//wizard->health = wizard->max_health;
+	//updateHealthBars();
 	/*grid->scramble();*/
 	
 	// we are in charge of free'ing round.
@@ -1310,6 +1310,10 @@ void Game::setup() {
 	
 	// reset buffs
 	wizard->clearBuffs();
+	
+	// clear pending actions
+	// remove any post-level dialogs
+	// remove all spells and stuff
 	
 	// scramble grid
 	grid->scramble();

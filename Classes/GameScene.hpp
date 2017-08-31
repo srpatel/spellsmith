@@ -60,6 +60,8 @@ public:
     Wizard *wizard;
 	void updateHealthBars();
 	
+	Sprite *mute_button;
+	
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
 private:
