@@ -30,14 +30,14 @@
 
 GameController *GameController::instance = nullptr;
 
-static Layer **stateScreens;
+static Screen **stateScreens;
 
 void GameController::init(Scene *root) {
 	// instance must be null here
 	instance = new GameController;
 	instance->root = root;
 	
-	stateScreens = (Layer **) malloc(kStateCount * sizeof(Layer *));
+	stateScreens = (Screen **) malloc(kStateCount * sizeof(Screen *));
 	
 	stateScreens[kStateMainMenu] = MainMenu::create();
 	stateScreens[kStateMainMenu]->retain();
@@ -166,29 +166,11 @@ void GameController::setState(State newstate) {
 		nullptr));
 	
 	// do refreshing
-	if (newstate == kStateMap) {
-		((MapScreen *)layer)->refreshNodes();
-		// Scroll so that first undefeated node is visible
-		((MapScreen *)layer)->scrollToUncomplete();
-	} else if (newstate == kStateSpellbook) {
-		((Spellbook *)layer)->refreshEquips();
-		((Spellbook *)layer)->refreshSpells();
-		/*((Spellbook *)layer)->mute_button->setSpriteFrame(
-				SoundManager::get()->getMute() ?
-				"icons/speakercross.png" :
-				"icons/speaker.png"
-			);*/
-	} else if (newstate == kStateGame) {
-		/*((Game *)layer)->mute_button->setSpriteFrame(
-				SoundManager::get()->getMute() ?
-				"icons/speakercross.png" :
-				"icons/speaker.png"
-			);*/
-	}
+	layer->onSelect();
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);
 }
-Layer *GameController::getScreen(State state) {
+Screen *GameController::getScreen(State state) {
 	if (state == kStateCount) state = this->state;
 	return stateScreens[state];
 }

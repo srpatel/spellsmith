@@ -38,6 +38,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/Popup.cpp \
 ../../Classes/Projectiles.cpp \
 ../../Classes/SaveData.cpp \
+../../Classes/Screen.cpp \
 ../../Classes/Shaders.cpp \
 ../../Classes/SoundManager.cpp \
 ../../Classes/Spell.cpp \

@@ -10,6 +10,7 @@
 #define ColumnScreen_hpp
 
 #include "GameScenery.hpp"
+#include "Screen.hpp"
 
 struct layout_t {
 	float ui_scale;
@@ -21,9 +22,10 @@ struct layout_t {
 	Vec2 melee_spot; //where enemies stand to hit the wizard
 };
 
-class ColumnScreen : public Layer {
+class ColumnScreen : public Screen {
 public:
 	bool init();
+	virtual void onSelect();
 	
 	GameScenery *scenery;
 	

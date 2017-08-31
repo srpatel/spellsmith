@@ -9,10 +9,12 @@
 #ifndef MainMenu_hpp
 #define MainMenu_hpp
 
-class MainMenu : public Layer {
+#include "Screen.hpp"
+
+class MainMenu : public Screen {
 public:
 	bool init();
-	
+	virtual void onSelect(){}
 	CREATE_FUNC(MainMenu);
 };
 

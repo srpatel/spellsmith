@@ -17,6 +17,10 @@
 #include "SaveData.hpp"
 #include "SoundManager.hpp"
 
+void MapScreen::onSelect() {
+	refreshNodes();
+}
+
 bool MapScreen::init() {
 	if ( !Layer::init() ) {
 		return false;

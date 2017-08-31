@@ -12,6 +12,7 @@
 #include "Dialogs.hpp"
 #include "Level.hpp"
 #include "Spell.hpp"
+#include "Screen.hpp"
 
 enum State {
 	kStateMainMenu = 0,
@@ -42,7 +43,7 @@ public:
 	void showPreLevelDialog(RoundDef *round);
 	void showOptionsDialog();
 	
-	Layer *getScreen(State state = kStateCount);
+	Screen *getScreen(State state = kStateCount);
 	void showButton(bool show);
 private:
 	static GameController *instance;

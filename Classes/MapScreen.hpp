@@ -9,11 +9,14 @@
 #ifndef MapScreen_hpp
 #define MapScreen_hpp
 
+#include "Screen.hpp"
+
 class MapScroll;
 
-class MapScreen : public Layer {
+class MapScreen : public Screen {
 public:
 	bool init();
+	virtual void onSelect();
 	void refreshNodes();
 	void scrollToUncomplete();
 	CREATE_FUNC(MapScreen);

@@ -19,6 +19,12 @@
 
 static layout_t layout;
 
+void Spellbook::onSelect() {
+	ColumnScreen::onSelect();
+	refreshEquips();
+	refreshSpells();
+}
+
 bool Spellbook::init() {
 	if ( !ColumnScreen::init() ) {
 		return false;

@@ -9,10 +9,12 @@
 #ifndef ArenaScreen_hpp
 #define ArenaScreen_hpp
 
-class ArenaScreen : public Layer {
+#include "Screen.hpp"
+
+class ArenaScreen : public Screen {
 public:
 	bool init();
-	
+	virtual void onSelect(){}
 	CREATE_FUNC(ArenaScreen);
 };
 

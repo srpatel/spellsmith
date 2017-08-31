@@ -21,8 +21,16 @@
 #define kDepthBarSmokey 20
 #define kDepthButton 10
 
+void ColumnScreen::onSelect() {
+	mute_button->setSpriteFrame(
+		SoundManager::get()->getMute() ?
+		"icons/speakercross.png" :
+		"icons/speaker.png"
+	);
+}
+
 bool ColumnScreen::init() {
-    if ( !Layer::init() ) {
+    if ( !Screen::init() ) {
         return false;
     }
     

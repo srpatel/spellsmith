@@ -16,6 +16,7 @@ class Spellbook : public ColumnScreen {
 	friend class Tutorial;
 public:
 	bool init();
+	virtual void onSelect();
 	void refreshSpells();
 	void refreshEquips();
 	void setMapButtonVisible(bool);
