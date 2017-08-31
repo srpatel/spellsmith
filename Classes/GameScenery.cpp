@@ -47,7 +47,7 @@ bool GameScenery::init(Size size) {
 	
 	redring = LoadSprite("ui/redring.png");
 	redring->setAnchorPoint(Vec2(0.5, 0.2));
-	addChild(redring);
+	redring->retain();
 	
 	float ydiff = size.height;
 	for (int i = 0; i < 3; i++) {
@@ -245,6 +245,17 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e, float delay) {
 	}
 	redring->setScale(char_scale);
 	redring->setPosition((*enemies)[0]->sprite->getPosition());
+	runAction(Sequence::create(DelayTime::create(delay), CallFunc::create([this](){
+		if (redring->getParent() == nullptr) {
+			addChild(redring);
+			setRedRingVisibility(true);
+		}
+	}), nullptr));
+	// Don't want to fade the redring in until the enemy is faded in...??
+	// Idea:
+	// Remove the redring when there are no enemies, and only re-add it once
+	// the enemy is faded in.
+	// Remember: must retain it if doing this.
 }
 void GameScenery::setSelected(int selected) {
 	redring->setPosition((*enemies)[selected]->sprite->getPosition());
@@ -252,9 +263,19 @@ void GameScenery::setSelected(int selected) {
 void GameScenery::setRedRingVisibility(bool visible) {
 	redring->stopAllActions();
 	auto time = 0.5f;
-	redring->runAction(
-		FadeTo::create(time, visible ? 255 : 0)
-	);
+	if (! visible) {
+		if (redring->getParent() != nullptr) {
+			redring->runAction(Sequence::create(
+				FadeOut::create(time),
+				RemoveSelf::create(),
+				nullptr
+			));
+		}
+	} else {
+		redring->runAction(
+			FadeIn::create(time)
+		);
+	}
 }
 GameScenery::~GameScenery() {
 	redring->autorelease();

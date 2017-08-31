@@ -816,6 +816,7 @@ void Game::attemptSetState(GameState nextstate) {
 	} else {
 		// Game is over!
 		grid->setActive(false);
+		scenery->setRedRingVisibility(false);
 		// defer all of this until all actions are done!
 		PendingAction action = [this] {
 			// state = gameend....
