@@ -226,7 +226,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			HEAL(5);
 			game->scenery->addChild(heal);
 		});
-		game->runAction(Sequence::create(delay, addanim, nullptr));
+		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
 	}
 	IF_SPELL(heal) {
 		// gain 7
@@ -242,7 +242,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			HEAL(7);
 			game->scenery->addChild(heal);
 		});
-		game->runAction(Sequence::create(delay, addanim, nullptr));
+		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
 	}
 	IF_SPELL(cleanse) { // TODO
 		// Heal for 3 and clear the grid
@@ -293,7 +293,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 				);
 				game->scenery->addChild(heal);
 			});
-			game->runAction(Sequence::create(delay, addanim, nullptr));
+			game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
 			For(10) {
 				// Random position, random delay
 				float xpos = game->scenery->getBoundingBox().size.width * ((float) rand() / RAND_MAX);

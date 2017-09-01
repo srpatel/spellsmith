@@ -485,7 +485,7 @@ void Game::makeCracks(Character *target) {
 	scenery->addChild(sprite);
 }
 void Game::makeMeteor(float xpos, float ypos, float delay) {
-	this->runAction(Sequence::create(DelayTime::create(delay), CallFunc::create(
+	scenery->runAction(Sequence::create(DelayTime::create(delay), CallFunc::create(
 		[this, xpos, ypos]() {
 			Vec2 to  {xpos, ypos};
 			Vec2 from{xpos, ypos + getLayout().scenery_height};
@@ -515,7 +515,7 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 				auto run = CallFunc::create([this](){
 					actionDone();
 				});
-				runAction(Sequence::create(delay, run, nullptr));
+				scenery->runAction(Sequence::create(delay, run, nullptr));
 			} else {
 				target->die();
 			}
@@ -633,13 +633,13 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 				auto run = CallFunc::create([this](){
 					PLAY_SOUND(kSoundEffect_SWhistle);
 				});
-				runAction(Sequence::create(delay, run, nullptr));
+				scenery->runAction(Sequence::create(delay, run, nullptr));
 			}
 			auto delay = DelayTime::create(e->endTime);
 			auto run = CallFunc::create([this](){
 				actionDone();
 			});
-			runAction(Sequence::create(delay, run, nullptr));
+			scenery->runAction(Sequence::create(delay, run, nullptr));
 		}
 		auto delay = DelayTime::create(14.0/30.0);
 		auto run = CallFunc::create([this, type, projectile](){
@@ -649,7 +649,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 			}
 			projectile->autorelease();
 		});
-		runAction(Sequence::create(delay, run, nullptr));
+		scenery->runAction(Sequence::create(delay, run, nullptr));
 		actionQueued(); // projectile hit
 		if (source == wizard) {
 			// we only wait for the wizard's animation to finish
@@ -871,7 +871,7 @@ void Game::enemyDoTurn() {
 						e->removeBuff(stun);
 					}
 					// Get up instead of attacking
-					runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
+					scenery->runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
 						// Get up!
 					}), nullptr));
 				} else {
@@ -956,7 +956,7 @@ void Game::enemyDoTurn() {
 							auto mainSeq = Sequence::create(DelayTime::create(moveTime + attackTime/2.0f), dealDamage, nullptr); // deal damage half way through animation
 							
 							e->sprite->runAction(enemySeq);
-							runAction(mainSeq);
+							scenery->runAction(mainSeq);
 						};
 					} else if (a->type == kAttackTypeHeal || a->type == kAttackTypeHealOther || a->type == kAttackTypeHealSelf) {
 						// Heal -- if there is another enemy to heal, then heal.
@@ -967,7 +967,7 @@ void Game::enemyDoTurn() {
 								skeleton->addAnimation(0, a->animation, false, 0);
 							}
 							// Wait for the heal animation
-							runAction(Sequence::create(
+							scenery->runAction(Sequence::create(
 								DelayTime::create(0.6),
 								CallFunc::create([a, healtargets]() {
 									int healfor = a->amount;
