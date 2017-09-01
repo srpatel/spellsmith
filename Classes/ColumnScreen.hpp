@@ -24,13 +24,11 @@ struct layout_t {
 
 class ColumnScreen : public Screen {
 public:
-	bool init();
+	bool init(bool mapConfirm = false);
 	virtual void onSelect();
 	void setMapButtonVisible(bool);
 	
 	void setBackground(std::string);
-	
-	CREATE_FUNC(ColumnScreen);
 protected:
 	Sprite *background;
 	layout_t layout;

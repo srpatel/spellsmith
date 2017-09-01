@@ -30,6 +30,7 @@ public:
     Grid *grid;
 	
 	virtual void onSelect();
+	virtual void onDeselect();
 	
 	// Restart the current game!
 	void startArena();
@@ -92,8 +93,6 @@ private:
 	RoundDef *round;
 	int wave;
 	int numMoves = 0;
-	
-	
 	
 	// Helper
 	void onDamageTarget(Character *target, bool withDelay); // Called to show the target taking damage (recoil/death animation, flash red)

@@ -12,6 +12,7 @@
 class Screen : public Layer {
 public:
 	virtual void onSelect() = 0;
+	virtual void onDeselect(){};
 };
 
 #endif /* Screen_hpp */

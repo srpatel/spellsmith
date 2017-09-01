@@ -38,6 +38,7 @@ public:
 	void startRound(RoundDef *);
 	
 	// (Model) Dialogs
+	void pushDialog(Dialog *dialog);
 	void popDialog();
 	void showSpellInfoDialog(Spell *);
 	void showPreLevelDialog(RoundDef *round);
@@ -53,7 +54,6 @@ private:
 	Node *fader;
 	State state = kStateMainMenu;
 	std::vector<Dialog *> dialog_stack;
-	void pushDialog(Dialog *dialog);
 };
 
 #endif /* GameController_hpp */

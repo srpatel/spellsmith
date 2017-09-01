@@ -163,6 +163,7 @@ void GameController::setState(State newstate) {
 		nullptr));
 	
 	// do refreshing
+	prevLayer->onDeselect();
 	layer->onSelect();
 	
 	SoundManager::get()->loader_game(newstate == kStateGame);

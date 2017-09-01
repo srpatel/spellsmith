@@ -71,6 +71,13 @@ void Character::flash(Color3B c) {
 	sprite->runAction(f);
 }
 
+Character::~Character() {
+	for (Buff *b : buffs) {
+		delete b;
+	}
+	buffs.clear();
+}
+
 void Character::removeBuff(Buff *existing) {
 	auto position = std::find(buffs.begin(), buffs.end(), existing);
 	if (position != buffs.end()) {

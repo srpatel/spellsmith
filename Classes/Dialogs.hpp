@@ -47,4 +47,10 @@ public:
 	CREATE_FUNC_1(PreLevelDialog, RoundDef *);
 };
 
+class GotoMapConfirmationDialog : public Dialog {
+public:
+	bool init();
+	
+	CREATE_FUNC(GotoMapConfirmationDialog);
+};
 #endif /* Dialogs_hpp */

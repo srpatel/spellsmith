@@ -141,6 +141,53 @@ bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float c
 	return true;
 }
 
+bool GotoMapConfirmationDialog::init() {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto size = Size(200, 0);
+	auto yBuffer = 50;
+	
+	auto text = Label::createWithTTF(
+		"Are you sure you want to return to the map? "
+		"You will lose your current progress!",
+		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	text->setDimensions(size.width - 20, 0);
+	text->setAlignment(TextHAlignment::CENTER);
+	size.height = text->getContentSize().height + yBuffer;
+	// position the label on the center of the screen
+	text->setPosition({0, 25});
+	
+	// add height for the button downstairs
+	size.height += 25;
+	
+	if ( !Dialog::init(true, true, size.width, size.height) ) {
+		return false;
+	}
+	
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
+	
+	addChild(text);
+	
+	// Add close button
+	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button->setTitleFontName(Fonts::TEXT_FONT);
+	button->setTitleFontSize(Fonts::TEXT_SIZE);
+	button->setPosition(Vec2(0, 30-size.height/2));
+	button->setTitleText("Go to map");
+	button->addTouchEventListener([button](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			button->setTouchEnabled(false);
+			PLAY_SOUND( kSoundEffect_UISelect );
+			GameController::get()->popDialog();
+			GameController::get()->setState(kStateMap);
+		}
+	});
+	this->addChild(button);
+	
+	return true;
+}
 
 bool PreLevelDialog::init(RoundDef *round) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();

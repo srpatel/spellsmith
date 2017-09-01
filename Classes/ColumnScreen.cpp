@@ -35,7 +35,7 @@ void ColumnScreen::setMapButtonVisible(bool visible) {
 	map_button->runAction(FadeTo::create(0.2, visible ? 255 : 0));
 }
 
-bool ColumnScreen::init() {
+bool ColumnScreen::init(bool mapConfirm) {
     if ( !Screen::init() ) {
         return false;
     }
@@ -163,12 +163,19 @@ bool ColumnScreen::init() {
 	auto onMapClick = EventListenerTouchOneByOne::create();
 	onMapClick->setSwallowTouches(true);
 	// trigger when you push down
-	onMapClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+	onMapClick->onTouchBegan = [this, mapConfirm](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		if (canClickMap && bounds.containsPoint(touch->getLocation())) {
 			// TODO : Are you sure you want to go back to the map?
 			PLAY_SOUND(kSoundEffect_UISelect);
-			GameController::get()->setState(kStateMap);
+			
+			if (! mapConfirm) {
+				GameController::get()->setState(kStateMap);
+			} else {
+				Dialog *dialog = GotoMapConfirmationDialog::create();
+				GameController::get()->pushDialog(dialog);
+			}
+			
 			return true;
 		}
 		return false; // if you are consuming it

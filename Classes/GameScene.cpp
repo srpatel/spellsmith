@@ -44,8 +44,22 @@ void Game::onSelect() {
 	setMapButtonVisible(true);
 }
 
+void Game::onDeselect() {
+	ColumnScreen::onDeselect();
+	
+	// stop all sounds
+	SoundManager::get()->stopHum();
+	SoundManager::get()->stopPTravel();
+	
+	// remove all projectiles and spell animations...
+	// - this can be done be clearing and resetting the scenery.
+	
+	// clear all pending actions
+	// - not sure how this can be resolved!
+}
+
 bool Game::init() {
-    if ( !ColumnScreen::init() ) {
+    if ( !ColumnScreen::init(true) ) {
         return false;
     }
 	
@@ -55,15 +69,11 @@ bool Game::init() {
 	
 	// Initialise spells - Normally this will be some kind of shared state.
 	// (Gems here will get created with scale 1)
-	wizard = new Wizard;
-	wizard->max_health = 30;//1;//
-	wizard->health = wizard->max_health;
-	wizard->ui_health = wizard->max_health;
-	
-	scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height -layout.column_height + 5), background);
-	scenery->setAnchorPoint(Vec2(0, 0));
-	scenery->setPosition(0, layout.column_height - 5);
-	addChild(scenery);
+//	
+//	scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height -layout.column_height + 5), background);
+//	scenery->setAnchorPoint(Vec2(0, 0));
+//	scenery->setPosition(0, layout.column_height - 5);
+//	addChild(scenery);
 	
 	{
 		// Click on scenery to select the enemy at that x-pos (ish)
@@ -94,7 +104,7 @@ bool Game::init() {
 			
 			return false; // if you are consuming it
 		};
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(onEnemyClick, scenery);
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onEnemyClick, this);
 	}
 	// Bar top
 	{
@@ -207,26 +217,7 @@ bool Game::init() {
 */
 	inventoryHolder = Layer::create();
 	addChild(inventoryHolder, 6);
-	updateInventory();
-	
-/*
-      _                          _                
-     | |                        | |               
-  ___| |__   __ _ _ __ __ _  ___| |_ ___ _ __ ___ 
- / __| '_ \ / _` | '__/ _` |/ __| __/ _ \ '__/ __|
-| (__| | | | (_| | | | (_| | (__| ||  __/ |  \__ \
- \___|_| |_|\__,_|_|  \__,_|\___|\__\___|_|  |___/
-*/
-	// Wizard
-	wizard->sprite = scenery->wizardsprite;
-	// TODO : calculate height from skeleton bounding box?
-	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0) + 6;
-	wizard->is_skeleton = true;
-	wizard->buffHolder = Layer::create();
-	wizard->sprite->addChild(wizard->buffHolder);
-	// TODO : Replace "100" with actual wizard width
-	layout.melee_spot.x = wizard->sprite->getPositionX() + 100 * scenery->char_scale;
-	layout.melee_spot.y = wizard->sprite->getPositionY() + 8 * scenery->char_scale;
+
 /*
  _    _ _    _ _____  
 | |  | | |  | |  __ \ 
@@ -656,7 +647,7 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 			if (type != ptBasicDart) {
 				SoundManager::get()->startPTravel();
 			}
-			projectile->release();
+			projectile->autorelease();
 		});
 		runAction(Sequence::create(delay, run, nullptr));
 		actionQueued(); // projectile hit
@@ -1154,13 +1145,33 @@ void Game::startArena() {
 	grid->setActive(true);
 }
 void Game::setup() {
-	// reset health
+	// Recreate wizard
+	if (wizard != nullptr)
+		delete wizard;
+	wizard = new Wizard;
+	wizard->max_health = 30;//1;//
 	wizard->health = wizard->max_health;
 	wizard->ui_health = wizard->max_health;
-	wizard->sprite->setOpacity(255);
+	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0) + 6;
+	wizard->is_skeleton = true;
+	updateInventory();
 	
-	// reset buffs
-	wizard->clearBuffs();
+	// Recreate scenery
+	if (scenery != nullptr)
+		scenery->removeFromParent();
+	scenery = GameScenery::create(Size(getBoundingBox().size.width, getBoundingBox().size.height -layout.column_height + 5), background);
+	scenery->setAnchorPoint(Vec2(0, 0));
+	scenery->setPosition(0, layout.column_height - 5);
+	addChild(scenery);
+	
+	wizard->sprite = scenery->wizardsprite;
+	wizard->buffHolder = Layer::create();
+	wizard->sprite->setOpacity(255);
+	wizard->sprite->addChild(wizard->buffHolder);
+	
+	// TODO : Replace "100" with actual wizard width
+	layout.melee_spot.x = wizard->sprite->getPositionX() + 100 * scenery->char_scale;
+	layout.melee_spot.y = wizard->sprite->getPositionY() + 8 * scenery->char_scale;
 	
 	// clear pending actions
 	// remove any post-level dialogs

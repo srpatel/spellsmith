@@ -43,6 +43,7 @@ public:
 	float die();
 	void damageEffect(int damage);
 	virtual std::map<std::string, Vec2> getOffsets() = 0;
+	virtual ~Character();
 };
 
 class Enemy : public Character {
