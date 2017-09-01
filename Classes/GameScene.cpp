@@ -231,9 +231,9 @@ bool Game::init() {
 	hud->setContentSize(
 		Size(getBoundingBox().size.width - layout.column_width * 2, layout.ui_scale * 20 * 2));
 	hud->setPosition(Vec2(layout.column_width, layout.column_height - layout.bar_top_height + layout.ui_scale * 15));
-	this->addChild(hud);
+	this->addChild(hud, 2); // Must be above bar_top
 
-	// Grid must be topmost.
+	// Grid must be below bar_top
 	this->addChild(this->grid);
     
     return true;
