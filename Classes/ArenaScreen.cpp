@@ -17,7 +17,7 @@
 #include "ui/CocosGUI.h"
 
 bool ArenaScreen::init() {
-	if ( !Layer::init() ) {
+	if ( !Screen::init() ) {
 		return false;
 	}
 	

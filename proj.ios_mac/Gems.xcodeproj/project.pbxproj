@@ -101,6 +101,8 @@
 		1035F3DD1F589583006C1CB8 /* ColumnScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */; };
 		1035F3E01F589BE8006C1CB8 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3DE1F589BE8006C1CB8 /* Screen.cpp */; };
 		1035F3E11F589BE8006C1CB8 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3DE1F589BE8006C1CB8 /* Screen.cpp */; };
+		1035F3E41F5938D6006C1CB8 /* OptionsScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3E21F5938D6006C1CB8 /* OptionsScreen.cpp */; };
+		1035F3E51F5938D6006C1CB8 /* OptionsScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1035F3E21F5938D6006C1CB8 /* OptionsScreen.cpp */; };
 		103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49C1CD13B0D00AEB60D /* Shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103FB4991CD13B0D00AEB60D /* Shaders.cpp */; };
 		103FB49E1CD13D9E00AEB60D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 103FB49D1CD13D9E00AEB60D /* shaders */; };
@@ -341,14 +343,16 @@
 		102993A41D6245B300D1492E /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
 		1035F3CC1F53440B006C1CB8 /* Tutorial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		1035F3CD1F53440B006C1CB8 /* Tutorial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
-		1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArenaScreen.cpp; sourceTree = "<group>"; };
-		1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArenaScreen.hpp; sourceTree = "<group>"; };
+		1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ArenaScreen.cpp; path = ../ArenaScreen.cpp; sourceTree = "<group>"; };
+		1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ArenaScreen.hpp; path = ../ArenaScreen.hpp; sourceTree = "<group>"; };
 		1035F3D51F56A449006C1CB8 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		1035F3D61F56A449006C1CB8 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
-		1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnScreen.cpp; sourceTree = "<group>"; };
-		1035F3DB1F589583006C1CB8 /* ColumnScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColumnScreen.hpp; sourceTree = "<group>"; };
-		1035F3DE1F589BE8006C1CB8 /* Screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Screen.cpp; sourceTree = "<group>"; };
-		1035F3DF1F589BE8006C1CB8 /* Screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Screen.hpp; sourceTree = "<group>"; };
+		1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColumnScreen.cpp; path = ../ColumnScreen.cpp; sourceTree = "<group>"; };
+		1035F3DB1F589583006C1CB8 /* ColumnScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ColumnScreen.hpp; path = ../ColumnScreen.hpp; sourceTree = "<group>"; };
+		1035F3DE1F589BE8006C1CB8 /* Screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Screen.cpp; path = ../Screen.cpp; sourceTree = "<group>"; };
+		1035F3DF1F589BE8006C1CB8 /* Screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Screen.hpp; path = ../Screen.hpp; sourceTree = "<group>"; };
+		1035F3E21F5938D6006C1CB8 /* OptionsScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OptionsScreen.cpp; path = ../OptionsScreen.cpp; sourceTree = "<group>"; };
+		1035F3E31F5938D6006C1CB8 /* OptionsScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OptionsScreen.hpp; path = ../OptionsScreen.hpp; sourceTree = "<group>"; };
 		103FB4991CD13B0D00AEB60D /* Shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shaders.cpp; sourceTree = "<group>"; };
 		103FB49A1CD13B0D00AEB60D /* Shaders.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shaders.hpp; sourceTree = "<group>"; };
 		103FB49D1CD13D9E00AEB60D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
@@ -380,8 +384,8 @@
 		1070AEF51CC56BB5009DA840 /* GameScenery.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScenery.hpp; sourceTree = "<group>"; };
 		1070E0AB1BF5188E007C06F9 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		1070E0AC1BF5188E007C06F9 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
-		1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
-		1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MainMenu.hpp; sourceTree = "<group>"; };
+		1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = ../MainMenu.cpp; sourceTree = "<group>"; };
+		1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MainMenu.hpp; path = ../MainMenu.hpp; sourceTree = "<group>"; };
 		107B33BA1E22678D00F2EBDD /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
 		107B33BB1E22678D00F2EBDD /* SoundManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundManager.hpp; sourceTree = "<group>"; };
 		107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextWisp.cpp; sourceTree = "<group>"; };
@@ -406,12 +410,12 @@
 		10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteLoader.cpp; sourceTree = "<group>"; };
 		10DC04E21BF90A1B003BA69E /* EffectSprite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectSprite; path = /Users/sunil/projects/Gems/Gems/Classes/EffectSprite; sourceTree = "<absolute>"; };
 		10DC05011BF90E80003BA69E /* pointlight.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.frag; sourceTree = "<group>"; };
-		10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapScreen.cpp; sourceTree = "<group>"; };
-		10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapScreen.hpp; sourceTree = "<group>"; };
+		10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapScreen.cpp; path = ../MapScreen.cpp; sourceTree = "<group>"; };
+		10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MapScreen.hpp; path = ../MapScreen.hpp; sourceTree = "<group>"; };
 		10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBar.cpp; sourceTree = "<group>"; };
 		10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NavigationBar.hpp; sourceTree = "<group>"; };
-		10FC73751E2F58870096BF0E /* Spellbook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spellbook.cpp; sourceTree = "<group>"; };
-		10FC73761E2F58870096BF0E /* Spellbook.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Spellbook.hpp; sourceTree = "<group>"; };
+		10FC73751E2F58870096BF0E /* Spellbook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spellbook.cpp; path = ../Spellbook.cpp; sourceTree = "<group>"; };
+		10FC73761E2F58870096BF0E /* Spellbook.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Spellbook.hpp; path = ../Spellbook.hpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -552,12 +556,12 @@
 		1020FEE91C06755700019EB9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
+				105E0D021BF14E3F0081D8F5 /* GameScene.hpp */,
 				105E0D061BF14E3F0081D8F5 /* Characters.cpp */,
 				105E0D051BF14E3F0081D8F5 /* Characters.hpp */,
 				100AEB951CC3E61400182962 /* GameHUD.cpp */,
 				100AEB961CC3E61400182962 /* GameHUD.hpp */,
-				105E0D031BF14E3F0081D8F5 /* GameScene.cpp */,
-				105E0D021BF14E3F0081D8F5 /* GameScene.hpp */,
 				1070AEF41CC56BB5009DA840 /* GameScenery.cpp */,
 				1070AEF51CC56BB5009DA840 /* GameScenery.hpp */,
 				105E0D011BF14E3F0081D8F5 /* Gem.cpp */,
@@ -581,20 +585,12 @@
 				1070E0AC1BF5188E007C06F9 /* GameController.hpp */,
 				108AC5B71D5F1C670006E5EA /* GameOverPopup.cpp */,
 				108AC5B81D5F1C670006E5EA /* GameOverPopup.hpp */,
-				1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */,
-				1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */,
-				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
-				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
-				10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */,
-				10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */,
 				10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */,
 				10FC73721E2EDBC30096BF0E /* NavigationBar.hpp */,
 				1095273B1D3BC843002EF8CC /* Popup.cpp */,
 				1095273C1D3BC843002EF8CC /* Popup.hpp */,
 				1064AE021E3890C0006A567B /* SpellBlob.cpp */,
 				1064AE031E3890C0006A567B /* SpellBlob.hpp */,
-				10FC73751E2F58870096BF0E /* Spellbook.cpp */,
-				10FC73761E2F58870096BF0E /* Spellbook.hpp */,
 				105C355D1D326E0100368FB5 /* SpellPicker.cpp */,
 				105C355E1D326E0100368FB5 /* SpellPicker.hpp */,
 				107B33C01E22C7FE00F2EBDD /* TextWisp.cpp */,
@@ -603,12 +599,30 @@
 				106C3F171EFEAA9300CE7411 /* Map.hpp */,
 				1035F3D51F56A449006C1CB8 /* Util.cpp */,
 				1035F3D61F56A449006C1CB8 /* Util.hpp */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		1035F3E61F5938E2006C1CB8 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				1035F3D11F5540E9006C1CB8 /* ArenaScreen.cpp */,
+				1035F3D21F5540E9006C1CB8 /* ArenaScreen.hpp */,
+				1035F3E21F5938D6006C1CB8 /* OptionsScreen.cpp */,
+				1035F3E31F5938D6006C1CB8 /* OptionsScreen.hpp */,
+				1070E0AF1BF54FCE007C06F9 /* MainMenu.cpp */,
+				1070E0B01BF54FCE007C06F9 /* MainMenu.hpp */,
+				10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */,
+				10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */,
+				10FC73751E2F58870096BF0E /* Spellbook.cpp */,
+				10FC73761E2F58870096BF0E /* Spellbook.hpp */,
 				1035F3DA1F589583006C1CB8 /* ColumnScreen.cpp */,
 				1035F3DB1F589583006C1CB8 /* ColumnScreen.hpp */,
 				1035F3DE1F589BE8006C1CB8 /* Screen.cpp */,
 				1035F3DF1F589BE8006C1CB8 /* Screen.hpp */,
 			);
-			name = UI;
+			name = Screens;
+			path = spine;
 			sourceTree = "<group>";
 		};
 		104E052D1D55E0230049EBEB /* Spells */ = {
@@ -801,6 +815,7 @@
 				1020FEE91C06755700019EB9 /* Game */,
 				104E052D1D55E0230049EBEB /* Spells */,
 				10B464DB1BFA935E00DD5E9E /* spine */,
+				1035F3E61F5938E2006C1CB8 /* Screens */,
 				1020FEEA1C06757400019EB9 /* UI */,
 			);
 			name = Classes;
@@ -1108,6 +1123,7 @@
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				102993521D62429000D1492E /* IkConstraint.c in Sources */,
 				1095273D1D3BC843002EF8CC /* Popup.cpp in Sources */,
+				1035F3E41F5938D6006C1CB8 /* OptionsScreen.cpp in Sources */,
 				102993721D62429000D1492E /* Slot.c in Sources */,
 				103FB49B1CD13B0D00AEB60D /* Shaders.cpp in Sources */,
 				1029937A1D62429000D1492E /* TransformConstraintData.c in Sources */,
@@ -1200,6 +1216,7 @@
 				102993351D62429000D1492E /* Animation.c in Sources */,
 				10FC73781E2F58870096BF0E /* Spellbook.cpp in Sources */,
 				102993691D62429000D1492E /* SkeletonBounds.c in Sources */,
+				1035F3E51F5938D6006C1CB8 /* OptionsScreen.cpp in Sources */,
 				10894F1F1F489FB500669A6A /* Buff.cpp in Sources */,
 				102993711D62429000D1492E /* Skin.c in Sources */,
 				102993611D62429000D1492E /* RegionAttachment.c in Sources */,

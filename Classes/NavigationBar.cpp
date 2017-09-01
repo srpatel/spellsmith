@@ -35,6 +35,7 @@ void NavigationBar::resetButtons() {
 	if (SaveData::isLevelComplete("3")) {
 		buttons.push_back({"ARENA", "icons/map.png", kStateArena}); // Set state to arena
 	}
+	buttons.push_back({"OPTIONS", "ui/options.png", kStateOptions}); // Set state to options
 
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;

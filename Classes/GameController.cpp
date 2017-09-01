@@ -12,6 +12,7 @@
 #include "GameScene.hpp"
 #include "MapScreen.hpp"
 #include "ArenaScreen.hpp"
+#include "OptionsScreen.hpp"
 #include "Spellbook.hpp"
 #include "Constants.h"
 #include "SoundManager.hpp"
@@ -53,6 +54,9 @@ void GameController::init(Scene *root) {
 	
 	stateScreens[kStateArena] = ArenaScreen::create();
 	stateScreens[kStateArena]->retain();
+	
+	stateScreens[kStateOptions] = OptionsScreen::create();
+	stateScreens[kStateOptions]->retain();
 	
 	instance->state = kStateMainMenu;
 	
@@ -149,7 +153,7 @@ void GameController::setState(State newstate) {
 			bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
 		
 			// Back button
-			showButton(newstate == kStateSpellbook || newstate == kStateArena);
+			showButton(newstate == kStateSpellbook || newstate == kStateArena || newstate == kStateOptions);
 		
 			// tutorials
 			if (newstate == kStateMap) {
