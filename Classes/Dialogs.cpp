@@ -11,6 +11,7 @@
 #include "Tutorial.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
+#include "SpellBlob.hpp"
 #include "GameScene.hpp"
 #include "GameController.hpp"
 #include "SoundManager.hpp"
@@ -69,7 +70,7 @@ bool OptionsDialog::init() {
 
 bool SpellInfoDialog::init(Spell *spell) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto size = Size(visibleSize.width - 50, 300);
+	auto size = Size(visibleSize.width - 80, 300);
 	
 	if ( !Dialog::init(true, false, size.width, size.height) ) {
 		return false;
@@ -191,7 +192,42 @@ bool GotoMapConfirmationDialog::init() {
 
 bool PreLevelDialog::init(RoundDef *round) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto size = Size(visibleSize.width - 50, 300);
+	float width = visibleSize.width - 50;
+	
+	auto roundName = _(std::string("level.")+round->name);
+	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	label->setColor(Color3B::BLACK);
+	
+	auto desc = Label::createWithTTF(_(std::string("level_desc.")+round->name), Fonts::TEXT_FONT_ITALIC, Fonts::TEXT_SIZE);
+	desc->setDimensions(width - 30, 0);
+	desc->setColor(Color3B::BLACK);
+	desc->setAlignment(TextHAlignment::CENTER);
+	
+	// Add monsters
+	// ...
+	
+	// Add play button
+	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button->setTitleFontName(Fonts::TEXT_FONT);
+	button->setTitleFontSize(Fonts::TEXT_SIZE);
+	button->setTitleText _("ui.PLAY");
+	button->addTouchEventListener([round, button](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			button->setTouchEnabled(false);
+			PLAY_SOUND( kSoundEffect_UISelect );
+			GameController::get()->startRound(round);
+		}
+	});
+	
+	Size size{width,
+		10 +
+		label->getContentSize().height +
+		5 +
+		desc->getContentSize().height +
+		80 +
+		button->getContentSize().height +
+		20
+	};
 	
 	if ( !Dialog::init(true, true, size.width, size.height) ) {
 		return false;
@@ -202,43 +238,31 @@ bool PreLevelDialog::init(RoundDef *round) {
 	this->addChild(popup);
 	setContentSize(size);
 	
-	auto roundName = _(std::string("level.")+round->name);
-	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
-	this->addChild(label, 1);
+	label->setPosition(Vec2(0, size.height/2 - 10 - label->getContentSize().height/2));
+	desc->setPosition(Vec2(0, label->getPosition().y - 5 - label->getContentSize().height/2 - desc->getContentSize().height/2));
+	button->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height/2));
 	
-	// Add spell icons
+	// Add spell icons AS BLOBS
 	float currentX = -50 * ((float) round->rewards.size() - 1) / 2.0;
 	for (std::string spellname : round->rewards) {
 		auto spell = SpellManager::get()->getByName(spellname);
 		if (spell) {
-			auto node = spell->makeNode(true);
-			node->setPositionX(currentX);
+			auto node = SpellBlob::create(spell, false, nullptr, nullptr);
+			node->setPosition({
+				currentX,
+				button->getPosition().y + button->getContentSize().height/2 + 50
+			});
 			currentX += 50;
 			// TODO : on click, get info
 			// TODO : organise layout of multiple
-			addChild(node);
+			addChild(node, 1);
 		}
 	}
 	
-	// Add monsters
-	// ...
-	
-	// Add play button
-	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleFontSize(Fonts::TEXT_SIZE);
-	button->setPosition(Vec2(0, 30-size.height/2));
-	button->setTitleText _("ui.PLAY");
-	button->addTouchEventListener([round, button](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::ENDED) {
-			button->setTouchEnabled(false);
-			PLAY_SOUND( kSoundEffect_UISelect );
-			GameController::get()->startRound(round);
-		}
-	});
+	this->addChild(label, 1);
+	this->addChild(desc, 1);
 	this->addChild(button);
+	
 	
 	return true;
 }

@@ -20,6 +20,7 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 	if ( !Layer::init() ) {
 		return false;
 	}
+	this->setCascadeOpacityEnabled(true);
 	
 	this->spell = spell;
 	this->draggable = draggable;
@@ -45,6 +46,7 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 	
 	mininode = spell->makeNode(true);
 	mininode->setPosition(Vec2::ZERO);
+	mininode->setCascadeOpacityEnabled(true);
 	addChild(mininode, 3);
 	
 	refresh();
