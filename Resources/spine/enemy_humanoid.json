@@ -188,7 +188,7 @@
 		},
 		"images/goblin1/head": {
 			"head": { "name": "characters/goblin/6_ice/head", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 },
-			"head_eyes_closed": { "name": "characters/goblin/5_ice/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
+			"head_eyes_closed": { "name": "characters/goblin/6_ice/head_alt", "x": 68.91, "y": -9.82, "rotation": -133.18, "width": 144, "height": 147 }
 		},
 		"neck": {
 			"neck": { "name": "characters/goblin/6_ice/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
