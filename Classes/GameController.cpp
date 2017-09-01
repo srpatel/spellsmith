@@ -159,8 +159,9 @@ void GameController::setState(State newstate) {
 			if (newstate == kStateMap) {
 				Tutorial::activate(11);
 			} else if (newstate == kStateSpellbook) {
-				Tutorial::activate(7);
-				Tutorial::activate(201);
+				if(! Tutorial::activate(7)) {
+					Tutorial::activate(201);
+				}
 			}
 		}),
 		FadeOut::create(0.2f),

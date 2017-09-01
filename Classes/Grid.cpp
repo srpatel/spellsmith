@@ -397,7 +397,9 @@ S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemTyp
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::FIRE ) S(GemType::AIR  )
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::FIRE ) S(GemType::AIR  ) S(GemType::FIRE )
 S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE ) S(GemType::NONE )
-S(GemType::FIRE ) S(GemType::FIRE )
+//
+S(GemType::FIRE ) S(GemType::NONE )
+S(GemType::FIRE ) S(GemType::NONE )
 	}
 	
 	refill();

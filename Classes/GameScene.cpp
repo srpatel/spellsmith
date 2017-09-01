@@ -24,8 +24,6 @@
 static int grid_size = 5;
 Game *Game::instance = nullptr;
 
-static layout_t layout;
-
 layout_t Game::getLayout() {
 	return layout;
 }

@@ -11,7 +11,7 @@
 
 class Tutorial {
 public:
-	static void activate(int number);
+	static bool activate(int number);
 	static void cancelAll();
 	static int getCurrent();
 };

@@ -67,9 +67,13 @@ Layer *makeTextBox(std::string text, int location, bool withTtc, float delay) {
 		auto gridCentre = game->grid->getPosition();
 		position = gridCentre - size/2;
 	} else if (location == kPosScenery) {
-		auto sceneCentre = game->scenery->getPosition();
-		auto sceneSize = game->scenery->getContentSize();
-		position = sceneCentre + sceneSize/2 - size/2;
+		Size visibleSize = Director::getInstance()->getVisibleSize();
+		float backgroundHeight = visibleSize.height - game->getLayout().column_height;
+		Vec2 sceneryCentre{
+			visibleSize.width / 2,
+			game->getLayout().column_height + backgroundHeight / 2,
+		};
+		position = sceneryCentre - size/2;
 	}
 	popup->setPosition(position);
 	
@@ -113,7 +117,7 @@ int Tutorial::getCurrent() {
 	return currentLevel;
 }
 
-void Tutorial::activate(int number) {
+bool Tutorial::activate(int number) {
 	auto game = Game::get();
 	// Starting numbers: 1, 7, 101
 	bool start = number == 1 || number == 7 || number == 101 || number == 201;
@@ -122,7 +126,9 @@ void Tutorial::activate(int number) {
 	// Don't progress to the next tutorial unless you're starting a chain
 	// or are moving to the next tutorial.
 	if (! start && ! prec)
-		return;
+		return false;
+	
+	printf("Activating tutorial %d\n", number);
 
 	// Popups which stay visible twice: 3 (not anymore)
 	auto remover = Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr);
@@ -138,7 +144,7 @@ void Tutorial::activate(int number) {
 	}
 	if (! others.empty()) {
 		for (Node *n : others) {
-			n->stopAllActions();
+			//n->stopAllActions();
 			n->runAction(remover->clone());
 		}
 		others.clear();
@@ -164,7 +170,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.1"),
 				kPosGrid, true, 0);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 		} else if (number == 2) {
 			game->grid->setActive(true);
 			game->grid->flashPreset(1);
@@ -173,7 +179,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.2"),
 				kPosScenery, false, 0.5);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 		} else if (number == 3) {
 			// Fade everything in...
 			game->grid->flashPreset(0);
@@ -183,7 +189,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.5"),
 				kPosGrid, true, 0);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 			// point to red circle
 		} else if (number == 6) {
 			game->setMapButtonVisible(true);
@@ -212,7 +218,7 @@ void Tutorial::activate(int number) {
 			if (spellEquipped || ! learntFireball || ! learntOneOnly) {
 				// No need to do tut.
 				currentLevel = -1;
-				return;
+				return false;
 			}
 			
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
@@ -228,7 +234,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.7"),
 				kPosScenery, false, 0.5);
-			spellbook->addChild(popup);
+			spellbook->addChild(popup, 150);
 			
 			// Flash new spell
 			/*auto blob = spellbook->blobs[0];
@@ -246,7 +252,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.9"),
 				kPosScenery, false, 0.5);
-			spellbook->addChild(popup);
+			spellbook->addChild(popup, 15);
 			
 			// Show arrow
 			auto finger = LoadSprite("ui/fingerpoint.png");
@@ -277,7 +283,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.10"),
 				kPosScenery, false, 1);
-			spellbook->addChild(popup, 100);
+			spellbook->addChild(popup, 15);
 			
 			// Re-enable ui
 			GameController::get()->showButton(true);
@@ -305,7 +311,7 @@ void Tutorial::activate(int number) {
 			if (! fireball || nonFireball) {
 				// No need to do tut.
 				currentLevel = -1;
-				return;
+				return false;
 			}
 			
 			// Start down this path!
@@ -320,7 +326,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.101"),
 				kPosGrid, true, 0);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 		} else if (number == 102) {
 			game->grid->setActive(true);
 			game->grid->flashPreset(2);
@@ -328,14 +334,14 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.102"),
 				kPosScenery, false, 0);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 		} else if (number == 103) {
 			game->grid->flashPreset(0);
 			// Make text box over grid...
 			auto popup = makeTextBox(
 				_("tutorial.103"),
 				kPosScenery, true, 0.5);
-			game->addChild(popup);
+			game->addChild(popup, 15);
 		} else if (number == 104) {
 		}
 	} else
@@ -356,7 +362,7 @@ void Tutorial::activate(int number) {
 			if (rightColumn || SaveData::getSpells().size() < 4) {
 				// No need to do tut.
 				currentLevel = -1;
-				return;
+				return false;
 			}
 			
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
@@ -369,7 +375,7 @@ void Tutorial::activate(int number) {
 			auto popup = makeTextBox(
 				_("tutorial.201"),
 				kPosScenery, false, 0.5);
-			spellbook->addChild(popup);
+			spellbook->addChild(popup, 15);
 			
 			// Show arrow
 			auto finger = LoadSprite("ui/fingerpoint.png");
@@ -407,4 +413,5 @@ void Tutorial::activate(int number) {
 			spellbook->setMapButtonVisible(true);
 		}
 	}
+	return true;
 }

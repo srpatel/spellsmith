@@ -24,6 +24,18 @@ bool ArenaScreen::init() {
 	Size size = Director::getInstance()->getVisibleSize();
 	setContentSize(size);
 	
+	auto label = Label::createWithTTF(
+		"Here you can:\n"
+		"- See YOUR previous runs (score, 32 - killed by goblin)\n"
+		"- See wordwide top scores\n"
+		"- Continue your current run or start a new one",
+		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	label->setDimensions(size.width - 20, 0);
+	label->setAlignment(TextHAlignment::CENTER);
+	// position the label on the center of the screen
+	label->setPosition(size/2);
+	addChild(label);
+	
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleFontSize(Fonts::TEXT_SIZE);
