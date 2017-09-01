@@ -47,8 +47,8 @@ bool Spellbook::init() {
 	
 	// Pages
 	{
-		left = LoadSprite("ui/page_arrow.png");
-		right = LoadSprite("ui/page_arrow.png");
+		left = LoadSprite("ui/buttonback_alpha.png");
+		right = LoadSprite("ui/buttonback_alpha.png");
 		left->setAnchorPoint(Vec2(0.5, 0.5));
 		right->setAnchorPoint(Vec2(0.5, 0.5));
 		right->setScaleX(-1);

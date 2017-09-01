@@ -227,7 +227,6 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e, float delay) {
 	redring->setPosition((*enemies)[0]->sprite->getPosition());
 	runAction(Sequence::create(DelayTime::create(delay), CallFunc::create([this](){
 		if (redring->getParent() == nullptr) {
-			addChild(redring);
 			setRedRingVisibility(true);
 		}
 	}), nullptr));
@@ -252,6 +251,8 @@ void GameScenery::setRedRingVisibility(bool visible) {
 			));
 		}
 	} else {
+		if (redring->getParent() == nullptr)
+			addChild(redring);
 		redring->runAction(
 			FadeIn::create(time)
 		);

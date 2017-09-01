@@ -703,7 +703,7 @@ void Game::attemptSetState(GameState nextstate) {
 						auto spellPicker = SpellPicker::create(spellpool[0], spellpool[1]);
 						// put it in the middle of the grid
 						spellPicker->setPosition(grid->getPosition());
-						addChild(spellPicker);
+						addChild(spellPicker, 7);
 						// also remove another 2
 						spellpool.erase(spellpool.begin(), spellpool.begin() +  2);
 					} else {
@@ -748,7 +748,7 @@ void Game::attemptSetState(GameState nextstate) {
 					post_level_dialog->retain();
 					// put it in the middle of the grid
 					post_level_dialog->setPosition(grid->getPosition());
-					addChild(post_level_dialog, 0, "post_level_dialog");
+					addChild(post_level_dialog, 7);
 				} else {
 					// TODO : This is the same branch as above...
 					
