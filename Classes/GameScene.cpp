@@ -553,7 +553,6 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	}
 	
 	bool phase = target->getBuffByType(BuffType::PHASING) != nullptr;
-	CallFunc *onHit;
 	
 	// If phasing, don't take damage! And the projectile goes past?
 	if (! phase) {
@@ -561,56 +560,16 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 	} else {
 		to.x = -50.0;
 	}
-	onHit = CallFunc::create([this, damage, target, onhitfunc, phase, type](){
-		SoundManager::get()->stopPTravel();
-		if (onhitfunc) {
-			onhitfunc();
-		}
-		if (! phase) {
-			target->damageEffect(damage);
-			onDamageTarget(target, true);
-			updateHealthBars();
-		}
-		actionDone();
-	});
 	
 	float scale = scenery->char_scale;//0.5 + MIN(damage, 20) / 4.f;
 	if (damage >= 10) {
 		scale *= 2;
 	}
-	BasicProjectile *projectile;
-	if (type == ptBasicWind) {
-		projectile = BasicWind::create(from, to, scale, onHit);
-	} else if (type == ptBasicEarth) {
-		projectile = BasicEarth::create(from, to, scale, onHit);
-	} else if (type == ptBasicWater) {
-		projectile = BasicWater::create(from, to, scale, onHit);
-	} else if (type == ptBasicFire) {
-		projectile = BasicFire::create(from, to, scale, onHit);
-	} else if (type == ptBasicPurple) {
-		projectile = BasicPurple::create(from, to, scale, onHit);
-	} else if (type == ptBasicMeteor) {
-		projectile = BasicMeteor::create(from, to, 1, onHit);
-	} else if (type == ptBasicDart) {
-		projectile = BasicDart::create(from, to, 1, onHit);
-	} else if (type == ptBasicAnvil) {
-		projectile = BasicAnvil::create(from, to, 1, onHit);
-	} else if (type == ptBasicIce) {
-		projectile = BasicIce::create(from, to, 1, onHit);
-	} else {
-		printf("Unrecognised projectile type!\n");
-		projectile = BasicFire::create(from, to, scale, onHit);
-	}
 	
-	if (phase) {
-		projectile->turnOffSound();
-	}
+	runPendingAction([=]() {
+		// Wait for 0.56 seconds as that is when the staff is in the right place
+		// TODO : Events
 	
-	// Wait for 0.56 seconds as that is when the staff is in the right place
-	// TODO : Events
-	projectile->retain();
-	
-	runPendingAction([this, source, projectile, type]() {
 		if (source == wizard) {
 			const char* projectile_type = "spell_projectile";
 			if (type == ptBasicAnvil || type == ptBasicEarth) {
@@ -642,12 +601,27 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 			scenery->runAction(Sequence::create(delay, run, nullptr));
 		}
 		auto delay = DelayTime::create(14.0/30.0);
-		auto run = CallFunc::create([this, type, projectile](){
+		auto run = CallFunc::create([=](){
+			auto onHit = CallFunc::create([this, damage, target, onhitfunc, phase, type](){
+				SoundManager::get()->stopPTravel();
+				if (onhitfunc) {
+					onhitfunc();
+				}
+				if (! phase) {
+					target->damageEffect(damage);
+					onDamageTarget(target, true);
+					updateHealthBars();
+				}
+				actionDone();
+			});
+			BasicProjectile *projectile = BasicProjectile::makeFromType(type, from, to, scale, onHit);
+			if (phase) {
+				projectile->turnOffSound();
+			}
 			scenery->addChild(projectile, 76); // in front of "back" enemies (50), and behind "front" enemies (100)
 			if (type != ptBasicDart) {
 				SoundManager::get()->startPTravel();
 			}
-			projectile->autorelease();
 		});
 		scenery->runAction(Sequence::create(delay, run, nullptr));
 		actionQueued(); // projectile hit
@@ -1036,7 +1010,7 @@ void Game::gotoNextEnemy() {
 	showRound(round, 0);
 }
 void Game::showRound(RoundDef *round, int wave) {
-	printf("Starting round. %d pending actions.\n", numCurrentActions);
+	printf("Starting round. %d current actions.\n", numCurrentActions);
 	setBackground(round->bg);
 	if (numCurrentActions > 0) {
 		numCurrentActions = 0;
@@ -1174,8 +1148,8 @@ void Game::setup() {
 	layout.melee_spot.y = wizard->sprite->getPositionY() + 8 * scenery->char_scale;
 	
 	// clear pending actions
-	// remove any post-level dialogs
-	// remove all spells and stuff
+	numCurrentActions = 0;
+	pendingActions.clear();
 	
 	// scramble grid
 	grid->scramble();

@@ -9,7 +9,36 @@
 #include "Projectiles.hpp"
 
 // Px per second
+// #define PROJECTILE_SPEED 10
 #define PROJECTILE_SPEED 300
+
+BasicProjectile *BasicProjectile::makeFromType(ProjectileType type, Vec2 from, Vec2 to, float scale, CallFunc* onHit) {
+	BasicProjectile *projectile;
+	if (type == ptBasicWind) {
+		projectile = BasicWind::create(from, to, scale, onHit);
+	} else if (type == ptBasicEarth) {
+		projectile = BasicEarth::create(from, to, scale, onHit);
+	} else if (type == ptBasicWater) {
+		projectile = BasicWater::create(from, to, scale, onHit);
+	} else if (type == ptBasicFire) {
+		projectile = BasicFire::create(from, to, scale, onHit);
+	} else if (type == ptBasicPurple) {
+		projectile = BasicPurple::create(from, to, scale, onHit);
+	} else if (type == ptBasicMeteor) {
+		projectile = BasicMeteor::create(from, to, 1, onHit);
+	} else if (type == ptBasicDart) {
+		projectile = BasicDart::create(from, to, 1, onHit);
+	} else if (type == ptBasicAnvil) {
+		projectile = BasicAnvil::create(from, to, 1, onHit);
+	} else if (type == ptBasicIce) {
+		projectile = BasicIce::create(from, to, 1, onHit);
+	} else {
+		printf("Unrecognised projectile type!\n");
+		projectile = BasicFire::create(from, to, scale, onHit);
+	}
+	
+	return projectile;
+}
 
 bool BasicAnim::init(
 		Vec2 loc,

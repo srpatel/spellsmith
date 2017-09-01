@@ -51,6 +51,7 @@ public:
 public:
 	void setRotation(float r);
 	inline void turnOffSound() {sound = nullptr;}
+	static BasicProjectile *makeFromType(ProjectileType type, Vec2 from, Vec2 to, float scale, CallFunc* onHit);
 protected:
 	Vec2 offset;
 	const char *path;
