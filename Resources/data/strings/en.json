@@ -136,14 +136,31 @@
     "shaman": "Shaman",
     "goblin_sword": "Goblin Swordsman",
     "goblin_axe": "Goblin Axeman",
+    "ice_goblin": "Goblin Soldier",
     "goblin_halberd": "Goblin Halberdier",
     "fire_wizard": "Pyromancer",
     "water_wizard": "Hydromancer",
     "necromancer": "Necromancer"
   },
+  "level_end": {
+    "GAME_OVER": "Game Over!",
+    "CONGRATULATIONS": "Congratulations!",
+    "win": {
+      "0": "Your memory is returning...",
+      "1": "Another spell comes to mind",
+      "2": "Your power grows yet more",
+      "3": "Soon you shall be unstoppable!",
+      "4": "The King had better watch out!"
+    },
+    "lose": {
+      "0": "Oh, how the mighty fall!",
+      "1": "How...how is this possible!?",
+      "2": "Dead...for now...",
+      "3": "You will return, with a vengeance!",
+      "4": "Why does lightning bolt always roll 1?"
+    }
+  },
   "ui": {
-    "LEVEL_WON": "congratulations",
-    "LEVEL_LOST": "you lost",
     "RETRY_LEVEL": "retry",
     "BACK": "back",
     "ARENA": "Arena",

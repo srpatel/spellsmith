@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include "ImageManager.hpp"
 #include "TextWisp.hpp"
+#include "Strings.hpp"
 
 bool GameScenery::init(Size size, Sprite *background) {
 	if ( !Layer::init() )
@@ -132,16 +133,16 @@ void GameScenery::showFlags(int flagType) {
 			banner->runAction(fadeIn);
 			
 			
-			bigText->setString("Level Up!");
-			const char* sentence;
+			bigText->setString _("level_end.CONGRATULATIONS");
+			std::string sentence;
 			int r = rand() % 5;
 			switch (r) {
-				case 0:	sentence = "Your knowledge expands..."; break;
-				case 1:	sentence = "Another spell comes to mind"; break;
-				case 2:	sentence = "Your power grows yet more"; break;
-				case 3:	sentence = "Soon you shall be unstoppable!"; break;
+				case 0:	sentence = _("level_end.win.0"); break;
+				case 1:	sentence = _("level_end.win.1"); break;
+				case 2:	sentence = _("level_end.win.2"); break;
+				case 3:	sentence = _("level_end.win.3"); break;
 				default:
-				case 4:	sentence = "Just another day of goblin slaughter..."; break;
+				case 4:	sentence = _("level_end.win.4"); break;
 			}
 			littleText->setString( sentence );
 		} else if (flagType == FLAG_TYPE_LOSE) {
@@ -154,16 +155,16 @@ void GameScenery::showFlags(int flagType) {
 			flags[0]->setPosition(-flags[0]->getContentSize().width, getContentSize().height/2.0);
 			flags[1]->setPosition(getContentSize().width, getContentSize().height/2.0);
 			
-			bigText->setString("Game Over!");
-			const char* sentence;
+			bigText->setString _("level_end.GAME_OVER");
+			std::string sentence;
 			int r = rand() % 5;
 			switch (r) {
-				case 0:	sentence = "The goblins finally got their revenge!"; break;
-				case 1:	sentence = "How...how is this possible!?"; break;
-				case 2:	sentence = "Dead...for now..."; break;
-				case 3:	sentence = "You will return, with a vengeance!"; break;
+				case 0:	sentence = _("level_end.lose.0"); break;
+				case 1:	sentence = _("level_end.lose.1"); break;
+				case 2:	sentence = _("level_end.lose.2"); break;
+				case 3:	sentence = _("level_end.lose.3"); break;
 				default:
-				case 4:	sentence = "Why does lightning bolt always roll 1?"; break;
+				case 4:	sentence = _("level_end.lose.4"); break;
 			}
 			littleText->setString( sentence );
 		}
