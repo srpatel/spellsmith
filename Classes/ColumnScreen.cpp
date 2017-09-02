@@ -35,7 +35,7 @@ void ColumnScreen::setMapButtonVisible(bool visible) {
 	map_button->runAction(FadeTo::create(0.2, visible ? 255 : 0));
 }
 
-bool ColumnScreen::init(bool mapConfirm) {
+bool ColumnScreen::init(std::function<bool()> mapConfirm) {
     if ( !Screen::init() ) {
         return false;
     }
@@ -169,7 +169,7 @@ bool ColumnScreen::init(bool mapConfirm) {
 			// TODO : Are you sure you want to go back to the map?
 			PLAY_SOUND(kSoundEffect_UISelect);
 			
-			if (! mapConfirm) {
+			if (! mapConfirm || ! mapConfirm()) {
 				GameController::get()->setState(kStateMap);
 			} else {
 				Dialog *dialog = GotoMapConfirmationDialog::create();

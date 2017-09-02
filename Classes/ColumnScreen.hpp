@@ -24,7 +24,7 @@ struct layout_t {
 
 class ColumnScreen : public Screen {
 public:
-	bool init(bool mapConfirm = false);
+	bool init(std::function<bool()> mapConfirm = {});
 	virtual void onSelect();
 	void setMapButtonVisible(bool);
 	

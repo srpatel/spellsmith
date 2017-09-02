@@ -57,7 +57,10 @@ void Game::onDeselect() {
 }
 
 bool Game::init() {
-    if ( !ColumnScreen::init(true) ) {
+    if ( !ColumnScreen::init([this]() {
+		// show map confirm if we don't have a post level dialog
+		return post_level_dialog == nullptr;
+	}) ) {
         return false;
     }
 	
