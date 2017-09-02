@@ -72,6 +72,23 @@ bool MapScreen::init() {
 		bounds.origin -= bounds.size/2;
 		
 		if (bounds.containsPoint(touch->getLocation())){
+			// are we on a node?
+			currentRound = nullptr;
+			for (auto n : map->nodes) {
+				auto round = n.first;
+				auto sprite = n.second;
+				auto theBounds = sprite->getBoundingBox();
+				theBounds.origin += map->getPosition();
+				if (!round->depends.empty() && ! SaveData::isLevelComplete(round->depends)) {
+					continue;
+				}
+				
+				if (theBounds.containsPoint(touch->getLocation())){
+					// don't stop propagation -- we want the map to capture too...
+					currentRound = round;
+					break;
+				}
+			}
 			return true;
 		}
 		
@@ -79,6 +96,7 @@ bool MapScreen::init() {
 	};
 	onclick->onTouchMoved = [this, mapPreferredMaxY, mapPreferredMinY, top, bot](Touch* touch, Event* event) -> bool {
 		auto dy = touch->getDelta().y;
+		currentRound = nullptr;
 		auto cy = map->getPositionY();
 		auto newY = cy + dy;
 		// if we're already above/below preferred, then minimise dy
@@ -108,7 +126,18 @@ bool MapScreen::init() {
 		top->setSpriteFrame(LoadSpriteFrame(frameName));
 		sprintf(frameName, "map/scroll%d.png", botIndex);
 		bot->setSpriteFrame(LoadSpriteFrame(frameName));
-		return false; // if you are consuming it
+		return true; // if you are consuming it
+	};
+	onclick->onTouchEnded = [this, mapPreferredMaxY, mapPreferredMinY, top, bot](Touch* touch, Event* event) -> bool {
+		if (true) {
+			if (currentRound != nullptr) {
+				PLAY_SOUND( kSoundEffect_UISelect );
+				GameController::get()->showPreLevelDialog(currentRound);
+				currentRound = nullptr;
+			}
+			return true;
+		}
+		return false;
 	};
 	// when you let go it should:
 	//	- keep going in the same direction a bit

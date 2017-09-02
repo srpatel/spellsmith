@@ -46,7 +46,7 @@ bool MapScroll::init() {
 		nodes[r] = n;
 		nodesHolder->addChild(n);
 		
-		auto onclick = EventListenerTouchOneByOne::create();
+		/*auto onclick = EventListenerTouchOneByOne::create();
 		onclick->setSwallowTouches(true);
 		onclick->onTouchBegan = [this, r](Touch* touch, Event* event) -> bool {
 			auto bounds = event->getCurrentTarget()->getBoundingBox();
@@ -59,14 +59,15 @@ bool MapScroll::init() {
 			}
 			
 			if (bounds.containsPoint(touch->getLocation())){
-				PLAY_SOUND( kSoundEffect_UISelect );
-				GameController::get()->showPreLevelDialog(r);
-				return true;
+				// don't stop propagation -- we want the map to capture too...
+				currentRound = r;
+				printf("Setting current round: %p\n", currentRound);
+				return false;
 			}
 			
 			return false; // if you are consuming it
 		};
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);*/
 		//listeners.push_back(onclick);
 	}
 	

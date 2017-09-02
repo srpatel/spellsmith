@@ -86,7 +86,7 @@ PROJECTILE(BasicEarth,  earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*off
 PROJECTILE(BasicWater,  waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0), kSoundEffect_PHWater);
 PROJECTILE(BasicMeteor, meteor,    /*shoot*/  0, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHFire);
 PROJECTILE(BasicPurple, drainlife,    /*shoot*/  11, /*travel*/ 3, /*hit*/  9, /*offset*/ Vec2(10, 0), kSoundEffect_PHWater);
-PROJECTILE_TIME(BasicDart, dart,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 0), kSoundEffect_None, 0.3);
+PROJECTILE_TIME(BasicDart, dart,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 5), kSoundEffect_None, 0.3);
 PROJECTILE(BasicAnvil, anvil,    /*shoot*/  0, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 0), kSoundEffect_PHEarth);
 PROJECTILE(BasicIce, icebolt,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 5), kSoundEffect_PHIce);
 

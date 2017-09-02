@@ -128,6 +128,7 @@ void Spellbook::refreshEquips() {
 				onSpellClick->onTouchBegan = [this, spell](Touch* touch, Event* event) -> bool {
 					auto bounds = event->getCurrentTarget()->getBoundingBox();
 					bounds.origin -= bounds.size/2;
+					// should be able to drag these also?
 					
 					if (bounds.containsPoint(touch->getLocation())){
 						PLAY_SOUND(kSoundEffect_UISelectMinor);

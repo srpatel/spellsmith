@@ -243,7 +243,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	button->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height/2));
 	
 	// Add spell icons AS BLOBS
-	float currentX = -50 * ((float) round->rewards.size() - 1) / 2.0;
+	float currentX = -80 * ((float) round->rewards.size() - 1) / 2.0;
 	for (std::string spellname : round->rewards) {
 		auto spell = SpellManager::get()->getByName(spellname);
 		if (spell) {
@@ -252,7 +252,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 				currentX,
 				button->getPosition().y + button->getContentSize().height/2 + 50
 			});
-			currentX += 50;
+			currentX += 80;
 			// TODO : on click, get info
 			// TODO : organise layout of multiple
 			addChild(node, 1);

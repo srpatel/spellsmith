@@ -22,6 +22,7 @@ public:
 	CREATE_FUNC(MapScreen);
 private:
 	float mapMaxY, mapMinY;
+	RoundDef *currentRound = nullptr;
 	MapScroll *map;
 };
 

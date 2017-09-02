@@ -554,7 +554,9 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 		}
 	} else if (skeleton) {
 		// Run the "hit" animation!
-		skeleton->setAnimation(0, "hit", false);
+		auto b = wizard->getBuffByType(BuffType::KINGS_COURT);
+		if (target != wizard || (b == nullptr || b->turns < 2))
+			skeleton->setAnimation(0, "hit", false);
 	}
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, ProjectileType type, std::function<void(void)> onhitfunc) {
@@ -958,10 +960,10 @@ void Game::enemyDoTurn() {
 										PLAY_SOUND(kSoundEffect_Bite);
 									}
 									wizard->damageEffect(damage);
-									((spine::SkeletonAnimation *) wizard->sprite)->setAnimation(0, "hit", false);
+									
 									auto b = wizard->getBuffByType(BuffType::KINGS_COURT);
-									if (b != nullptr && b->turns == 2) {
-										((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "mystic", false, 0.8);
+									if (b == nullptr || b->turns < 2) {
+										((spine::SkeletonAnimation *) wizard->sprite)->setAnimation(0, "hit", false);
 									}
 									updateHealthBars();
 								}
