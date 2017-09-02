@@ -144,21 +144,21 @@ bool Game::init() {
 			354 * layout.ui_scale);
 		addChild(currentRound, 6);
 		
-		currentWaveHeading = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
+		currentWaveHeading = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALLER_SIZE);
 		currentWaveHeading->setString("WAVE");
 		currentWaveHeading->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentWaveHeading->setAnchorPoint(Vec2(0.5, 0.5));
 		currentWaveHeading->setPosition(
-			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 3,
-			366 * layout.ui_scale);
+			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 4,
+			360 * layout.ui_scale);
 		addChild(currentWaveHeading, 6);
 		
-		currentWave = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALL_SIZE);
+		currentWave = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALLER_SIZE);
 		currentWave->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentWave->setAnchorPoint(Vec2(0.5, 0.5));
 		currentWave->setPosition(
-			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 3,
-			354 * layout.ui_scale);
+			getBoundingBox().size.width - layout.ui_scale * right_col_sprite->getContentSize().width/2 + layout.ui_scale * 4,
+			348 * layout.ui_scale);
 		addChild(currentWave, 6);
 	}
 	{

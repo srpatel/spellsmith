@@ -19,6 +19,7 @@ namespace Fonts {
 	const int TITLE_SIZE = 32;
 	const int TEXT_SIZE = 18;
 	const int SMALL_SIZE = 12;
+	const int SMALLER_SIZE = 10;
 };
 
 namespace Colours {
