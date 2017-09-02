@@ -170,7 +170,7 @@
 			"neck": { "name": "characters/goblin/5_ice/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
 		},
 		"torso": {
-			"characters/goblin/5_ice/torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
+			"characters/goblin/torso": { "name": "characters/goblin/5_ice/torso",  "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
 		}
 	},
 	"icegoblin2": {
@@ -194,7 +194,7 @@
 			"neck": { "name": "characters/goblin/6_ice/neck", "x": 22.33, "y": 10.14, "rotation": -130.41, "width": 72, "height": 59 }
 		},
 		"torso": {
-			"characters/goblin/6_ice/torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
+			"characters/goblin/torso": { "name": "characters/goblin/6_ice/torso",  "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 148, "height": 201 }
 		}
 	}
 },
