@@ -40,23 +40,23 @@ void Character::addBuff(Buff *buff, bool apply) {
 	updateBuffs();
 }
 
-void Character::heal(int amt) {
+void Character::heal(int amt, Color3B c) {
 	Game *game = Game::get();
 	int max_amt = max_health - health;
 	amt = MIN(max_amt, amt);
 	health += amt;
 	ui_health += amt;
-	flash(Color3B(175, 255, 175));
+	flash(c);
 	if (game) {
 		game->updateHealthBars();
 		game->scenery->addTextWisp(this, std::string("+") + ToString(amt), Color3B::GREEN);
 	}
 }
 
-void Character::damageEffect(int amt) {
+void Character::damageEffect(int amt, Color3B c) {
 	Game *game = Game::get();
 	ui_health -= amt;
-	flash(Color3B(255, 175, 175));
+	flash(c);
 	if (game) {
 		game->scenery->addTextWisp(this, std::string("-") + ToString(amt), Color3B::RED);
 	}

@@ -34,10 +34,7 @@
     "monsters": [
       [
         "necromancer",
-        "goblin_sword"
-      ],
-      [
-        "necromancer",
+        "goblin_sword",
         "goblin_sword"
       ]
     ],
@@ -151,6 +148,15 @@
     "bg": "volcano2",
     "monsters": [
       [
+        "goblin_halberd",
+        "goblin_halberd",
+        "goblin_halberd"
+      ],
+      [
+        "fire_wizard",
+        "water_wizard"
+      ],
+      [
         "goblin_king"
       ]
     ],
@@ -166,6 +172,10 @@
         "necromancer",
         "necromancer",
         "goblin_sword"
+      ],
+      [
+        "necromancer",
+        "necromancer"
       ]
     ],
     "x": 178,
@@ -180,8 +190,12 @@
     "monsters": [
       [
         "fire_wizard",
+        "goblin_sword",
+        "fire_wizard"
+      ],
+      [
         "fire_wizard",
-        "fast_dog"
+        "fire_wizard"
       ]
     ],
     "x": 580,
@@ -196,9 +210,13 @@
     "bg": "tundra1",
     "monsters": [
       [
-        "goblin_sword",
+        "ice_goblin",
         "water_wizard",
-        "goblin_axe"
+        "goblin_sword"
+      ],
+      [
+        "water_wizard",
+        "water_wizard"
       ]
     ],
     "x": 119,
@@ -212,7 +230,11 @@
     "bg": "tundra1",
     "monsters": [
       [
-        "water_wizard",
+        "ice_goblin",
+        "ice_goblin"
+      ],
+      [
+        "ice_goblin",
         "water_wizard"
       ]
     ],
@@ -228,6 +250,15 @@
     "monsters": [
       [
         "water_wizard",
+        "ice_goblin",
+        "water_wizard"
+      ],
+      [
+        "ice_goblin",
+        "ice_goblin",
+        "ice_goblin"
+      ],
+      [
         "water_wizard",
         "water_wizard"
       ]

@@ -413,6 +413,35 @@ bool Game::onCastSpell(Chain *chain) {
 			makeProjectile(wizard, enemies[currentEnemy], (int) (damage * damageModifier), colour);
 		}
 		
+		// Are any enemies poisoned?
+		std::vector<Enemy *> poisoned;
+		for (Enemy *e : enemies) {
+			if (! e->dead()) {
+				auto p = e->getBuffByType(BuffType::POISON);
+				if (p != nullptr) {
+					// Poison for 2 dams!
+					e->health -= 2;
+					poisoned.push_back(e);
+				}
+			}
+		}
+		// Add pending to flash them green!
+		if (poisoned.size() > 0) {
+			runPendingAction([this, poisoned](){
+				auto delay = DelayTime::create(0.2f);
+				auto flash = CallFunc::create([=](){
+					for (Enemy *e : poisoned) {
+						e->damageEffect(2, Colours::POISON);
+						onDamageTarget(e, true);
+						updateHealthBars();
+					}
+					actionDone();
+				});
+				actionQueued();
+				scenery->runAction(Sequence::create(delay, flash, delay->clone(), nullptr));
+			});
+		}
+		
 		onWizardTurnOver();
 	} else {
 		PLAY_SOUND( kSoundEffect_Fizzle );
@@ -606,7 +635,11 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 					onhitfunc();
 				}
 				if (! phase) {
-					target->damageEffect(damage);
+					if (type == ptBasicDart) {
+						target->damageEffect(damage, Colours::POISON);
+					} else {
+						target->damageEffect(damage);
+					}
 					onDamageTarget(target, true);
 					updateHealthBars();
 				}

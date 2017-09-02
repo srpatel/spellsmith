@@ -9,6 +9,7 @@
 #ifndef Characters_hpp
 #define Characters_hpp
 
+#include "Constants.h"
 #include "Spell.hpp"
 #include "Monster.hpp"
 #include "Buff.hpp"
@@ -39,9 +40,9 @@ public:
 	inline bool ui_dead() { return ui_health <= 0; }
 	Layer *buffHolder;
 	void flash(Color3B c);
-	void heal(int amt);
+	void heal(int amt, Color3B c = Colours::HEAL);
 	float die();
-	void damageEffect(int damage);
+	void damageEffect(int damage, Color3B c = Colours::DAMAGE);
 	virtual std::map<std::string, Vec2> getOffsets() = 0;
 	virtual ~Character();
 };

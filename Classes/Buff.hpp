@@ -20,7 +20,8 @@ enum BuffType {
 	PHASING,
 	FOCUS, // UNUSED!
 	SPELL_FOCUS,
-	CHARGE_BOLT
+	CHARGE_BOLT,
+	POISON
 };
 
 struct Buff {
@@ -52,6 +53,7 @@ struct Buff {
 	static Buff *createFocus();
 	static Buff *createSpellFocus();
 	static Buff *createChargeBolt();
+	static Buff *createPoison();
 	
 	virtual ~Buff();
 };

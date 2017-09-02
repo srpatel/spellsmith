@@ -86,8 +86,8 @@
       "description": "Replace all green gems with crystal gems."
     },
     "poison_dart": {
-      "name": "Precise Dart",
-      "description": "Deal 5 damage. If the enemy is at full health deal 10 instead."
+      "name": "Poison Dart",
+      "description": "Poison an enemy for 2 damage a turn."
     },
     "induce_explosion": {
       "name": "Induce Explosion",

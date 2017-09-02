@@ -8,6 +8,7 @@
 
 #include "DoSpell.hpp"
 #include "Characters.hpp"
+#include "Constants.h"
 #include "SoundManager.hpp"
 
 #include "Projectiles.hpp"
@@ -28,6 +29,7 @@ public:
 #define WIZARD_BASH_ANIMATION(_n_) game->wizardBashAnimationByQueue(); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
 #define HEAL(_n_) game->wizard->heal(_n_);
+#define HEAL_COLOUR(_n_, _c_) game->wizard->heal(_n_, _c_);
 #define PROJ(_n_, _t_) projectile = true; \
 	game->makeProjectile(\
 	game->wizard, \
@@ -119,7 +121,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			PROJ( D(5), ptBasicPurple );
 		} else {
 			PROJ_ONHIT( D(5), ptBasicPurple, [game](){
-				HEAL(8);
+				HEAL_COLOUR(8, Colours::DRAIN);
 			} );
 		}
 	}
@@ -143,13 +145,16 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(poison_dart) { // TODO
-		// Deal 5 damage. Deal 10 instead if at full health.
-		int n = 5;
-		auto e = game->enemies[game->currentEnemy];
+		// Poison an enemy for 2 damage a turn.
+		/*int n = 5;
+		
 		if (e->health == e->max_health) {
 			n += 5;
-		}
-		PROJ( D(n), ptBasicDart );
+		}*/
+		auto e = game->enemies[game->currentEnemy];
+		PROJ_ONHIT( D(2), ptBasicDart, [=](){
+			e->addBuff( Buff::createPoison() );
+		} );
 	}
 	IF_SPELL(fertilise) { // TODO
 		// Replace all green gems with crystal

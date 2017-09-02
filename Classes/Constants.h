@@ -27,6 +27,11 @@ namespace Colours {
 	const Color3B GEM_BACKGROUND ( 46, 19, 19    );
 	const Color4B SEMIBLACK      (  0,  0,  0, 60);
 	const Color3B ORANGE         (232,165, 62    );
+	
+	const Color3B HEAL		     (175, 255, 175);
+	const Color3B DAMAGE         (232,165, 62    );
+	const Color3B POISON         (124,226, 225    );
+	const Color3B DRAIN			 (207, 114, 167);
 };
 
 

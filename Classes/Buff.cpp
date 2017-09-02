@@ -310,6 +310,23 @@ Buff *Buff::createPhasing(){
 	return buff;
 }
 
+Buff *Buff::createPoison(){
+	auto buff = new EmptyBuff;
+	buff->type = BuffType::POISON;
+	buff->positive = true;
+	
+	buff->icon = "";
+	
+	buff->sprite = nullptr;
+	
+	buff->turns = -1; // -1 = forever, n = lasts n more turns
+	buff->charges = -1; // -1 = infinite, n = n charges remaining
+	
+	buff->priority = 1;
+	
+	return buff;
+}
+
 Buff::~Buff() {
 	if (sprite)
 		sprite->release();
