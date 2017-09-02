@@ -37,7 +37,7 @@ bool Spellbook::init() {
 	addChild(spell_holder, 7);
 	
 	equipped_holder = Layer::create();
-	addChild(equipped_holder, 6);
+	addChild(equipped_holder, 7);
 	
 	auto grad = LayerColor::create();
 	grad->initWithColor(Color4B(95, 91, 85, 255));
@@ -123,6 +123,7 @@ void Spellbook::refreshEquips() {
 				auto sprite = spell->makeNode(true);
 				sprite->setPosition(x, y);
 				auto onSpellClick = EventListenerTouchOneByOne::create();
+				auto outerI = i;
 				onSpellClick->setSwallowTouches(true);
 				// trigger when you push down
 				onSpellClick->onTouchBegan = [this, spell](Touch* touch, Event* event) -> bool {
@@ -130,14 +131,67 @@ void Spellbook::refreshEquips() {
 					bounds.origin -= bounds.size/2;
 					// should be able to drag these also?
 					
-					if (bounds.containsPoint(touch->getLocation())){
-						PLAY_SOUND(kSoundEffect_UISelectMinor);
-						GameController::get()->showSpellInfoDialog(spell);
+					if (bounds.containsPoint(touch->getLocation())) {
+						// Start dragging this one!
+						moved = false;
 						return true;
 					}
 					
 					return false; // if you are consuming it
 				};
+				onSpellClick->onTouchMoved = [this, spell](Touch* touch, Event* event) -> bool {
+					event->getCurrentTarget()->setPosition(touch->getLocation());
+					moved = true;
+					return true; // if you are consuming it
+				};
+				onSpellClick->onTouchEnded = [this, spell, outerI](Touch* touch, Event* event) -> bool {
+					// TODO : If you've not moved far
+					if (! moved) {
+						PLAY_SOUND(kSoundEffect_UISelectMinor);
+						GameController::get()->showSpellInfoDialog(spell);
+					} else {
+						auto s = event->getCurrentTarget();
+						// either:
+						// - lock into a new place (if over slot)
+						// - unequip (if over grid)
+						// - whizz back to old location (else)
+						
+						// Check if over a slot:
+						layout_t layout = Game::get()->getLayout();
+						const float starty = layout.column_height - 110 * layout.ui_scale;
+						Size size{31, 44};
+						for (int i = 0; i < 6; i++) {
+							float originX = 18 * layout.ui_scale;
+							if (i >= 3)
+								originX = Game::get()->getBoundingBox().size.width - originX;
+							originX -= size.width/2;
+							
+							auto bounds = Rect(
+								Vec2(
+									originX,
+									starty - (i % 3) * 55 * layout.ui_scale - size.height/2),
+								size
+							);
+							if (bounds.containsPoint(touch->getLocation())) {
+								// Snap here!
+								SaveData::setEquippedSpellAt(i, spell->getRawName());
+								refreshEquips();
+								refreshSpells();
+								return true;
+							}
+						}
+						
+						// Check if over the grid:
+						// ???
+						
+						// Otherwise:
+						SaveData::setEquippedSpellAt(outerI, "");
+						refreshEquips();
+						refreshSpells();
+					}
+					return true;
+				};
+				
 				// We need to add this to a list and delete ourselves because the sprite's destructor is never called.
 				// It's the shared mininode instance.
 				_eventDispatcher->addEventListenerWithSceneGraphPriority(onSpellClick, sprite);

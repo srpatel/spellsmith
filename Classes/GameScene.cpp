@@ -490,7 +490,7 @@ void Game::makeLightning(Character *target, int amt) {
 		anim->runAction(Sequence::create(
 			DelayTime::create(0.3f),
 			CallFunc::create([=](){
-				target->ui_health -= amt;
+				target->damageEffect(amt);
 				onDamageTarget(target, false);
 				updateHealthBars();
 			}),

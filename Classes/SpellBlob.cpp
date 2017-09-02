@@ -110,9 +110,16 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 				layout_t layout = Game::get()->getLayout();
 				const auto size = getContentSize();
 				const float starty = layout.column_height - 110 * layout.ui_scale;
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 6; i++) {
+					float originX = 18 * layout.ui_scale;
+					if (i >= 3)
+						originX = Game::get()->getBoundingBox().size.width - originX;
+					originX -= size.width/2;
+					
 					auto bounds = Rect(
-						Vec2(18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
+						Vec2(
+							originX,
+							starty - (i % 3) * 55 * layout.ui_scale - size.height/2),
 						size
 					);
 					if (bounds.containsPoint(touch->getLocation())) {
@@ -120,20 +127,6 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 						mininode->setVisible(false);
 						if (onSelect) {
 							onSelect(i, this->spell);
-						}
-						doSnap = false;
-					}
-				}
-				for (int i = 0; i < 3; i++) {
-					auto bounds = Rect(
-									   Vec2(Game::get()->getBoundingBox().size.width - 18 * layout.ui_scale - size.width/2, starty - i * 55 * layout.ui_scale - size.height/2),
-									   size
-									   );
-					if (bounds.containsPoint(touch->getLocation())) {
-						mininode->setPosition(Vec2::ZERO);
-						mininode->setVisible(false);
-						if (onSelect) {
-							onSelect(3 + i, this->spell);
 						}
 						doSnap = false;
 					}
