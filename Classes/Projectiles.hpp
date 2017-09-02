@@ -80,7 +80,7 @@ protected:
 };
 
 // TODO: Resize everything to be 150x150, positioning as needed.
-PROJECTILE(BasicFire,   fireball,  /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 5), kSoundEffect_PHFire);
+PROJECTILE(BasicFire,   fireball,  /*shoot*/ 19, /*travel*/ 4, /*hit*/ 10, /*offset*/ Vec2( 0, 7), kSoundEffect_PHFire);
 PROJECTILE(BasicWind,   windball,  /*shoot*/ 13, /*travel*/ 4, /*hit*/  9, /*offset*/ Vec2(20, 0), kSoundEffect_PHAir);
 PROJECTILE(BasicEarth,  earthball, /*shoot*/ 28, /*travel*/ 1, /*hit*/ 23, /*offset*/ Vec2( 0, 0), kSoundEffect_PHEarth);
 PROJECTILE(BasicWater,  waterball, /*shoot*/ 13, /*travel*/ 3, /*hit*/ 10, /*offset*/ Vec2(20, 0), kSoundEffect_PHWater);

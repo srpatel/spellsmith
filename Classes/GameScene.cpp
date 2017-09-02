@@ -453,7 +453,7 @@ void Game::wizardBashAnimationByQueue() {
 	// floor.
 	// Awful naming.
 	runPendingAction([=]() {
-		scenery->wizardsprite->addAnimation(0, "spell_aura", false);
+		scenery->wizardsprite->setAnimation(0, "spell_aura", false);
 		actionQueued();
 		auto q = Sequence::create(
 			DelayTime::create(0.5667f),
@@ -551,7 +551,7 @@ void Game::onDamageTarget(Character *target, bool withDelay) {
 		}
 	} else if (skeleton) {
 		// Run the "hit" animation!
-		skeleton->addAnimation(0, "hit", false);
+		skeleton->setAnimation(0, "hit", false);
 	}
 }
 void Game::makeProjectile(Character *source, Character *target, int damage, ProjectileType type, std::function<void(void)> onhitfunc) {
@@ -597,14 +597,16 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 		// Wait for 0.56 seconds as that is when the staff is in the right place
 		// TODO : Events
 	
+		float staffTime = 14.0/30.0;
 		if (source == wizard) {
 			const char* projectile_type = "spell_projectile";
 			if (type == ptBasicAnvil || type == ptBasicEarth) {
 				projectile_type = "spell_aura";
 			}
-			spTrackEntry *e = scenery->wizardsprite->addAnimation(0,
+			spTrackEntry *e = scenery->wizardsprite->setAnimation(0,
 				projectile_type,
 				false);
+			//staffTime = e->endTime - 0.6;
 			// Spell aura also has a sound effect for the bash
 			/*if (!strcmp(projectile_type, "spell_aura")) {
 				auto delay = DelayTime::create(0.5667);
@@ -627,7 +629,8 @@ void Game::makeProjectile(Character *source, Character *target, int damage, Proj
 			});
 			scenery->runAction(Sequence::create(delay, run, nullptr));
 		}
-		auto delay = DelayTime::create(14.0/30.0);
+
+		auto delay = DelayTime::create(staffTime);
 		auto run = CallFunc::create([=](){
 			auto onHit = CallFunc::create([this, damage, target, onhitfunc, phase, type](){
 				SoundManager::get()->stopPTravel();
@@ -952,7 +955,11 @@ void Game::enemyDoTurn() {
 										PLAY_SOUND(kSoundEffect_Bite);
 									}
 									wizard->damageEffect(damage);
-									((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "hit", false);
+									((spine::SkeletonAnimation *) wizard->sprite)->setAnimation(0, "hit", false);
+									auto b = wizard->getBuffByType(BuffType::KINGS_COURT);
+									if (b != nullptr && b->turns == 2) {
+										((spine::SkeletonAnimation *) wizard->sprite)->addAnimation(0, "mystic", false, 0.8);
+									}
 									updateHealthBars();
 								}
 							});

@@ -25,7 +25,7 @@ public:
 #define D(_n_) (_n_ * damageModifier)
 #define D_BETWEEN(_lo_, _hi_) (AmountGenerator::between(_lo_, _hi_) * damageModifier)
 
-#define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->addAnimation(0, _n_, false); doAnimation = false;
+#define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->setAnimation(0, _n_, false); doAnimation = false;
 #define WIZARD_BASH_ANIMATION(_n_) game->wizardBashAnimationByQueue(); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
 #define HEAL(_n_) game->wizard->heal(_n_);
@@ -180,6 +180,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(channel) { // TODO
 		// cast the next spell three times
 		game->wizard->addBuff( Buff::createKingsCourt() );
+		SKELETON_ANIMATION( "mystic" );
 	}
 	IF_SPELL(phase) {
 		// immortal for one turn (sound effect in addBuff somehow)

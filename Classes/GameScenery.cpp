@@ -53,6 +53,13 @@ bool GameScenery::init(Size size, Sprite *background) {
 	wizardsprite->setPosition(50 * char_scale, 10 * char_scale);
 	wizardsprite->setScale(char_scale * 0.4f);
 	
+	spAnimationStateData *stateData = spAnimationStateData_create(wizardsprite->getSkeleton()->data);
+	//stateData->setDefaultMix(0.1);
+	stateData->defaultMix = 0.5; // 0.8;
+	wizardsprite->setAnimationStateData(stateData);
+//
+//spAnimationStateData_setMixByName(stateData, "walk", "jump", 0.2);
+	
 	addChild(wizardsprite, 75);
 	
 	Layer *message = Layer::create();

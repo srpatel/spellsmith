@@ -171,7 +171,7 @@ Buff *Buff::createSpellFocus(){
 	buff->type = BuffType::SPELL_FOCUS;
 	buff->positive = true;
 	
-	buff->icon = "buffs/focus.png";
+	buff->icon = "";
 	
 	buff->sprite = nullptr;
 	
@@ -201,11 +201,27 @@ Buff *Buff::createChargeBolt(){
 }
 
 Buff *Buff::createKingsCourt(){
+/*
+ParticleSystemQuad *_emitter = new ParticleSystemQuad();
+_emitter->initWithTotalParticles(200);
+addChild(_emitter, 10);
+_emitter->setTexture(TextureCache::sharedTextureCache()->addImage("particle.png"));
+*/
+//	class KingsCourtBuff : public Buff {
+//		void _apply(Character *c) override {
+//			// start particles
+//			spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) c->sprite;
+//			skeleton->setAnimation(0, "mystic", false);
+//		}
+//		void _remove(Character *c) override {
+//			// ???
+//		}
+//	};
 	auto buff = new EmptyBuff;
 	buff->type = BuffType::KINGS_COURT;
 	buff->positive = true;
 	
-	buff->icon = "buffs/kingscourt.png";
+	buff->icon = "";
 	
 	buff->sprite = nullptr;
 	
