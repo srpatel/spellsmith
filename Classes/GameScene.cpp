@@ -467,7 +467,7 @@ void Game::wizardBashAnimationByQueue() {
 }
 void Game::makeLightning(Character *target, int amt) {
 	float startx = target->sprite->getPosition().x;
-	float starty = target->sprite->getPosition().y + 75 * scenery->char_scale;
+	float starty = scenery->getContentSize().height - 70 * scenery->char_scale;
 	target->health -= amt;
 	runPendingAction([=]() {
 		Vec2 pos{startx, starty};

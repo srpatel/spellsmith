@@ -111,7 +111,12 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		} else {
 			charge->charges++;
 		}
-		PROJ( D(3 * charge->charges), ptBasicWater );
+		auto e = game->enemies[game->currentEnemy];
+		WIZARD_BASH_ANIMATION();
+		for (int i = 0; i < charge->charges; i++) {
+			if (e->dead()) break;
+			game->makeLightning(e, D(3));
+		}
 	}
 	IF_SPELL(drain_life) {
 		// Deal 5 damage. If this kills the enemy, gain 8 life.
