@@ -31,7 +31,7 @@ private:
 	Label *page_label;
 	int current_page;
 	int num_pages;
-	bool moved;
+	Vec2 startPos;
 };
 
 

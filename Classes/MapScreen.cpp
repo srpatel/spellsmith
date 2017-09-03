@@ -96,7 +96,6 @@ bool MapScreen::init() {
 	};
 	onclick->onTouchMoved = [this, mapPreferredMaxY, mapPreferredMinY, top, bot](Touch* touch, Event* event) -> bool {
 		auto dy = touch->getDelta().y;
-		currentRound = nullptr;
 		auto cy = map->getPositionY();
 		auto newY = cy + dy;
 		// if we're already above/below preferred, then minimise dy
@@ -129,7 +128,8 @@ bool MapScreen::init() {
 		return true; // if you are consuming it
 	};
 	onclick->onTouchEnded = [this, mapPreferredMaxY, mapPreferredMinY, top, bot](Touch* touch, Event* event) -> bool {
-		if (true) {
+		auto dx = touch->getLocation().distance(touch->getStartLocation());
+		if (dx < kMaxTapDistance) {
 			if (currentRound != nullptr) {
 				PLAY_SOUND( kSoundEffect_UISelect );
 				GameController::get()->showPreLevelDialog(currentRound);

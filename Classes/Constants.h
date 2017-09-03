@@ -9,6 +9,8 @@
 #ifndef Constants_h
 #define Constants_h
 
+#define kMaxTapDistance 5
+
 namespace Fonts {
 //Adobe Garamond Pro,
 	const std::string TITLE_FONT = "fonts/eb_garamond.ttf";//"fonts/im_fell_english_sc.ttf";

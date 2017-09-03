@@ -153,10 +153,9 @@ void Spellbook::refreshEquips() {
 					auto bounds = event->getCurrentTarget()->getBoundingBox();
 					bounds.origin -= bounds.size/2;
 					// should be able to drag these also?
-					
+					startPos = event->getCurrentTarget()->getPosition();
 					if (bounds.containsPoint(touch->getLocation())) {
 						// Start dragging this one!
-						moved = false;
 						return true;
 					}
 					
@@ -164,16 +163,17 @@ void Spellbook::refreshEquips() {
 				};
 				onSpellClick->onTouchMoved = [this, spell](Touch* touch, Event* event) -> bool {
 					event->getCurrentTarget()->setPosition(touch->getLocation());
-					moved = true;
 					return true; // if you are consuming it
 				};
 				onSpellClick->onTouchEnded = [this, spell, outerI](Touch* touch, Event* event) -> bool {
-					// TODO : If you've not moved far
-					if (! moved) {
+					// If you've not moved far
+					auto dx = touch->getLocation().distance(touch->getStartLocation());
+					if (dx < kMaxTapDistance) {
 						PLAY_SOUND(kSoundEffect_UISelectMinor);
 						GameController::get()->showSpellInfoDialog(spell);
+						// Jump back to start Loc:
+						event->getCurrentTarget()->setPosition(startPos);
 					} else {
-						auto s = event->getCurrentTarget();
 						// either:
 						// - lock into a new place (if over slot)
 						// - unequip (if over grid)
