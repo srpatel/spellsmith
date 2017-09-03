@@ -18,6 +18,10 @@
 
 void ArenaScreen::onSelect() {
 	button->setTouchEnabled(true);
+	if (SaveData::getArenaScore() <= 0) {
+		auto d = ArenaTutorialDialog::create();
+		GameController::get()->pushDialog(d);
+	}
 }
 
 bool ArenaScreen::init() {

@@ -742,6 +742,7 @@ void Game::attemptSetState(GameState nextstate) {
 			}
 			std::function<void()> func;
 			if (round->generated) {
+				// End of arena!
 				if (success) {
 					// pick a new spell if there are enough left
 					if (spellpool.size() >= 2) {
@@ -1070,6 +1071,7 @@ void Game::gotoNextEnemy() {
 	RoundDef *round = LevelManager::get()->generateRound(stage);
 	currentRound->setString(ToString(stage));
 	stage++;
+	SaveData::setArenaScore(stage);
 	showRound(round, 0);
 }
 void Game::showRound(RoundDef *round, int wave) {

@@ -40,6 +40,13 @@ public:
 	CREATE_FUNC_1(SpellInfoDialog, Spell *);
 };
 
+class ArenaTutorialDialog : public Dialog {
+public:
+	bool init();
+	
+	CREATE_FUNC(ArenaTutorialDialog);
+};
+
 class PreLevelDialog : public Dialog {
 public:
 	bool init(RoundDef *);

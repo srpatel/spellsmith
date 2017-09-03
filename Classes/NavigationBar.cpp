@@ -32,7 +32,7 @@ void NavigationBar::resetButtons() {
 	if (! spells.empty()) {
 		buttons.push_back({("ui.SPELLBOOK"), "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
-	if (SaveData::isLevelComplete("3")) {
+	if (SaveData::isLevelComplete("4")) {
 		buttons.push_back({("ui.ARENA"), "icons/map.png", kStateArena}); // Set state to arena
 	}
 	buttons.push_back({("ui.OPTIONS"), "ui/options.png", kStateOptions}); // Set state to options

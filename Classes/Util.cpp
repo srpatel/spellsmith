@@ -20,7 +20,7 @@ Layer *makeLargeTemporaryTextPopup(std::string text) {
 	label->setAlignment(TextHAlignment::CENTER);
 	size.height = label->getContentSize().height + yBuffer;
 	// position the label on the center of the screen
-	label->setPosition(size/2 + Size(0, 0));
+	label->setPosition(size/2);
 	
 	auto popup = Popup::create(size.width, size.height);
 	popup->setCascadeOpacityEnabled(true);

@@ -68,6 +68,34 @@ bool OptionsDialog::init() {
 	return true;
 }
 
+bool ArenaTutorialDialog::init() {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto yBuffer = 50;
+	auto size = Size(visibleSize.width - 80, 0);
+	
+	auto label = Label::createWithTTF(
+		"Welcome to the arena!\n\n"
+		"The arena is an infinite game mode where you face many different challengers. Get as far as you can before you get knocked out!",
+		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	label->setDimensions(size.width - 20, 0);
+	label->setColor(Color3B::BLACK);
+	label->setAlignment(TextHAlignment::CENTER);
+	size.height = label->getContentSize().height + yBuffer;
+	//label->setPosition(size/2);
+	this->addChild(label, 1);
+	
+	if ( !Dialog::init(true, false, size.width, size.height) ) {
+		return false;
+	}
+	
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	setContentSize(size);
+	
+	return true;
+}
+
 bool SpellInfoDialog::init(Spell *spell) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto size = Size(visibleSize.width - 80, 300);

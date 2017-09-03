@@ -35,6 +35,7 @@ int SaveData::getArenaScore() {
 }
 
 void SaveData::setArenaScore(int score) {
+	if (score <= getArenaScore()) return;
 	UserDefault::getInstance()->setIntegerForKey("inf-score", score);
 	UserDefault::getInstance()->flush();
 }
