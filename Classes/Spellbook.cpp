@@ -100,6 +100,29 @@ bool Spellbook::init() {
 	return true;
 }
 
+void Spellbook::gotoPageWithSpell(std::string name) {
+	int numberPerRow = 3;
+	float dy = 65;
+	float totalHeight = layout.column_height - layout.bar_top_height - NavigationBar::HEIGHT;
+	int numRows = (int) (totalHeight / dy);
+	
+	int numPerPage = numRows * numberPerRow;
+	
+	auto spells = SaveData::getSpells();
+	
+	int i = 0;
+	for (std::string s : spells) {
+		if (s == name) {
+			// this page!
+			current_page = i / numPerPage;
+			break;
+		}
+		i++;
+	}
+	
+	refreshSpells();
+}
+
 void Spellbook::refreshEquips() {
 	const float starty = layout.column_height - 110 * layout.ui_scale;
 	

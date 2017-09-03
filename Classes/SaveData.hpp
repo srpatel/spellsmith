@@ -24,7 +24,7 @@ struct SaveData {
 	
 	// get spell list!
 	static std::vector<std::string> getSpells();
-	static void                     addSpell(std::string name);
+	static bool                     addSpell(std::string name);
 	
 	// get equipped spells
 	static std::string getEquippedSpellAt(int i);

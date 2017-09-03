@@ -19,6 +19,7 @@ public:
 	virtual void onSelect();
 	void refreshSpells();
 	void refreshEquips();
+	void gotoPageWithSpell(std::string name);
 	CREATE_FUNC(Spellbook);
 	Sprite *mute_button;
 private:

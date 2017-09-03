@@ -100,7 +100,7 @@ std::vector<std::string> SaveData::getSpells() {
 #endif
 }
 
-void SaveData::addSpell(std::string name) {
+bool SaveData::addSpell(std::string name) {
 	auto spells = getSpells();
 	
 	// If the spell doesn't exist
@@ -115,7 +115,9 @@ void SaveData::addSpell(std::string name) {
 		}
 		UserDefault::getInstance()->setStringForKey("spell-inventory", list);
 		UserDefault::getInstance()->flush();
+		return true;
 	} else {
 		printf("Already know that spell.\n");
+		return false;
 	}
 }

@@ -12,6 +12,7 @@
 #include "Level.hpp"
 #include "SaveData.hpp"
 #include "Tutorial.hpp"
+#include "Spellbook.hpp"
 #include "Util.hpp"
 
 #include "Projectiles.hpp"
@@ -779,8 +780,15 @@ void Game::attemptSetState(GameState nextstate) {
 				if (success) {
 					// Save the rewards
 					// TODO : Refresh the spellbook
+					bool goneToPage = false;
 					for (std::string r : round->rewards) {
-						SaveData::addSpell(r);
+						bool didLearn = SaveData::addSpell(r);
+						if (didLearn && ! goneToPage) {
+							// Go to page with this spell
+							Spellbook *sb = (Spellbook *) GameController::get()->getScreen(kStateSpellbook);
+							sb->gotoPageWithSpell(r);
+							goneToPage = true;
+						}
 					}
 					
 					// Save the number of moves the level was completed in
