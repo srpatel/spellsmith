@@ -21,7 +21,7 @@
         }
       ]
     },
-    "health": 50,
+    "health": 30,
     "attack_frequency": 4,
     "attacks": [
       {
@@ -52,7 +52,7 @@
         }
       ]
     },
-    "health": 50,
+    "health": 30,
     "attack_frequency": 4,
     "attacks": [
       {
@@ -85,7 +85,7 @@
         }
       ]
     },
-    "health": 50,
+    "health": 30,
     "attack_frequency": 2,
     "attacks": [
       {
@@ -143,8 +143,8 @@
         "brown"
       ]
     },
-    "health": 30,
-    "attack_frequency": 1,
+    "health": 20,
+    "attack_frequency": 2,
     "attacks": [
       {
         "ratio": 1,
@@ -169,7 +169,7 @@
       ]
     },
     "health": 20,
-    "attack_frequency": 0,
+    "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
@@ -202,16 +202,16 @@
     "attack_frequency": 2,
     "attacks": [
       {
-        "ratio": 1,
+        "ratio": 3,
         "type": "heal_other",
         "animation": "heal",
         "amount": 5
       },
       {
-        "ratio": 0,
+        "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 2
+        "amount": 4
       }
     ]
   },
@@ -243,10 +243,10 @@
         "amount": 5
       },
       {
-        "ratio": 0,
+        "ratio": 2,
         "type": "melee",
         "animation": "melee",
-        "amount": 2
+        "amount": 4
       }
     ]
   },
@@ -269,17 +269,17 @@
         "red"
       ]
     },
-    "health": 30,
-    "attack_frequency": 1,
+    "health": 35,
+    "attack_frequency": 2,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 3
+        "amount": 4
       },
       {
-        "ratio": 3,
+        "ratio": 4,
         "type": "projectile_fire",
         "animation": "cast",
         "amount": 6
@@ -305,17 +305,17 @@
         "blue"
       ]
     },
-    "health": 30,
+    "health": 35,
     "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 3
+        "amount": 4
       },
       {
-        "ratio": 3,
+        "ratio": 4,
         "type": "projectile_water",
         "animation": "cast",
         "amount": 6
