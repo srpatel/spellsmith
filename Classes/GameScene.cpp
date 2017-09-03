@@ -39,6 +39,11 @@ void Game::onSelect() {
 		post_level_dialog->autorelease();
 		post_level_dialog = nullptr;
 	}
+	if (game_over_dialog != nullptr) {
+		game_over_dialog->removeFromParent();
+		game_over_dialog->autorelease();
+		game_over_dialog = nullptr;
+	}
 	setMapButtonVisible(true);
 }
 
@@ -59,7 +64,7 @@ void Game::onDeselect() {
 bool Game::init() {
     if ( !ColumnScreen::init([this]() {
 		// show map confirm if we don't have a post level dialog
-		return post_level_dialog == nullptr;
+		return post_level_dialog == nullptr && game_over_dialog == nullptr;
 	}) ) {
         return false;
     }
@@ -148,7 +153,7 @@ bool Game::init() {
 		addChild(currentRound, 6);
 		
 		currentWaveHeading = Label::createWithTTF(ToString(0), Fonts::NUMBER_FONT, Fonts::SMALLER_SIZE);
-		currentWaveHeading->setString("WAVE");
+		currentWaveHeading->setString _("level.WAVE");
 		currentWaveHeading->setHorizontalAlignment(TextHAlignment::CENTER);
 		currentWaveHeading->setAnchorPoint(Vec2(0.5, 0.5));
 		currentWaveHeading->setPosition(
@@ -757,11 +762,14 @@ void Game::attemptSetState(GameState nextstate) {
 					// You are dead!
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
+						if (game_over_dialog != nullptr)
+							game_over_dialog->removeFromParent();
 						// Dialog takes all focus!
-						auto levelEnd = GameOverPopup::create();
+						game_over_dialog = GameOverPopup::create(false);
+						game_over_dialog->retain();
 						// put it in the middle of the grid
-						levelEnd->setPosition(grid->getPosition());
-						addChild(levelEnd);
+						game_over_dialog->setPosition(grid->getPosition());
+						addChild(game_over_dialog);
 					});
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
@@ -797,10 +805,14 @@ void Game::attemptSetState(GameState nextstate) {
 					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
-						auto levelEnd = GameOverPopup::create();
+						if (game_over_dialog != nullptr)
+							game_over_dialog->removeFromParent();
+						// Dialog takes all focus!
+						game_over_dialog = GameOverPopup::create(true);
+						game_over_dialog->retain();
 						// put it in the middle of the grid
-						levelEnd->setPosition(grid->getPosition());
-						addChild(levelEnd);
+						game_over_dialog->setPosition(grid->getPosition());
+						addChild(game_over_dialog);
 					});
 					
 					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
@@ -1069,13 +1081,23 @@ void Game::showRound(RoundDef *round, int wave) {
 	int numWaves = round->waves.size();
 	currentWaveHeading->setVisible( ! round->generated && numWaves > 1 );
 	currentWave->setVisible( ! round->generated && numWaves > 1 );
-	currentWave->setString(ToString(wave + 1) + " of " + ToString(numWaves));
+	auto waveXofY = Strings::get()->translate("level.WAVE_NUM",
+		{
+			ToString(wave + 1),
+			ToString(numWaves)
+		});
+	currentWave->setString(waveXofY);
 	
 	if (numWaves > 1) {
 		// Show the "wave x of y" popup
 		auto sceneCentre = scenery->getPosition();
 		auto sceneSize = scenery->getContentSize();
-		Layer *textPopup = makeLargeTemporaryTextPopup("Wave " + ToString(wave + 1) + " of " + ToString(numWaves));
+		auto waveHeading = Strings::get()->translate("level.WAVE_HEADING",
+		{
+			ToString(wave + 1),
+			ToString(numWaves)
+		});
+		Layer *textPopup = makeLargeTemporaryTextPopup(waveHeading);
 		auto position = sceneCentre + sceneSize/2 - textPopup->getContentSize()/2;
 		textPopup->setPosition(position);
 		addChild(textPopup);
@@ -1198,6 +1220,9 @@ void Game::setup() {
 	grid->scramble();
 	
 	updateHealthBars();
+}
+void Game::restartRound() {
+	startRound(round);
 }
 void Game::startRound(RoundDef *rounddef) {
 	setup();

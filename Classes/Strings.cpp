@@ -43,12 +43,37 @@ void Strings::loadObject(std::string key, const rapidjson::Value& value) {
 	}
 }
 
-std::string Strings::translate(std::string key) {
+std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) {
+    size_t start_pos = 0;
+    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+    }
+    return str;
+}
+
+std::string Strings::translate(std::string key, std::initializer_list<std::string> replacements) {
 	auto t = table.find(key);
 	if (t == table.end()) {
 		printf("Translation missing: %s\n", key.c_str());
 		return key;
 	} else {
-		return t->second;
+		if (replacements.size() > 0) {
+			std::string copy {t->second};
+			int i = 1;
+			for (auto to : replacements) {
+				std::string from = std::string("{") + ToString(i) + "}";
+				size_t start_pos = 0;
+				while((start_pos = copy.find(from, start_pos)) != std::string::npos) {
+					copy.replace(start_pos, from.length(), to);
+					start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+				}
+				i++;
+			}
+			return copy;
+		} else {
+			// Don't bother returning a copy
+			return t->second;
+		}
 	}
 }

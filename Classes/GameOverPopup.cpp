@@ -11,39 +11,76 @@
 #include "Constants.h"
 #include "Popup.hpp"
 #include "GameScene.hpp"
+#include "Strings.hpp"
 
 #include "ui/CocosGUI.h"
 
-bool GameOverPopup::init() {
+bool GameOverPopup::init(bool isMain) {
 	if ( !Layer::init() ) {
 		return false;
 	}
 	
-	auto size = Size(200, 150);
+	// "Pick a spell" title
+	auto label = Label::createWithTTF( _("level_end.GAME_OVER"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	label->setColor(Color3B::WHITE);
+	addChild(label, 1);
+	
+	// You can't retry arena
+	ui::Button *button1 = nullptr;
+	if (isMain) {
+		// Retry button
+		button1 = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+		button1->setTitleFontName(Fonts::TEXT_FONT);
+		button1->setTitleFontSize(Fonts::TEXT_SIZE);
+		button1->setTitleText _("ui.RETRY_LEVEL");
+		button1->addTouchEventListener([this, button1](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				// For now, from scratch always!
+				button1->setTouchEnabled(false);
+				GameController::get()->setState(kStateGame);
+				Game::get()->restartRound();
+			}
+		});
+		addChild(button1, 1);
+	}
+	
+	// "return to menu" button
+	auto button2 = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button2->setTitleFontName(Fonts::TEXT_FONT);
+	button2->setTitleFontSize(Fonts::TEXT_SIZE);
+	button2->setTitleText _("ui.RETURN_TO_MAP");
+	button2->addTouchEventListener([this, button2](Ref* pSender, ui::Widget::TouchEventType type) {
+		if (type == ui::Widget::TouchEventType::ENDED) {
+			// For now, from scratch always!
+			button2->setTouchEnabled(false);
+			GameController::get()->setState(kStateMap);
+		}
+	});
+	addChild(button2, 1);
+	
+	
+	Size size {
+		200,
+		10 +
+		label->getContentSize().height +
+		5 +
+		(button1 == nullptr ?
+			0 :
+			(button1->getContentSize().height + 10)) +
+		button2->getContentSize().height +
+		15
+	};
+	
 	auto popup = Popup::create(size.width, size.height);
 	popup->setPosition(size/-2);
 	this->addChild(popup);
 	setContentSize(size);
 	
-	// "Pick a spell" title
-	auto label = Label::createWithTTF( "game over", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
-	label->setColor(Color3B::WHITE);
-	label->setPosition(Vec2(0, 50));
-	addChild(label, 1);
-	
-	// "return to menu" button
-	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText("Back to map");
-	button->setPosition(Vec2(0, -50));
-	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
-		if (type == ui::Widget::TouchEventType::ENDED) {
-			// For now, from scratch always!
-			removeFromParent();
-			GameController::get()->setState(kStateMap);
-		}
-	});
-	addChild(button);
+	label->setPosition({0, size.height/2 - 10 - label->getContentSize().height / 2});
+	if (button1 != nullptr) {
+		button1->setPosition({0, label->getPosition().y - label->getContentSize().height / 2 - 5 - button1->getContentSize().height/2});
+	}
+	button2->setPosition({0, -size.height/2 + 15 + button2->getContentSize().height/2});
 
 	return true;
 }

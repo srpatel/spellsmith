@@ -10,6 +10,7 @@
 #include "SpellPicker.hpp"
 #include "GameController.hpp"
 #include "Constants.h"
+#include "Strings.hpp"
 #include "Popup.hpp"
 #include "GameScene.hpp"
 #include "SoundManager.hpp"
@@ -28,12 +29,12 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	setContentSize(size);
 	
 	// "Pick a spell" title
-	auto label = Label::createWithTTF( "Choose a Spell", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	auto label = Label::createWithTTF( _("level.CHOOSE_SPELL"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
 	label->setColor(Color3B::WHITE);
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);
 	
-	auto label2 = Label::createWithTTF( "Tap for info. Drag to a slot to learn.", Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
+	auto label2 = Label::createWithTTF( _("level.CHOOSE_DESC"), Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
 	label2->setColor(Color3B::WHITE);
 	label2->setPosition(Vec2(0, -50));
 	addChild(label2, 1);
@@ -78,7 +79,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	setContentSize(size);
 	
 	// "Pick a spell" title
-	auto label = Label::createWithTTF( "You have learnt:", Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	auto label = Label::createWithTTF( _("level.YOU_HAVE_LEARNT"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
 	label->setColor(Color3B::WHITE);
 	label->setPosition(Vec2(0, 80));
 	addChild(label, 1);
@@ -98,7 +99,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	// Add button -> spellbook
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
-	button->setTitleText("Spellbook");
+	button->setTitleText _("ui.SPELLBOOK");
 	button->setPosition(Vec2(0, -70));
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {

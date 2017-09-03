@@ -35,6 +35,7 @@ public:
 	// Restart the current game!
 	void startArena();
 	void startRound(RoundDef *round);
+	void restartRound();
 	
 	Wizard *getWizard();
 	void updateInventory();
@@ -84,15 +85,16 @@ private:
 	Label *currentWave;
 	Node *level_counter;
 	Node *post_level_dialog;
+	Node *game_over_dialog;
 	Layer *inventoryHolder;
 	std::vector<EventListener *> inventoryListeners;
 	bool checkGameOver();
 	void enemyDoTurn();
 	GameState state;
 	void attemptSetState(GameState);
-	RoundDef *round;
 	int wave;
 	int numMoves = 0;
+	RoundDef *round;
 	
 	// Helper
 	void onDamageTarget(Character *target, bool withDelay); // Called to show the target taking damage (recoil/death animation, flash red)

@@ -11,8 +11,8 @@
 
 class GameOverPopup : public Layer {
 public:
-	bool init();
-	CREATE_FUNC(GameOverPopup);
+	bool init(bool isMain);
+	CREATE_FUNC_1(GameOverPopup, bool);
 private:
 };
 

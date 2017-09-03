@@ -194,7 +194,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	float width = visibleSize.width - 50;
 	
-	auto roundName = _(std::string("level.")+round->name);
+	auto roundName = _(std::string("level_name.")+round->name);
 	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
 	label->setColor(Color3B::BLACK);
 	

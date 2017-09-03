@@ -30,7 +30,7 @@ bool ArenaScreen::init() {
 	
 	auto label = Label::createWithTTF(
 		"Here you can:\n"
-		"- See YOUR previous runs (score, 32 - killed by goblin)\n"
+		"- See YOUR previous runs (e.g. score, 32 - killed by goblin)\n"
 		"- See wordwide top scores\n"
 		"- Continue your current run or start a new one",
 		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);

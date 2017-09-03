@@ -126,46 +126,45 @@ void GameController::showButton(bool show) {
 }
 
 void GameController::setState(State newstate) {
-	if (newstate == this->state)
-		return;
-	
 	// Do animations I guess
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	
 	auto prevLayer = stateScreens[this->state];
 	
 	auto layer = stateScreens[newstate];
-	this->state = newstate;
 	
 	layer->setPosition(origin.x, origin.y);
 	
-	// Show the fader!
-	fader->runAction(Sequence::create(
-		FadeIn::create(0.2f),
-		CallFunc::create([this, prevLayer, layer, newstate](){
-			root->removeChild(prevLayer);
-			root->addChild(layer, kDepthScene);
-		
-			// Navigation bar
-			bool showBar = newstate == kStateMap;
-			bar->stopAllActions();
-			bar->resetButtons();
-			bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
-		
-			// Back button
-			showButton(newstate == kStateSpellbook || newstate == kStateArena || newstate == kStateOptions);
-		
-			// tutorials
-			if (newstate == kStateMap) {
-				Tutorial::activate(11);
-			} else if (newstate == kStateSpellbook) {
-				if(! Tutorial::activate(7)) {
-					Tutorial::activate(201);
+	if (newstate != this->state) {
+		this->state = newstate;
+		// Show the fader!
+		fader->runAction(Sequence::create(
+			FadeIn::create(0.2f),
+			CallFunc::create([this, prevLayer, layer, newstate](){
+				root->removeChild(prevLayer);
+				root->addChild(layer, kDepthScene);
+			
+				// Navigation bar
+				bool showBar = newstate == kStateMap;
+				bar->stopAllActions();
+				bar->resetButtons();
+				bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
+			
+				// Back button
+				showButton(newstate == kStateSpellbook || newstate == kStateArena || newstate == kStateOptions);
+			
+				// tutorials
+				if (newstate == kStateMap) {
+					Tutorial::activate(11);
+				} else if (newstate == kStateSpellbook) {
+					if(! Tutorial::activate(7)) {
+						Tutorial::activate(201);
+					}
 				}
-			}
-		}),
-		FadeOut::create(0.2f),
-		nullptr));
+			}),
+			FadeOut::create(0.2f),
+			nullptr));
+	}
 	
 	// do refreshing
 	prevLayer->onDeselect();

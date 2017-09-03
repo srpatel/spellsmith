@@ -30,12 +30,12 @@ void NavigationBar::resetButtons() {
 	
 	auto spells = SaveData::getSpells();
 	if (! spells.empty()) {
-		buttons.push_back({"SPELLBOOK", "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
+		buttons.push_back({("ui.SPELLBOOK"), "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
 	if (SaveData::isLevelComplete("3")) {
-		buttons.push_back({"ARENA", "icons/map.png", kStateArena}); // Set state to arena
+		buttons.push_back({("ui.ARENA"), "icons/map.png", kStateArena}); // Set state to arena
 	}
-	buttons.push_back({"OPTIONS", "ui/options.png", kStateOptions}); // Set state to options
+	buttons.push_back({("ui.OPTIONS"), "ui/options.png", kStateOptions}); // Set state to options
 
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;
@@ -45,7 +45,7 @@ void NavigationBar::resetButtons() {
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(currentX, getContentSize().height/2.0f);
 		buttonHolder->addChild(n);
-		auto t = Label::createWithTTF(b.label, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		auto t = Label::createWithTTF(_(b.label), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 		t->setTextColor(Color4B::BLACK);
 		t->setPosition(currentX, 10);
 		buttonHolder->addChild(t);

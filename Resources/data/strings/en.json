@@ -144,7 +144,7 @@
   },
   "level_end": {
     "GAME_OVER": "Game Over!",
-    "CONGRATULATIONS": "Congratulations!",
+    "CONGRATULATIONS": "Well Done!",
     "win": {
       "0": "Your memory is returning...",
       "1": "Another spell comes to mind",
@@ -161,7 +161,7 @@
     }
   },
   "ui": {
-    "RETRY_LEVEL": "retry",
+    "RETRY_LEVEL": "Retry level",
     "BACK": "back",
     "ARENA": "Arena",
     "START_ARENA": "Start Arena",
@@ -170,9 +170,18 @@
     "TAP_TO_CLOSE": "[Tap to close]",
     "TAP_TO_CONTINUE": "[Tap to continue]",
     "OPTIONS": "Options",
-    "RETURN_TO_MAP": "Return to map"
+    "RETURN_TO_MAP": "Return to map",
+    "SPELLBOOK": "Spellbook"
   },
   "level": {
+    "WAVE": "WAVE",
+    "WAVE_NUM": "{1} of {2}",
+    "WAVE_HEADING": "Wave {1} of {2}",
+    "YOU_HAVE_LEARNT": "You have learnt:",
+    "CHOOSE_SPELL": "Choose a spell:",
+    "CHOOSE_DESC": "Tap for info. Drag to a slot to learn."
+  },
+  "level_name": {
     "1": "Blueleaf Forest",
     "2": "South Gate",
     "3": "Graveyard",
