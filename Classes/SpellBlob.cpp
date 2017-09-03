@@ -14,7 +14,7 @@
 
 bool SpellBlob::draggingAllowed = true;
 
-bool SpellBlob::init(Spell *spell, bool draggable,
+bool SpellBlob::init(Spell *spell, bool blackText, bool draggable,
 	std::function<void(int, Spell*)> onSelect,
 	std::function<bool(Spell*)> isBeingUsed) {
 	if ( !Layer::init() ) {
@@ -34,7 +34,7 @@ bool SpellBlob::init(Spell *spell, bool draggable,
 	setContentSize(bg->getContentSize());
 	
 	auto label = Label::createWithTTF( spell->getName(), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
-	label->setColor(Color3B::WHITE);
+	label->setColor(blackText ? Color3B::BLACK : Color3B::WHITE);
 	label->setPosition(Vec2(0, -getContentSize().height/2-8));
 	this->addChild(label, 1);
 	

@@ -284,7 +284,7 @@ void Spellbook::refreshSpells() {
 			return false;
 		};
 		
-		auto sb = SpellBlob::create(spell, true, onSelect, isBeingUsed);
+		auto sb = SpellBlob::create(spell, false, true, onSelect, isBeingUsed);
 		sb->setPosition(currentX, currentY);
 		blobs.push_back(sb);
 		spell_holder->addChild(sb);

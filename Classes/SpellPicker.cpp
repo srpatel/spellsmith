@@ -30,12 +30,12 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( _("level.CHOOSE_SPELL"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
-	label->setColor(Color3B::WHITE);
+	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);
 	
 	auto label2 = Label::createWithTTF( _("level.CHOOSE_DESC"), Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
-	label2->setColor(Color3B::WHITE);
+	label2->setColor(Color3B::BLACK);
 	label2->setPosition(Vec2(0, -50));
 	addChild(label2, 1);
 	
@@ -56,11 +56,11 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 		return false;
 	};
 	
-	auto sb1 = SpellBlob::create(s1, true, onPickSpell, isBeingUsed);
+	auto sb1 = SpellBlob::create(s1, true, true, onPickSpell, isBeingUsed);
 	sb1->setPosition(5-getContentSize().width/4, -5);
 	addChild(sb1, 2);
 	
-	auto sb2 = SpellBlob::create(s2, true, onPickSpell, isBeingUsed);
+	auto sb2 = SpellBlob::create(s2, true, true, onPickSpell, isBeingUsed);
 	sb2->setPosition(-5+getContentSize().width/4, -5);
 	addChild(sb2, 2);
 	
@@ -80,7 +80,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( _("level.YOU_HAVE_LEARNT"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
-	label->setColor(Color3B::WHITE);
+	label->setColor(Color3B::BLACK);
 	label->setPosition(Vec2(0, 80));
 	addChild(label, 1);
 	
@@ -90,7 +90,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	float startX = - (dx * (numRewards - 1)) / 2.0f;
 	for (std::string spellname : r->rewards) {
 		Spell *s = SpellManager::get()->getByName(spellname);
-		auto sb = SpellBlob::create(s, false, nullptr, nullptr);
+		auto sb = SpellBlob::create(s, true, false, nullptr, nullptr);
 		sb->setPosition(startX, +8);
 		startX += dx;
 		addChild(sb);

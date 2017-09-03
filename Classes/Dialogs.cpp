@@ -275,7 +275,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	for (std::string spellname : round->rewards) {
 		auto spell = SpellManager::get()->getByName(spellname);
 		if (spell) {
-			auto node = SpellBlob::create(spell, false, nullptr, nullptr);
+			auto node = SpellBlob::create(spell, true, false, nullptr, nullptr);
 			node->setPosition({
 				currentX,
 				button->getPosition().y + button->getContentSize().height/2 + 50

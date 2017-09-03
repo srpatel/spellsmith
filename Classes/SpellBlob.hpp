@@ -14,9 +14,9 @@
 class SpellBlob : public Layer {
 	friend class Tutorial;
 public:
-	bool init(Spell *, bool draggable, std::function<void(int, Spell*)> onSelect, std::function<bool(Spell*)> isBeingUsed);
+	bool init(Spell *, bool blackText, bool draggable, std::function<void(int, Spell*)> onSelect, std::function<bool(Spell*)> isBeingUsed);
 	void refresh();
-	CREATE_FUNC_4(SpellBlob, Spell *, bool, std::function<void(int, Spell*)>, std::function<bool(Spell*)>);
+	CREATE_FUNC_5(SpellBlob, Spell *, bool, bool, std::function<void(int, Spell*)>, std::function<bool(Spell*)>);
 private:
 	static bool draggingAllowed;
 	std::function<bool(Spell*)> isBeingUsed;
