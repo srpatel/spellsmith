@@ -1,4 +1,8 @@
-varying vec4 v_fragmentColor;	
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform float u_start_time;
