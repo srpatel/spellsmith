@@ -12,6 +12,7 @@
 #include "Strings.hpp"
 #include "Constants.h"
 #include "SpellBlob.hpp"
+#include "SaveData.hpp"
 #include "GameScene.hpp"
 #include "GameController.hpp"
 #include "SoundManager.hpp"
@@ -231,6 +232,14 @@ bool PreLevelDialog::init(RoundDef *round) {
 	desc->setColor(Color3B::BLACK);
 	desc->setAlignment(TextHAlignment::CENTER);
 	
+	int numMoves = SaveData::isLevelComplete(round->name);
+	Label *pb = nullptr;
+	if (numMoves > 0) {
+		auto pbtext = Strings::get()->translate("level.PREVIOUS_BEST", {ToString(numMoves)});
+		pb = Label::createWithTTF( pbtext, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		pb->setColor(Color3B::BLACK);
+	}
+	
 	// Add monsters
 	// ...
 	
@@ -252,7 +261,8 @@ bool PreLevelDialog::init(RoundDef *round) {
 		label->getContentSize().height +
 		5 +
 		desc->getContentSize().height +
-		80 +
+		80 + // rewards
+		(pb == nullptr ? 0 : (pb->getContentSize().height + 5)) +
 		button->getContentSize().height +
 		20
 	};
@@ -269,6 +279,9 @@ bool PreLevelDialog::init(RoundDef *round) {
 	label->setPosition(Vec2(0, size.height/2 - 10 - label->getContentSize().height/2));
 	desc->setPosition(Vec2(0, label->getPosition().y - 5 - label->getContentSize().height/2 - desc->getContentSize().height/2));
 	button->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height/2));
+	if (pb != nullptr) {
+		pb->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height + pb->getContentSize().height/2 + 12));
+	}
 	
 	// Add spell icons AS BLOBS
 	float currentX = -80 * ((float) round->rewards.size() - 1) / 2.0;
@@ -278,7 +291,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 			auto node = SpellBlob::create(spell, true, false, nullptr, nullptr);
 			node->setPosition({
 				currentX,
-				button->getPosition().y + button->getContentSize().height/2 + 50
+				desc->getPosition().y - desc->getContentSize().height/2 - 30
 			});
 			currentX += 80;
 			// TODO : on click, get info
@@ -289,6 +302,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	
 	this->addChild(label, 1);
 	this->addChild(desc, 1);
+	if (pb != nullptr) this->addChild(pb, 1);
 	this->addChild(button);
 	
 	
