@@ -22,13 +22,13 @@
       ]
     },
     "health": 30,
-    "attack_frequency": 4,
+    "attack_frequency": 3,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack_lunge",
-        "amount": 10
+        "amount": 5
       }
     ]
   },
@@ -53,13 +53,13 @@
       ]
     },
     "health": 30,
-    "attack_frequency": 4,
+    "attack_frequency": 3,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack_lunge",
-        "amount": 10
+        "amount": 5
       }
     ]
   },
@@ -92,7 +92,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack_slash",
-        "amount": 5
+        "amount": 3
       }
     ]
   },
@@ -119,13 +119,13 @@
       ]
     },
     "health": 30,
-    "attack_frequency": 3,
+    "attack_frequency": 2,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack_lunge",
-        "amount": 5
+        "amount": 2
       }
     ]
   },
@@ -150,7 +150,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 5
+        "amount": 3
       }
     ]
   },
@@ -175,7 +175,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 5
+        "amount": 3
       }
     ]
   },
@@ -205,13 +205,13 @@
         "ratio": 3,
         "type": "heal_other",
         "animation": "heal",
-        "amount": 5
+        "amount": 4
       },
       {
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 4
+        "amount": 3
       }
     ]
   },
@@ -240,7 +240,7 @@
         "ratio": 1,
         "type": "heal_other",
         "animation": "heal",
-        "amount": 5
+        "amount": 4
       },
       {
         "ratio": 2,
@@ -276,13 +276,13 @@
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 4
+        "amount": 2
       },
       {
         "ratio": 4,
         "type": "projectile_fire",
         "animation": "cast",
-        "amount": 6
+        "amount": 4
       }
     ]
   },
@@ -312,13 +312,13 @@
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 4
+        "amount": 2
       },
       {
         "ratio": 4,
         "type": "projectile_water",
         "animation": "cast",
-        "amount": 6
+        "amount": 4
       }
     ]
   },

@@ -11,7 +11,7 @@
     },
     "forest_breeze": {
       "name": "Forest Breeze",
-      "description": "Gain 5 health."
+      "description": "Heal for 5. Create 1 crystal gem."
     },
     "chill": {
       "name": "Freeze",
@@ -35,7 +35,7 @@
     },
     "smelt": {
       "name": "Smelt",
-      "description": "Deal 6 damage. Create 1 crystal gem."
+      "description": "Deal 5 damage. Create 1 crystal gem."
     },
     "heal": {
       "name": "Heal",
@@ -63,7 +63,7 @@
     },
     "focus": {
       "name": "Focus",
-      "description": "For the next 6 turns, spells deal 50% extra damage."
+      "description": "For the next 8 turns, spells deal 50% extra damage and heal for 50% more."
     },
     "fury": {
       "name": "Fury",
@@ -75,7 +75,7 @@
     },
     "fire_cleanse": {
       "name": "Fire Cleanse",
-      "description": "Destroy all fire gems and deal 3 damage for each."
+      "description": "Destroy all fire gems and deal 2 damage for each."
     },
     "fountain_of_youth": {
       "name": "Fountain of Youth",
@@ -111,7 +111,7 @@
     },
     "drain_life": {
       "name": "Drain Life",
-      "description": "Deal 5 damage. If this kills the enemy, gain 8 life."
+      "description": "Deal 7 damage. If this kills the enemy, gain 7 life."
     },
     "evaporate": {
       "name": "Evaporate",

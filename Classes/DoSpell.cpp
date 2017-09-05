@@ -28,8 +28,8 @@ public:
 #define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->setAnimation(0, _n_, false); doAnimation = false;
 #define WIZARD_BASH_ANIMATION(_n_) game->wizardBashAnimationByQueue(); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
-#define HEAL(_n_) game->wizard->heal(_n_);
-#define HEAL_COLOUR(_n_, _c_) game->wizard->heal(_n_, _c_);
+#define HEAL(_n_) game->wizard->heal(_n_ * healModifier);
+#define HEAL_COLOUR(_n_, _c_) game->wizard->heal(_n_ * healModifier, _c_);
 #define PROJ(_n_, _t_) projectile = true; \
 	game->makeProjectile(\
 	game->wizard, \
@@ -55,11 +55,13 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	// Modifiers
 	// Rage
 	float damageModifier = 1;
+	float healModifier = 1;
 	if (game->wizard->getBuffByType(BuffType::FURY)) {
 		damageModifier *= 2;
 	}
 	if (game->wizard->getBuffByType(BuffType::SPELL_FOCUS)) {
 		damageModifier *= 1.5;
+		healModifier *= 1.5;
 	}
 	// King's court is at the bottom
 	// because we want to queue pending actions after any pending actions here are added.
@@ -119,14 +121,16 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(drain_life) {
-		// Deal 5 damage. If this kills the enemy, gain 8 life.
+		// Deal 7 damage. If this kills the enemy, gain 7 life.
 		auto target = game->enemies[game->currentEnemy];
-		int amount = D(5);
+		int amount = D(7);
 		if (target->health > amount) {
-			PROJ( D(5), ptBasicPurple );
+			PROJ( amount, ptBasicPurple );
 		} else {
-			PROJ_ONHIT( D(5), ptBasicPurple, [game](){
-				HEAL_COLOUR(8, Colours::DRAIN);
+			// this is ok because enemy doesn't do a turn until we've finished
+			// this would be a problem if player character every got DoTs
+			PROJ_ONHIT( amount, ptBasicPurple, [=](){
+				HEAL_COLOUR(7, Colours::DRAIN);
 			} );
 		}
 	}
@@ -168,15 +172,15 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(fire_cleanse) { // TODO
 		// Destroy all red gems and deal 2 damage for each
 		int n = game->grid->destroyGemsOfType( GemType::FIRE, chain );
-		PROJ( D(n * 3), ptBasicFire );
+		PROJ( D(n * 2), ptBasicFire );
 	}
 	IF_SPELL(fountain_of_youth) { // TODO
-		// Destroy all blue gems and heal 1 for each
+		// Destroy all blue gems and heal 2 for each
 		int n = game->grid->destroyGemsOfType( GemType::WATER, chain );
 		HEAL( 2 * n );
 	}
 	IF_SPELL(focus) { // TODO
-		// deal extra damage with spells for 6 turns
+		// deal extra damage with spells for 8 turns
 		game->wizard->addBuff( Buff::createSpellFocus() );
 		
 		// OLD: deal extra damage with chains for 6 turns
@@ -223,12 +227,13 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(forest_breeze) {
-		// gain 5
+		// gain 5 and create 1 cystal
+		CRYSTAL(1);
 		SKELETON_ANIMATION("spell_heal");
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
-		auto addanim = CallFunc::create([game, staffOffset]() {
+		auto addanim = CallFunc::create([=]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 					game->actionDone();
 				}), false
@@ -245,7 +250,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
-		auto addanim = CallFunc::create([game, staffOffset]() {
+		auto addanim = CallFunc::create([=]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
 			}), false);
@@ -286,7 +291,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
-		PROJ_ONHIT( D(5), ptBasicFire, [game](){
+		PROJ_ONHIT( D(5), ptBasicFire, [=](){
 			HEAL(5);
 		} );
 	}
@@ -354,8 +359,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		CRYSTAL(1);
 	}
 	IF_SPELL(smelt) { // TODO
-		// deal 6 damage, create 1 crystal gem
-		PROJ( D(6), ptBasicAnvil );
+		// deal 5 damage, create 1 crystal gem
+		PROJ( D(5), ptBasicAnvil );
 		CRYSTAL(1);
 	}
 	IF_SPELL(ice_bolt) { // TODO
@@ -451,7 +456,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		RemoveSelf::create(),
 		nullptr)
 	);
-	game->addChild(glow);
+	game->addChild(glow, 8);
 
 	// King's Court
 	if (allowRepeats && hasKingsCourt) {

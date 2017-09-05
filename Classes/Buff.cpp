@@ -175,7 +175,7 @@ Buff *Buff::createSpellFocus(){
 	
 	buff->sprite = nullptr;
 	
-	buff->turns = 6; // -1 = forever, n = lasts n more turns
+	buff->turns = 8; // -1 = forever, n = lasts n more turns
 	buff->charges = -1; // -1 = infinite, n = n charges remaining
 	
 	buff->priority = 1;
