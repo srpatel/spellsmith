@@ -410,7 +410,7 @@ int Grid::destroyGemsOfType(GemType type, Chain *chain) {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			if (! ChainContainsCoords(chain, i, j)) {
-				if (get(i, j)->type == type) {
+				if (get(i, j) != nullptr && get(i, j)->type == type) {
 					number++;
 					removeChild(get(i, j)->sprite);
 					set(i, j, nullptr);
