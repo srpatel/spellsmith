@@ -29,6 +29,7 @@ public:
 	void showFlags(int flagType);
 	float char_scale;
 private:
+	void update(float dt);
 	void greyscaleMode(bool);
 	std::vector<Enemy *> *enemies;
 	Sprite *redring;
@@ -40,6 +41,7 @@ private:
 	Label *littleText;
 	Label *bigText;
 	Sprite *banner;
+	float greyness = 0;
 };
 
 #endif /* GameScenery_hpp */

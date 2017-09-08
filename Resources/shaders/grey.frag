@@ -5,13 +5,12 @@ precision mediump float;
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
-uniform float u_start_time;
+uniform float u_greyness;
 uniform int u_direction;
 
 void main()
 {
-	float delta = (CC_Time.y - u_start_time) / 2.0;
-	float ratio = delta;
+	float ratio = u_greyness;
 	if (ratio > 1.0) {
 		ratio = 1.0;
 	}

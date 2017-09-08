@@ -83,6 +83,8 @@ bool GameScenery::init(Size size, Sprite *background) {
 	bigText->setOpacity(0);
 	littleText->setOpacity(0);
 	
+	scheduleUpdate();
+	
 	return true;
 }
 
@@ -184,7 +186,9 @@ void GameScenery::greyscaleMode(bool grey) {
 	redring->setVisible(! grey);
 	GLProgram *shader = Shaders::greyscale();
 	GLProgramState *state = GLProgramState::create(shader);
-	state->setUniformFloat("u_start_time", _director->getTotalFrames() * _director->getAnimationInterval());
+	//state->setUniformFloat("u_start_time", _director->getTotalFrames() * _director->getAnimationInterval());
+	greyness = 0;
+	state->setUniformFloat("u_greyness", greyness);
 	state->setUniformInt("u_direction", grey ? 1 : -1);
 	background->setGLProgramState(state);
 	wizardsprite->setGLProgramState(state);
@@ -192,6 +196,17 @@ void GameScenery::greyscaleMode(bool grey) {
 		for (Enemy *e : *enemies) {
 			e->sprite->setGLProgramState(state);
 		}
+}
+
+void GameScenery::update(float dt) {
+	// Move greyness towards 1
+	if (greyness < 1) {
+		greyness += dt / 2;
+	}
+	auto state = background->getGLProgramState();
+	if (state != nullptr) {
+		state->setUniformFloat("u_greyness", greyness);
+	}
 }
 
 void GameScenery::addTextWisp(Character *enemy, std::string s, Color3B c) {
