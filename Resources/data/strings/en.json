@@ -177,7 +177,7 @@
     "WAVE": "WAVE",
     "WAVE_NUM": "{1} of {2}",
     "WAVE_HEADING": "Wave {1} of {2}",
-    "YOU_HAVE_LEARNT": "You have learnt:",
+    "YOU_HAVE_LEARNT": "New Spell",
     "CHOOSE_SPELL": "Choose a spell:",
     "CHOOSE_DESC": "Tap for info. Drag to a slot to learn.",
     "PREVIOUS_BEST": "Previous Best: {1} moves"

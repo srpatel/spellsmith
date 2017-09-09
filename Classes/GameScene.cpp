@@ -748,10 +748,15 @@ void Game::attemptSetState(GameState nextstate) {
 					if (spellpool.size() >= 2) {
 						grid->setActive(false);
 						// fade grid out
-						auto spellPicker = SpellPicker::create(spellpool[0], spellpool[1]);
+						if (post_level_dialog != nullptr) {
+							post_level_dialog->removeFromParent();
+							post_level_dialog->autorelease();
+						}
+						post_level_dialog = SpellPicker::create(spellpool[0], spellpool[1]);
 						// put it in the middle of the grid
-						spellPicker->setPosition(grid->getPosition());
-						addChild(spellPicker, 7);
+						post_level_dialog->setPosition(grid->getPosition());
+						addChild(post_level_dialog, 7);
+						post_level_dialog->retain();
 						// also remove another 2
 						spellpool.erase(spellpool.begin(), spellpool.begin() +  2);
 					} else {
@@ -1250,8 +1255,4 @@ void Game::startRound(RoundDef *rounddef) {
 	currentRound->setString(""); // What should go here?
 	
 	showRound(rounddef, 0);
-}
-
-void Game::update(float dt) {
-	// ???
 }

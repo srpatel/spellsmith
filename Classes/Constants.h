@@ -13,6 +13,7 @@
 
 namespace Fonts {
 //Adobe Garamond Pro,
+	const std::string INTERESTING_FONT = "fonts/im_fell_english_sc.ttf";
 	const std::string TITLE_FONT = "fonts/eb_garamond.ttf";//"fonts/im_fell_english_sc.ttf";
 	const std::string TEXT_FONT = "fonts/eb_garamond.ttf";
 	const std::string TEXT_FONT_ITALIC = "fonts/eb_garamond_italic.ttf";

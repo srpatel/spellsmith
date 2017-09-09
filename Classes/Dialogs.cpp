@@ -16,6 +16,7 @@
 #include "GameScene.hpp"
 #include "GameController.hpp"
 #include "SoundManager.hpp"
+#include "Banner.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -110,14 +111,17 @@ bool SpellInfoDialog::init(Spell *spell) {
 	this->addChild(popup);
 	setContentSize(size);
 	
-	auto label = Label::createWithTTF( spell->getName(), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
+	/*auto label = Label::createWithTTF( spell->getName(), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
+	label->setColor(Color3B::WHITE);
 	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
-	this->addChild(label, 1);
+	this->addChild(label, 1);*/
+	auto banner = Banner::create( spell->getName(), size.width + 40 );
+	banner->setPosition(Vec2(0, size.height/2 - banner->getContentSize().height / 4));
+	addChild(banner, 1);
 	
 	auto d = spell->getDescription();
 	ui::Text* text = ui::Text::create( spell->getDescription(), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-	text->setColor(Color3B::BLACK);
+	text->setColor(Color3B::WHITE);
 	text->setPosition(Vec2(0, 15));
 	text->ignoreContentAdaptWithSize(false);
 	text->setContentSize(Size(size.width - 20, size.height));
@@ -150,7 +154,7 @@ bool Dialog::init(bool closeable, bool captureTouch, float centralWidth, float c
 	addChild(background);
 	
 	if (closeable) {
-		auto ttc = Label::createWithTTF(_("ui.TAP_TO_CLOSE"), Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+		auto ttc = Label::createWithTTF(_("ui.TAP_TO_CLOSE"), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 		ttc->setDimensions(size.width - 20, 0);
 		ttc->setColor(Color3B::WHITE);
 		ttc->setAlignment(TextHAlignment::CENTER);
@@ -225,11 +229,11 @@ bool PreLevelDialog::init(RoundDef *round) {
 	
 	auto roundName = _(std::string("level_name.")+round->name);
 	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::BLACK);
+	label->setColor(Color3B::WHITE);
 	
 	auto desc = Label::createWithTTF(_(std::string("level_desc.")+round->name), Fonts::TEXT_FONT_ITALIC, Fonts::TEXT_SIZE);
 	desc->setDimensions(width - 30, 0);
-	desc->setColor(Color3B::BLACK);
+	desc->setColor(Color3B::WHITE);
 	desc->setAlignment(TextHAlignment::CENTER);
 	
 	int numMoves = SaveData::isLevelComplete(round->name);
@@ -237,7 +241,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	if (numMoves > 0) {
 		auto pbtext = Strings::get()->translate("level.PREVIOUS_BEST", {ToString(numMoves)});
 		pb = Label::createWithTTF( pbtext, Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-		pb->setColor(Color3B::BLACK);
+		pb->setColor(Color3B::WHITE);
 	}
 	
 	// Add monsters
@@ -255,6 +259,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 			GameController::get()->startRound(round);
 		}
 	});
+	button->setTitleColor(Color3B::WHITE);
 	
 	Size size{width,
 		10 +
@@ -288,7 +293,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	for (std::string spellname : round->rewards) {
 		auto spell = SpellManager::get()->getByName(spellname);
 		if (spell) {
-			auto node = SpellBlob::create(spell, true, false, nullptr, nullptr);
+			auto node = SpellBlob::create(spell, false, false, nullptr, nullptr);
 			node->setPosition({
 				currentX,
 				desc->getPosition().y - desc->getContentSize().height/2 - 30

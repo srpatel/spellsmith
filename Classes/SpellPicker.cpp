@@ -30,12 +30,12 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 	
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( _("level.CHOOSE_SPELL"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
-	label->setColor(Color3B::BLACK);
+	label->setColor(Color3B::WHITE);
 	label->setPosition(Vec2(0, 50));
 	addChild(label, 1);
 	
 	auto label2 = Label::createWithTTF( _("level.CHOOSE_DESC"), Fonts::TITLE_FONT, Fonts::SMALL_SIZE);
-	label2->setColor(Color3B::BLACK);
+	label2->setColor(Color3B::WHITE);
 	label2->setPosition(Vec2(0, -50));
 	addChild(label2, 1);
 	
@@ -56,12 +56,12 @@ bool SpellPicker::init(Spell *s1, Spell *s2) {
 		return false;
 	};
 	
-	auto sb1 = SpellBlob::create(s1, true, true, onPickSpell, isBeingUsed);
-	sb1->setPosition(5-getContentSize().width/4, -5);
+	auto sb1 = SpellBlob::create(s1, false, true, onPickSpell, isBeingUsed);
+	sb1->setPosition(5-getContentSize().width/4, 5);
 	addChild(sb1, 2);
 	
-	auto sb2 = SpellBlob::create(s2, true, true, onPickSpell, isBeingUsed);
-	sb2->setPosition(-5+getContentSize().width/4, -5);
+	auto sb2 = SpellBlob::create(s2, false, true, onPickSpell, isBeingUsed);
+	sb2->setPosition(-5+getContentSize().width/4, 5);
 	addChild(sb2, 2);
 	
 	return true;
@@ -72,35 +72,16 @@ bool PostLevelDialog::init(RoundDef *r) {
 		return false;
 	}
 	
-	auto size = Size(200, 200);
-	auto popup = Popup::create(size.width, size.height);
-	popup->setPosition(size/-2);
-	this->addChild(popup);
-	setContentSize(size);
-	
 	// "Pick a spell" title
 	auto label = Label::createWithTTF( _("level.YOU_HAVE_LEARNT"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
-	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(0, 80));
+	label->setColor(Color3B::WHITE);
 	addChild(label, 1);
-	
-	// Add spell blobs
-	int numRewards = r->rewards.size();
-	float dx = (getContentSize().width/2) - 10;
-	float startX = - (dx * (numRewards - 1)) / 2.0f;
-	for (std::string spellname : r->rewards) {
-		Spell *s = SpellManager::get()->getByName(spellname);
-		auto sb = SpellBlob::create(s, true, false, nullptr, nullptr);
-		sb->setPosition(startX, +8);
-		startX += dx;
-		addChild(sb);
-	}
 	
 	// Add button -> spellbook
 	auto button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
+	button->setTitleFontSize(Fonts::TEXT_SIZE);
 	button->setTitleText _("ui.SPELLBOOK");
-	button->setPosition(Vec2(0, -70));
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			// For now, from scratch always!
@@ -108,7 +89,37 @@ bool PostLevelDialog::init(RoundDef *r) {
 			GameController::get()->setState(kStateSpellbook);
 		}
 	});
-	addChild(button);
+	addChild(button, 1);
+
+	auto size = Size(
+		200,
+		10 +
+		label->getContentSize().height +
+		5 +
+		80 +
+		button->getContentSize().height +
+		15
+	);
+	label->setPosition({0, size.height/2 - (10 + label->getContentSize().height/2)});
+	button->setPosition({0, -size.height/2 + 15 + button->getContentSize().height/2});
+	
+	// Add spell blobs
+	int numRewards = r->rewards.size();
+	float dx = (getContentSize().width/2) - 10;
+	float startX = - (dx * (numRewards - 1)) / 2.0f;
+	for (std::string spellname : r->rewards) {
+		Spell *s = SpellManager::get()->getByName(spellname);
+		auto sb = SpellBlob::create(s, false, false, nullptr, nullptr);
+		sb->setPosition(startX, button->getPosition().y + button->getContentSize().height/2 + 50);
+		startX += dx;
+		addChild(sb, 1);
+	}
+	
+	auto popup = Popup::create(size.width, size.height);
+	popup->setPosition(size/-2);
+	this->addChild(popup);
+	
+	setContentSize(size);
 	
 	return true;
 }

@@ -42,7 +42,6 @@ public:
 	void spellPicked();
 	
     bool init();
-    void update(float dt);
 	
 	// Called by Spell when you cast something
 	bool onCastSpell(Chain *chain);

@@ -165,6 +165,8 @@
 		10DC04E41BF90A1B003BA69E /* EffectSprite in Resources */ = {isa = PBXBuildFile; fileRef = 10DC04E21BF90A1B003BA69E /* EffectSprite */; };
 		10DC05021BF90E80003BA69E /* pointlight.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10DC05011BF90E80003BA69E /* pointlight.frag */; };
 		10DC05031BF90E80003BA69E /* pointlight.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10DC05011BF90E80003BA69E /* pointlight.frag */; };
+		10E5030A1F63BF7D00B575FB /* Banner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E503081F63BF7D00B575FB /* Banner.cpp */; };
+		10E5030B1F63BF7D00B575FB /* Banner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E503081F63BF7D00B575FB /* Banner.cpp */; };
 		10FC736E1E2D79BB0096BF0E /* MapScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */; };
 		10FC736F1E2D79BB0096BF0E /* MapScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */; };
 		10FC73731E2EDBC30096BF0E /* NavigationBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */; };
@@ -410,6 +412,8 @@
 		10C4094E1CC28C5E00DED2A9 /* SpriteLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteLoader.cpp; sourceTree = "<group>"; };
 		10DC04E21BF90A1B003BA69E /* EffectSprite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectSprite; path = /Users/sunil/projects/Gems/Gems/Classes/EffectSprite; sourceTree = "<absolute>"; };
 		10DC05011BF90E80003BA69E /* pointlight.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.frag; sourceTree = "<group>"; };
+		10E503081F63BF7D00B575FB /* Banner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Banner.cpp; sourceTree = "<group>"; };
+		10E503091F63BF7D00B575FB /* Banner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Banner.hpp; sourceTree = "<group>"; };
 		10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapScreen.cpp; path = ../MapScreen.cpp; sourceTree = "<group>"; };
 		10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MapScreen.hpp; path = ../MapScreen.hpp; sourceTree = "<group>"; };
 		10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBar.cpp; sourceTree = "<group>"; };
@@ -599,6 +603,8 @@
 				106C3F171EFEAA9300CE7411 /* Map.hpp */,
 				1035F3D51F56A449006C1CB8 /* Util.cpp */,
 				1035F3D61F56A449006C1CB8 /* Util.hpp */,
+				10E503081F63BF7D00B575FB /* Banner.cpp */,
+				10E503091F63BF7D00B575FB /* Banner.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1082,6 +1088,7 @@
 				102441781BF3DD3700AEC8B4 /* Dialogs.cpp in Sources */,
 				1029934E1D62429000D1492E /* EventData.c in Sources */,
 				102993541D62429000D1492E /* IkConstraintData.c in Sources */,
+				10E5030A1F63BF7D00B575FB /* Banner.cpp in Sources */,
 				1035F3D31F5540E9006C1CB8 /* ArenaScreen.cpp in Sources */,
 				102993761D62429000D1492E /* spine-cocos2dx.cpp in Sources */,
 				102993401D62429000D1492E /* AttachmentLoader.c in Sources */,
@@ -1190,6 +1197,7 @@
 				102993471D62429000D1492E /* BoneData.c in Sources */,
 				102993531D62429000D1492E /* IkConstraint.c in Sources */,
 				10FC73741E2EDBC30096BF0E /* NavigationBar.cpp in Sources */,
+				10E5030B1F63BF7D00B575FB /* Banner.cpp in Sources */,
 				102993591D62429000D1492E /* MeshAttachment.c in Sources */,
 				1029933B1D62429000D1492E /* Atlas.c in Sources */,
 				106C3F191EFEAA9300CE7411 /* Map.cpp in Sources */,
