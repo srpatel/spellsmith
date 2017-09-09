@@ -118,7 +118,7 @@ bool SpellInfoDialog::init(Spell *spell) {
 	
 	Size size{width,
 		3 * banner->getContentSize().height / 4 +
-		30 +
+		25 +
 		gems->getContentSize().height +
 		30 +
 		text->getContentSize().height +

@@ -21,9 +21,9 @@ bool GameOverPopup::init(bool isMain) {
 	}
 	
 	// "Pick a spell" title
-	auto label = Label::createWithTTF( _("level_end.GAME_OVER"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
+	/*auto label = Label::createWithTTF( _("level_end.GAME_OVER"), Fonts::TITLE_FONT, Fonts::TEXT_SIZE);
 	label->setColor(Color3B::WHITE);
-	addChild(label, 1);
+	addChild(label, 1);*/
 	
 	// You can't retry arena
 	ui::Button *button1 = nullptr;
@@ -60,10 +60,10 @@ bool GameOverPopup::init(bool isMain) {
 	
 	
 	Size size {
-		200,
-		10 +
-		label->getContentSize().height +
-		5 +
+		button2->getContentSize().width + 30,
+		//10 +
+		//label->getContentSize().height +
+		15 +
 		(button1 == nullptr ?
 			0 :
 			(button1->getContentSize().height + 10)) +
@@ -76,9 +76,9 @@ bool GameOverPopup::init(bool isMain) {
 	this->addChild(popup);
 	setContentSize(size);
 	
-	label->setPosition({0, size.height/2 - 10 - label->getContentSize().height / 2});
+	//label->setPosition({0, size.height/2 - 10 - label->getContentSize().height / 2});
 	if (button1 != nullptr) {
-		button1->setPosition({0, label->getPosition().y - label->getContentSize().height / 2 - 5 - button1->getContentSize().height/2});
+		button1->setPosition({0, size.height/2 - 15 - button1->getContentSize().height/2});
 	}
 	button2->setPosition({0, -size.height/2 + 15 + button2->getContentSize().height/2});
 
