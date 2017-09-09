@@ -33,7 +33,7 @@ bool Banner::init(std::string text, float width) {
 	} else {
 		TTFConfig config{label->getTTFConfig()};
 		while (width < label->getContentSize().width + 35) {
-			config.fontSize *= 0.85;
+			config.fontSize -= 2;
 			label->setTTFConfig(config);
 		}
 	}
