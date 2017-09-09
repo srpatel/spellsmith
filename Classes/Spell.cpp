@@ -185,6 +185,10 @@ Layer *Spell::makeNode(bool mini) {
 		}
 	}
 	
+	if (! mini) {
+		layer->setContentSize({width * 40.0f, height * 50.0f});
+	}
+	
 	return layer;
 }
 

@@ -100,38 +100,43 @@ bool ArenaTutorialDialog::init() {
 
 bool SpellInfoDialog::init(Spell *spell) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto size = Size(visibleSize.width - 80, 300);
+	auto width = visibleSize.width - 80;
+	
+	auto banner = Banner::create( spell->getName(), width + 40 );
+	addChild(banner, 1);
+	
+	auto d = spell->getDescription();
+	Label* text = Label::createWithTTF( spell->getDescription(), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+	text->setColor(Color3B::WHITE);
+	text->setDimensions(width - 40, 0);
+	text->setAlignment(TextHAlignment::CENTER);
+	addChild(text, 1);
+	
+	// Draw gems in the middle of the dialog
+	auto gems = spell->makeNode(false);
+	addChild(gems, 1);
+	
+	Size size{width,
+		3 * banner->getContentSize().height / 4 +
+		30 +
+		gems->getContentSize().height +
+		30 +
+		text->getContentSize().height +
+		10
+	};
 	
 	if ( !Dialog::init(true, false, size.width, size.height) ) {
 		return false;
 	}
 	
+	banner->setPositionY(size.height/2 - banner->getContentSize().height / 4);
+	text->setPositionY(-size.height/2 + 10 + text->getContentSize().height/2);
+	gems->setPositionY(text->getPosition().y + text->getContentSize().height/2 + 30 + gems->getContentSize().height/2);
+	
 	auto popup = Popup::create(size.width, size.height);
 	popup->setPosition(size/-2);
 	this->addChild(popup);
 	setContentSize(size);
-	
-	/*auto label = Label::createWithTTF( spell->getName(), Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::WHITE);
-	label->setPosition(Vec2(0, size.height/2 - Fonts::TITLE_SIZE));
-	this->addChild(label, 1);*/
-	auto banner = Banner::create( spell->getName(), size.width + 40 );
-	banner->setPosition(Vec2(0, size.height/2 - banner->getContentSize().height / 4));
-	addChild(banner, 1);
-	
-	auto d = spell->getDescription();
-	ui::Text* text = ui::Text::create( spell->getDescription(), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-	text->setColor(Color3B::WHITE);
-	text->setPosition(Vec2(0, 15));
-	text->ignoreContentAdaptWithSize(false);
-	text->setContentSize(Size(size.width - 20, size.height));
-	text->setTextHorizontalAlignment(TextHAlignment::CENTER);
-	text->setTextVerticalAlignment(TextVAlignment::BOTTOM);
-	this->addChild(text, 1);
-	
-	// Draw gems in the middle of the dialog
-	auto gems = spell->makeNode(false);
-	addChild(gems);
 	
 	return true;
 }
@@ -228,8 +233,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 	float width = visibleSize.width - 50;
 	
 	auto roundName = _(std::string("level_name.")+round->name);
-	auto label = Label::createWithTTF( roundName, Fonts::TITLE_FONT, Fonts::TITLE_SIZE);
-	label->setColor(Color3B::WHITE);
+	auto banner = Banner::create( roundName, width + 25 );
 	
 	auto desc = Label::createWithTTF(_(std::string("level_desc.")+round->name), Fonts::TEXT_FONT_ITALIC, Fonts::TEXT_SIZE);
 	desc->setDimensions(width - 30, 0);
@@ -262,9 +266,8 @@ bool PreLevelDialog::init(RoundDef *round) {
 	button->setTitleColor(Color3B::WHITE);
 	
 	Size size{width,
-		10 +
-		label->getContentSize().height +
-		5 +
+		3 * banner->getContentSize().height / 4 +
+		8 +
 		desc->getContentSize().height +
 		80 + // rewards
 		(pb == nullptr ? 0 : (pb->getContentSize().height + 5)) +
@@ -281,8 +284,8 @@ bool PreLevelDialog::init(RoundDef *round) {
 	this->addChild(popup);
 	setContentSize(size);
 	
-	label->setPosition(Vec2(0, size.height/2 - 10 - label->getContentSize().height/2));
-	desc->setPosition(Vec2(0, label->getPosition().y - 5 - label->getContentSize().height/2 - desc->getContentSize().height/2));
+	banner->setPosition(Vec2(0, size.height/2 - banner->getContentSize().height / 4));
+	desc->setPosition(Vec2(0, banner->getPosition().y - 8 - banner->getContentSize().height/2 - desc->getContentSize().height/2));
 	button->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height/2));
 	if (pb != nullptr) {
 		pb->setPosition(Vec2(0, -size.height/2 + 20 + button->getContentSize().height + pb->getContentSize().height/2 + 12));
@@ -305,7 +308,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 		}
 	}
 	
-	this->addChild(label, 1);
+	this->addChild(banner, 1);
 	this->addChild(desc, 1);
 	if (pb != nullptr) this->addChild(pb, 1);
 	this->addChild(button);
