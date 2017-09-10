@@ -9,7 +9,11 @@
 #include "SaveData.hpp"
 #include "Level.hpp"
 
-#define kArenaStateVersion "1"
+#define kArenaStateVersion 5
+
+static std::string GetArenaKey(int version = kArenaStateVersion) {
+	return std::string{"arena-state"} + ToString(version);
+}
 
 void SaveData::clear() {
 	auto ud = UserDefault::getInstance();
@@ -21,6 +25,7 @@ void SaveData::clear() {
 	}
 	
 	ud->deleteValueForKey("inf-score");
+	ud->deleteValueForKey(GetArenaKey().c_str());
 	ud->deleteValueForKey("spell-inventory");
 	
 	for (RoundDef *rd : LevelManager::get()->getRoundDefinitions()) {
@@ -37,11 +42,15 @@ int SaveData::getArenaScore() {
 }
 
 void SaveData::setArenaState(std::string state) {
-	UserDefault::getInstance()->setStringForKey("arena-state" kArenaStateVersion, state);
+	UserDefault::getInstance()->setStringForKey(GetArenaKey().c_str(), state);
 }
 
 std::string SaveData::getArenaState() {
-	return UserDefault::getInstance()->getStringForKey("arena-state" kArenaStateVersion, "");
+	// Clear all old arena states
+	for (int i = 0; i < kArenaStateVersion; i++) {
+		UserDefault::getInstance()->deleteValueForKey(GetArenaKey(i).c_str());
+	}
+	return UserDefault::getInstance()->getStringForKey(GetArenaKey().c_str(), "");
 }
 
 void SaveData::setArenaScore(int score) {

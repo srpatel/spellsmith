@@ -1225,7 +1225,7 @@ void Game::saveArenaState() {
 			buff.AddMember("type", b->type, allocator);
 			buff.AddMember("turns", b->turns, allocator);
 			buff.AddMember("charges", b->charges, allocator);
-			buffs.PushBack(buffs, allocator);
+			buffs.PushBack(buff, allocator);
 		}
 		rapidjson::Value name;
 		name.SetString(e->monster->name.c_str(), e->monster->name.length(), allocator);
@@ -1254,11 +1254,11 @@ void Game::saveArenaState() {
 		buff.AddMember("type", b->type, allocator);
 		buff.AddMember("turns", b->turns, allocator);
 		buff.AddMember("charges", b->charges, allocator);
-		buffs.PushBack(buffs, allocator);
+		buffs.PushBack(buff, allocator);
 	}
 	theWizard.AddMember("health", wizard->health, allocator);
 	theWizard.AddMember("inventory", inventory, allocator);
-	//theWizard.AddMember("buffs", buffs, allocator);
+	theWizard.AddMember("buffs", buffs, allocator);
 	
 	// Spells
 	// remaining spells...
@@ -1297,12 +1297,46 @@ void Game::saveArenaState() {
 	printf("%s\n", state.c_str());
 	SaveData::setArenaState( state );
 }
+static void deserialiseBuffs(rapidjson::Value &buffs, Character *c) {
+	// [{...}, {...}, {...}]
+	// {"type": 0, "turns": 0, "charges": 0}
+	for (int i=0; i<buffs.Size(); i++) {
+		auto &b = buffs[i];
+		BuffType bt = static_cast<BuffType>(b["type"].GetInt());
+		Buff *buff = nullptr;
+		if (false);
+		else if (bt == BuffType::BARRIER)
+			buff = Buff::createMudshield();
+		else if (bt == BuffType::FREEZE)
+			buff = Buff::createFreeze(0);
+		else if (bt == BuffType::STUN)
+			buff = Buff::createStun();
+		else if (bt == BuffType::FURY)
+			buff = Buff::createFury();
+		else if (bt == BuffType::KINGS_COURT)
+			buff = Buff::createKingsCourt();
+		else if (bt == BuffType::PHASING)
+			buff = Buff::createPhasing();
+		else if (bt == BuffType::FOCUS)
+			buff = Buff::createFocus();
+		else if (bt == BuffType::SPELL_FOCUS)
+			buff = Buff::createSpellFocus();
+		else if (bt == BuffType::CHARGE_BOLT)
+			buff = Buff::createChargeBolt();
+		else if (bt == BuffType::POISON)
+			buff = Buff::createPoison();
+		buff->turns = b["turns"].GetInt();
+		buff->charges = b["charges"].GetInt();
+		c->addBuff(buff, true);
+	}
+}
 void Game::startArena(std::string state) {
 	setup();
 	
 	bool createNew = true;
 	
 	if (! state.empty()) {
+		printf("Loading: \n%s\n", state.c_str());
 		// Load from the state instead!
 		rapidjson::Document doc;
 		if (! doc.Parse(state.c_str()).HasParseError()) {
@@ -1322,6 +1356,7 @@ void Game::startArena(std::string state) {
 						wizard->inventory.push_back(spell);
 					}
 				}
+				deserialiseBuffs(theWizard["buffs"], wizard);
 				
 				spellpool.clear();
 				for (int i = 0; i < doc["spellpool"].Size(); i++) {
@@ -1360,12 +1395,17 @@ void Game::startArena(std::string state) {
 				stage++;
 				
 				if (! doc["game_over"].GetBool()) {
-					for (int i = 0; i < doc["enemies"].Size(); i++) {
+					for (int i = 0, j = 0; i < doc["enemies"].Size(); i++, j++) {
 						auto hp = doc["enemies"][i]["health"].GetInt();
-						auto e = enemies[i];
-						e->health = hp;
-						e->ui_health = hp;
-						e->attack_clock = doc["enemies"][i]["attack_clock"].GetInt();
+						if (hp > 0) {
+							auto e = enemies[j];
+							e->health = hp;
+							e->ui_health = hp;
+							e->attack_clock = doc["enemies"][i]["attack_clock"].GetInt();
+							deserialiseBuffs(doc["enemies"][i]["buffs"], e);
+						} else {
+							j--;
+						}
 					}
 				}
 				updateHealthBars();
