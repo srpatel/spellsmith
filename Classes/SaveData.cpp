@@ -9,6 +9,8 @@
 #include "SaveData.hpp"
 #include "Level.hpp"
 
+#define kArenaStateVersion "1"
+
 void SaveData::clear() {
 	auto ud = UserDefault::getInstance();
 	// TODO - finish...
@@ -35,11 +37,11 @@ int SaveData::getArenaScore() {
 }
 
 void SaveData::setArenaState(std::string state) {
-	UserDefault::getInstance()->setStringForKey("arena-state", state);
+	UserDefault::getInstance()->setStringForKey("arena-state" kArenaStateVersion, state);
 }
 
 std::string SaveData::getArenaState() {
-	return UserDefault::getInstance()->getStringForKey("arena-state", "");
+	return UserDefault::getInstance()->getStringForKey("arena-state" kArenaStateVersion, "");
 }
 
 void SaveData::setArenaScore(int score) {

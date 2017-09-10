@@ -912,17 +912,12 @@ void Game::enemyDoTurn() {
 				
 				Buff *stun = e->getBuffByType(BuffType::STUN);
 				
-				// TODO : Not 1 second - actual length of character attack
 				if (stun != nullptr) {
 					stun->charges--;
 					if (stun->charges == 0) {
 						// Remove the buff
 						e->removeBuff(stun);
 					}
-					// Get up instead of attacking
-					scenery->runAction(Sequence::create(DelayTime::create(1), CallFunc::create([this, e]() {
-						// Get up!
-					}), nullptr));
 				} else {
 					// Should the wizard ignore damage?
 					bool phase = wizard->getBuffByType(BuffType::PHASING) != nullptr;
@@ -964,6 +959,12 @@ void Game::enemyDoTurn() {
 						// - move up to the wizard
 						// - run the specified animation
 						// - move back
+						
+						// Deal damage immedes:
+						if (! phase) {
+							wizard->health -= a->amount;
+						}
+						
 						action = [this, e, a, phase]() {
 							actionQueued();
 							
@@ -985,9 +986,6 @@ void Game::enemyDoTurn() {
 							auto pendingActionDone = CallFunc::create([this](){
 								actionDone();
 							});
-							if (! phase) {
-								wizard->health -= damage;
-							}
 							auto dealDamage = CallFunc::create([this, e, damage, phase](){
 								if (! phase) {
 									if (e->type == Humanoid) {
@@ -1013,7 +1011,10 @@ void Game::enemyDoTurn() {
 						};
 					} else if (a->type == kAttackTypeHeal || a->type == kAttackTypeHealOther || a->type == kAttackTypeHealSelf) {
 						// Heal -- if there is another enemy to heal, then heal.
-						action = [this, e, a, healtargets]() {
+						// Immediately heal, ui later
+						Enemy *healme = healtargets[0];
+						healme->health += a->amount;
+						action = [this, e, a, healme]() {
 							if (e->is_skeleton) {
 								spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) e->sprite;
 									
@@ -1022,10 +1023,9 @@ void Game::enemyDoTurn() {
 							// Wait for the heal animation
 							scenery->runAction(Sequence::create(
 								DelayTime::create(0.6),
-								CallFunc::create([a, healtargets]() {
+								CallFunc::create([a, healme]() {
 									int healfor = a->amount;
-							
-									Enemy *healme = healtargets[0];
+									healme->health -= healfor;
 									healme->heal(healfor);
 								}),
 								nullptr
@@ -1034,6 +1034,7 @@ void Game::enemyDoTurn() {
 						// Otherwise, go for a melee attack instead.
 					} else {
 						// non-melee attacks are just basic projectile for now
+						wizard->health -= a->amount;
 						action = [this, e, a]() {
 							if (e->is_skeleton) {
 								spine::SkeletonAnimation *skeleton = (spine::SkeletonAnimation *) e->sprite;
@@ -1043,6 +1044,7 @@ void Game::enemyDoTurn() {
 							}
 							
 							int damage = a->amount;
+							wizard->health += damage;
 							if (a->type == kAttackTypeProjectileFire) {
 								makeProjectile(e, wizard, damage, ptBasicFire);
 							} else if (a->type == kAttackTypeProjectileWater) {
@@ -1061,6 +1063,7 @@ void Game::enemyDoTurn() {
 		}
 	}
 	hud->updateAttackClocks();
+	saveArenaState();
 	if (!enemyTurn) {
 		// it's now the player's turn
 		attemptSetState(kStatePlayerTurn);
@@ -1308,6 +1311,7 @@ void Game::startArena(std::string state) {
 				
 				auto &theWizard = doc["wizard"];
 				wizard->health = theWizard["health"].GetInt();
+				wizard->ui_health = wizard->health;
 				wizard->inventory.clear();
 				for (int i = 0; i < theWizard["inventory"].Size(); i++) {
 					auto spellname = theWizard["inventory"][i].GetString();
@@ -1365,6 +1369,7 @@ void Game::startArena(std::string state) {
 					}
 				}
 				updateHealthBars();
+				hud->updateAttackClocks();
 				
 				// If enemies are all dead, show the spell picker
 				attemptSetState(kStatePlayerTurn);

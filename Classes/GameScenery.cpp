@@ -247,7 +247,9 @@ void GameScenery::placeMonsters(std::vector<Enemy *> *e, float delay) {
 		(*enemies)[0]->sprite->setLocalZOrder(50);
 	}
 	redring->setScale(char_scale);
-	redring->setPosition((*enemies)[0]->sprite->getPosition());
+	if ((*enemies).size() > 0) {
+		redring->setPosition((*enemies)[0]->sprite->getPosition());
+	}
 	runAction(Sequence::create(DelayTime::create(delay), CallFunc::create([this](){
 		if (redring->getParent() == nullptr) {
 			setRedRingVisibility(true);
