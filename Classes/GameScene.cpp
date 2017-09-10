@@ -70,6 +70,7 @@ bool Game::init() {
     if ( !ColumnScreen::init([this]() {
 		// show map confirm if we don't have a post level dialog
 		if (round != nullptr && round->generated) {
+			saveArenaState();
 			// Never show dialog if in arena.
 			return false;
 		}
@@ -1084,11 +1085,10 @@ void Game::gotoNextEnemy() {
 	//wizard->health = wizard->max_health;
 	//updateHealthBars();
 	/*grid->scramble();*/
-	
+	stage++;
 	// we are in charge of free'ing round.
 	RoundDef *round = LevelManager::get()->generateRound(stage);
 	currentRound->setString(ToString(stage));
-	stage++;
 	SaveData::setArenaScore(stage);
 	showRound(round, 0);
 	
@@ -1392,7 +1392,6 @@ void Game::startArena(std::string state) {
 				r->waves.push_back(wave);
 				currentRound->setString(ToString(stage));
 				showRound(r, 0);
-				stage++;
 				
 				if (! doc["game_over"].GetBool()) {
 					for (int i = 0, j = 0; i < doc["enemies"].Size(); i++, j++) {
@@ -1420,7 +1419,7 @@ void Game::startArena(std::string state) {
 	}
 	
 	if (createNew) {
-		stage = 0;
+		stage = -1;
 		
 		wizard->inventory.clear();
 		for (int i = 0; i < 6; i++) {

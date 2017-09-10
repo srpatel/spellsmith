@@ -47,9 +47,9 @@ void SaveData::setArenaState(std::string state) {
 
 std::string SaveData::getArenaState() {
 	// Clear all old arena states
-	for (int i = 0; i < kArenaStateVersion; i++) {
+	/*for (int i = 0; i < kArenaStateVersion; i++) {
 		UserDefault::getInstance()->deleteValueForKey(GetArenaKey(i).c_str());
-	}
+	}*/
 	return UserDefault::getInstance()->getStringForKey(GetArenaKey().c_str(), "");
 }
 
