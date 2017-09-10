@@ -1216,20 +1216,20 @@ void Game::saveArenaState() {
 	for (Enemy *e : enemies) {
 		rapidjson::Value enemy{};
 		enemy.SetObject();
-		/*rapidjson::Value buffs(rapidjson::kArrayType);
+		rapidjson::Value buffs(rapidjson::kArrayType);
 		for (Buff* b : e->buffs) {
 			rapidjson::Value buff(rapidjson::kObjectType);
 			buff.AddMember("type", b->type, allocator);
 			buff.AddMember("turns", b->turns, allocator);
 			buff.AddMember("charges", b->charges, allocator);
 			buffs.PushBack(buffs, allocator);
-		}*/
+		}
 		rapidjson::Value name;
 		name.SetString(e->monster->name.c_str(), e->monster->name.length(), allocator);
 		enemy.AddMember("name", name, allocator);
-		/*enemy.AddMember("health", e->health, allocator);
+		enemy.AddMember("health", e->health, allocator);
 		enemy.AddMember("attack_clock", e->attack_clock, allocator);
-		enemy.AddMember("buffs", buffs, allocator);*/
+		enemy.AddMember("buffs", buffs, allocator);
 		theEnemies.PushBack(enemy, allocator);
 	}
 	
@@ -1245,14 +1245,14 @@ void Game::saveArenaState() {
 		}
 		inventory.PushBack(name, allocator);
 	}
-	/*rapidjson::Value buffs(rapidjson::kArrayType);
-		for (Buff* b : wizard->buffs) {
-			rapidjson::Value buff(rapidjson::kObjectType);
-			buff.AddMember("type", b->type, allocator);
-			buff.AddMember("turns", b->turns, allocator);
-			buff.AddMember("charges", b->charges, allocator);
-			buffs.PushBack(buffs, allocator);
-		}*/
+	rapidjson::Value buffs(rapidjson::kArrayType);
+	for (Buff* b : wizard->buffs) {
+		rapidjson::Value buff(rapidjson::kObjectType);
+		buff.AddMember("type", b->type, allocator);
+		buff.AddMember("turns", b->turns, allocator);
+		buff.AddMember("charges", b->charges, allocator);
+		buffs.PushBack(buffs, allocator);
+	}
 	theWizard.AddMember("health", wizard->health, allocator);
 	theWizard.AddMember("inventory", inventory, allocator);
 	//theWizard.AddMember("buffs", buffs, allocator);
@@ -1344,13 +1344,27 @@ void Game::startArena(std::string state) {
 				// If gameover, then don't add enemies!
 				if (! doc["game_over"].GetBool()) {
 					for (int i = 0; i < doc["enemies"].Size(); i++) {
-						wave.push_back(doc["enemies"][i]["name"].GetString());
+						auto hp = doc["enemies"][i]["health"].GetInt();
+						if (hp > 0) {
+							wave.push_back(doc["enemies"][i]["name"].GetString());
+						}
 					}
 				}
 				r->waves.push_back(wave);
 				currentRound->setString(ToString(stage));
 				showRound(r, 0);
 				stage++;
+				
+				if (! doc["game_over"].GetBool()) {
+					for (int i = 0; i < doc["enemies"].Size(); i++) {
+						auto hp = doc["enemies"][i]["health"].GetInt();
+						auto e = enemies[i];
+						e->health = hp;
+						e->ui_health = hp;
+						e->attack_clock = doc["enemies"][i]["attack_clock"].GetInt();
+					}
+				}
+				updateHealthBars();
 				
 				// If enemies are all dead, show the spell picker
 				attemptSetState(kStatePlayerTurn);
