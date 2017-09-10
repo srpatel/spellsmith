@@ -27,7 +27,7 @@
     },
     "volcanic": {
       "name": "Volcanic Eruption",
-      "description": "Deal 10 damage to EVERYONE."
+      "description": "Deal 8 damage to all enemies."
     },
     "crystalise": {
       "name": "Crystalise",
@@ -35,7 +35,7 @@
     },
     "smelt": {
       "name": "Smelt",
-      "description": "Deal 5 damage. Create 1 crystal gem."
+      "description": "Deal 6 damage. Create 1 crystal gem."
     },
     "heal": {
       "name": "Heal",
@@ -43,7 +43,7 @@
     },
     "purify": {
       "name": "Purify",
-      "description": "Create 1 crystal gem."
+      "description": "Create 1-3 crystal gems."
     },
     "zap": {
       "name": "Zap",
@@ -165,20 +165,22 @@
     "BACK": "back",
     "ARENA": "Arena",
     "START_ARENA": "Start Arena",
+    "CONTINUE_ARENA": "Continue Arena",
     "ADVENTURE": "Adventure",
     "PLAY": "PLAY",
     "TAP_TO_CLOSE": "[Tap to close]",
     "TAP_TO_CONTINUE": "[Tap to continue]",
     "OPTIONS": "Options",
     "RETURN_TO_MAP": "Return to map",
-    "SPELLBOOK": "Spellbook"
+    "SPELLBOOK": "Spellbook",
+    "ARE_YOU_SURE": "Are you sure you want to return to the map? You will lose your  progress on the current level!"
   },
   "level": {
     "WAVE": "WAVE",
     "WAVE_NUM": "{1} of {2}",
     "WAVE_HEADING": "Wave {1} of {2}",
     "YOU_HAVE_LEARNT": "New Spell",
-    "CHOOSE_SPELL": "Choose a spell:",
+    "CHOOSE_SPELL": "Choose a spell",
     "CHOOSE_DESC": "Tap for info. Drag to a slot to learn.",
     "PREVIOUS_BEST": "Previous Best: {1} moves"
   },

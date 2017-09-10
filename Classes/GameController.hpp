@@ -35,7 +35,7 @@ public:
 	
 	// Game states
 	void setState(State state);
-	void startArena();
+	void startArena(std::string state);
 	void startRound(RoundDef *);
 	
 	// (Model) Dialogs

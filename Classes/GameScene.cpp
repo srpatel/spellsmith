@@ -17,6 +17,10 @@
 
 #include "Projectiles.hpp"
 
+#include "json/rapidjson.h"
+#include "json/stringbuffer.h"
+#include "json/writer.h"
+
 #include <sstream>
 
 #define GRID_WIDTH 4
@@ -65,6 +69,10 @@ void Game::onDeselect() {
 bool Game::init() {
     if ( !ColumnScreen::init([this]() {
 		// show map confirm if we don't have a post level dialog
+		if (round != nullptr && round->generated) {
+			// Never show dialog if in arena.
+			return false;
+		}
 		return post_level_dialog == nullptr && game_over_dialog == nullptr;
 	}) ) {
         return false;
@@ -744,6 +752,8 @@ void Game::attemptSetState(GameState nextstate) {
 			if (round->generated) {
 				// End of arena!
 				if (success) {
+					// Save here that all enemies are dead!
+					saveArenaState();
 					// pick a new spell if there are enough left
 					if (spellpool.size() >= 2) {
 						grid->setActive(false);
@@ -1078,6 +1088,9 @@ void Game::gotoNextEnemy() {
 	stage++;
 	SaveData::setArenaScore(stage);
 	showRound(round, 0);
+	
+	// Save state when starting a round
+	saveArenaState();
 }
 void Game::showRound(RoundDef *round, int wave) {
 	printf("Starting round. %d current actions.\n", numCurrentActions);
@@ -1164,39 +1177,215 @@ void Game::showRound(RoundDef *round, int wave) {
 		Tutorial::activate(101);
 	}
 }
-void Game::startArena() {
-	// Load a completely fresh level!
-	stage = 0;
+void Game::saveArenaState() {
+	// Arena state consists of:
+	/*
+	{
+		"stage": 0,
+		"game_over": true,
+		"enemies":[
+			{"name":"goblin_sword"}
+		],
+		"wizard":{
+			"health":30,
+			"inventory":["","","","","",""]
+		},
+		"spellpool":[
+			"firewisp",
+			"ice_bolt",
+			...
+		],
+		"grid":[
+			[5,5,5,5,5],
+			[5,5,5,5,5],
+			[5,5,5,5,5],
+			[5,5,5,5,5],
+			[5,5,5,5,5]
+		]
+	}
+	*/
 	
-	setup();
+	// Save as JSON
+	rapidjson::Document doc;
+	doc.SetObject();
 	
-	wizard->inventory.clear();
-	for (int i = 0; i < 6; i++) {
-		wizard->inventory.push_back(nullptr);
+	auto& allocator = doc.GetAllocator();
+	
+	// Enemies
+	rapidjson::Value theEnemies(rapidjson::kArrayType);
+	for (Enemy *e : enemies) {
+		rapidjson::Value enemy{};
+		enemy.SetObject();
+		/*rapidjson::Value buffs(rapidjson::kArrayType);
+		for (Buff* b : e->buffs) {
+			rapidjson::Value buff(rapidjson::kObjectType);
+			buff.AddMember("type", b->type, allocator);
+			buff.AddMember("turns", b->turns, allocator);
+			buff.AddMember("charges", b->charges, allocator);
+			buffs.PushBack(buffs, allocator);
+		}*/
+		rapidjson::Value name;
+		name.SetString(e->monster->name.c_str(), e->monster->name.length(), allocator);
+		enemy.AddMember("name", name, allocator);
+		/*enemy.AddMember("health", e->health, allocator);
+		enemy.AddMember("attack_clock", e->attack_clock, allocator);
+		enemy.AddMember("buffs", buffs, allocator);*/
+		theEnemies.PushBack(enemy, allocator);
 	}
 	
-	// copy spells across
-	spellpool = SpellManager::get()->spells;
+	// Wizard
+	rapidjson::Value theWizard(rapidjson::kObjectType);
+	rapidjson::Value inventory(rapidjson::kArrayType);
+	for (Spell * s: wizard->inventory) {
+		rapidjson::Value name;
+		if (s == nullptr) {
+			name.SetString("");
+		} else {
+			name.SetString(s->getRawName().c_str(), s->getRawName().length(), allocator);
+		}
+		inventory.PushBack(name, allocator);
+	}
+	/*rapidjson::Value buffs(rapidjson::kArrayType);
+		for (Buff* b : wizard->buffs) {
+			rapidjson::Value buff(rapidjson::kObjectType);
+			buff.AddMember("type", b->type, allocator);
+			buff.AddMember("turns", b->turns, allocator);
+			buff.AddMember("charges", b->charges, allocator);
+			buffs.PushBack(buffs, allocator);
+		}*/
+	theWizard.AddMember("health", wizard->health, allocator);
+	theWizard.AddMember("inventory", inventory, allocator);
+	//theWizard.AddMember("buffs", buffs, allocator);
 	
-	// sort spells by tier, but otherwise random.
-	std::random_shuffle(spellpool.begin(), spellpool.end(), [](int i) { return std::rand()%i;});
-	std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
-		return a->tier < b->tier;
-	});
-	// Delete the first 4 spells
-	//spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
+	// Spells
+	// remaining spells...
+	rapidjson::Value theSpellPool(rapidjson::kArrayType);
+	for (Spell * s: spellpool) {
+		rapidjson::Value name;
+		name.SetString(s->getRawName().c_str(), s->getRawName().length(), allocator);
+		theSpellPool.PushBack(name, allocator);
+	}
 	
-	// Create a round based on the current stage.
-	gotoNextEnemy();
+	// Grid
+	rapidjson::Value theGrid(rapidjson::kArrayType);
+	for (int i = 0; i < grid_size; i++) {
+		rapidjson::Value row(rapidjson::kArrayType);
+		for (int j = 0; j < grid_size; j++) {
+			auto g = grid->get(i, j);
+			row.PushBack((!g) ? 0 : g->type, allocator);
+		}
+		theGrid.PushBack(row, allocator);
+	}
+	
+	bool gameOver = checkGameOver();
+	
+	doc.AddMember("stage", stage, allocator);
+	doc.AddMember("game_over", gameOver, allocator);
+	doc.AddMember("enemies", theEnemies, allocator);
+	doc.AddMember("wizard", theWizard, allocator);
+	doc.AddMember("spellpool", theSpellPool, allocator);
+	doc.AddMember("grid", theGrid, allocator);
+	
+	rapidjson::StringBuffer buffer{};
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	doc.Accept(writer);
+	
+	std::string state(buffer.GetString(), buffer.GetSize());
+	printf("%s\n", state.c_str());
+	SaveData::setArenaState( state );
+}
+void Game::startArena(std::string state) {
+	setup();
+	
+	bool createNew = true;
+	
+	if (! state.empty()) {
+		// Load from the state instead!
+		rapidjson::Document doc;
+		if (! doc.Parse(state.c_str()).HasParseError()) {
+			if (doc.IsObject()) {
+				stage = doc["stage"].GetInt();
+				
+				auto &theWizard = doc["wizard"];
+				wizard->health = theWizard["health"].GetInt();
+				wizard->inventory.clear();
+				for (int i = 0; i < theWizard["inventory"].Size(); i++) {
+					auto spellname = theWizard["inventory"][i].GetString();
+					if (strlen(spellname) == 0) {
+						wizard->inventory.push_back(nullptr);
+					} else {
+						auto spell = SpellManager::get()->getByName(spellname);
+						wizard->inventory.push_back(spell);
+					}
+				}
+				
+				spellpool.clear();
+				for (int i = 0; i < doc["spellpool"].Size(); i++) {
+					auto spellname = doc["spellpool"][i].GetString();
+					auto spell = SpellManager::get()->getByName(spellname);
+					spellpool.push_back(spell);
+				}
+				
+				// grid->scramble();
+				grid->futureGems.clear();
+				for (int i = 0; i < doc["grid"].Size(); i++) {
+					for (int j = 0; j < doc["grid"][i].Size(); j++) {
+						GemType gt = static_cast<GemType>(doc["grid"][i][j].GetInt());
+						grid->futureGems.push_back(gt);
+					}
+				}
+				grid->scramble();
+				
+				// enemies
+				// {"name":"goblin_sword","health":20,"attack_clock":2,"buffs":[]}
+				RoundDef *r = LevelManager::get()->generateRound(0);
+				r->waves.clear();
+				std::vector<std::string> wave;
+				// If gameover, then don't add enemies!
+				if (! doc["game_over"].GetBool()) {
+					for (int i = 0; i < doc["enemies"].Size(); i++) {
+						wave.push_back(doc["enemies"][i]["name"].GetString());
+					}
+				}
+				r->waves.push_back(wave);
+				currentRound->setString(ToString(stage));
+				showRound(r, 0);
+				stage++;
+				
+				// If enemies are all dead, show the spell picker
+				attemptSetState(kStatePlayerTurn);
+	
+				createNew = false;
+			}
+		}
+	}
+	
+	if (createNew) {
+		stage = 0;
+		
+		wizard->inventory.clear();
+		for (int i = 0; i < 6; i++) {
+			wizard->inventory.push_back(nullptr);
+		}
+		
+		// copy spells across
+		spellpool = SpellManager::get()->spells;
+		// sort spells by tier, but otherwise random.
+		std::random_shuffle(spellpool.begin(), spellpool.end(), [](int i) { return std::rand()%i;});
+		std::sort(spellpool.begin(), spellpool.end(), [](Spell *a, Spell *b) {
+			return a->tier < b->tier;
+		});
+		// Delete the first 4 spells
+		//spellpool.erase(spellpool.begin(), spellpool.begin() + 5);
+		
+		// shuffle grid
+		grid->scramble();
+		
+		// Create a round based on the current stage.
+		gotoNextEnemy();
+	}
 	
 	updateInventory();
-	
-	// shuffle grid
-	grid->scramble();
-	
-	// reset game state
-	state = kStatePlayerTurn;
-	grid->setActive(true);
 }
 void Game::setup() {
 	// Recreate wizard

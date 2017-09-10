@@ -48,14 +48,22 @@ bool ArenaScreen::init() {
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleFontSize(Fonts::TEXT_SIZE);
 	button->setPosition(Vec2(size.width/2, 50 + button->getContentSize().height/2));
-	button->setTitleText _("ui.START_ARENA");
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			button->setTouchEnabled(false);
 			PLAY_SOUND( kSoundEffect_UISelect );
-			GameController::get()->startArena();
+			GameController::get()->startArena(SaveData::getArenaState());
 		}
 	});
+	
+	auto state = SaveData::getArenaState();
+	if (state.empty()) {
+		// button says start again?
+		button->setTitleText _("ui.START_ARENA");
+	} else {
+		button->setTitleText _("ui.CONTINUE_ARENA");
+	}
+	
 	this->addChild(button);
 	
 	return true;

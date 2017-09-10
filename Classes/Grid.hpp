@@ -14,6 +14,7 @@ class Grid : public cocos2d::Layer {
 public:
 	Grid(int w, int h, float maxWidth, float maxHeight);
 	Gem *get(int column, int row);
+	std::list<GemType> futureGems;
 	bool init(float maxWidth, float maxHeight);
 	void scramble(Chain *chain = nullptr);
 	void preset(int which);
@@ -49,7 +50,6 @@ private:
 	void onTouchMovePart(Vec2 loc);
 	bool doesLineIntersectCell(Vec2 start, Vec2 end, int column, int row);
 	bool isAboveLine(Vec2 start, Vec2 end, Vec2 point);
-	std::list<GemType> futureGems;
 	void initNewGem(Gem *gem, GemType type);
 	
 	bool diagonals_allowed;

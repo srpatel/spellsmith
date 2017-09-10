@@ -17,6 +17,7 @@
 #include "Constants.h"
 #include "SoundManager.hpp"
 #include "Tutorial.hpp"
+#include "SaveData.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -176,9 +177,9 @@ Screen *GameController::getScreen(State state) {
 	if (state == kStateCount) state = this->state;
 	return stateScreens[state];
 }
-void GameController::startArena() {
+void GameController::startArena(std::string state) {
 	setState(kStateGame);
-	Game::get()->startArena();
+	Game::get()->startArena(state);
 }
 void GameController::startRound(RoundDef *round) {
 	popDialog();

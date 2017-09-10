@@ -33,7 +33,7 @@ public:
 	virtual void onDeselect();
 	
 	// Restart the current game!
-	void startArena();
+	void startArena(std::string state);
 	void startRound(RoundDef *round);
 	void restartRound();
 	
@@ -69,6 +69,7 @@ private:
 	
 	void gotoNextEnemy();
 	void showRound(RoundDef *, int wave);
+	void saveArenaState();
 	
 	int getNextAliveEnemy(int start, bool *allDead);
 	

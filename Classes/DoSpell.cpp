@@ -298,7 +298,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(volcanic) {
 		// Create lots of downwards meteors
 		SKELETON_ANIMATION("spell_heal");
-		game->runPendingAction([damageModifier, game]() {
+		auto amount = D(8);
+		game->runPendingAction([amount, game]() {
 			game->actionQueued();
 			Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 			auto delay = DelayTime::create(1.0f/3.0f);
@@ -316,17 +317,17 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 				float ypos = 5 + 0.8 * game->wizard->projectile_height * ((float) rand() / RAND_MAX);
 				game->makeMeteor(xpos, ypos, i / 10.0);
 				if (i == 5) {
-					game->runPendingAction([game, damageModifier]() {
+					game->runPendingAction([game, amount]() {
 						bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
-						if (! phase) {
+						/*if (! phase) {
 							game->wizard->ui_health -= D(10);
 							game->onDamageTarget(game->wizard, false);
-						}
+						}*/
 						for (Enemy *e : game->enemies) {
 							if (e->ui_dead()) continue;
 							phase = e->getBuffByType(BuffType::PHASING) != nullptr;
 							if (! phase) {
-								e->ui_health -= D(10);
+								e->ui_health -= amount;
 								game->onDamageTarget(e, false);
 							}
 						}
@@ -336,15 +337,15 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			}
 		});
 		// deal 10 damage to everyone
-		bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
+		/*bool phase = game->wizard->getBuffByType(BuffType::PHASING) != nullptr;
 		if (! phase) {
 			game->wizard->health -= D(10);
-		}
+		}*/
 		for (Enemy *e : game->enemies) {
 			if (e->dead()) continue;
-			phase = e->getBuffByType(BuffType::PHASING) != nullptr;
+			auto phase = e->getBuffByType(BuffType::PHASING) != nullptr;
 			if (! phase) {
-				e->health -= D(10);
+				e->health -= amount;
 			}
 		}
 	}
@@ -355,12 +356,14 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		CRYSTAL(3);
 	}
 	IF_SPELL(purify) { // TODO
-		// Create 1 crystal gem
-		CRYSTAL(1);
+		// Create 1-3 crystal gems
+		auto amt = 1 + (rand() % 3);
+		CRYSTAL(amt);
+		PLAY_SOUND(kSoundEffect_SRainbow);
 	}
 	IF_SPELL(smelt) { // TODO
-		// deal 5 damage, create 1 crystal gem
-		PROJ( D(5), ptBasicAnvil );
+		// deal 6 damage, create 1 crystal gem
+		PROJ( D(6), ptBasicAnvil );
 		CRYSTAL(1);
 	}
 	IF_SPELL(ice_bolt) { // TODO

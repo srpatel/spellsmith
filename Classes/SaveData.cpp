@@ -34,6 +34,14 @@ int SaveData::getArenaScore() {
 	return score;
 }
 
+void SaveData::setArenaState(std::string state) {
+	UserDefault::getInstance()->setStringForKey("arena-state", state);
+}
+
+std::string SaveData::getArenaState() {
+	return UserDefault::getInstance()->getStringForKey("arena-state", "");
+}
+
 void SaveData::setArenaScore(int score) {
 	if (score <= getArenaScore()) return;
 	UserDefault::getInstance()->setIntegerForKey("inf-score", score);

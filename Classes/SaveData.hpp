@@ -14,6 +14,10 @@
 struct SaveData {
 	static void clear();
 	
+	// Get arena state
+	static void setArenaState(std::string state);
+	static std::string getArenaState();
+	
 	// Get level scores
 	static int  getArenaScore();
 	static void setArenaScore(int);

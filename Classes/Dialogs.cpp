@@ -186,8 +186,7 @@ bool GotoMapConfirmationDialog::init() {
 	auto yBuffer = 50;
 	
 	auto text = Label::createWithTTF(
-		"Are you sure you want to return to the map? "
-		"You will lose your current progress!",
+		_("ui.ARE_YOU_SURE"),
 		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 	text->setDimensions(size.width - 20, 0);
 	text->setAlignment(TextHAlignment::CENTER);
