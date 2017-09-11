@@ -28,8 +28,18 @@ public:
 #define SKELETON_ANIMATION(_n_) game->scenery->wizardsprite->setAnimation(0, _n_, false); doAnimation = false;
 #define WIZARD_BASH_ANIMATION(_n_) game->wizardBashAnimationByQueue(); doAnimation = false;
 #define CRYSTAL(_n_) game->grid->createRandomCrystalGems(_n_, chain);
-#define HEAL(_n_) game->wizard->heal(_n_ * healModifier);
-#define HEAL_COLOUR(_n_, _c_) game->wizard->heal(_n_ * healModifier, _c_);
+#define PREHEAL(_n_) {\
+	healAmount = _n_ * healModifier;\
+	healAmount = game->wizard->heal(healAmount, Colours::HEAL, true);\
+}
+#define HEAL() {\
+	game->wizard->health -= healAmount;\
+	game->wizard->heal(healAmount);\
+}
+#define HEAL_COLOUR(_c_) {\
+	game->wizard->health -= healAmount;\
+	game->wizard->heal(healAmount, _c_);\
+}
 #define PROJ(_n_, _t_) projectile = true; \
 	game->makeProjectile(\
 	game->wizard, \
@@ -68,6 +78,7 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	bool projectile = false;
 	bool hasKingsCourt = game->wizard->getBuffByType(BuffType::KINGS_COURT);
 	bool doAnimation = true;
+	int healAmount = 0;
 	
 	if (1 == 0);
 	IF_SPELL(whispers_in_the_wind) { // TODO
@@ -128,9 +139,10 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 			PROJ( amount, ptBasicPurple );
 		} else {
 			// this is ok because enemy doesn't do a turn until we've finished
-			// this would be a problem if player character every got DoTs
+			// this would be a problem if player character ever got DoTs
+			PREHEAL(7);
 			PROJ_ONHIT( amount, ptBasicPurple, [=](){
-				HEAL_COLOUR(7, Colours::DRAIN);
+				HEAL_COLOUR(Colours::DRAIN);
 			} );
 		}
 	}
@@ -177,7 +189,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(fountain_of_youth) { // TODO
 		// Destroy all blue gems and heal 2 for each
 		int n = game->grid->destroyGemsOfType( GemType::WATER, chain );
-		HEAL( 2 * n );
+		PREHEAL( 2 * n );
+		HEAL();
 	}
 	IF_SPELL(focus) { // TODO
 		// deal extra damage with spells for 8 turns
@@ -233,13 +246,14 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
+		PREHEAL(5);
 		auto addanim = CallFunc::create([=]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 					game->actionDone();
 				}), false
 			);
 			PLAY_SOUND(kSoundEffect_SHeal);
-			HEAL(5);
+			HEAL();
 			game->scenery->addChild(heal);
 		});
 		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
@@ -250,12 +264,13 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->actionQueued();
 		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
 		auto delay = DelayTime::create(1.0f/3.0f);
+		PREHEAL(7);
 		auto addanim = CallFunc::create([=]() {
 			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
 				game->actionDone();
 			}), false);
 			PLAY_SOUND(kSoundEffect_SHeal);
-			HEAL(7);
+			HEAL();
 			game->scenery->addChild(heal);
 		});
 		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
@@ -263,7 +278,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	IF_SPELL(cleanse) { // TODO
 		// Heal for 3 and clear the grid
 		PLAY_SOUND(kSoundEffect_SHeal);
-		HEAL(3);
+		PREHEAL(3);
+		HEAL();
 		game->grid->scramble(chain);
 	}
 	IF_SPELL(lightning_bolt) {
@@ -291,8 +307,9 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(healstrike) {
 		// gain 5, deal 5 damage
+		PREHEAL(5);
 		PROJ_ONHIT( D(5), ptBasicFire, [=](){
-			HEAL(5);
+			HEAL();
 		} );
 	}
 	IF_SPELL(volcanic) {
@@ -351,7 +368,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(crystalise) { // TODO
 		// heal 3, create 3 crystal gems
-		HEAL(3);
+		PREHEAL(3);
+		HEAL();
 		PLAY_SOUND(kSoundEffect_SRainbow);
 		CRYSTAL(3);
 	}

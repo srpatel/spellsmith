@@ -1181,6 +1181,10 @@ void Game::showRound(RoundDef *round, int wave) {
 	}
 }
 void Game::saveArenaState() {
+	if (wizard->health <= 0) {
+		SaveData::setArenaState({});
+		return;
+	}
 	// Arena state consists of:
 	/*
 	{

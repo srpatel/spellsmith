@@ -40,17 +40,20 @@ void Character::addBuff(Buff *buff, bool apply) {
 	updateBuffs();
 }
 
-void Character::heal(int amt, Color3B c) {
+int Character::heal(int amt, Color3B c, bool actualOnly) {
 	Game *game = Game::get();
 	int max_amt = max_health - health;
 	amt = MIN(max_amt, amt);
 	health += amt;
-	ui_health += amt;
-	flash(c);
-	if (game) {
-		game->updateHealthBars();
-		game->scenery->addTextWisp(this, std::string("+") + ToString(amt), Color3B::GREEN);
+	if (! actualOnly) {
+		ui_health += amt;
+		flash(c);
+		if (game) {
+			game->updateHealthBars();
+			game->scenery->addTextWisp(this, std::string("+") + ToString(amt), Color3B::GREEN);
+		}
 	}
+	return amt;
 }
 
 void Character::damageEffect(int amt, Color3B c) {

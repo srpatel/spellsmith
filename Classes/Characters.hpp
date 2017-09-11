@@ -40,7 +40,7 @@ public:
 	inline bool ui_dead() { return ui_health <= 0; }
 	Layer *buffHolder;
 	void flash(Color3B c);
-	void heal(int amt, Color3B c = Colours::HEAL);
+	int heal(int amt, Color3B c = Colours::HEAL, bool actualOnly = false);
 	float die();
 	void damageEffect(int damage, Color3B c = Colours::DAMAGE);
 	virtual std::map<std::string, Vec2> getOffsets() = 0;
