@@ -18,6 +18,13 @@
 
 void ArenaScreen::onSelect() {
 	button->setTouchEnabled(true);
+	auto state = SaveData::getArenaState();
+	if (state.empty()) {
+		// button says start again?
+		button->setTitleText _("ui.START_ARENA");
+	} else {
+		button->setTitleText _("ui.CONTINUE_ARENA");
+	}
 	if (SaveData::getArenaScore() <= 0) {
 		auto d = ArenaTutorialDialog::create();
 		GameController::get()->pushDialog(d);
@@ -55,14 +62,6 @@ bool ArenaScreen::init() {
 			GameController::get()->startArena(SaveData::getArenaState());
 		}
 	});
-	
-	auto state = SaveData::getArenaState();
-	if (state.empty()) {
-		// button says start again?
-		button->setTitleText _("ui.START_ARENA");
-	} else {
-		button->setTitleText _("ui.CONTINUE_ARENA");
-	}
 	
 	this->addChild(button);
 	

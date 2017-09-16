@@ -44,7 +44,7 @@ bool BasicAnim::init(
 		Vec2 loc,
 		float scale,
 		CallFunc* onHit,
-		bool looping
+		AnimType animType
 )
 {
 	if ( !Layer::init() )
@@ -70,17 +70,23 @@ bool BasicAnim::init(
 
 	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
 	
-	if (looping) {
+	if (animType == AnimType::kLooping) {
 		// Unsure the difference between these:
 		// animation->setLoops(-1);
 		sprite->runAction(
 			RepeatForever::create(Animate::create(animation))
 		);
-	} else {
+	} else if (animType == AnimType::kSimple) {
 		sprite->runAction(Sequence::create(
 			Animate::create(animation),
 			onHit,
 			RemoveSelf::create(),
+			nullptr
+		));
+	} else if (animType == AnimType::kPersistant) {
+		sprite->runAction(Sequence::create(
+			Animate::create(animation),
+			onHit,
 			nullptr
 		));
 	}

@@ -33,22 +33,23 @@ void NavigationBar::resetButtons() {
 		buttons.push_back({("ui.SPELLBOOK"), "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
 	if (SaveData::isLevelComplete("4")) {
-		buttons.push_back({("ui.ARENA"), "icons/map.png", kStateArena}); // Set state to arena
+		buttons.push_back({("ui.ARENA"), "icons/arena.png", kStateArena}); // Set state to arena
 	}
-	buttons.push_back({("ui.OPTIONS"), "ui/options.png", kStateOptions}); // Set state to options
+	buttons.push_back({("ui.OPTIONS"), "icons/settings.png", kStateOptions}); // Set state to options
 
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;
 	float currentX = widthPerButton / 2.0f;
 	for (ButtonDef b : buttons) {
 		auto n = LoadSprite(b.imagePath);
+		n->setScale(0.8);
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(currentX, getContentSize().height/2.0f);
 		buttonHolder->addChild(n);
-		auto t = Label::createWithTTF(_(b.label), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-		t->setTextColor(Color4B::BLACK);
-		t->setPosition(currentX, 10);
-		buttonHolder->addChild(t);
+		//auto t = Label::createWithTTF(_(b.label), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
+		//t->setTextColor(Color4B::BLACK);
+		//t->setPosition(currentX, 10);
+		//buttonHolder->addChild(t);
 		currentX += widthPerButton;
 		// Add onclick...
 		auto onclick = EventListenerTouchOneByOne::create();

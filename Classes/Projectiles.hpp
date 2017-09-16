@@ -13,6 +13,12 @@
 
 typedef int ProjectileType;
 
+enum AnimType {
+	kLooping,
+	kPersistant,
+	kSimple
+};
+
 #define PROJECTILE(_classname, _name, _shoot, _travel, _hit, _offset, _sound) PROJECTILE_TIME(_classname, _name, _shoot, _travel, _hit, _offset, _sound, -1)
 #define PROJECTILE_TIME(_classname, _name, _shoot, _travel, _hit, _offset, _sound, _time) \
 const ProjectileType pt ## _classname = __COUNTER__;\
@@ -27,15 +33,15 @@ public: \
 	CREATE_FUNC_4(_classname, Vec2, Vec2, float, CallFunc*);\
 };
 
-#define ANIM(_classname, _name, _num, _fileprefix, _looping) \
+#define ANIM(_classname, _name, _num, _fileprefix, _type) \
 class _classname : public BasicAnim { \
 public: \
 	_classname() \
 		: BasicAnim(_name, _num, _fileprefix) {} \
-	inline bool init(Vec2 loc, float scale, CallFunc* onHit, bool looping){\
-		return BasicAnim::init(loc, scale, onHit, looping);\
+	inline bool init(Vec2 loc, float scale, CallFunc* onHit){\
+		return BasicAnim::init(loc, scale, onHit, _type);\
 	}\
-	CREATE_FUNC_4(_classname, Vec2, float, CallFunc*, bool);\
+	CREATE_FUNC_3(_classname, Vec2, float, CallFunc*);\
 }
 
 class BasicProjectile : public Layer {
@@ -72,7 +78,7 @@ public:
 		Vec2 loc,
 		float scale,
 		CallFunc* onHit,
-		bool looping);
+		AnimType animType);
 protected:
 	const char *path;
 	const char *prefix;
@@ -90,13 +96,15 @@ PROJECTILE_TIME(BasicDart, dart,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*o
 PROJECTILE(BasicAnvil, anvil,    /*shoot*/  0, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 0), kSoundEffect_PHEarth);
 PROJECTILE(BasicIce, icebolt,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 5), kSoundEffect_PHIce);
 
-ANIM(AnimHeal, "castheal", 11, "castheal", false);
-ANIM(AnimFire, "castfire", 11, "castfire", false);
-ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100", false);
-ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200", false);
-ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300", false);
-ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00", true);
-ANIM(AnimStarsTop, "stars/top", 4, "starsfront00", true);
-ANIM(AnimBlueGlow, "fountain", 26, "fountain", true);
+ANIM(AnimHeal, "castheal", 11, "castheal", AnimType::kSimple);
+ANIM(AnimFire, "castfire", 11, "castfire", AnimType::kSimple);
+ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100", AnimType::kSimple);
+ANIM(AnimLightning2, "lightning/2", 11, "LightningStrike200", AnimType::kSimple);
+ANIM(AnimLightning3, "lightning/3", 11, "LightningStrike300", AnimType::kSimple);
+ANIM(AnimStarsBottom, "stars/bottom", 4, "starsback00", AnimType::kLooping);
+ANIM(AnimStarsTop, "stars/top", 4, "starsfront00", AnimType::kLooping);
+ANIM(AnimBlueGlow, "fountain", 26, "fountain", AnimType::kLooping);
+ANIM(IceGrow, "icecrystal/grow", 5, "grow00", AnimType::kPersistant);
+ANIM(IceShatter, "icecrystal/shatter", 6, "shatter00", AnimType::kSimple);
 
 #endif /* BasicFire_hpp */

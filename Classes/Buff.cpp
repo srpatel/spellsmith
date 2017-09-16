@@ -63,11 +63,35 @@ Buff *Buff::createMudshield() {
 }
 
 Buff *Buff::createFreeze(int amount){
-	auto buff = new EmptyBuff;
+	class FreezeBuff : public Buff {
+		Node *grow;
+		void _apply(Character *c) override {
+			auto char_scale = Game::get()->scenery->char_scale;
+			Vec2 pos = c->sprite->getPosition() + Vec2(0, 20) * char_scale;
+			
+			grow = IceGrow::create(pos, char_scale * 0.8f, nullptr);
+			
+			c->sprite->getParent()->addChild(grow, 125);
+			
+			//auto tt = TintTo::create(0.5f, 255, 255, 255);
+			//c->sprite->runAction(tt);
+		}
+		void _remove(Character *c) override {
+			auto char_scale = Game::get()->scenery->char_scale;
+			Vec2 pos = c->sprite->getPosition() + Vec2(0, 20) * char_scale;
+			auto shatter = IceShatter::create(pos, char_scale * 0.8f, nullptr);
+			grow->removeFromParent();
+			c->sprite->getParent()->addChild(shatter, 125);
+			
+			//auto tt = TintTo::create(0.5f, 165, 242, 243);
+			//c->sprite->runAction(tt);
+		}
+	};
+	auto buff = new FreezeBuff;
 	buff->type = BuffType::FREEZE;
 	buff->positive = true;
 	
-	buff->icon = "buffs/frozen.png";
+	buff->icon = "";
 	
 	buff->sprite = nullptr;
 	
@@ -86,8 +110,8 @@ Buff *Buff::createStun(){
 			auto char_scale = Game::get()->scenery->char_scale;
 			Vec2 pos = c->sprite->getPosition() + c->head_offset * char_scale;
 			
-			top = AnimStarsTop::create(pos, 0.8f, nullptr, true);
-			bottom = AnimStarsBottom::create(pos, 0.8f, nullptr, true);
+			top = AnimStarsTop::create(pos, char_scale * 0.8f, nullptr);
+			bottom = AnimStarsBottom::create(pos, char_scale * 0.8f, nullptr);
 			
 			auto fadeIn = FadeIn::create(1);
 			top->runAction(fadeIn);
@@ -149,7 +173,7 @@ Buff *Buff::createSpellFocus(){
 			Vec2 pos = c->sprite->getPosition();
 			pos.y += char_scale * 75;
 			
-			glow = AnimBlueGlow::create(pos, 2 * char_scale, nullptr, true);
+			glow = AnimBlueGlow::create(pos, 2 * char_scale, nullptr);
 			
 			auto fadeIn = FadeIn::create(1);
 			glow->runAction(fadeIn);

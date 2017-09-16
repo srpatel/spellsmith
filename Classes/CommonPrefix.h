@@ -9,6 +9,8 @@
 #ifndef CommonPrefix_h
 #define CommonPrefix_h
 
+#define RAPIDJSON_HAS_STDSTRING 1
+
 #ifdef __cplusplus
 #include "cocos2d.h"
 USING_NS_CC;
