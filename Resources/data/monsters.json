@@ -234,6 +234,31 @@
     ]
   },
   {
+    "name": "hell_dog",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "dog",
+      "skins": [
+        "hell"
+      ]
+    },
+    "health": 20,
+    "attack_frequency": 1,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack",
+        "amount": 4
+      }
+    ]
+  },
+  {
     "name": "shaman",
     "offsets": {
       "proj_from": [

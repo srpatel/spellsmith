@@ -268,7 +268,105 @@
 		"tail4": {
 			"tail3": { "name": "characters/dog/1/tail3", "x": 21.19, "y": 2.89, "rotation": 3.69, "width": 62, "height": 22 }
 		}
-	}
+	},
+	"hell": {
+		"Pelvis": {
+			"pelvis": { "name": "characters/dog/3/pelvis", "x": 30.93, "y": -10.2, "rotation": -1.47, "width": 136, "height": 90 }
+		},
+		"Torso": {
+			"torso": { "name": "characters/dog/3/torso", "x": 30.13, "y": -0.33, "rotation": -14.89, "width": 140, "height": 97 }
+		},
+		"foreleg_1": {
+			"foreleg1": { "name": "characters/dog/3/foreleg1", "x": 20.29, "y": -0.84, "rotation": 96.5, "width": 53, "height": 87 }
+		},
+		"foreleg_2": {
+			"foreleg2": { "name": "characters/dog/3/foreleg2", "x": 22.62, "y": 4.16, "rotation": 82.98, "width": 30, "height": 53 }
+		},
+		"foreleg_3": {
+			"foreleg3": { "name": "characters/dog/3/foreleg3", "x": 11.9, "y": -1.98, "rotation": 108.43, "width": 50, "height": 53 }
+		},
+		"foreleg_4": {
+			"foreleg1": { "name": "characters/dog/3/foreleg1", "x": 18.82, "y": 5.51, "rotation": 84.94, "width": 53, "height": 87 }
+		},
+		"foreleg_5": {
+			"foreleg2": { "name": "characters/dog/3/foreleg2", "x": 23.18, "y": 2.94, "rotation": 87.44, "width": 30, "height": 53 }
+		},
+		"foreleg_6": {
+			"foreleg3": { "name": "characters/dog/3/foreleg3", "x": 12.66, "y": 4.98, "rotation": 122.65, "width": 50, "height": 53 }
+		},
+		"foreleg_7": {
+			"foreleg4": { "name": "characters/dog/3/foreleg4", "x": -7.81, "y": -16.07, "rotation": 165.96, "width": 50, "height": 53 }
+		},
+		"foreleg_8": {
+			"foreleg4": { "name": "characters/dog/3/foreleg4", "x": -8.53, "y": -15.34, "rotation": 171.12, "width": 50, "height": 53 }
+		},
+		"head": {
+			"head": { "name": "characters/dog/3/head", "x": 20.85, "y": 12.38, "rotation": 169.38, "width": 98, "height": 135 }
+		},
+		"hindleg_1": {
+			"hindleg1": { "name": "characters/dog/3/hindleg1", "x": 37.06, "y": 5.14, "rotation": 98.86, "width": 63, "height": 97 }
+		},
+		"hindleg_2": {
+			"hindleg2": { "name": "characters/dog/3/hindleg2", "x": 20.1, "y": -1.28, "rotation": 58.17, "width": 51, "height": 56 }
+		},
+		"hindleg_3": {
+			"hindleg3": { "name": "characters/dog/3/hindleg3", "x": 17.93, "y": -6.35, "rotation": 107.35, "width": 49, "height": 62 }
+		},
+		"hindleg_4": {
+			"hindleg1": { "name": "characters/dog/3/hindleg1", "x": 35.69, "y": 3.62, "rotation": 100.86, "width": 63, "height": 97 }
+		},
+		"hindleg_5": {
+			"hindleg2": { "name": "characters/dog/3/hindleg2", "x": 19.57, "y": -7.67, "rotation": 57.72, "width": 51, "height": 56 }
+		},
+		"hindleg_6": {
+			"hindleg3": { "name": "characters/dog/3/hindleg3", "x": 24.97, "y": -16.19, "rotation": 100.95, "width": 49, "height": 62 }
+		},
+		"hindleg_7": {
+			"hindleg4": { "name": "characters/dog/3/hindleg4", "x": -13.06, "y": -24.48, "rotation": 167.01, "width": 49, "height": 62 }
+		},
+		"hindleg_8": {
+			"hindleg4": { "name": "characters/dog/3/hindleg4", "x": -12.77, "y": -21.78, "rotation": 168.37, "width": 49, "height": 62 }
+		},
+		"jaw": {
+			"jaw": { "name": "characters/dog/3/jaw", "x": 17.95, "y": -0.58, "rotation": 173.04, "width": 65, "height": 20 }
+		},
+		"jb_fb1": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 5.64, "y": 3.11, "rotation": 93.01, "width": 25, "height": 25 }
+		},
+		"jb_fb2": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 0.65, "y": 6.48, "rotation": 101.31, "width": 25, "height": 25 }
+		},
+		"jb_ff1": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 4.61, "y": 4.51, "rotation": 99.09, "width": 25, "height": 25 }
+		},
+		"jb_ff2": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 0.34, "y": 5.67, "rotation": 96.01, "width": 25, "height": 25 }
+		},
+		"jb_hb1": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 11.65, "y": -2.28, "scaleX": 1.374, "rotation": 71.56, "width": 25, "height": 25 }
+		},
+		"jb_hb2": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 3.99, "y": -4.52, "rotation": 74.48, "width": 25, "height": 25 }
+		},
+		"jb_hf1": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": 7.32, "y": 2.12, "scaleX": 1.363, "rotation": 82.87, "width": 25, "height": 25 }
+		},
+		"jb_hf2": {
+			"jointball": { "name": "characters/dog/3/jointball", "x": -2.71, "y": -0.36, "rotation": 104.04, "width": 25, "height": 25 }
+		},
+		"neck": {
+			"neck": { "name": "characters/dog/3/neck", "x": 18.96, "y": -1.87, "rotation": -120.19, "width": 75, "height": 79 }
+		},
+		"tail2": {
+			"tail1": { "name": "characters/dog/3/tail1", "x": 20.29, "y": 2.69, "rotation": 31.09, "width": 61, "height": 43 }
+		},
+		"tail3": {
+			"tail2": { "name": "characters/dog/3/tail2", "x": 7.71, "y": 0.18, "rotation": 21.63, "width": 56, "height": 31 }
+		},
+		"tail4": {
+			"tail3": { "name": "characters/dog/3/tail3", "x": 21.19, "y": 2.89, "rotation": 3.69, "width": 62, "height": 22 }
+		}
+	},
 },
 "animations": {
 	"attack": {

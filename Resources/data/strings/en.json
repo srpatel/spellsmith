@@ -133,6 +133,7 @@
   "monster": {
     "dog": "Hound",
     "fast_dog": "Greyhound",
+	"hell_dog": "Hellhound",
     "shaman": "Shaman",
     "goblin_sword": "Goblin Swordsman",
     "goblin_axe": "Goblin Axeman",
