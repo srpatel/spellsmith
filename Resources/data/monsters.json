@@ -408,5 +408,32 @@
         "amount": 10
       }
     ]
+  },
+  {
+    "name": "troll",
+    "scale": 1,
+    "offsets": {
+      "proj_from": [
+        50,
+        -10
+      ],
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "troll"
+    },
+    "health": 200,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack",
+        "amount": 5
+      }
+    ]
   }
 ]

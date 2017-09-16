@@ -142,7 +142,8 @@
     "water_wizard": "Hydromancer",
     "necromancer": "Necromancer",
     "frogfolk": "Frogfolk",
-    "frogfolk_sword": "Frogfolk"
+    "frogfolk_sword": "Frogfolk",
+	"troll": "Mountain Troll"
   },
   "level_end": {
     "GAME_OVER": "Game Over!",
