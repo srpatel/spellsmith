@@ -1,5 +1,59 @@
 [
   {
+    "name": "frogfolk",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "frogfolk",
+      "attachments": [
+        {
+          "weapon": "characters/frogfolk/spear"
+        }
+      ]
+    },
+    "health": 30,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack_lunge",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "frogfolk_sword",
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "frogfolk",
+      "attachments": [
+        {
+          "weapon": "characters/frogfolk/sword"
+        }
+      ]
+    },
+    "health": 30,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack_slash",
+        "amount": 5
+      }
+    ]
+  },
+  {
     "name": "goblin_halberd",
     "offsets": {
       "proj_to": [
@@ -92,7 +146,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack_slash",
-        "amount": 3
+        "amount": 4
       }
     ]
   },
@@ -125,7 +179,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack_lunge",
-        "amount": 2
+        "amount": 3
       }
     ]
   },
@@ -150,7 +204,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 3
+        "amount": 4
       }
     ]
   },
@@ -175,7 +229,7 @@
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 3
+        "amount": 4
       }
     ]
   },
@@ -276,13 +330,13 @@
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 2
+        "amount": 3
       },
       {
         "ratio": 4,
         "type": "projectile_fire",
         "animation": "cast",
-        "amount": 4
+        "amount": 5
       }
     ]
   },
@@ -312,13 +366,13 @@
         "ratio": 1,
         "type": "melee",
         "animation": "melee",
-        "amount": 2
+        "amount": 3
       },
       {
         "ratio": 4,
         "type": "projectile_water",
         "animation": "cast",
-        "amount": 4
+        "amount": 5
       }
     ]
   },

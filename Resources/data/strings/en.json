@@ -140,7 +140,9 @@
     "goblin_halberd": "Goblin Halberdier",
     "fire_wizard": "Pyromancer",
     "water_wizard": "Hydromancer",
-    "necromancer": "Necromancer"
+    "necromancer": "Necromancer",
+    "frogfolk": "Frogfolk",
+    "frogfolk_sword": "Frogfolk"
   },
   "level_end": {
     "GAME_OVER": "Game Over!",
@@ -162,6 +164,7 @@
   },
   "ui": {
     "RETRY_LEVEL": "Retry level",
+    "SUBMIT_SCORE": "Submit score",
     "BACK": "back",
     "ARENA": "Arena",
     "START_ARENA": "Start Arena",

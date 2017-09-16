@@ -99,9 +99,8 @@
     "bg": "lake1",
     "monsters": [
       [
-        "water_wizard",
-        "dog",
-        "water_wizard"
+        "frogfolk",
+        "frogfolk"
       ]
     ],
     "x": 324,
@@ -116,9 +115,9 @@
     "bg": "lake1",
     "monsters": [
       [
+        "frogfolk",
         "water_wizard",
-        "water_wizard",
-        "water_wizard"
+        "frogfolk"
       ]
     ],
     "x": 340,
