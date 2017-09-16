@@ -1,7 +1,7 @@
 {
 "skeleton": { "hash": "8mb+u10f7DsOj3RWMQ8UhdJMGUM", "spine": "3.6.39", "width": 397.81, "height": 379.62, "images": "" },
 "bones": [
-	{ "name": "root", "x": 20, "y": 80.13 },
+	{ "name": "root", "x": 30, "y": 90.13 },
 	{ "name": "bone", "parent": "root", "length": 98, "rotation": 90, "x": -1, "y": 1 },
 	{ "name": "bone9", "parent": "bone", "length": 105.74, "rotation": 10.81, "x": 2.83, "y": -10.58 },
 	{ "name": "bone2", "parent": "bone9", "length": 89.14, "rotation": 32.37, "x": 120.78, "y": 13.16 },
@@ -20,56 +20,56 @@
 	{ "name": "bone16", "parent": "bone9", "length": 34.79, "rotation": 29.6, "x": 122.53, "y": 5.07 }
 ],
 "slots": [
-	{ "name": "leg_end2", "bone": "bone15", "attachment": "leg_end" },
+	{ "name": "leg_end2", "bone": "bone15", "attachment": "characters/frogfolk/leg_end" },
 	{ "name": "leg_top2", "bone": "bone6" },
 	{ "name": "leg_mid2", "bone": "bone14" },
-	{ "name": "leg_end", "bone": "bone13", "attachment": "leg_end" },
+	{ "name": "leg_end", "bone": "bone13", "attachment": "characters/frogfolk/leg_end" },
 	{ "name": "images/goblin1/leg_top", "bone": "bone5" },
-	{ "name": "images/goblin1/arm_back", "bone": "bone4", "attachment": "arm_back" },
-	{ "name": "neck", "bone": "bone16", "attachment": "neck" },
-	{ "name": "torso", "bone": "bone9", "attachment": "torso" },
+	{ "name": "images/goblin1/arm_back", "bone": "bone4", "attachment": "characters/frogfolk/arm_back" },
+	{ "name": "neck", "bone": "bone16", "attachment": "characters/frogfolk/neck" },
+	{ "name": "torso", "bone": "bone9", "attachment": "characters/frogfolk/torso" },
 	{ "name": "images/goblin1/torso", "bone": "bone" },
-	{ "name": "weapon", "bone": "bone7", "attachment": "halberd" },
-	{ "name": "images/goblin1/head", "bone": "bone2", "attachment": "head" },
+	{ "name": "weapon", "bone": "bone7", "attachment": "characters/frogfolk/spear" },
+	{ "name": "images/goblin1/head", "bone": "bone2", "attachment": "characters/frogfolk/head" },
 	{ "name": "images/goblin1/arm_front", "bone": "bone3" },
 	{ "name": "bone7", "bone": "bone7" },
-	{ "name": "bone3", "bone": "bone3", "attachment": "arm_front_top" },
-	{ "name": "arm_front_mid", "bone": "bone10", "attachment": "arm_front_mid" },
-	{ "name": "arm_front_end", "bone": "bone11", "attachment": "arm_front_end" }
+	{ "name": "bone3", "bone": "bone3", "attachment": "characters/frogfolk/arm_front_top" },
+	{ "name": "arm_front_mid", "bone": "bone10", "attachment": "characters/frogfolk/arm_front_mid" },
+	{ "name": "arm_front_end", "bone": "bone11", "attachment": "characters/frogfolk/arm_front_end" }
 ],
 "skins": {
 	"default": {
 		"arm_front_end": {
-			"arm_front_end": { "x": 23.21, "y": 9.55, "rotation": 167.24, "width": 56, "height": 45 }
+			"characters/frogfolk/arm_front_end": { "x": 23.21, "y": 9.55, "rotation": 167.24, "width": 56, "height": 45 }
 		},
 		"arm_front_mid": {
-			"arm_front_mid": { "x": 37.29, "y": -3.77, "rotation": 156.87, "width": 103, "height": 59 }
+			"characters/frogfolk/arm_front_mid": { "x": 37.29, "y": -3.77, "rotation": 156.87, "width": 103, "height": 59 }
 		},
 		"bone3": {
-			"arm_front_top": { "x": 23.31, "y": -2.37, "rotation": 61.1, "width": 60, "height": 108 }
+			"characters/frogfolk/arm_front_top": { "x": 23.31, "y": -2.37, "rotation": 61.1, "width": 60, "height": 108 }
 		},
 		"images/goblin1/arm_back": {
-			"arm_back": { "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 153, "height": 134 }
+			"characters/frogfolk/arm_back": { "x": 36.37, "y": -18.52, "rotation": 81.87, "width": 153, "height": 134 }
 		},
 		"images/goblin1/head": {
-			"head": { "x": 57.89, "y": -38.44, "rotation": -133.35, "width": 185, "height": 139 },
-			"head_alt": { "x": 61.49, "y": -39.85, "rotation": -133.35, "width": 185, "height": 139 }
+			"characters/frogfolk/head": { "x": 57.89, "y": -38.44, "rotation": -133.35, "width": 185, "height": 139 },
+			"characters/frogfolk/head_alt": { "x": 61.49, "y": -39.85, "rotation": -133.35, "width": 185, "height": 139 }
 		},
 		"leg_end": {
-			"leg_end": { "x": 36.03, "y": -41.9, "rotation": 164.39, "width": 141, "height": 60 }
+			"characters/frogfolk/leg_end": { "x": 36.03, "y": -41.9, "rotation": 164.39, "width": 141, "height": 60 }
 		},
 		"leg_end2": {
-			"leg_end": { "x": 38.98, "y": -58.53, "scaleX": 0.786, "scaleY": 0.804, "rotation": 158.4, "width": 141, "height": 60 }
+			"characters/frogfolk/leg_end": { "x": 38.98, "y": -58.53, "scaleX": 0.786, "scaleY": 0.804, "rotation": 158.4, "width": 141, "height": 60 }
 		},
 		"neck": {
-			"neck": { "x": 20.35, "y": 7.89, "rotation": -130.41, "width": 72, "height": 59 }
+			"characters/frogfolk/neck": { "x": 20.35, "y": 7.89, "rotation": -130.41, "width": 72, "height": 59 }
 		},
 		"torso": {
-			"torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 251, "height": 239 }
+			"characters/frogfolk/torso": { "x": 61.91, "y": 13.12, "rotation": -100.81, "width": 251, "height": 239 }
 		},
 		"weapon": {
-			"axe": { "x": 88.78, "y": 4.07, "scaleX": 0.848, "scaleY": 0.848, "rotation": 166.46, "width": 531, "height": 121 },
-			"halberd": { "path": "spear", "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": -109.52, "width": 90, "height": 472 }
+			"characters/frogfolk/sword": { "x": 88.78, "y": 4.07, "scaleX": 0.848, "scaleY": 0.848, "rotation": 166.46, "width": 531, "height": 121 },
+			"characters/frogfolk/spear": { "path": "characters/frogfolk/spear", "x": 104.75, "y": -15.22, "scaleX": 0.848, "scaleY": 0.848, "rotation": -109.52, "width": 90, "height": 472 }
 		}
 	}
 },
@@ -140,10 +140,10 @@
 		"slots": {
 			"images/goblin1/head": {
 				"attachment": [
-					{ "time": 0, "name": "head" },
-					{ "time": 0.2, "name": "head_alt" },
-					{ "time": 0.4667, "name": "head_alt" },
-					{ "time": 0.6, "name": "head" }
+					{ "time": 0, "name": "characters/frogfolk/head" },
+					{ "time": 0.2, "name": "characters/frogfolk/head_alt" },
+					{ "time": 0.4667, "name": "characters/frogfolk/head_alt" },
+					{ "time": 0.6, "name": "characters/frogfolk/head" }
 				]
 			}
 		},
@@ -301,8 +301,8 @@
 		"slots": {
 			"images/goblin1/head": {
 				"attachment": [
-					{ "time": 0, "name": "head" },
-					{ "time": 0.9333, "name": "head_alt" }
+					{ "time": 0, "name": "characters/frogfolk/head" },
+					{ "time": 0.9333, "name": "characters/frogfolk/head_alt" }
 				]
 			}
 		},
