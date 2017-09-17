@@ -9,6 +9,7 @@
 #ifndef Characters_hpp
 #define Characters_hpp
 
+#include "spine/SkeletonAnimation.h"
 #include "Constants.h"
 #include "Spell.hpp"
 #include "Monster.hpp"
@@ -28,7 +29,7 @@ public:
 	bool is_skeleton = false;
 	float projectile_height;
 	Vec2 head_offset;
-	Node *sprite;
+	spine::SkeletonAnimation *sprite;
 	std::vector<Buff *> buffs;
 	Buff *getBuffByType(BuffType);
 	void addBuff(Buff *, bool apply = true);

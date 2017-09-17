@@ -133,7 +133,7 @@
   "monster": {
     "dog": "Hound",
     "fast_dog": "Greyhound",
-	"hell_dog": "Hellhound",
+    "hell_dog": "Hellhound",
     "shaman": "Shaman",
     "goblin_sword": "Goblin Swordsman",
     "goblin_axe": "Goblin Axeman",
@@ -144,7 +144,7 @@
     "necromancer": "Necromancer",
     "frogfolk": "Frogfolk",
     "frogfolk_sword": "Frogfolk",
-	"troll": "Mountain Troll"
+    "troll": "Mountain Troll"
   },
   "level_end": {
     "GAME_OVER": "Game Over!",

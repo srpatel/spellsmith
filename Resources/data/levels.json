@@ -34,8 +34,11 @@
     "monsters": [
       [
         "necromancer",
-        "goblin_sword",
         "goblin_sword"
+      ],
+	  [
+        "necromancer",
+        "necromancer"
       ]
     ],
     "x": 294,
@@ -84,8 +87,8 @@
     "monsters": [
       [
         "fire_wizard",
-        "dog",
-        "dog"
+        "hell_dog",
+        "hell_dog"
       ]
     ],
     "x": 398,
@@ -118,7 +121,11 @@
         "frogfolk",
         "water_wizard",
         "frogfolk"
-      ]
+      ],
+	  [
+		"frogfolk",
+		"water_wizard"
+	  ]
     ],
     "x": 340,
     "y": 1050,
@@ -147,9 +154,9 @@
     "bg": "volcano2",
     "monsters": [
       [
+        "troll",
         "goblin_halberd",
-        "goblin_halberd",
-        "goblin_halberd"
+        "troll"
       ],
       [
         "fire_wizard",
@@ -169,12 +176,11 @@
     "monsters": [
       [
         "necromancer",
-        "necromancer",
-        "goblin_sword"
+        "necromancer"
       ],
       [
         "necromancer",
-        "necromancer"
+        "goblin_sword"
       ]
     ],
     "x": 178,
@@ -189,7 +195,7 @@
     "monsters": [
       [
         "fire_wizard",
-        "goblin_sword",
+        "troll",
         "fire_wizard"
       ],
       [
@@ -249,8 +255,7 @@
     "monsters": [
       [
         "water_wizard",
-        "ice_goblin",
-        "water_wizard"
+        "ice_goblin"
       ],
       [
         "ice_goblin",

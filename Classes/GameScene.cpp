@@ -1064,7 +1064,9 @@ void Game::enemyDoTurn() {
 		}
 	}
 	hud->updateAttackClocks();
-	saveArenaState();
+	if (round != nullptr && round->generated) {
+		saveArenaState();
+	}
 	if (!enemyTurn) {
 		// it's now the player's turn
 		attemptSetState(kStatePlayerTurn);
@@ -1473,6 +1475,10 @@ void Game::setup() {
 	wizard->buffHolder = Layer::create();
 	wizard->sprite->setOpacity(255);
 	wizard->sprite->addChild(wizard->buffHolder);
+	
+	if (SaveData::isLevelComplete("10")) {
+		wizard->sprite->setSkin("crowned");
+	}
 	
 	// TODO : Replace "100" with actual wizard width
 	layout.melee_spot.x = wizard->sprite->getPositionX() + 100 * scenery->char_scale;

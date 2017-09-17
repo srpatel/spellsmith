@@ -62,6 +62,11 @@
 		"characters/wizard/head": {
 			"characters/wizard/head": { "x": 24.06, "y": 8.68, "rotation": -89.03, "width": 81, "height": 83 }
 		}
+	},
+	"crowned": {
+		"characters/wizard/head": {
+			"characters/wizard/head": { "name": "characters/wizard/head_crowned", "x": 24.06, "y": 8.68, "rotation": -89.03, "width": 81, "height": 103 }
+		}
 	}
 },
 "animations": {
