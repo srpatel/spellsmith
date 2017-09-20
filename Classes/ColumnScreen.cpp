@@ -74,7 +74,7 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
 		layout.scenery_height = getBoundingBox().size.height - layout.column_height;
 		Size scenerySize(getBoundingBox().size.width, getBoundingBox().size.height - layout.column_height + 5);
 		background = LoadLargeSprite("bg_graveyard1.png");
-		background->setAnchorPoint(Vec2(0.5, 0.5));
+		background->setAnchorPoint(Vec2(0.5, 0));
 		
 		//Fit width:
 		float targetWidth = scenerySize.width;
@@ -89,7 +89,7 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
 		background->setScale(ratio);
 		
 		//background->setPosition({visibleSize.height - ratio * scenerySize.height/2, ratio * scenerySize.width / 2});
-		background->setPosition({visibleSize.width / 2, visibleSize.height - background->getBoundingBox().size.height/2});
+		background->setPosition({visibleSize.width / 2, layout.column_height});
 		addChild(background, 0);
 	}
 	// Gem background
