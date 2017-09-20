@@ -167,8 +167,8 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
 		if (canClickMap && bounds.containsPoint(touch->getLocation())) {
 			// TODO : Are you sure you want to go back to the map?
+			if (GameController::get()->getState() != kStateGame) return false;
 			PLAY_SOUND(kSoundEffect_UISelect);
-			
 			if (! mapConfirm || ! mapConfirm()) {
 				GameController::get()->setState(kStateMap);
 			} else {
@@ -192,6 +192,7 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
 	// trigger when you push down
 	onMuteClick->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
 		auto bounds = event->getCurrentTarget()->getBoundingBox();
+		if (GameController::get()->getState() != kStateGame) return false;
 		if (bounds.containsPoint(touch->getLocation())) {
 			SoundManager::get()->toggleMute();
 			PLAY_SOUND( kSoundEffect_UISelect );

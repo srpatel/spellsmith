@@ -146,13 +146,14 @@ void GameController::setState(State newstate) {
 				root->addChild(layer, kDepthScene);
 			
 				// Navigation bar
-				bool showBar = newstate != kStateSpellbook && newstate != kStateGame;
+				bool showBar = newstate != kStateGame;//newstate != kStateSpellbook && newstate != kStateGame;
 				bar->stopAllActions();
 				bar->resetButtons();
 				bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
 			
 				// Back button
-				showButton(newstate == kStateSpellbook);
+				//showButton(newstate == kStateSpellbook);
+				showButton(false);
 			
 				// tutorials
 				if (newstate == kStateMap) {
