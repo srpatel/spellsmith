@@ -34,6 +34,7 @@ public:
 	static GameController *get();
 	
 	// Game states
+	inline State getState() { return state; }
 	void setState(State state);
 	void startArena(std::string state);
 	void startRound(RoundDef *);

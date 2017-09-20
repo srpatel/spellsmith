@@ -1493,6 +1493,18 @@ void Game::setup() {
 	
 	updateHealthBars();
 }
+ArenaScore Game::getArenaScore() {
+	std::vector<std::string> inventory{};
+	for (Spell *spell : wizard->inventory) {
+		inventory.push_back(spell->getRawName());
+	}
+	return {
+		.avatar = "avatar",
+		.killedby = "killedby",
+		.score = stage,
+		.inventory = inventory
+	};
+}
 void Game::restartRound() {
 	startRound(round);
 }

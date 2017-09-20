@@ -13,6 +13,7 @@
 #include "GameScene.hpp"
 #include "SaveData.hpp"
 #include "Strings.hpp"
+#include "Online.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -27,22 +28,42 @@ bool GameOverPopup::init(bool isMain) {
 	addChild(label, 1);*/
 	
 	// Retry button
-	ui::Button *button1 = nullptr;
+	ui::Button *button1 = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
+	button1->setTitleFontName(Fonts::TEXT_FONT);
+	button1->setTitleFontSize(Fonts::TEXT_SIZE);
 	if (isMain) {
-		button1 = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
-		button1->setTitleFontName(Fonts::TEXT_FONT);
-		button1->setTitleFontSize(Fonts::TEXT_SIZE);
 		button1->setTitleText _("ui.RETRY_LEVEL");
 		button1->addTouchEventListener([this, button1](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
-				// For now, from scratch always!
 				button1->setTouchEnabled(false);
 				GameController::get()->setState(kStateGame);
 				Game::get()->restartRound();
 			}
 		});
-		addChild(button1, 1);
+	} else {
+		button1->setTitleText _("ui.SUBMIT_SCORE");
+		button1->addTouchEventListener([this, button1](Ref* pSender, ui::Widget::TouchEventType type) {
+			if (type == ui::Widget::TouchEventType::ENDED) {
+				button1->setTouchEnabled(false);
+				
+				// TODO : Remove Online.hpp, and replace with dialog.
+				// TODO : Grab correct values.
+				Online::get()->submitArenaScore({
+					.name = "sunil",
+					.avatar = "avatar",
+					.killedby = "killedby",
+					.score = 0,
+					.inventory = {}
+				});
+				/* 
+					Open up a submission dialog!
+					It shows your score, and asks for your name.
+					It has the submit button underneath.
+				*/
+			}
+		});
 	}
+	addChild(button1, 1);
 	
 	// "return to menu" button
 	auto button2 = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);

@@ -14,6 +14,9 @@
 struct SaveData {
 	static void clear();
 	
+	// uuid
+	static std::string getUuid();
+	
 	// Get arena state
 	static void setArenaState(std::string state);
 	static std::string getArenaState();

@@ -167,6 +167,8 @@
 		10DC05031BF90E80003BA69E /* pointlight.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10DC05011BF90E80003BA69E /* pointlight.frag */; };
 		10E5030A1F63BF7D00B575FB /* Banner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E503081F63BF7D00B575FB /* Banner.cpp */; };
 		10E5030B1F63BF7D00B575FB /* Banner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E503081F63BF7D00B575FB /* Banner.cpp */; };
+		10E5030F1F6723D700B575FB /* Online.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E5030D1F6723D700B575FB /* Online.cpp */; };
+		10E503101F6723D700B575FB /* Online.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E5030D1F6723D700B575FB /* Online.cpp */; };
 		10FC736E1E2D79BB0096BF0E /* MapScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */; };
 		10FC736F1E2D79BB0096BF0E /* MapScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */; };
 		10FC73731E2EDBC30096BF0E /* NavigationBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */; };
@@ -414,6 +416,8 @@
 		10DC05011BF90E80003BA69E /* pointlight.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.frag; sourceTree = "<group>"; };
 		10E503081F63BF7D00B575FB /* Banner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Banner.cpp; sourceTree = "<group>"; };
 		10E503091F63BF7D00B575FB /* Banner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Banner.hpp; sourceTree = "<group>"; };
+		10E5030D1F6723D700B575FB /* Online.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Online.cpp; sourceTree = "<group>"; };
+		10E5030E1F6723D700B575FB /* Online.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Online.hpp; sourceTree = "<group>"; };
 		10FC736C1E2D79BB0096BF0E /* MapScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapScreen.cpp; path = ../MapScreen.cpp; sourceTree = "<group>"; };
 		10FC736D1E2D79BB0096BF0E /* MapScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MapScreen.hpp; path = ../MapScreen.hpp; sourceTree = "<group>"; };
 		10FC73711E2EDBC30096BF0E /* NavigationBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBar.cpp; sourceTree = "<group>"; };
@@ -553,6 +557,8 @@
 				105E0CFA1BF14E3F0081D8F5 /* Spell.hpp */,
 				105E0CF71BF14E3F0081D8F5 /* Strings.cpp */,
 				105E0CF61BF14E3F0081D8F5 /* Strings.hpp */,
+				10E5030D1F6723D700B575FB /* Online.cpp */,
+				10E5030E1F6723D700B575FB /* Online.hpp */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1148,6 +1154,7 @@
 				100F9E551CD332E5001118C1 /* DoSpell.cpp in Sources */,
 				1029934A1D62429000D1492E /* Cocos2dAttachmentLoader.cpp in Sources */,
 				102993581D62429000D1492E /* MeshAttachment.c in Sources */,
+				10E5030F1F6723D700B575FB /* Online.cpp in Sources */,
 				102993681D62429000D1492E /* SkeletonBounds.c in Sources */,
 				1029935C1D62429000D1492E /* PathConstraint.c in Sources */,
 				1035F3DC1F589583006C1CB8 /* ColumnScreen.cpp in Sources */,
@@ -1164,6 +1171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10E503101F6723D700B575FB /* Online.cpp in Sources */,
 				1029934F1D62429000D1492E /* EventData.c in Sources */,
 				105E0D161BF14E3F0081D8F5 /* GameScene.cpp in Sources */,
 				1035F3DD1F589583006C1CB8 /* ColumnScreen.cpp in Sources */,

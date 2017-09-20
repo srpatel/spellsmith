@@ -36,7 +36,7 @@
         "necromancer",
         "goblin_sword"
       ],
-	  [
+      [
         "necromancer",
         "necromancer"
       ]
@@ -122,10 +122,10 @@
         "water_wizard",
         "frogfolk"
       ],
-	  [
-		"frogfolk",
-		"water_wizard"
-	  ]
+      [
+        "frogfolk",
+        "water_wizard"
+      ]
     ],
     "x": 340,
     "y": 1050,

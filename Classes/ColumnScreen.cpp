@@ -157,7 +157,7 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
  */
 	map_button = LoadSprite("icons/map.png");
 	map_button->setAnchorPoint(Vec2(0.5, 0.5));
-	map_button->setScale(ui_scale);
+	map_button->setScale(ui_scale * 0.8);
 	map_button->setPosition(getBoundingBox().size.width - layout.column_width/2 + 4, 34 * ui_scale);
 	addChild(map_button, kDepthButton);
 	auto onMapClick = EventListenerTouchOneByOne::create();
@@ -184,7 +184,7 @@ bool ColumnScreen::init(std::function<bool()> mapConfirm) {
 	
 	mute_button = LoadSprite("icons/speaker.png");
 	mute_button->setAnchorPoint(Vec2(0.5, 0.5));
-	mute_button->setScale(ui_scale);
+	mute_button->setScale(ui_scale * 0.8);
 	mute_button->setPosition(layout.column_width/2 - 4, 34 * ui_scale);
 	addChild(mute_button, kDepthButton);
 	auto onMuteClick = EventListenerTouchOneByOne::create();

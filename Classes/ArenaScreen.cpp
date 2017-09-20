@@ -10,6 +10,7 @@
 #include "SoundManager.hpp"
 #include "ImageManager.hpp"
 #include "SaveData.hpp"
+#include "NavigationBar.hpp"
 #include "GameController.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
@@ -54,7 +55,7 @@ bool ArenaScreen::init() {
 	button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleFontSize(Fonts::TEXT_SIZE);
-	button->setPosition(Vec2(size.width/2, 50 + button->getContentSize().height/2));
+	button->setPosition(Vec2(size.width/2, NavigationBar::HEIGHT + 50 + button->getContentSize().height/2));
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			button->setTouchEnabled(false);

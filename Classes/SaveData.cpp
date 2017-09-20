@@ -15,6 +15,27 @@ static std::string GetArenaKey(int version = kArenaStateVersion) {
 	return std::string{"arena-state"} + ToString(version);
 }
 
+std::string SaveData::getUuid() {
+	static std::string uuid = {};
+	if (uuid.empty()) {
+		auto ud = UserDefault::getInstance();
+		uuid = ud->getStringForKey("uuid", "");
+		if (uuid.empty()) {
+			char buffer[33] = {0};
+			const char charset[] =
+				"0123456789"
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+				"abcdefghijklmnopqrstuvwxyz";
+			for (int i = 0; i < 32; ++i) {
+				buffer[i] = charset[rand() % (sizeof(charset) - 1)];
+			}
+			uuid = buffer;
+			ud->setStringForKey("uuid", uuid);
+		}
+	}
+	return uuid;
+}
+
 void SaveData::clear() {
 	auto ud = UserDefault::getInstance();
 	// TODO - finish...

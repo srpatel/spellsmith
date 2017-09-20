@@ -24,7 +24,7 @@
 // Nav bar and back button
 #define kDepthFader 200
 #define kDepthPopup 100
-#define kDepthNavBar 50
+#define kDepthNavBar 201
 #define kDepthBackButton 51
 #define kDepthScene 0
 
@@ -146,13 +146,13 @@ void GameController::setState(State newstate) {
 				root->addChild(layer, kDepthScene);
 			
 				// Navigation bar
-				bool showBar = newstate == kStateMap;
+				bool showBar = newstate != kStateSpellbook && newstate != kStateGame;
 				bar->stopAllActions();
 				bar->resetButtons();
 				bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
 			
 				// Back button
-				showButton(newstate == kStateSpellbook || newstate == kStateArena || newstate == kStateOptions);
+				showButton(newstate == kStateSpellbook);
 			
 				// tutorials
 				if (newstate == kStateMap) {

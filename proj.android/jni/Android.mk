@@ -36,6 +36,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/MapScreen.cpp \
 ../../Classes/Monster.cpp \
 ../../Classes/NavigationBar.cpp \
+../../Classes/Online.cpp \
 ../../Classes/OptionsScreen.cpp \
 ../../Classes/Popup.cpp \
 ../../Classes/Projectiles.cpp \

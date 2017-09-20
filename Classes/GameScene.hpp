@@ -11,6 +11,7 @@
 #include "Level.hpp"
 #include "Projectiles.hpp"
 #include "ColumnScreen.hpp"
+#include "Online.hpp"
 
 typedef std::function<void()> PendingAction;
 
@@ -31,6 +32,8 @@ public:
 	
 	virtual void onSelect();
 	virtual void onDeselect();
+	
+	ArenaScore getArenaScore();
 	
 	// Restart the current game!
 	void startArena(std::string state);

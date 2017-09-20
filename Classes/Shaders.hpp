@@ -15,6 +15,7 @@ public:
 	static GLProgram *smooth();
 	static GLProgram *smokey();
 	static GLProgram *greyscale();
+	static GLProgram *bright();
 };
 
 #endif /* Shaders_hpp */

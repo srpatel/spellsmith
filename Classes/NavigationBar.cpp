@@ -12,6 +12,7 @@
 #include "GameController.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
+#include "Shaders.hpp"
 #include "SaveData.hpp"
 
 #include "ui/CocosGUI.h"
@@ -29,6 +30,7 @@ void NavigationBar::resetButtons() {
 	buttonHolder->removeAllChildren();
 	
 	auto spells = SaveData::getSpells();
+	buttons.push_back({("ui.MAP"), "icons/map.png", kStateMap}); // Set state to map
 	if (! spells.empty()) {
 		buttons.push_back({("ui.SPELLBOOK"), "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
@@ -44,8 +46,15 @@ void NavigationBar::resetButtons() {
 		auto n = LoadSprite(b.imagePath);
 		n->setScale(0.8);
 		n->setAnchorPoint(Vec2(0.5, 0.5));
-		n->setPosition(currentX, getContentSize().height/2.0f);
+		n->setPosition(currentX, getContentSize().height/2.0f - 3);
 		buttonHolder->addChild(n);
+		
+		if (b.state == GameController::get()->getState()) {
+			GLProgram *shader = Shaders::bright();
+			GLProgramState *state = GLProgramState::create(shader);
+			n->setGLProgramState(state);
+		}
+		
 		//auto t = Label::createWithTTF(_(b.label), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 		//t->setTextColor(Color4B::BLACK);
 		//t->setPosition(currentX, 10);
@@ -82,9 +91,9 @@ bool NavigationBar::init() {
 	setContentSize(Size(visibleSize.width, NavigationBar::HEIGHT));
 	
 	auto sprite = LoadSprite("ui/nav_bar.png");
-	auto ratio = 55.0f / sprite->getContentSize().height;
-	sprite->setAnchorPoint(Vec2(0.5, 1));
-	sprite->setScale(3, -ratio);
+	auto ratio = getContentSize().height / sprite->getContentSize().height;
+	sprite->setAnchorPoint(Vec2(0.5, 0));
+	sprite->setScale(3, ratio);
 	sprite->setPosition(Vec2(visibleSize.width/2, 0));
 	//	sprite->setScale(ui_scale);
 	addChild(sprite);
