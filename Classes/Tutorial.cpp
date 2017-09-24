@@ -30,7 +30,7 @@ Layer *makeTextBox(std::string text, int location, bool withTtc, float delay) {
 		currentPopup->removeFromParent();
 	}
 
-	auto yBuffer = 50;
+	auto yBuffer = withTtc ? 50 : 20;
 	auto size = Size(200, 0);
 	
 	// Add wrapping text in the middle...
@@ -190,9 +190,10 @@ bool Tutorial::activate(int number) {
 				_("tutorial.5"),
 				kPosGrid, true, 0);
 			game->addChild(popup, 15);
-			// point to red circle
+			// point to red circle?
 		} else if (number == 6) {
-			game->setMapButtonVisible(true);
+			// We force them to go to the spellbook for the tutorial
+			// game->setMapButtonVisible(true);
 			game->grid->setActive(true);
 		} else if (number == 7) {
 			// If our spellbook contains only one spell, and there are no
@@ -224,7 +225,7 @@ bool Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			GameController::get()->showButton(false);
+			//GameController::get()->showButton(false);
 			spellbook->setMapButtonVisible(false);
 			
 			// Disallow dragging spells
@@ -286,7 +287,7 @@ bool Tutorial::activate(int number) {
 			spellbook->addChild(popup, 15);
 			
 			// Re-enable ui
-			GameController::get()->showButton(true);
+			//GameController::get()->showButton(true);
 			spellbook->setMapButtonVisible(true);
 		} else if (number == 11) {
 		}
@@ -368,7 +369,7 @@ bool Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			GameController::get()->showButton(false);
+			//GameController::get()->showButton(false);
 			spellbook->setMapButtonVisible(false);
 			
 			// Learn spell text
@@ -407,7 +408,7 @@ bool Tutorial::activate(int number) {
 				others.push_back(finger);
 			}
 		} else if (number == 202) {
-			GameController::get()->showButton(true);
+			//GameController::get()->showButton(true);
 			
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			spellbook->setMapButtonVisible(true);

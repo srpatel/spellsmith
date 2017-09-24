@@ -22,9 +22,9 @@
 #include "ui/CocosGUI.h"
 
 // Nav bar and back button
-#define kDepthFader 200
-#define kDepthPopup 100
-#define kDepthNavBar 201
+#define kDepthFader 100
+#define kDepthPopup 200
+#define kDepthNavBar 101
 #define kDepthBackButton 51
 #define kDepthScene 0
 

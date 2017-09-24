@@ -366,7 +366,7 @@
 		"tail4": {
 			"tail3": { "name": "characters/dog/3/tail3", "x": 21.19, "y": 2.89, "rotation": 3.69, "width": 62, "height": 22 }
 		}
-	},
+	}
 },
 "animations": {
 	"attack": {

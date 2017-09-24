@@ -44,7 +44,7 @@
     "x": 294,
     "y": 348,
     "rewards": [
-      "phase"
+      "drain_life"
     ]
   },
   "4": {
@@ -55,6 +55,11 @@
         "shaman",
         "dog",
         "goblin_sword"
+      ],
+      [
+        "shaman",
+        "dog",
+        "dog"
       ]
     ],
     "x": 210,
@@ -175,18 +180,19 @@
     "bg": "graveyard1",
     "monsters": [
       [
+        "goblin_sword",
         "necromancer",
-        "necromancer"
+        "goblin_sword"
       ],
       [
         "necromancer",
-        "goblin_sword"
+        "necromancer"
       ]
     ],
     "x": 178,
     "y": 350,
     "rewards": [
-      "drain_life"
+      "phase"
     ]
   },
   "5a": {

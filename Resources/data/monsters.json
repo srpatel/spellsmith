@@ -260,6 +260,7 @@
   },
   {
     "name": "shaman",
+    "scale": 0.92,
     "offsets": {
       "proj_from": [
         0,
@@ -296,6 +297,7 @@
   },
   {
     "name": "necromancer",
+    "scale": 0.92,
     "offsets": {
       "proj_from": [
         0,

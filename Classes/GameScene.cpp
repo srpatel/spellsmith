@@ -827,7 +827,6 @@ void Game::attemptSetState(GameState nextstate) {
 					// TODO : This is the same branch as above...
 					
 					// You are dead!
-					auto fadeOut = FadeOut::create(0.2f);
 					auto nextLevel = CallFunc::create([this](){
 						// Dialog takes all focus!
 						if (game_over_dialog != nullptr)
@@ -839,9 +838,12 @@ void Game::attemptSetState(GameState nextstate) {
 						game_over_dialog->setPosition(grid->getPosition());
 						addChild(game_over_dialog);
 					});
-					
-					auto seq = Sequence::create(fadeOut, nextLevel, nullptr);
-					wizard->sprite->runAction(seq);
+					auto s = wizard->sprite->getBoundingBox().size;
+					auto death = AnimDeath::create(
+						wizard->sprite->getPosition() + Vec2{-7 * scenery->char_scale, 5 * scenery->char_scale + s.height/2},
+						wizard->sprite->getScale() * 3, nextLevel);
+					wizard->sprite->removeFromParent();
+					scenery->addChild(death);
 				}
 			}
 		};

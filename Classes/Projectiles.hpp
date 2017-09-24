@@ -96,6 +96,7 @@ PROJECTILE_TIME(BasicDart, dart,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*o
 PROJECTILE(BasicAnvil, anvil,    /*shoot*/  0, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 0), kSoundEffect_PHEarth);
 PROJECTILE(BasicIce, icebolt,    /*shoot*/  10, /*travel*/ 3, /*hit*/  8, /*offset*/ Vec2(0, 5), kSoundEffect_PHIce);
 
+ANIM(AnimDeath, "death", 9, "pc_death00", AnimType::kSimple);
 ANIM(AnimHeal, "castheal", 11, "castheal", AnimType::kSimple);
 ANIM(AnimFire, "castfire", 11, "castfire", AnimType::kSimple);
 ANIM(AnimLightning1, "lightning/1", 11, "LightningStrike100", AnimType::kSimple);
