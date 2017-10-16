@@ -1,5 +1,29 @@
 [
   {
+    "name": "fire_golem",
+    "scale": 1.1,
+    "offsets": {
+      "proj_to": [
+        -40,
+        0
+      ]
+    },
+    "skeleton": {
+      "name": "golem",
+      "attachments": []
+    },
+    "health": 30,
+    "attack_frequency": 3,
+    "attacks": [
+      {
+        "ratio": 1,
+        "type": "melee",
+        "animation": "attack",
+        "amount": 5
+      }
+    ]
+  },
+  {
     "name": "frogfolk",
     "offsets": {
       "proj_to": [

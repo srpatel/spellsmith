@@ -1,0 +1,606 @@
+{
+"skeleton": { "hash": "747FAhQ/0TkXu60xmIDFZuLJjCA", "spine": "3.6.45", "width": 310.78, "height": 449.84, "images": "" },
+"bones": [
+	{ "name": "root", "x": -7.37, "y": 60.61 },
+	{ "name": "OgreTorso", "parent": "root", "length": 171.15, "rotation": 132.05, "x": 60.09, "y": 162.62 },
+	{ "name": "OgreBArm1", "parent": "OgreTorso", "length": 51.22, "rotation": 133.42, "x": 165.93, "y": 50.02 },
+	{ "name": "OgreBA2", "parent": "OgreBArm1", "length": 60.65, "rotation": 362.41, "x": 64.57, "y": -0.02 },
+	{ "name": "OgreBA3", "parent": "OgreBA2", "length": 28.86, "rotation": 354.23, "x": 68.84, "y": -1.83 },
+	{ "name": "OgreBLeg1", "parent": "OgreTorso", "length": 49.15, "rotation": 107.49, "x": 16.65, "y": 70.55 },
+	{ "name": "OgreBLeg2", "parent": "OgreBLeg1", "length": 44.05, "rotation": 22.34, "x": 89.58, "y": 4.99 },
+	{ "name": "OgreFArm1", "parent": "OgreTorso", "length": 118.24, "rotation": 132.39, "x": 132.51, "y": -20.52 },
+	{ "name": "OgreFArm2", "parent": "OgreFArm1", "length": 67.7, "rotation": 342.63, "x": 110.4, "y": -2.19 },
+	{ "name": "OgreFArm3", "parent": "OgreFArm2", "length": 26.02, "rotation": 10.36, "x": 83.8, "y": -1.79 },
+	{ "name": "OgreFLeg1", "parent": "OgreTorso", "length": 93.67, "rotation": 109.34, "x": -29.73, "y": -5.06 },
+	{ "name": "OgreFLeg2", "parent": "OgreFLeg1", "length": 56.29, "rotation": 383.53, "x": 109.09, "y": 5.57 },
+	{ "name": "OgreHead", "parent": "OgreTorso", "length": 65.38, "rotation": 40.28, "x": 237.31, "y": 63.22 }
+],
+"slots": [
+	{ "name": "OgreBL2", "bone": "OgreBLeg2", "attachment": "characters/golem/FL2" },
+	{ "name": "OgreBL1", "bone": "OgreBLeg1", "attachment": "characters/golem/BL1" },
+	{ "name": "OgreBA3", "bone": "OgreBA3", "attachment": "characters/golem/BA3fist" },
+	{ "name": "OgreBA2", "bone": "OgreBA2" },
+	{ "name": "OgreBA4", "bone": "OgreBA2", "attachment": "characters/golem/BA2" },
+	{ "name": "OgreBA1", "bone": "OgreBArm1", "attachment": "characters/golem/BA1" },
+	{ "name": "OgreTorso", "bone": "OgreTorso", "attachment": "characters/golem/Torso" },
+	{ "name": "OgreFA4", "bone": "OgreBA3" },
+	{ "name": "OgreFL2", "bone": "OgreFLeg2", "attachment": "characters/golem/FL2" },
+	{ "name": "OgreFL1", "bone": "OgreFLeg1", "attachment": "characters/golem/FL1" },
+	{ "name": "OgreHead", "bone": "OgreHead", "attachment": "characters/golem/Head" },
+	{ "name": "OgreFA3", "bone": "OgreFArm3", "attachment": "characters/golem/FA3fist" },
+	{ "name": "OgreFA2", "bone": "OgreFArm2", "attachment": "characters/golem/FA2" },
+	{ "name": "OgreFA1", "bone": "OgreFArm1", "attachment": "characters/golem/FA1" },
+	{ "name": "outline", "bone": "root" }
+],
+"skins": {
+	"default": {
+		"OgreBA1": {
+			"characters/golem/BA1": { "x": 0.11, "y": 25.5, "scaleX": 0.853, "scaleY": 0.766, "rotation": 116.85, "width": 144, "height": 174 }
+		},
+		"OgreBA3": {
+			"characters/golem/BA3": { "x": 9.95, "y": -7.62, "scaleX": 0.974, "scaleY": 0.933, "rotation": 156.09, "width": 68, "height": 57 },
+			"characters/golem/BA3fist": { "x": 9.37, "y": -8.76, "scaleY": 0.942, "rotation": 155.68, "width": 68, "height": 57 }
+		},
+		"OgreBA4": {
+			"characters/golem/BA2": { "x": 26.2, "y": 1.65, "scaleX": 0.758, "scaleY": 0.97, "rotation": 145.3, "width": 136, "height": 63 }
+		},
+		"OgreBL1": {
+			"characters/golem/BL1": { "x": 17.79, "y": 11.16, "rotation": 108.46, "width": 77, "height": 153 }
+		},
+		"OgreBL2": {
+			"characters/golem/FL2": { "x": 41.92, "y": 17.67, "scaleX": 0.949, "rotation": 98.13, "width": 70, "height": 116 }
+		},
+		"OgreFA1": {
+			"characters/golem/FA1": { "x": 40.92, "y": 16.53, "scaleX": 0.945, "scaleY": 0.949, "rotation": 108.94, "width": 144, "height": 174 }
+		},
+		"OgreFA2": {
+			"characters/golem/FA2": { "x": 32.64, "y": 0.44, "scaleX": 0.862, "scaleY": 1.251, "rotation": 155.53, "width": 136, "height": 63 }
+		},
+		"OgreFA3": {
+			"characters/golem/FA3": { "x": 13.1, "y": -1.18, "scaleY": 1.028, "rotation": 506.85, "width": 68, "height": 57 },
+			"characters/golem/FA3fist": { "x": 13.47, "y": -1.79, "rotation": 146.65, "width": 68, "height": 57 }
+		},
+		"OgreFL1": {
+			"characters/golem/FL1": { "x": 47.2, "y": 10.76, "rotation": 109.97, "width": 77, "height": 153 }
+		},
+		"OgreFL2": {
+			"characters/golem/FL2": { "x": 45.59, "y": 14.74, "rotation": 95.08, "width": 70, "height": 116 }
+		},
+		"OgreHead": {
+			"characters/golem/Head": { "x": -26.61, "y": -18.84, "rotation": 187.67, "width": 125, "height": 158 },
+			"characters/golem/Head2": { "x": -25.78, "y": -19.6, "rotation": 187.67, "width": 125, "height": 158 },
+			"characters/golem/Head3": { "x": -25.64, "y": -20.64, "rotation": -172.33, "width": 125, "height": 158 }
+		},
+		"OgreTorso": {
+			"characters/golem/Torso": { "x": 90.45, "y": -24.72, "rotation": -132.05, "width": 227, "height": 278 }
+		}
+	}
+},
+"animations": {
+	"Bomb": {
+		"bones": {
+			"OgreTorso": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1, "angle": 2.96 },
+					{ "time": 2, "angle": 0 }
+				]
+			},
+			"OgreFLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1, "angle": -2.83 },
+					{ "time": 2, "angle": 0 }
+				]
+			},
+			"OgreBLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1, "angle": -3.86 },
+					{ "time": 2, "angle": 0 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 },
+					{ "time": 1, "x": 0.966, "y": 1 },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"OgreFArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 2, "angle": 0 }
+				]
+			},
+			"OgreFArm2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 360.28 },
+					{ "time": 2, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -3.55, "y": 1.99 },
+					{ "time": 2, "x": 0, "y": 0 }
+				]
+			}
+		}
+	},
+	"Cast": {
+		"bones": {
+			"OgreTorso": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -8.7 },
+					{ "time": 0.8333, "angle": -4.11 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreFLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 8.98 },
+					{ "time": 0.8333, "angle": 5.94 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreBLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 11.96 },
+					{ "time": 0.8333, "angle": 8.12 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreFArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 39.73 },
+					{ "time": 0.8333, "angle": -18.55 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreFArm2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -420.91 },
+					{ "time": 0.8333, "angle": -377.93 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreBArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 22.78 },
+					{ "time": 0.8333, "angle": -14.66 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreBA2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -415.96 },
+					{ "time": 0.8333, "angle": -405.72 },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			},
+			"OgreHead": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 6.4 },
+					{ "time": 0.8333, "angle": 0, "curve": "stepped" },
+					{ "time": 1.1667, "angle": 0 }
+				]
+			}
+		}
+	},
+	"attack": {
+		"slots": {
+			"OgreBA3": {
+				"attachment": [
+					{ "time": 0, "name": "BA3" },
+					{ "time": 0.3333, "name": "BA3fist" },
+					{ "time": 1.1667, "name": "BA3" }
+				]
+			},
+			"OgreFA3": {
+				"attachment": [
+					{ "time": 0, "name": "FA3" },
+					{ "time": 0.3333, "name": "FA3fist" },
+					{ "time": 1.1667, "name": "FA3" }
+				]
+			},
+			"OgreHead": {
+				"attachment": [
+					{ "time": 0, "name": "Head" },
+					{ "time": 0.6667, "name": "Head2" },
+					{ "time": 1, "name": "Head" }
+				]
+			}
+		},
+		"bones": {
+			"OgreTorso": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -17.32 },
+					{ "time": 1, "angle": 15.92 },
+					{ "time": 1.3333, "angle": -4.9 },
+					{ "time": 1.5, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0, "y": 0 },
+					{ "time": 1, "x": -35.77, "y": -11.64 },
+					{ "time": 1.3333, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.5, "x": 0, "y": 0 },
+					{ "time": 1.7333, "x": 2.31, "y": 0 }
+				]
+			},
+			"OgreFLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 14.73 },
+					{ "time": 1, "angle": -4.59 },
+					{ "time": 1.3333, "angle": 3.56 },
+					{ "time": 1.5, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0, "y": 0 },
+					{ "time": 1, "x": 8.11, "y": -10.85 },
+					{ "time": 1.3333, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.5, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFLeg2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -349.22 },
+					{ "time": 1, "angle": -362.91 },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0, "y": 0 },
+					{ "time": 1, "x": 3.55, "y": -0.23 },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 14.88 },
+					{ "time": 1, "angle": -18.05 },
+					{ "time": 1.3333, "angle": 6.54 },
+					{ "time": 1.5, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -24.04, "y": -3.15 },
+					{ "time": 1, "x": -13.08, "y": -24.1 },
+					{ "time": 1.3333, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.5, "x": 0, "y": 0 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 },
+					{ "time": 0.6667, "x": 1.114, "y": 1 },
+					{ "time": 1, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 1.3333, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 1.5, "x": 1, "y": 1 }
+				]
+			},
+			"OgreBLeg2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 10.06 },
+					{ "time": 1, "angle": 5.6 },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -5.52, "y": -2.67 },
+					{ "time": 1, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreHead": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 15.47 },
+					{ "time": 1, "angle": 0, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -9.9, "y": 2.55 },
+					{ "time": 1, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -38.84 },
+					{ "time": 1, "angle": -31.67 },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -11.63, "y": -8.66 },
+					{ "time": 1, "x": -15.67, "y": 8.81 },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFArm2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -413.24 },
+					{ "time": 1, "angle": 0, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": 9.89, "y": -13.42 },
+					{ "time": 1, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFArm3": {
+				"translate": [
+					{ "time": 0.3333, "x": 0, "y": -8 }
+				]
+			},
+			"OgreBArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -43.5 },
+					{ "time": 1, "angle": -30.26 },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBA2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": -414.33 },
+					{ "time": 1, "angle": 0, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 1.3333, "x": 0, "y": 0 }
+				]
+			}
+		}
+	},
+	"die": {
+		"slots": {
+			"OgreHead": {
+				"attachment": [
+					{ "time": 0, "name": "Head" },
+					{ "time": 0.2667, "name": "Head3" }
+				]
+			}
+		},
+		"bones": {
+			"OgreTorso": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 38.1 },
+					{ "time": 0.6667, "angle": -307.95 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.3333, "x": 12.39, "y": -51.61 },
+					{ "time": 0.6667, "x": 10.77, "y": -89.2 }
+				]
+			},
+			"OgreFLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 21.26 },
+					{ "time": 0.6667, "angle": 32.4 }
+				]
+			},
+			"OgreFLeg2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": -329.85 },
+					{ "time": 0.6667, "angle": -345.69 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.3333, "x": -0.51, "y": -5.26 },
+					{ "time": 0.6667, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 20.49 },
+					{ "time": 0.6667, "angle": 52.33 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.3333, "x": -0.23, "y": -51.96 },
+					{ "time": 0.6667, "x": -24.33, "y": -38.35 }
+				]
+			},
+			"OgreBLeg2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 34.36 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.3333, "x": -9.31, "y": -1.56 }
+				]
+			},
+			"OgreFArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": -21.76 },
+					{ "time": 0.6667, "angle": -44.61 }
+				],
+				"translate": [
+					{ "time": 0.6667, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFArm2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": -373.52 },
+					{ "time": 0.6667, "angle": -396.31 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": -0.11, "y": -3.37 }
+				]
+			},
+			"OgreHead": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6667, "angle": 18.57 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": -3.19 },
+					{ "time": 0.6667, "angle": -30.3 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0, "y": 0 },
+					{ "time": 0.6667, "x": 0.95, "y": -33.83 }
+				]
+			},
+			"OgreBA2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": -425.19 },
+					{ "time": 0.6667, "angle": -445.8 }
+				]
+			}
+		}
+	},
+	"hit": {
+		"slots": {
+			"OgreBA3": {
+				"attachment": [
+					{ "time": 0, "name": "BA3" },
+					{ "time": 0.1667, "name": "BA3fist" },
+					{ "time": 0.6667, "name": "BA3" }
+				]
+			},
+			"OgreFA3": {
+				"attachment": [
+					{ "time": 0, "name": "FA3" },
+					{ "time": 0.1667, "name": "FA3fist" },
+					{ "time": 0.6667, "name": "FA3" }
+				]
+			},
+			"OgreHead": {
+				"attachment": [
+					{ "time": 0, "name": "Head" },
+					{ "time": 0.3, "name": "Head2" },
+					{ "time": 0.6, "name": "Head" }
+				]
+			}
+		},
+		"bones": {
+			"OgreTorso": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -4.18 },
+					{ "time": 0.8333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.5, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.8333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 4.27 },
+					{ "time": 0.8333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.5, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.8333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBLeg1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 6.68 },
+					{ "time": 0.8333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.5, "x": 0.1, "y": 5.62 },
+					{ "time": 0.8333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreHead": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 6.96 },
+					{ "time": 0.8333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.5, "x": -2.28, "y": -2.94 },
+					{ "time": 0.8333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreFArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 12.96 },
+					{ "time": 0.8333, "angle": 0 }
+				]
+			},
+			"OgreFArm2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -38.66 },
+					{ "time": 0.8333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.5, "x": 11.14, "y": -9.05 },
+					{ "time": 0.8333, "x": 0, "y": 0 }
+				]
+			},
+			"OgreBArm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": 12.07 },
+					{ "time": 0.8333, "angle": 0 }
+				]
+			},
+			"OgreBA2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5, "angle": -22.3 },
+					{ "time": 0.8333, "angle": 0 }
+				]
+			}
+		}
+	}
+}
+}
