@@ -48,13 +48,13 @@ bool GameOverPopup::init(bool isMain) {
 				
 				// TODO : Remove Online.hpp, and replace with dialog.
 				// TODO : Grab correct values.
-				Online::get()->submitArenaScore({
-					.name = "sunil",
-					.avatar = "avatar",
-					.killedby = "killedby",
-					.score = 0,
-					.inventory = {}
-				});
+				ArenaScore a;
+				a.name = "sunil";
+				a.avatar = "avatar";
+				a.killedby = "killedby";
+				a.score = 0;
+				a.inventory = {};
+				Online::get()->submitArenaScore(a);
 				/* 
 					Open up a submission dialog!
 					It shows your score, and asks for your name.

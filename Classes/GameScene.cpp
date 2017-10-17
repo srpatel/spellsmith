@@ -1502,12 +1502,12 @@ ArenaScore Game::getArenaScore() {
 	for (Spell *spell : wizard->inventory) {
 		inventory.push_back(spell->getRawName());
 	}
-	return {
-		.avatar = "avatar",
-		.killedby = "killedby",
-		.score = stage,
-		.inventory = inventory
-	};
+	ArenaScore a;
+	a.avatar = "avatar";
+	a.killedby = "killedby";
+	a.score = stage;
+	a.inventory = inventory;
+	return a;
 }
 void Game::restartRound() {
 	startRound(round);
