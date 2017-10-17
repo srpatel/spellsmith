@@ -12,14 +12,14 @@
       "name": "golem",
       "attachments": []
     },
-    "health": 30,
-    "attack_frequency": 3,
+    "health": 80,
+    "attack_frequency": 2,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 5
+        "amount": 9
       }
     ]
   },
@@ -39,7 +39,7 @@
         }
       ]
     },
-    "health": 30,
+    "health": 40,
     "attack_frequency": 3,
     "attacks": [
       {
@@ -221,8 +221,8 @@
         "brown"
       ]
     },
-    "health": 20,
-    "attack_frequency": 2,
+    "health": 30,
+    "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
@@ -246,8 +246,8 @@
         "grey"
       ]
     },
-    "health": 20,
-    "attack_frequency": 1,
+    "health": 25,
+    "attack_frequency": 0,
     "attacks": [
       {
         "ratio": 1,
@@ -271,14 +271,14 @@
         "hell"
       ]
     },
-    "health": 20,
+    "health": 35,
     "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 4
+        "amount": 5
       }
     ]
   },
