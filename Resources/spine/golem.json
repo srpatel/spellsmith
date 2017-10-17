@@ -197,23 +197,23 @@
 		"slots": {
 			"OgreBA3": {
 				"attachment": [
-					{ "time": 0, "name": "BA3" },
-					{ "time": 0.3333, "name": "BA3fist" },
-					{ "time": 1.1667, "name": "BA3" }
+					{ "time": 0, "name": "characters/golem/BA3" },
+					{ "time": 0.3333, "name": "characters/golem/BA3fist" },
+					{ "time": 1.1667, "name": "characters/golem/BA3" }
 				]
 			},
 			"OgreFA3": {
 				"attachment": [
-					{ "time": 0, "name": "FA3" },
-					{ "time": 0.3333, "name": "FA3fist" },
-					{ "time": 1.1667, "name": "FA3" }
+					{ "time": 0, "name": "characters/golem/FA3" },
+					{ "time": 0.3333, "name": "characters/golem/FA3fist" },
+					{ "time": 1.1667, "name": "characters/golem/FA3" }
 				]
 			},
 			"OgreHead": {
 				"attachment": [
-					{ "time": 0, "name": "Head" },
-					{ "time": 0.6667, "name": "Head2" },
-					{ "time": 1, "name": "Head" }
+					{ "time": 0, "name": "characters/golem/Head" },
+					{ "time": 0.6667, "name": "characters/golem/Head2" },
+					{ "time": 1, "name": "characters/golem/Head" }
 				]
 			}
 		},
@@ -382,8 +382,8 @@
 		"slots": {
 			"OgreHead": {
 				"attachment": [
-					{ "time": 0, "name": "Head" },
-					{ "time": 0.2667, "name": "Head3" }
+					{ "time": 0, "name": "characters/golem/Head" },
+					{ "time": 0.2667, "name": "characters/golem/Head3" }
 				]
 			}
 		},
@@ -498,23 +498,23 @@
 		"slots": {
 			"OgreBA3": {
 				"attachment": [
-					{ "time": 0, "name": "BA3" },
-					{ "time": 0.1667, "name": "BA3fist" },
-					{ "time": 0.6667, "name": "BA3" }
+					{ "time": 0, "name": "characters/golem/BA3" },
+					{ "time": 0.1667, "name": "characters/golem/BA3fist" },
+					{ "time": 0.6667, "name": "characters/golem/BA3" }
 				]
 			},
 			"OgreFA3": {
 				"attachment": [
-					{ "time": 0, "name": "FA3" },
-					{ "time": 0.1667, "name": "FA3fist" },
-					{ "time": 0.6667, "name": "FA3" }
+					{ "time": 0, "name": "characters/golem/FA3" },
+					{ "time": 0.1667, "name": "characters/golem/FA3fist" },
+					{ "time": 0.6667, "name": "characters/golem/FA3" }
 				]
 			},
 			"OgreHead": {
 				"attachment": [
-					{ "time": 0, "name": "Head" },
-					{ "time": 0.3, "name": "Head2" },
-					{ "time": 0.6, "name": "Head" }
+					{ "time": 0, "name": "characters/golem/Head" },
+					{ "time": 0.3, "name": "characters/golem/Head2" },
+					{ "time": 0.6, "name": "characters/golem/Head" }
 				]
 			}
 		},
