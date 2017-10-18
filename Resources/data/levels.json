@@ -25,7 +25,7 @@
     "x": 313,
     "y": 204,
     "rewards": [
-      "forest_breeze"
+      "nature_call"
     ]
   },
   "3": {
@@ -125,8 +125,7 @@
     "x": 324,
     "y": 887,
     "rewards": [
-      "fertilise",
-      "heal"
+      "fertilise"
     ]
   },
   "8": {
@@ -150,7 +149,7 @@
     "x": 340,
     "y": 1050,
     "rewards": [
-      "fountain_of_youth"
+      "ice_shard"
     ]
   },
   "9": {

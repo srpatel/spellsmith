@@ -13,6 +13,10 @@
       "name": "Forest Breeze",
       "description": "Heal for 5. Create 1 crystal gem."
     },
+    "nature_call": {
+	  "name": "Nature's Call",
+      "description": "Create 3 crystal gems."
+    },
     "chill": {
       "name": "Freeze",
       "description": "Freeze enemy for 2 turns."
@@ -31,7 +35,7 @@
     },
     "crystalise": {
       "name": "Crystalise",
-      "description": "Heal for 3. Create 3 crystal gems."
+      "description": "Create 8 crystal gems."
     },
     "smelt": {
       "name": "Smelt",
@@ -52,6 +56,10 @@
     "ice_bolt": {
       "name": "Ice Bolt",
       "description": "Deal 3 damage. 50% chance to freeze for 2 turns."
+    },
+    "ice_shard": {
+      "name": "Ice Shard",
+      "description": "Deal 6 damage. Freeze for 2 turns."
     },
     "stun_strike": {
       "name": "Stun Strike",

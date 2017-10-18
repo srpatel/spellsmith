@@ -22,6 +22,17 @@
     ]
   },
   {
+    "name": "nature_call",
+    "tier": 1,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "A    ",
+      "EEA  "
+    ]
+  },
+  {
     "name": "forest_breeze",
     "tier": 1,
     "shape": [
@@ -150,6 +161,17 @@
       "     ",
       "     ",
       "     ",
+      "WWA  "
+    ]
+  },
+  {
+    "name": "ice_shard",
+    "tier": 3,
+    "shape": [
+      "     ",
+      "     ",
+      "     ",
+      "WWA  ",
       "WWA  "
     ]
   },
