@@ -12,6 +12,7 @@
 #include "Spellbook.hpp"
 #include "SpellBlob.hpp"
 #include "GameController.hpp"
+#include "NavigationBar.hpp"
 #include "Popup.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
@@ -131,7 +132,7 @@ bool Tutorial::activate(int number) {
 	printf("Activating tutorial %d\n", number);
 
 	// Popups which stay visible twice: 3 (not anymore)
-	auto remover = Sequence::create(FadeOut::create(1), RemoveSelf::create(), nullptr);
+	auto remover = Sequence::create(FadeOut::create(0.5), RemoveSelf::create(), nullptr);
 	if (currentPopup != nullptr /*&& number != 3*/) {
 		currentPopup->stopAllActions();
 		// Sometimes we don't want to fade it out (when changing screens)
@@ -184,13 +185,14 @@ bool Tutorial::activate(int number) {
 			// Fade everything in...
 			game->grid->flashPreset(0);
 		} else if (number == 4) {
-		} else if (number == 5) {
 			game->grid->setActive(false);
 			auto popup = makeTextBox(
 				_("tutorial.5"),
 				kPosGrid, true, 0);
 			game->addChild(popup, 15);
 			// point to red circle?
+		} else if (number == 5) {
+			game->grid->setActive(true);
 		} else if (number == 6) {
 			// We force them to go to the spellbook for the tutorial
 			// game->setMapButtonVisible(true);
@@ -212,7 +214,7 @@ bool Tutorial::activate(int number) {
 				if (s == "fireball") {
 					learntFireball = true;
 				} else {
-					learntOneOnly = false;
+					//learntOneOnly = false;
 				}
 			}
 			
@@ -289,6 +291,27 @@ bool Tutorial::activate(int number) {
 			// Re-enable ui
 			//GameController::get()->showButton(true);
 			spellbook->setMapButtonVisible(true);
+			
+			// Show arrow
+			auto finger = LoadSprite("ui/fingerpoint.png");
+			finger->setAnchorPoint(Vec2(0.5, 1));
+			layout_t layout = Game::get()->getLayout();
+			auto fromPos = spellbook->getPosition() + spellbook->getContentSize()/2;
+			auto toPos = GameController::get()->bar->firstButtonPos;
+			GameController::get()->root->addChild(finger, 1000);
+			finger->setOpacity(0);
+			finger->runAction(RepeatForever::create(
+				Sequence::create(
+					MoveTo::create(0, fromPos),
+					FadeIn::create(0.2f),
+					DelayTime::create(0.2f),
+					MoveTo::create(0.8f, toPos),
+					DelayTime::create(0.2f),
+					FadeOut::create(0.2f),
+					nullptr
+				)
+			));
+			others.push_back(finger);
 		} else if (number == 11) {
 		}
 	} else

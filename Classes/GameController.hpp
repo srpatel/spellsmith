@@ -48,10 +48,10 @@ public:
 	
 	Screen *getScreen(State state = kStateCount);
 	void showButton(bool show);
+	NavigationBar *bar;
+	Scene *root;
 private:
 	static GameController *instance;
-	Scene *root;
-	NavigationBar *bar;
 	Node *button;
 	Node *fader;
 	State state = kStateMainMenu;

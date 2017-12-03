@@ -55,7 +55,7 @@ void Gem::init(GemType type) {
 }
 
 void Gem::init() {
-#if DESKTOP && 1
+#if DESKTOP && 0
 	init(CRYSTAL);
 #else
 	init(static_cast<GemType>(1 + rand() % 4));

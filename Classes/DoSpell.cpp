@@ -213,8 +213,8 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		game->wizard->addBuff( Buff::createFury() );
 	}
 	IF_SPELL(fireball) {
-		// deal 10 damage
-		PROJ( D(10), ptBasicFire );
+		// deal 9 damage
+		PROJ( D(9), ptBasicFire );
 	}
 	IF_SPELL(mud_shield) { // BENCHED
 		// block next 2 attacks
@@ -238,6 +238,23 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		} else {
 			shield->charges = 2;
 		}
+	}
+	IF_SPELL(nature_call) {
+		// Create 3 cystal gems
+		SKELETON_ANIMATION("spell_heal");
+		CRYSTAL(3);
+		game->actionQueued();
+		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
+		auto delay = DelayTime::create(1.0f/3.0f);
+		auto addanim = CallFunc::create([=]() {
+			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
+					game->actionDone();
+				})
+			);
+			PLAY_SOUND(kSoundEffect_SHeal);
+			game->scenery->addChild(heal);
+		});
+		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
 	}
 	IF_SPELL(forest_breeze) {
 		// gain 5 and create 1 cystal
@@ -367,11 +384,21 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 		}
 	}
 	IF_SPELL(crystalise) { // TODO
-		// heal 3, create 3 crystal gems
-		PREHEAL(3);
-		HEAL();
-		PLAY_SOUND(kSoundEffect_SRainbow);
-		CRYSTAL(3);
+		// create 8 crystal gems
+		CRYSTAL(8);
+		SKELETON_ANIMATION("spell_heal");
+		game->actionQueued();
+		Vec2 staffOffset = Vec2(118, 384) * game->wizard->sprite->getScale();
+		auto delay = DelayTime::create(1.0f/3.0f);
+		auto addanim = CallFunc::create([=]() {
+			auto heal = AnimHeal::create(game->wizard->sprite->getPosition() + staffOffset, 1, CallFunc::create([game](){
+					game->actionDone();
+				})
+			);
+			game->scenery->addChild(heal);
+			PLAY_SOUND(kSoundEffect_SRainbow);
+		});
+		game->scenery->runAction(Sequence::create(delay, addanim, nullptr));
 	}
 	IF_SPELL(purify) { // TODO
 		// Create 1-3 crystal gems
@@ -386,12 +413,20 @@ void DoSpell::run(Game *game, Spell *spell, Chain *chain, bool allowRepeats) {
 	}
 	IF_SPELL(ice_bolt) { // TODO
 		// deal 3 damage, 50% chance to freeze 2
+		// (actually 4/7 (~57%), but call it 50% because that looks better :P)
 		PROJ( D(3), ptBasicIce );
-		if (rand() % 2) {
+		if ((rand() % 7) <= 3) {
 			game->enemies[game->currentEnemy]->addBuff(
 												   Buff::createFreeze(2)
 												   );
 		}
+	}
+	IF_SPELL(ice_shard) { // TODO
+		// deal 6 damage, freeze 2
+		PROJ( D(3), ptBasicIce );
+		game->enemies[game->currentEnemy]->addBuff(
+											   Buff::createFreeze(2)
+											   );
 	}
 	IF_SPELL(dragon_breath) { // TODO
 		// Deal 7 damage to each enemy.

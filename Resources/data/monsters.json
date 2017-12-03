@@ -12,7 +12,7 @@
       "name": "golem",
       "attachments": []
     },
-    "health": 80,
+    "health": 70,
     "attack_frequency": 2,
     "attacks": [
       {
@@ -163,7 +163,7 @@
         }
       ]
     },
-    "health": 30,
+    "health": 25,
     "attack_frequency": 2,
     "attacks": [
       {
@@ -196,7 +196,7 @@
         }
       ]
     },
-    "health": 30,
+    "health": 25,
     "attack_frequency": 2,
     "attacks": [
       {
@@ -221,7 +221,7 @@
         "brown"
       ]
     },
-    "health": 30,
+    "health": 15,
     "attack_frequency": 1,
     "attacks": [
       {
@@ -246,7 +246,7 @@
         "grey"
       ]
     },
-    "health": 25,
+    "health": 15,
     "attack_frequency": 0,
     "attacks": [
       {
@@ -271,7 +271,7 @@
         "hell"
       ]
     },
-    "health": 35,
+    "health": 15,
     "attack_frequency": 1,
     "attacks": [
       {
@@ -338,7 +338,7 @@
         "necromancer"
       ]
     },
-    "health": 25,
+    "health": 20,
     "attack_frequency": 2,
     "attacks": [
       {
@@ -375,19 +375,13 @@
       ]
     },
     "health": 35,
-    "attack_frequency": 2,
+    "attack_frequency": 1,
     "attacks": [
       {
         "ratio": 1,
-        "type": "melee",
-        "animation": "melee",
-        "amount": 3
-      },
-      {
-        "ratio": 4,
         "type": "projectile_fire",
         "animation": "cast",
-        "amount": 5
+        "amount": 4
       }
     ]
   },
@@ -411,16 +405,10 @@
       ]
     },
     "health": 35,
-    "attack_frequency": 1,
+    "attack_frequency": 2,
     "attacks": [
       {
         "ratio": 1,
-        "type": "melee",
-        "animation": "melee",
-        "amount": 3
-      },
-      {
-        "ratio": 4,
         "type": "projectile_water",
         "animation": "cast",
         "amount": 5
@@ -451,12 +439,6 @@
         "type": "melee",
         "animation": "ogre_attack",
         "amount": 5
-      },
-      {
-        "ratio": 1,
-        "type": "projectile_bomb",
-        "animation": "throw_bomb",
-        "amount": 10
       }
     ]
   },

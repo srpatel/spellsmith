@@ -673,7 +673,7 @@ void AssetsManager::destroyStoragePath()
     deleteVersion();
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     FileUtils::getInstance()->removeDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     string command = "rd /s /q ";

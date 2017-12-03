@@ -9,7 +9,7 @@
 #include "SaveData.hpp"
 #include "Level.hpp"
 
-#define kArenaStateVersion 5
+#define kArenaStateVersion 6
 
 static std::string GetArenaKey(int version = kArenaStateVersion) {
 	return std::string{"arena-state"} + ToString(version);
@@ -113,12 +113,12 @@ void SaveData::setEquippedSpellAt(int j, std::string name) {
 	UserDefault::getInstance()->flush();
 }
 
-#if DESKTOP
+#if DESKTOP && 0
 	#include "Spell.hpp"
 #endif
 
 std::vector<std::string> SaveData::getSpells() {
-#if DESKTOP
+#if DESKTOP && 0
 	std::vector<std::string> result;
 	for (Spell *spell : SpellManager::get()->spells)
 		result.push_back(spell->getRawName());

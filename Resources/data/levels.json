@@ -25,7 +25,7 @@
     "x": 313,
     "y": 204,
     "rewards": [
-      "nature_call"
+      "poison_dart"
     ]
   },
   "3": {
@@ -52,20 +52,19 @@
     "bg": "forest2",
     "monsters": [
       [
-        "shaman",
         "dog",
-        "goblin_sword"
+        "dog"
       ],
       [
-        "shaman",
         "dog",
+        "shaman",
         "dog"
       ]
     ],
     "x": 210,
     "y": 481,
     "rewards": [
-      "poison_dart",
+      "healstrike",
       "focus"
     ]
   },
@@ -78,7 +77,7 @@
         "shaman",
         "dog"
       ],
-       [
+      [
         "fast_dog",
         "fast_dog"
       ]
@@ -106,7 +105,7 @@
     "x": 398,
     "y": 784,
     "rewards": [
-      "healstrike"
+      "nature_call"
     ]
   },
   "7": {
@@ -114,11 +113,14 @@
     "bg": "lake1",
     "monsters": [
       [
-        "frogfolk",
+        "water_wizard",
         "frogfolk"
       ],
       [
         "water_wizard",
+        "frogfolk"
+      ],
+      [
         "frogfolk"
       ]
     ],
@@ -139,10 +141,6 @@
       ],
       [
         "frogfolk",
-        "water_wizard"
-      ],
-      [
-        "frogfolk",
         "frogfolk"
       ]
     ],
@@ -157,12 +155,7 @@
     "bg": "volcano2",
     "monsters": [
       [
-        "fire_golem",
         "fire_golem"
-      ],
-      [
-        "fire_wizard",
-        "fire_wizard"
       ],
       [
         "fire_golem"
@@ -179,19 +172,15 @@
     "bg": "volcano2",
     "monsters": [
       [
-        "troll",
-        "goblin_halberd",
-        "troll"
+        "hell_dog",
+        "hell_dog",
+        "hell_dog"
       ],
       [
-	    "fire_golem",
-        "fire_wizard",
         "fire_golem"
       ],
       [
-        "goblin_halberd",
-        "goblin_king",
-	    "goblin_halberd"
+        "goblin_king"
       ]
     ],
     "x": 300,

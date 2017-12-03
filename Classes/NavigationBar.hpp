@@ -16,6 +16,7 @@ public:
 	inline void setEnabled(bool enabled) {this->enabled = enabled;}
 	void resetButtons();
 	CREATE_FUNC(NavigationBar);
+	Vec2 firstButtonPos;
 private:
 	bool enabled = true;
 	Layer *buttonHolder;

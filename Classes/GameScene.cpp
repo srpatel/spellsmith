@@ -1460,7 +1460,7 @@ void Game::setup() {
 	if (wizard != nullptr)
 		delete wizard;
 	wizard = new Wizard;
-	wizard->max_health = 30;//1;//
+	wizard->max_health = 30;//1
 	wizard->health = wizard->max_health;
 	wizard->ui_health = wizard->max_health;
 	wizard->projectile_height = 0.4 * 260.0 * (119.0/221.0) + 6;

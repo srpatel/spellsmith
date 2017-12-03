@@ -3,7 +3,7 @@
     "_comment": "Names of spells which can be cast",
     "fireball": {
       "name": "Fireball",
-      "description": "Deal 10 damage."
+      "description": "Deal 9 damage."
     },
     "firewisp": {
       "name": "Firewisp",
@@ -14,7 +14,7 @@
       "description": "Heal for 5. Create 1 crystal gem."
     },
     "nature_call": {
-	  "name": "Nature's Call",
+      "name": "Vulcanise",
       "description": "Create 3 crystal gems."
     },
     "chill": {
@@ -144,8 +144,10 @@
     "hell_dog": "Hellhound",
     "shaman": "Shaman",
     "goblin_sword": "Goblin Swordsman",
+    "goblin_king": "Goblin King",
     "goblin_axe": "Goblin Axeman",
     "ice_goblin": "Goblin Soldier",
+    "fire_golem": "Fire Golem",
     "goblin_halberd": "Goblin Halberdier",
     "fire_wizard": "Pyromancer",
     "water_wizard": "Hydromancer",

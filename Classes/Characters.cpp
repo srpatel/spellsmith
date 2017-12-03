@@ -11,7 +11,7 @@
 #include "GameScene.hpp"
 
 
-#if DESKTOP
+#if DESKTOP && 0
 #define EASY_MODE 1
 #else
 #define EASY_MODE 0

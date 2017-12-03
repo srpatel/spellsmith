@@ -66,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 	
     // turn on display FPS
-#if DESKTOP
+#if DESKTOP && 0
     director->setDisplayStats(true);
 #else
 	director->setDisplayStats(false);
