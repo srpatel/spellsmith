@@ -188,7 +188,8 @@
     "OPTIONS": "Options",
     "RETURN_TO_MAP": "Return to map",
     "SPELLBOOK": "Spellbook",
-    "ARE_YOU_SURE": "Are you sure you want to return to the map? You will lose your  progress on the current level!"
+    "ARE_YOU_SURE": "Are you sure you want to return to the map? You will lose your  progress on the current level!",
+    "BEST": "Best"
   },
   "level": {
     "WAVE": "WAVE",

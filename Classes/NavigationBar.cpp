@@ -44,13 +44,12 @@ void NavigationBar::resetButtons() {
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;
 	float currentX = widthPerButton / 2.0f;
-	//buttonPositions.clear();
+	
 	for (ButtonDef b : buttons) {
 		auto n = LoadSprite(b.imagePath);
 		n->setScale(0.8);
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(currentX, getContentSize().height/2.0f - 3);
-		//buttonPositions[b.label] = n->getPosition();
 		if (! focus.empty() && focus == b.label) {
 			auto clickMe = ClickMe::create();
 			clickMe->setPosition(n->getPosition());
@@ -59,6 +58,17 @@ void NavigationBar::resetButtons() {
 		}
 		buttonHolder->addChild(n);
 		
+		int best = SaveData::getArenaScore();
+		if (best > 0 && std::string(b.label) == std::string("ui.ARENA")) {
+			auto t = Label::createWithTTF(
+				_("ui.BEST") + ": " + ToString(best),
+				Fonts::TEXT_FONT, Fonts::SMALL_SIZE);
+			t->setTextColor(Color4B::WHITE);
+			t->setAlignment(TextHAlignment::CENTER);
+			t->setPosition(currentX, 10);
+			buttonHolder->addChild(t);
+		}
+		
 		if (b.state == GameController::get()->getState()) {
 			GLProgram *shader = Shaders::bright();
 			GLProgramState *state = GLProgramState::create(shader);
@@ -66,6 +76,7 @@ void NavigationBar::resetButtons() {
 		}
 		
 		currentX += widthPerButton;
+		
 		// Add onclick...
 		if (b.state != GameController::get()->getState()) {
 			auto onclick = EventListenerTouchOneByOne::create();
