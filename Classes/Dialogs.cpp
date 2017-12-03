@@ -70,17 +70,16 @@ bool OptionsDialog::init() {
 	return true;
 }
 
-bool ArenaTutorialDialog::init() {
+bool OneShotDialog::init(std::string message) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto yBuffer = 50;
 	auto size = Size(visibleSize.width - 80, 0);
 	
 	auto label = Label::createWithTTF(
-		"Welcome to the arena!\n\n"
-		"The arena is an infinite game mode where you face many different challengers. Get as far as you can before you get knocked out!",
+		message,
 		Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
 	label->setDimensions(size.width - 20, 0);
-	label->setColor(Color3B::BLACK);
+	label->setColor(Color3B::WHITE);
 	label->setAlignment(TextHAlignment::CENTER);
 	size.height = label->getContentSize().height + yBuffer;
 	//label->setPosition(size/2);

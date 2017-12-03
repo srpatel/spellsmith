@@ -27,7 +27,9 @@ void ArenaScreen::onSelect() {
 		button->setTitleText _("ui.CONTINUE_ARENA");
 	}
 	if (SaveData::getArenaScore() <= 0) {
-		auto d = ArenaTutorialDialog::create();
+		std::string message = "Welcome to the arena!\n\n"
+			"The arena is an infinite game mode where you face many different challengers. Get as far as you can before you get knocked out!";
+		auto d = OneShotDialog::create(message);
 		GameController::get()->pushDialog(d);
 	}
 }

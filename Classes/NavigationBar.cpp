@@ -7,6 +7,7 @@
 //
 
 #include "NavigationBar.hpp"
+#include "ClickMe.hpp"
 #include "SoundManager.hpp"
 #include "ImageManager.hpp"
 #include "GameController.hpp"
@@ -34,23 +35,28 @@ void NavigationBar::resetButtons() {
 	if (! spells.empty()) {
 		buttons.push_back({("ui.SPELLBOOK"), "icons/spellbook.png", kStateSpellbook}); // Set state to spellbook
 	}
-	/*
-	if (SaveData::isLevelComplete("4")) {
+	if (SaveData::isLevelComplete("10")) {
 		buttons.push_back({("ui.ARENA"), "icons/arena.png", kStateArena}); // Set state to arena
 	}
+	/*
 	buttons.push_back({("ui.OPTIONS"), "icons/settings.png", kStateOptions}); // Set state to options
 	*/
 	int num = buttons.size();
 	float widthPerButton = getContentSize().width / num;
 	float currentX = widthPerButton / 2.0f;
-	firstButtonPos = Vec2(0,0);
+	//buttonPositions.clear();
 	for (ButtonDef b : buttons) {
 		auto n = LoadSprite(b.imagePath);
 		n->setScale(0.8);
 		n->setAnchorPoint(Vec2(0.5, 0.5));
 		n->setPosition(currentX, getContentSize().height/2.0f - 3);
-		if (firstButtonPos == Vec2(0,0))
-			firstButtonPos = n->getPosition();
+		//buttonPositions[b.label] = n->getPosition();
+		if (! focus.empty() && focus == b.label) {
+			auto clickMe = ClickMe::create();
+			clickMe->setPosition(n->getPosition());
+			buttonHolder->addChild(clickMe);
+			focus = "";
+		}
 		buttonHolder->addChild(n);
 		
 		if (b.state == GameController::get()->getState()) {

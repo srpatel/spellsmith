@@ -15,8 +15,9 @@ public:
 	bool init();
 	inline void setEnabled(bool enabled) {this->enabled = enabled;}
 	void resetButtons();
+	std::string focus;
 	CREATE_FUNC(NavigationBar);
-	Vec2 firstButtonPos;
+	//std::map<std::string, Vec2> buttonPositions;
 private:
 	bool enabled = true;
 	Layer *buttonHolder;

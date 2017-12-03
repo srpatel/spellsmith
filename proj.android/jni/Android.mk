@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/Banner.cpp \
 ../../Classes/Buff.cpp \
 ../../Classes/Characters.cpp \
+../../Classes/ClickMe.cpp \
 ../../Classes/ColumnScreen.cpp \
 ../../Classes/Dialogs.cpp \
 ../../Classes/DoSpell.cpp \

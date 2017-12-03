@@ -15,6 +15,7 @@
 #include "GameScene.hpp"
 #include "SoundManager.hpp"
 #include "Banner.hpp"
+#include "Tutorial.hpp"
 
 #include "ui/CocosGUI.h"
 
@@ -89,10 +90,11 @@ bool PostLevelDialog::init(RoundDef *r) {
 	// if this is the king-level, there are no benefits, and we unlock arena!
 	// otherwise, we show the spells you win
 	
+	int numRewards = r->rewards.size();
 	std::string title;
 	std::string buttonTitle;
 	State targetState;
-	if (r->rewards.size() > 0) {
+	if (numRewards > 0) {
 		title = _("level.YOU_HAVE_LEARNT");
 		buttonTitle = _("ui.SPELLBOOK");
 		targetState = kStateSpellbook;
@@ -115,6 +117,10 @@ bool PostLevelDialog::init(RoundDef *r) {
 			// For now, from scratch always!
 			removeFromParent();
 			GameController::get()->setState(targetState);
+			// On return to map advertise arena mode!
+			if (targetState == kStateMap) {
+				Tutorial::activate(301);
+			}
 		}
 	});
 	addChild(button, 1);
@@ -126,11 +132,23 @@ bool PostLevelDialog::init(RoundDef *r) {
 		button->getContentSize().height +
 		15
 	);
+	
+	auto desc = Label::createWithTTF(
+			_("level_desc.10_END"),
+			Fonts::TEXT_FONT_ITALIC, Fonts::TEXT_SIZE);
+	desc->setDimensions(width - 30, 0);
+	desc->setColor(Color3B::WHITE);
+	desc->setAlignment(TextHAlignment::CENTER);
+	if (numRewards == 0) {
+		// height must change to accomodate desc
+		size.height -= 80;
+		size.height += desc->getContentSize().height;
+	}
+	
 	banner->setPositionY(size.height/2 - banner->getContentSize().height / 4);
 	button->setPosition({0, -size.height/2 + 15 + button->getContentSize().height/2});
 	
 	// Add spell blobs
-	int numRewards = r->rewards.size();
 	if (numRewards > 0) {
 		float dx = (width/2) - 10;
 		float startX = - (dx * (numRewards - 1)) / 2.0f;
@@ -143,15 +161,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 		}
 	} else {
 		// Game complete message!
-		// "Your revenge has been served: the King is slain, and magic is once more yours to command!
-		// With this great power returned to you, the people bow in awe and fear. You are crowned the new ruler."
-		auto desc = Label::createWithTTF(
-			"Your revenge has been served: the King is slain, and magic is once more yours to command!"
-			"With this great power returned to you, the people bow in awe and fear. You are crowned the new ruler.",
-			Fonts::TEXT_FONT_ITALIC, Fonts::TEXT_SIZE);
-		desc->setDimensions(width - 30, 0);
-		desc->setColor(Color3B::WHITE);
-		desc->setAlignment(TextHAlignment::CENTER);
+		// On return to map advertise arena mode!
 		addChild(desc, 1);
 	}
 	

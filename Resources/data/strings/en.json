@@ -227,6 +227,7 @@
     "8": "I must admit, I expected to be charged a toll for crossing that!",
     "9": "I can see the castle up ahead, only a little further to go...",
     "10": "The King is going to pay for what he stole from me!",
+    "10_END": "Your revenge has been served: the King is slain, and magic is once more yours to command!",
     "3a": "The boundary between life and death is interesting indeed.",
     "4a": "A nice 1-bed with an airy balcony. 5 minute walk from local church. Ideal for mages.",
     "4b": "It's so cold up here, it's lucky I remembered how to make fire so early!",
@@ -243,6 +244,7 @@
     "101": "This might be tricky! You'd better use your new spell.",
     "102": "Draw the spell in any orientation to cast it!",
     "103": "Nice work! You have many spells to learn yet, and many enemies to defeat. Good luck!",
-    "201": "Remember, you can also equip spells to the right!"
+    "201": "Remember, you can also equip spells to the right!",
+    "301": "You've unlocked a new game mode! Try your hand in the arena and see how far you can get."
   }
 }

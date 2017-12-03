@@ -40,11 +40,11 @@ public:
 	CREATE_FUNC_1(SpellInfoDialog, Spell *);
 };
 
-class ArenaTutorialDialog : public Dialog {
+class OneShotDialog : public Dialog {
 public:
-	bool init();
+	bool init(std::string message);
 	
-	CREATE_FUNC(ArenaTutorialDialog);
+	CREATE_FUNC_1(OneShotDialog, std::string);
 };
 
 class PreLevelDialog : public Dialog {

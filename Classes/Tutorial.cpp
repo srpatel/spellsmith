@@ -19,6 +19,7 @@
 
 #define kPosGrid 1
 #define kPosScenery 2
+#define kPosCentre 3
 
 int currentLevel = -1;
 Layer *currentPopup = nullptr;
@@ -75,6 +76,9 @@ Layer *makeTextBox(std::string text, int location, bool withTtc, float delay) {
 			game->getLayout().column_height + backgroundHeight / 2,
 		};
 		position = sceneryCentre - size/2;
+	} else if (location == kPosCentre) {
+		auto gridCentre = game->getPosition();
+		position = gridCentre/2 - size/2;
 	}
 	popup->setPosition(position);
 	
@@ -121,7 +125,7 @@ int Tutorial::getCurrent() {
 bool Tutorial::activate(int number) {
 	auto game = Game::get();
 	// Starting numbers: 1, 7, 101
-	bool start = number == 1 || number == 7 || number == 101 || number == 201;
+	bool start = number == 1 || number == 7 || number == 101 || number == 201 || number == 301;
 	bool prec = number == currentLevel + 1;
 	
 	// Don't progress to the next tutorial unless you're starting a chain
@@ -214,7 +218,7 @@ bool Tutorial::activate(int number) {
 				if (s == "fireball") {
 					learntFireball = true;
 				} else {
-					//learntOneOnly = false;
+					learntOneOnly = false;
 				}
 			}
 			
@@ -293,25 +297,26 @@ bool Tutorial::activate(int number) {
 			spellbook->setMapButtonVisible(true);
 			
 			// Show arrow
-			auto finger = LoadSprite("ui/fingerpoint.png");
-			finger->setAnchorPoint(Vec2(0.5, 1));
-			layout_t layout = Game::get()->getLayout();
-			auto fromPos = spellbook->getPosition() + spellbook->getContentSize()/2;
-			auto toPos = GameController::get()->bar->firstButtonPos;
-			GameController::get()->root->addChild(finger, 1000);
-			finger->setOpacity(0);
-			finger->runAction(RepeatForever::create(
-				Sequence::create(
-					MoveTo::create(0, fromPos),
-					FadeIn::create(0.2f),
-					DelayTime::create(0.2f),
-					MoveTo::create(0.8f, toPos),
-					DelayTime::create(0.2f),
-					FadeOut::create(0.2f),
-					nullptr
-				)
-			));
-			others.push_back(finger);
+			GameController::get()->bar->focus = "ui.MAP";
+//			auto finger = LoadSprite("ui/fingerpoint.png");
+//			finger->setAnchorPoint(Vec2(0.5, 1));
+//			layout_t layout = Game::get()->getLayout();
+//			auto fromPos = spellbook->getPosition() + spellbook->getContentSize()/2;
+//			auto toPos = GameController::get()->bar->buttonPositions["ui.MAP"];
+//			GameController::get()->root->addChild(finger, 1000);
+//			finger->setOpacity(0);
+//			finger->runAction(RepeatForever::create(
+//				Sequence::create(
+//					MoveTo::create(0, fromPos),
+//					FadeIn::create(0.2f),
+//					DelayTime::create(0.2f),
+//					MoveTo::create(0.8f, toPos),
+//					DelayTime::create(0.2f),
+//					FadeOut::create(0.2f),
+//					nullptr
+//				)
+//			));
+//			others.push_back(finger);
 		} else if (number == 11) {
 		}
 	} else
@@ -435,6 +440,15 @@ bool Tutorial::activate(int number) {
 			
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			spellbook->setMapButtonVisible(true);
+		}
+	}
+	else if (number < 400) {
+		// Arena mode unlocked!
+		if (number == 301) {
+			// If arena mode is already unlocked, then don't worry about this.
+			auto d = OneShotDialog::create(_("tutorial.301"));
+			GameController::get()->bar->focus = "ui.ARENA";
+			GameController::get()->pushDialog(d);			
 		}
 	}
 	return true;

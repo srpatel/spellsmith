@@ -144,6 +144,8 @@
 		107B33C61E25967100F2EBDD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 107B33C51E25967100F2EBDD /* Images.xcassets */; };
 		107B33C81E26D26900F2EBDD /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 107B33C71E26D26900F2EBDD /* sound */; };
 		107B33C91E26D26900F2EBDD /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 107B33C71E26D26900F2EBDD /* sound */; };
+		107FC4591FD4317A00EB9DFD /* ClickMe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107FC4571FD4317A00EB9DFD /* ClickMe.cpp */; };
+		107FC45A1FD4317A00EB9DFD /* ClickMe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107FC4571FD4317A00EB9DFD /* ClickMe.cpp */; };
 		1087478B1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478C1C0797CD0069DCAF /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108747891C0797CD0069DCAF /* Level.cpp */; };
 		1087478F1C07A7920069DCAF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1087478D1C07A7920069DCAF /* Monster.cpp */; };
@@ -396,6 +398,8 @@
 		107B33C11E22C7FE00F2EBDD /* TextWisp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextWisp.hpp; sourceTree = "<group>"; };
 		107B33C51E25967100F2EBDD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Gems-mobile/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		107B33C71E26D26900F2EBDD /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
+		107FC4571FD4317A00EB9DFD /* ClickMe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClickMe.cpp; sourceTree = "<group>"; };
+		107FC4581FD4317A00EB9DFD /* ClickMe.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClickMe.hpp; sourceTree = "<group>"; };
 		108747891C0797CD0069DCAF /* Level.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Level.cpp; sourceTree = "<group>"; };
 		1087478A1C0797CD0069DCAF /* Level.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		1087478D1C07A7920069DCAF /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
@@ -611,6 +615,8 @@
 				1035F3D61F56A449006C1CB8 /* Util.hpp */,
 				10E503081F63BF7D00B575FB /* Banner.cpp */,
 				10E503091F63BF7D00B575FB /* Banner.hpp */,
+				107FC4571FD4317A00EB9DFD /* ClickMe.cpp */,
+				107FC4581FD4317A00EB9DFD /* ClickMe.hpp */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1114,6 +1120,7 @@
 				1029937C1D62429000D1492E /* VertexAttachment.c in Sources */,
 				1029936A1D62429000D1492E /* SkeletonData.c in Sources */,
 				1029934C1D62429000D1492E /* Event.c in Sources */,
+				107FC4591FD4317A00EB9DFD /* ClickMe.cpp in Sources */,
 				102993461D62429000D1492E /* BoneData.c in Sources */,
 				105E0D191BF14E3F0081D8F5 /* AppDelegate.cpp in Sources */,
 				10894F1E1F489FB500669A6A /* Buff.cpp in Sources */,
@@ -1200,6 +1207,7 @@
 				102993651D62429000D1492E /* SkeletonAnimation.cpp in Sources */,
 				1029933D1D62429000D1492E /* AtlasAttachmentLoader.c in Sources */,
 				1095273E1D3BC843002EF8CC /* Popup.cpp in Sources */,
+				107FC45A1FD4317A00EB9DFD /* ClickMe.cpp in Sources */,
 				102993431D62429000D1492E /* AttachmentVertices.cpp in Sources */,
 				108747901C07A7920069DCAF /* Monster.cpp in Sources */,
 				102993511D62429000D1492E /* extension.c in Sources */,
