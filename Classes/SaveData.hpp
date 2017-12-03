@@ -12,6 +12,8 @@
 #include "Level.hpp"
 
 struct SaveData {
+	static void init();
+
 	static void clear();
 	
 	// uuid

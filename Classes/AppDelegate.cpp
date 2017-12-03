@@ -142,6 +142,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	MonsterManager::get()->init();
 	Strings::get()->init();
 	SoundManager::get()->init();
+	SaveData::init();
 		
 	// Warn about missing translations
 	for (Spell *spell : SpellManager::get()->spells) {
