@@ -267,7 +267,7 @@ bool PreLevelDialog::init(RoundDef *round) {
 		3 * banner->getContentSize().height / 4 +
 		8 +
 		desc->getContentSize().height +
-		80 + // rewards
+		(round->rewards.size() > 0 ? 80 : 10) + // rewards
 		(pb == nullptr ? 0 : (pb->getContentSize().height + 5)) +
 		button->getContentSize().height +
 		20

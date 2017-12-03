@@ -22,10 +22,10 @@ public:
 	void gotoPageWithSpell(std::string name);
 	CREATE_FUNC(Spellbook);
 	Sprite *mute_button;
+	std::vector<SpellBlob *> blobs;
 private:
 	Layer *spell_holder, *equipped_holder;
 	std::vector<EventListener *> equipped_listeners;
-	std::vector<SpellBlob *> blobs;
 	Node *left;
 	Node *right;
 	Label *page_label;

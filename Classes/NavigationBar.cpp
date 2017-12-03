@@ -65,29 +65,27 @@ void NavigationBar::resetButtons() {
 			n->setGLProgramState(state);
 		}
 		
-		//auto t = Label::createWithTTF(_(b.label), Fonts::TEXT_FONT, Fonts::TEXT_SIZE);
-		//t->setTextColor(Color4B::BLACK);
-		//t->setPosition(currentX, 10);
-		//buttonHolder->addChild(t);
 		currentX += widthPerButton;
 		// Add onclick...
-		auto onclick = EventListenerTouchOneByOne::create();
-		onclick->setSwallowTouches(true);
-		// trigger when you push down
-		onclick->onTouchBegan = [this, n, b](Touch* touch, Event* event) -> bool {
-			Vec2 p = touch->getLocation();
-			Rect rect = n->getBoundingBox();
-			rect.origin += getPosition();
-			if(enabled && rect.containsPoint(p)) {
-				PLAY_SOUND( kSoundEffect_UISelect );
-				GameController::get()->setState(b.state);
-				return true;
-			}
-			
-			return false; // if you are consuming it
-		};
-		// get removed when children are removed
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
+		if (b.state != GameController::get()->getState()) {
+			auto onclick = EventListenerTouchOneByOne::create();
+			onclick->setSwallowTouches(true);
+			// trigger when you push down
+			onclick->onTouchBegan = [this, n, b](Touch* touch, Event* event) -> bool {
+				Vec2 p = touch->getLocation();
+				Rect rect = n->getBoundingBox();
+				rect.origin += getPosition();
+				if(enabled && rect.containsPoint(p)) {
+					PLAY_SOUND( kSoundEffect_UISelect );
+					GameController::get()->setState(b.state);
+					return true;
+				}
+				
+				return false; // if you are consuming it
+			};
+			// get removed when children are removed
+			_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);
+		}
 	}
 }
 

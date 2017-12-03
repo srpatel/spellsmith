@@ -18,6 +18,8 @@
 #include "ui/CocosGUI.h"
 
 void ArenaScreen::onSelect() {
+	GameController::get()->startArena(SaveData::getArenaState());
+	/*
 	button->setTouchEnabled(true);
 	auto state = SaveData::getArenaState();
 	if (state.empty()) {
@@ -31,18 +33,26 @@ void ArenaScreen::onSelect() {
 			"The arena is an infinite game mode where you face many different challengers. Get as far as you can before you get knocked out!";
 		auto d = OneShotDialog::create(message);
 		GameController::get()->pushDialog(d);
-	}
+	}*/
 }
 
 bool ArenaScreen::init() {
-	if ( !Screen::init() ) {
+	if ( !ColumnScreen::init() ) {
 		return false;
 	}
+	
+	setBackground("bg_arena.png");
+	
+	auto grad = LayerColor::create();
+	grad->initWithColor(Color4B(95, 91, 85, 255));
+	grad->setPosition(Vec2(6, 340) * layout.ui_scale);
+	grad->setContentSize(Size(27, 30) * layout.ui_scale);
+	this->addChild(grad, 6);
 	
 	Size size = Director::getInstance()->getVisibleSize();
 	setContentSize(size);
 	
-	auto label = Label::createWithTTF(
+	/*auto label = Label::createWithTTF(
 		"Here you can:\n"
 		"- See YOUR previous runs (e.g. score, 32 - killed by goblin)\n"
 		"- See wordwide top scores\n"
@@ -52,12 +62,12 @@ bool ArenaScreen::init() {
 	label->setAlignment(TextHAlignment::CENTER);
 	// position the label on the center of the screen
 	label->setPosition(size/2);
-	addChild(label);
+	addChild(label);*/
 	
 	button = ui::Button::create("ui/button_up.png", "ui/button_down.png", "ui/button_down.png", TEXTURE_TYPE);
 	button->setTitleFontName(Fonts::TEXT_FONT);
 	button->setTitleFontSize(Fonts::TEXT_SIZE);
-	button->setPosition(Vec2(size.width/2, NavigationBar::HEIGHT + 50 + button->getContentSize().height/2));
+	button->setPosition(Vec2(size.width/2, NavigationBar::HEIGHT + 10 + button->getContentSize().height/2));
 	button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			button->setTouchEnabled(false);

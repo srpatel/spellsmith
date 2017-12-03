@@ -154,8 +154,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
 	auto scene = Scene::create();
 	GameController::init(scene);
-	GameController::get()->setState(kStateMainMenu);
-	
+	//GameController::get()->setState(kStateMainMenu);
+	GameController::get()->setState(kStateMap);
+
     // run
     director->runWithScene(scene);
 

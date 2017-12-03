@@ -7,7 +7,7 @@
 
 #include "ClickMe.hpp"
 
-bool ClickMe::init() {
+bool ClickMe::init(bool big) {
 	if ( !Layer::init() ) {
 		return false;
 	}
@@ -29,7 +29,7 @@ bool ClickMe::init() {
 				ScaleTo::create(0, 0.1),
 				Spawn::create(
 					FadeTo::create(1, 0),
-					ScaleTo::create(1, 1),
+					ScaleTo::create(1, big ? 1.5 : 1),
 					nullptr
 				),
 				DelayTime::create(0.1),

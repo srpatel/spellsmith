@@ -141,7 +141,7 @@ bool PostLevelDialog::init(RoundDef *r) {
 	desc->setAlignment(TextHAlignment::CENTER);
 	if (numRewards == 0) {
 		// height must change to accomodate desc
-		size.height -= 80;
+		size.height -= 60;
 		size.height += desc->getContentSize().height;
 	}
 	

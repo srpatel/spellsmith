@@ -16,6 +16,7 @@
 #include "Popup.hpp"
 #include "Strings.hpp"
 #include "Constants.h"
+#include "ClickMe.hpp"
 
 #define kPosGrid 1
 #define kPosScenery 2
@@ -231,7 +232,7 @@ bool Tutorial::activate(int number) {
 			auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			
 			// Disable navigation
-			//GameController::get()->showButton(false);
+			GameController::get()->showBar(false);
 			spellbook->setMapButtonVisible(false);
 			
 			// Disallow dragging spells
@@ -244,12 +245,12 @@ bool Tutorial::activate(int number) {
 			spellbook->addChild(popup, 150);
 			
 			// Flash new spell
-			/*auto blob = spellbook->blobs[0];
-			auto fadeIn = EaseIn::create(FadeIn::create(1), 0.5f);
-			auto fadeOut = EaseOut::create(FadeOut::create(1), 0.5f);
-			auto sequence = RepeatForever::create(Sequence::create(fadeIn, fadeOut, DelayTime::create(0.5f), nullptr));
-			blob->runAction(sequence);*/
-			// ???
+			auto clickMe = ClickMe::create(true);
+			auto b = spellbook->blobs[0];
+			//clickMe->setScale(1.5);
+			clickMe->setPosition(b->getPosition() + b->getParent()->getPosition());
+			spellbook->addChild(clickMe);
+			others.push_back(clickMe);
 		} else if (number == 8) {
 			//auto spellbook = (Spellbook *) (GameController::get()->getScreen(kStateSpellbook));
 			//auto blob = spellbook->blobs[0];
@@ -293,30 +294,11 @@ bool Tutorial::activate(int number) {
 			spellbook->addChild(popup, 15);
 			
 			// Re-enable ui
-			//GameController::get()->showButton(true);
 			spellbook->setMapButtonVisible(true);
 			
 			// Show arrow
 			GameController::get()->bar->focus = "ui.MAP";
-//			auto finger = LoadSprite("ui/fingerpoint.png");
-//			finger->setAnchorPoint(Vec2(0.5, 1));
-//			layout_t layout = Game::get()->getLayout();
-//			auto fromPos = spellbook->getPosition() + spellbook->getContentSize()/2;
-//			auto toPos = GameController::get()->bar->buttonPositions["ui.MAP"];
-//			GameController::get()->root->addChild(finger, 1000);
-//			finger->setOpacity(0);
-//			finger->runAction(RepeatForever::create(
-//				Sequence::create(
-//					MoveTo::create(0, fromPos),
-//					FadeIn::create(0.2f),
-//					DelayTime::create(0.2f),
-//					MoveTo::create(0.8f, toPos),
-//					DelayTime::create(0.2f),
-//					FadeOut::create(0.2f),
-//					nullptr
-//				)
-//			));
-//			others.push_back(finger);
+			GameController::get()->showBar(true);
 		} else if (number == 11) {
 		}
 	} else

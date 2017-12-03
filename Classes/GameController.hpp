@@ -45,6 +45,7 @@ public:
 	void showSpellInfoDialog(Spell *);
 	void showPreLevelDialog(RoundDef *round);
 	void showOptionsDialog();
+	void showBar(bool showBar);
 	
 	Screen *getScreen(State state = kStateCount);
 	void showButton(bool show);
@@ -54,7 +55,7 @@ private:
 	static GameController *instance;
 	Node *button;
 	Node *fader;
-	State state = kStateMainMenu;
+	State state = kStateMap;
 	std::vector<Dialog *> dialog_stack;
 };
 

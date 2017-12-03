@@ -12,6 +12,7 @@
 #include "SoundManager.hpp"
 #include "GameController.hpp"
 #include "SaveData.hpp"
+#include "ClickMe.hpp"
 
 bool MapScroll::init() {
 	if ( !Layer::init() ) {
@@ -26,15 +27,8 @@ bool MapScroll::init() {
 	
 	// Add nodes!
 	Layer *nodesHolder = Layer::create();
-	addChild(nodesHolder);
+	addChild(nodesHolder, 1);
 	
-	nodesHolder->removeAllChildren();
-	/*for (EventListener *l : listeners) {
-		_eventDispatcher->removeEventListener(l);
-	}
-	listeners.clear();*/
-	
-	//float offset_y = 50;
 	for (RoundDef * r : LevelManager::get()->getRoundDefinitions()) {
 		// Make a node and add it!
 		auto n = LoadSprite("map/node_red.png");
@@ -45,30 +39,6 @@ bool MapScroll::init() {
 		n->setPosition(pos);
 		nodes[r] = n;
 		nodesHolder->addChild(n);
-		
-		/*auto onclick = EventListenerTouchOneByOne::create();
-		onclick->setSwallowTouches(true);
-		onclick->onTouchBegan = [this, r](Touch* touch, Event* event) -> bool {
-			auto bounds = event->getCurrentTarget()->getBoundingBox();
-			bounds.origin += getPosition();
-			
-			// Can only click on me if the dependency is completed
-			auto depends = r->depends;
-			if (!depends.empty() && !SaveData::isLevelComplete(depends)) {
-				return false;
-			}
-			
-			if (bounds.containsPoint(touch->getLocation())){
-				// don't stop propagation -- we want the map to capture too...
-				currentRound = r;
-				printf("Setting current round: %p\n", currentRound);
-				return false;
-			}
-			
-			return false; // if you are consuming it
-		};
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(onclick, n);*/
-		//listeners.push_back(onclick);
 	}
 	
 	refreshNodes();
@@ -77,6 +47,8 @@ bool MapScroll::init() {
 }
 
 void MapScroll::refreshNodes() {
+	int numVisible = 0;
+	Sprite *onlyVisible = nullptr;
 	for (auto n : nodes) {
 		bool completed =  SaveData::isLevelComplete(n.first->name);
 		auto sprite = n.second;
@@ -87,6 +59,20 @@ void MapScroll::refreshNodes() {
 		
 		// Is the dependency completed?
 		auto depends = n.first->depends;
-		sprite->setVisible(completed || depends.empty() || SaveData::isLevelComplete(depends));
+		bool isVisible = completed || depends.empty() || SaveData::isLevelComplete(depends);
+		sprite->setVisible(isVisible);
+		if (isVisible) {
+			numVisible++;
+			onlyVisible = sprite;
+		}
+	}
+	
+	removeChildByTag(1);
+	if (numVisible == 1) {
+		// add a click me
+		auto clickMe = ClickMe::create();
+		clickMe->setTag(1);
+		clickMe->setPosition(onlyVisible->getPosition());
+		addChild(clickMe);
 	}
 }

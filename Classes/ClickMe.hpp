@@ -9,9 +9,10 @@
 #define ClickMe_hpp
 
 class ClickMe : public Layer {
-	bool init();
+	bool init(bool big = false);
 public:
 	CREATE_FUNC(ClickMe);
+	CREATE_FUNC_1(ClickMe, bool);
 };
 
 #endif /* ClickMe_hpp */

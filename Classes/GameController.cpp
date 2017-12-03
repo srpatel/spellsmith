@@ -59,7 +59,7 @@ void GameController::init(Scene *root) {
 	stateScreens[kStateOptions] = OptionsScreen::create();
 	stateScreens[kStateOptions]->retain();
 	
-	instance->state = kStateMainMenu;
+	instance->state = kStateMap;
 	
 	auto grad = LayerColor::create();
 	grad->initWithColor(Color4B(Colours::BACKGROUND));
@@ -68,7 +68,7 @@ void GameController::init(Scene *root) {
 	root->addChild(grad);
 	
 	instance->bar = NavigationBar::create();
-	instance->bar->setPosition(Vec2(0, -NavigationBar::HEIGHT));
+	instance->bar->setPosition(Vec2(0, 0));
 	root->addChild(instance->bar, kDepthNavBar);
 	
 	auto size = Director::getInstance()->getVisibleSize();
@@ -109,7 +109,7 @@ void GameController::init(Scene *root) {
 	instance->fader = fader;
 	
 	auto origin = Director::getInstance()->getVisibleOrigin();
-	auto layer = stateScreens[kStateMainMenu];
+	auto layer = stateScreens[instance->state];
 	layer->setPosition(origin.x, origin.y);
 	root->addChild(layer, kDepthScene);
 }
@@ -124,6 +124,12 @@ void GameController::showButton(bool show) {
 	button->runAction(MoveTo::create(0.2f, Vec2(
 		button->getPosition().x,
 		size.height + (show ? -1 : 1) * (button->getContentSize().height/2 + 10))));
+}
+
+void GameController::showBar(bool showBar) {
+	bar->stopAllActions();
+	bar->resetButtons();
+	bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
 }
 
 void GameController::setState(State newstate) {
@@ -146,10 +152,8 @@ void GameController::setState(State newstate) {
 				root->addChild(layer, kDepthScene);
 			
 				// Navigation bar
-				bool showBar = newstate != kStateGame;//newstate != kStateSpellbook && newstate != kStateGame;
-				bar->stopAllActions();
-				bar->resetButtons();
-				bar->runAction(MoveTo::create(0.2f, Vec2(0, showBar ? 0 : -NavigationBar::HEIGHT)));
+				bool show = newstate != kStateGame;//newstate != kStateSpellbook && newstate != kStateGame;
+				showBar(show);
 			
 				// Back button
 				//showButton(newstate == kStateSpellbook);

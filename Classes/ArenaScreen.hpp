@@ -9,10 +9,10 @@
 #ifndef ArenaScreen_hpp
 #define ArenaScreen_hpp
 
-#include "Screen.hpp"
+#include "ColumnScreen.hpp"
 #include "ui/CocosGUI.h"
 
-class ArenaScreen : public Screen {
+class ArenaScreen : public ColumnScreen {
 public:
 	bool init();
 	virtual void onSelect();
