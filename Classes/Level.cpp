@@ -81,7 +81,7 @@ RoundDef *LevelManager::generateRound(int stage) {
 			wave.push_back(("goblin_sword"));
 			wave.push_back(("goblin_axe"));
 		} else if (difficulty == 1) {
-			wave.push_back(("goblin_sword"));
+			wave.push_back(("necromancer"));
 			wave.push_back(("goblin_sword"));
 		} else {
 			wave.push_back(("goblin_sword"));
@@ -90,7 +90,11 @@ RoundDef *LevelManager::generateRound(int stage) {
 	} else if (stage <= 10) {
 		int difficulty = rand() % 9;
 		if (difficulty <= 2) {
-			wave.push_back(("shaman"));
+			if (rand() % 2 == 0) {
+				wave.push_back(("shaman"));
+			} else {
+				wave.push_back(("necromancer"));
+			}
 			wave.push_back(("dog"));
 			if (difficulty == 1) {
 				wave.push_back(("fast_dog"));
@@ -102,7 +106,7 @@ RoundDef *LevelManager::generateRound(int stage) {
 				wave.push_back(("goblin_sword"));
 			}
 			if (difficulty == 4) {
-				wave.push_back(("goblin_sword"));
+				wave.push_back(("necromancer"));
 			} else if (difficulty == 3) {
 				wave.push_back(("goblin_halberd"));
 			}
@@ -110,18 +114,24 @@ RoundDef *LevelManager::generateRound(int stage) {
 		} else if (difficulty <= 6) {
 			if (rand() % 2 == 0) {
 				wave.push_back(("fire_wizard"));
+				wave.push_back(("hell_dog"));
 			} else {
+				wave.push_back(("frogfolk"));
 				wave.push_back(("water_wizard"));
 			}
-			if (difficulty == 4) {
+			if (difficulty == 5) {
 				wave.push_back(("goblin_sword"));
-			} else if (difficulty == 3) {
+			} else if (difficulty == 6) {
 				wave.push_back(("goblin_halberd"));
 			}
-			wave.push_back(("goblin_sword"));
 		} else if (difficulty <= 7) {
 			wave.push_back(("water_wizard"));
 			wave.push_back(("fire_wizard"));
+			if (rand() % 2 == 0) {
+				wave.push_back(("fire_wizard"));
+			} else {
+				wave.push_back(("frogfolk"));
+			}
 		} else {
 			wave.push_back(("goblin_sword"));
 			if (difficulty == 4) {
@@ -133,16 +143,51 @@ RoundDef *LevelManager::generateRound(int stage) {
 			}
 			wave.push_back(((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
 		}
-	} else {
+	} else if (stage <= 15) {
 		if (rand() % 2 == 0) {
 			wave.push_back(((rand() % 2 == 0) ? "fast_dog" : "dog"));
 			wave.push_back(("shaman"));
 			wave.push_back(((rand() % 2 == 0) ? "fast_dog" : "dog"));
 		} else {
+			if (rand() % 2 == 0) {
+				wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "hell_dog"));
+				wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "hell_dog"));
+				wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "hell_dog"));
+			} else {
+				wave.push_back(((rand() % 2 == 0) ? "frogfolk" : "water_wizard"));
+				wave.push_back(((rand() % 2 == 0) ? "frogfolk" : "water_wizard"));
+				wave.push_back(((rand() % 2 == 0) ? "frogfolk" : "water_wizard"));
+			}
+		}
+	} else if (stage <= 25) {
+		// From now on we get golems or trolls sometimes
+		if (rand() % 3 == 1) {
+			wave.push_back(((rand() % 2 == 0) ? "troll" : "fire_golem"));
+		} else {
 			wave.push_back(((rand() % 2 == 0) ? "goblin_halberd" : "dog"));
 			wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "water_wizard"));
 			wave.push_back(((rand() % 2 == 0) ? "goblin_halberd" : "fast_dog"));
 		}
+	} else if (stage <= 40) {
+		// From now on we get golems or trolls always
+		wave.push_back(((rand() % 2 == 0) ? "troll" : "fire_golem"));
+		if (rand() % 2 == 0) {
+			wave.push_back(((rand() % 2 == 0) ? "fast_dog" : "dog"));
+			wave.push_back(("shaman"));
+		} else {
+			wave.push_back(((rand() % 2 == 0) ? "goblin_halberd" : "dog"));
+			wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "water_wizard"));
+		}
+	} else {
+		wave.push_back(((rand() % 2 == 0) ? "troll" : "fire_golem"));
+		if (rand() % 2 == 0)
+			wave.push_back(((rand() % 2 == 0) ? "troll" : "fire_golem"));
+		else
+			wave.push_back(((rand() % 2 == 0) ? "fire_wizard" : "water_wizard"));
+		if (rand() % 2 == 0)
+			wave.push_back(((rand() % 2 == 0) ? "troll" : "fire_golem"));
+		else
+			wave.push_back(((rand() % 2 == 0) ? "frogfolk" : "goblin_halberd"));
 	}
 	if (wave.size() > 3) {
 		printf("Shouldn't happen. Remove the extra monsters.");

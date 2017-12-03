@@ -458,14 +458,14 @@
     "skeleton": {
       "name": "troll"
     },
-    "health": 200,
+    "health": 100,
     "attack_frequency": 3,
     "attacks": [
       {
         "ratio": 1,
         "type": "melee",
         "animation": "attack",
-        "amount": 5
+        "amount": 6
       }
     ]
   }
